@@ -66,7 +66,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-for cmd in curl unzip rsync mktemp; do
+for cmd in curl tar rsync mktemp; do
   if ! command -v "${cmd}" >/dev/null 2>&1; then
     echo "[ERROR] Required command not found: ${cmd}"
     exit 1
@@ -121,11 +121,11 @@ cleanup() {
 }
 trap cleanup EXIT
 
-ZIP_FILE="${TMP_DIR}/fe-${BRANCH}.zip"
+ZIP_FILE="${TMP_DIR}/fe-${BRANCH}.tar.gz"
 # GitHub strips the leading 'v' from the top-level directory inside the archive.
 EXTRACT_DIR_NAME="fe-${BRANCH#v}"
 SRC_DIR="${TMP_DIR}/${EXTRACT_DIR_NAME}"
-ARCHIVE_URL="${ARCHIVE_BASE}/${BRANCH}.zip"
+ARCHIVE_URL="${ARCHIVE_BASE}/${BRANCH}.tar.gz"
 
 download_with_retry() {
   local attempts="$1"
@@ -136,7 +136,7 @@ download_with_retry() {
     echo "[1/3] Downloading ${ARCHIVE_URL} (try ${try}/${attempts})"
     if curl -fsSL --max-time 120 -o "${ZIP_FILE}" "${ARCHIVE_URL}"; then
       echo "[1/3] Extracting archive ..."
-      unzip -q "${ZIP_FILE}" -d "${TMP_DIR}"
+      tar -xzf "${ZIP_FILE}" -C "${TMP_DIR}"
       return 0
     fi
 

@@ -73,42 +73,42 @@ for cmd in git rsync mktemp; do
 done
 
 # ── latest-tag check ──────────────────────────────────────────────────────────
-# Fetch the list of tags from upstream and warn if BRANCH is not the newest one.
+# Query the GitHub Releases API to find the latest published release tag and
+# warn the user if BRANCH is not up to date.
 check_latest_tag() {
-  echo "[INFO] Checking latest release tag from ${SRC_REPO} ..."
+  local api_url="https://api.github.com/repos/n9e/fe/releases/latest"
   local latest
-  # ls-remote returns all refs; pick tags sorted by version (vX.Y.Z), take last.
-  # Use a 10-second timeout so a network outage doesn't block the script.
-  latest="$(GIT_TERMINAL_PROMPT=0 timeout 10 git ls-remote --tags --refs "${SRC_REPO}" 'refs/tags/v*' 2>/dev/null \
-    | awk '{print $2}' \
-    | sed 's|refs/tags/||' \
-    | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' \
-    | sort -V \
-    | tail -n 1)"
+
+  # Prefer curl; fall back gracefully if unavailable or on timeout.
+  if command -v curl >/dev/null 2>&1; then
+    latest="$(curl -fsSL --max-time 8 "${api_url}" 2>/dev/null \
+      | grep '"tag_name"' \
+      | sed 's/.*"tag_name": *"\([^"]*\)".*/\1/')"
+  fi
 
   if [[ -z "${latest}" ]]; then
-    echo "[WARN] Could not determine the latest tag (network issue?). Proceeding with ${BRANCH}."
+    echo "[WARN] Could not determine the latest GitHub release (network issue?). Proceeding with ${BRANCH}."
     return
   fi
 
   if [[ "${BRANCH}" != "${latest}" ]]; then
     echo ""
     echo "┌─────────────────────────────────────────────────────────────┐"
-    echo "│  [WARN] A newer upstream release tag is available!          │"
-    printf "│  Current: %-50s │\n" "${BRANCH}"
-    printf "│  Latest:  %-50s │\n" "${latest}"
+    echo "│  [WARN] A newer upstream release is available!              │"
+    printf "│  Current : %-49s │\n" "${BRANCH}"
+    printf "│  Latest  : %-49s │\n" "${latest}"
     echo "│                                                             │"
     echo "│  Re-run with:                                               │"
-    printf "│    BRANCH=%s ./scripts/sync_upstream.sh%-16s │\n" "${latest}" ""
+    printf "│    BRANCH=%s ./scripts/sync_upstream.sh                   │\n" "${latest}"
     echo "└─────────────────────────────────────────────────────────────┘"
     echo ""
   else
-    echo "[INFO] ${BRANCH} is the latest release tag."
+    echo "[INFO] ${BRANCH} is the latest GitHub release."
   fi
 }
 
+echo "[INFO] Checking latest GitHub release for n9e/fe ..."
 check_latest_tag
-# ─────────────────────────────────────────────────────────────────────────────
 
 if [[ "${DRY_RUN}" != "1" ]]; then
   require_clean_worktree

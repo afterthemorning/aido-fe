@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 SRC_REPO="https://github.com/n9e/fe.git"
-BRANCH="${BRANCH:-main}"
+BRANCH="${BRANCH:-v8.5.1}"
 DRY_RUN="0"
 RETRY_TIMES="${RETRY_TIMES:-3}"
 RETRY_INTERVAL_SEC="${RETRY_INTERVAL_SEC:-15}"
@@ -71,6 +71,43 @@ for cmd in git rsync mktemp; do
     exit 1
   fi
 done
+
+# ── latest-tag check ──────────────────────────────────────────────────────────
+# Fetch the list of tags from upstream and warn if BRANCH is not the newest one.
+check_latest_tag() {
+  echo "[INFO] Checking latest release tag from ${SRC_REPO} ..."
+  local latest
+  # ls-remote returns all refs; pick tags sorted by version (vX.Y.Z), take last.
+  latest="$(git ls-remote --tags --refs "${SRC_REPO}" 'refs/tags/v*' 2>/dev/null \
+    | awk '{print $2}' \
+    | sed 's|refs/tags/||' \
+    | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' \
+    | sort -V \
+    | tail -n 1)"
+
+  if [[ -z "${latest}" ]]; then
+    echo "[WARN] Could not determine the latest tag (network issue?). Proceeding with ${BRANCH}."
+    return
+  fi
+
+  if [[ "${BRANCH}" != "${latest}" ]]; then
+    echo ""
+    echo "┌─────────────────────────────────────────────────────────────┐"
+    echo "│  [WARN] A newer upstream release tag is available!          │"
+    printf "│  Current: %-50s │\n" "${BRANCH}"
+    printf "│  Latest:  %-50s │\n" "${latest}"
+    echo "│                                                             │"
+    echo "│  Re-run with:                                               │"
+    printf "│    BRANCH=%s ./scripts/sync_upstream.sh%-16s │\n" "${latest}" ""
+    echo "└─────────────────────────────────────────────────────────────┘"
+    echo ""
+  else
+    echo "[INFO] ${BRANCH} is the latest release tag."
+  fi
+}
+
+check_latest_tag
+# ─────────────────────────────────────────────────────────────────────────────
 
 if [[ "${DRY_RUN}" != "1" ]]; then
   require_clean_worktree

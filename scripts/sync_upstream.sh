@@ -4,7 +4,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-SRC_REPO="https://github.com/n9e/fe.git"
+REPO_SLUG="n9e/fe"
+ARCHIVE_BASE="https://github.com/${REPO_SLUG}/archive/refs/tags"
 BRANCH="${BRANCH:-v8.5.1}"
 DRY_RUN="0"
 RETRY_TIMES="${RETRY_TIMES:-3}"
@@ -29,16 +30,16 @@ require_clean_worktree() {
 usage() {
   cat <<EOF
 Usage:
-  $(basename "$0") [--branch <name>] [--dry-run]
+  $(basename "$0") [--branch <tag>] [--dry-run]
 
 Options:
-  --branch <name>     Checkout branch/tag from upstream (default: main)
-  --dry-run           Show sync changes only
+  --branch <tag>      Release tag to sync (default: v8.5.1)
+  --dry-run           Preview sync changes only
   -h, --help          Show this help
 
 Environment:
   BRANCH              Same as --branch
-  RETRY_TIMES         Clone retry count (default: 3)
+  RETRY_TIMES         Download retry count (default: 3)
   RETRY_INTERVAL_SEC  Retry interval in seconds (default: 15)
 EOF
 }
@@ -65,7 +66,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-for cmd in git rsync mktemp; do
+for cmd in curl unzip rsync mktemp; do
   if ! command -v "${cmd}" >/dev/null 2>&1; then
     echo "[ERROR] Required command not found: ${cmd}"
     exit 1
@@ -76,7 +77,7 @@ done
 # Query the GitHub Releases API to find the latest published release tag and
 # warn the user if BRANCH is not up to date.
 check_latest_tag() {
-  local api_url="https://api.github.com/repos/n9e/fe/releases/latest"
+  local api_url="https://api.github.com/repos/${REPO_SLUG}/releases/latest"
   local latest
 
   # Prefer curl; fall back gracefully if unavailable or on timeout.
@@ -120,16 +121,22 @@ cleanup() {
 }
 trap cleanup EXIT
 
-CLONE_DIR="${TMP_DIR}/src"
+ZIP_FILE="${TMP_DIR}/fe-${BRANCH}.zip"
+# GitHub strips the leading 'v' from the top-level directory inside the archive.
+EXTRACT_DIR_NAME="fe-${BRANCH#v}"
+SRC_DIR="${TMP_DIR}/${EXTRACT_DIR_NAME}"
+ARCHIVE_URL="${ARCHIVE_BASE}/${BRANCH}.zip"
 
-clone_with_retry() {
+download_with_retry() {
   local attempts="$1"
   local interval_sec="$2"
   local try=1
 
   while (( try <= attempts )); do
-    echo "[1/3] Cloning upstream (try ${try}/${attempts})"
-    if git clone --depth 1 --branch "${BRANCH}" "${SRC_REPO}" "${CLONE_DIR}"; then
+    echo "[1/3] Downloading ${ARCHIVE_URL} (try ${try}/${attempts})"
+    if curl -fsSL --max-time 120 -o "${ZIP_FILE}" "${ARCHIVE_URL}"; then
+      echo "[1/3] Extracting archive ..."
+      unzip -q "${ZIP_FILE}" -d "${TMP_DIR}"
       return 0
     fi
 
@@ -137,17 +144,24 @@ clone_with_retry() {
       break
     fi
 
-    echo "[WARN] Clone failed, retry in ${interval_sec}s..."
-    rm -rf "${CLONE_DIR}"
+    echo "[WARN] Download failed, retry in ${interval_sec}s..."
+    rm -f "${ZIP_FILE}"
     sleep "${interval_sec}"
     try=$((try + 1))
   done
 
-  echo "[ERROR] Failed to clone ${SRC_REPO} after ${attempts} attempts"
+  echo "[ERROR] Failed to download ${ARCHIVE_URL} after ${attempts} attempts"
   return 1
 }
 
-clone_with_retry "${RETRY_TIMES}" "${RETRY_INTERVAL_SEC}"
+download_with_retry "${RETRY_TIMES}" "${RETRY_INTERVAL_SEC}"
+
+if [[ ! -d "${SRC_DIR}" ]]; then
+  echo "[ERROR] Expected extracted directory not found: ${SRC_DIR}"
+  echo "        Contents of ${TMP_DIR}:"
+  ls "${TMP_DIR}"
+  exit 1
+fi
 
 RSYNC_ARGS=(
   -a
@@ -165,7 +179,7 @@ else
   echo "[2/3] Syncing files into aido-fe workspace"
 fi
 
-rsync "${RSYNC_ARGS[@]}" "${CLONE_DIR}/" "${TARGET_DIR}/"
+rsync "${RSYNC_ARGS[@]}" "${SRC_DIR}/" "${TARGET_DIR}/"
 
 if [[ "${DRY_RUN}" == "1" ]]; then
   echo "[3/3] Dry-run completed. No files were changed."
@@ -173,5 +187,5 @@ else
   echo "[3/3] Sync completed."
 fi
 
-echo "Source: ${SRC_REPO}"
-echo "Branch: ${BRANCH}"
+echo "Source: ${ARCHIVE_URL}"
+echo "Tag:    ${BRANCH}"

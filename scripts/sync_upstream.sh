@@ -7,6 +7,7 @@ TARGET_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 REPO_SLUG="n9e/fe"
 ARCHIVE_BASE="https://github.com/${REPO_SLUG}/archive/refs/tags"
 BRANCH="${BRANCH:-v8.5.1}"
+LOCAL_FILE=""
 DRY_RUN="0"
 RETRY_TIMES="${RETRY_TIMES:-3}"
 RETRY_INTERVAL_SEC="${RETRY_INTERVAL_SEC:-15}"
@@ -31,6 +32,42 @@ setup_utf8_locale() {
   fi
 }
 
+# Auto-detect macOS system proxy and export https_proxy / http_proxy if not set.
+setup_system_proxy() {
+  if [[ -n "${https_proxy:-}" || -n "${HTTPS_PROXY:-}" ]]; then
+    return  # already configured
+  fi
+
+  local service proxy_enabled proxy_server proxy_port
+  for service in Wi-Fi Ethernet en0 en1; do
+    proxy_enabled="$(networksetup -getsecurewebproxy "${service}" 2>/dev/null | awk '/^Enabled:/{print $2}')" || continue
+    if [[ "${proxy_enabled}" == "Yes" ]]; then
+      proxy_server="$(networksetup -getsecurewebproxy "${service}" 2>/dev/null | awk '/^Server:/{print $2}')"
+      proxy_port="$(networksetup -getsecurewebproxy "${service}" 2>/dev/null | awk '/^Port:/{print $2}')"
+      if [[ -n "${proxy_server}" && -n "${proxy_port}" && "${proxy_port}" != "0" ]]; then
+        export https_proxy="http://${proxy_server}:${proxy_port}"
+        export http_proxy="http://${proxy_server}:${proxy_port}"
+        echo "[INFO] Using system proxy: ${https_proxy}"
+        return
+      fi
+    fi
+  done
+
+  for service in Wi-Fi Ethernet en0 en1; do
+    proxy_enabled="$(networksetup -getsocksfirewallproxy "${service}" 2>/dev/null | awk '/^Enabled:/{print $2}')" || continue
+    if [[ "${proxy_enabled}" == "Yes" ]]; then
+      proxy_server="$(networksetup -getsocksfirewallproxy "${service}" 2>/dev/null | awk '/^Server:/{print $2}')"
+      proxy_port="$(networksetup -getsocksfirewallproxy "${service}" 2>/dev/null | awk '/^Port:/{print $2}')"
+      if [[ -n "${proxy_server}" && -n "${proxy_port}" && "${proxy_port}" != "0" ]]; then
+        export https_proxy="socks5://${proxy_server}:${proxy_port}"
+        export http_proxy="socks5://${proxy_server}:${proxy_port}"
+        echo "[INFO] Using system SOCKS proxy: ${https_proxy}"
+        return
+      fi
+    fi
+  done
+}
+
 require_clean_worktree() {
   if ! git -C "${TARGET_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     echo "[ERROR] ${TARGET_DIR} is not a git repository"
@@ -50,10 +87,11 @@ require_clean_worktree() {
 usage() {
   cat <<EOF
 Usage:
-  $(basename "$0") [--branch <tag>] [--dry-run]
+  $(basename "$0") [--branch <tag>] [--file <path>] [--dry-run]
 
 Options:
   --branch <tag>      Release tag to sync (default: v8.5.1)
+  --file <path>       Use a local .tar.gz archive instead of downloading
   --dry-run           Preview sync changes only
   -h, --help          Show this help
 
@@ -68,6 +106,10 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --branch)
       BRANCH="$2"
+      shift 2
+      ;;
+    --file)
+      LOCAL_FILE="$2"
       shift 2
       ;;
     --dry-run)
@@ -86,14 +128,19 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-for cmd in curl tar rsync mktemp; do
+for cmd in tar rsync mktemp; do
   if ! command -v "${cmd}" >/dev/null 2>&1; then
     echo "[ERROR] Required command not found: ${cmd}"
     exit 1
   fi
 done
+if [[ -z "${LOCAL_FILE}" ]] && ! command -v curl >/dev/null 2>&1; then
+  echo "[ERROR] curl is required for downloading (or use --file to provide a local archive)"
+  exit 1
+fi
 
 setup_utf8_locale
+setup_system_proxy
 
 # ── latest-tag check ──────────────────────────────────────────────────────────
 # Query the GitHub Releases API to find the latest published release tag and
@@ -176,7 +223,17 @@ download_with_retry() {
   return 1
 }
 
-download_with_retry "${RETRY_TIMES}" "${RETRY_INTERVAL_SEC}"
+if [[ -n "${LOCAL_FILE}" ]]; then
+  if [[ ! -f "${LOCAL_FILE}" ]]; then
+    echo "[ERROR] Local file not found: ${LOCAL_FILE}"
+    exit 1
+  fi
+  echo "[1/3] Using local archive: ${LOCAL_FILE}"
+  echo "[1/3] Extracting archive ..."
+  tar -xzf "${LOCAL_FILE}" -C "${TMP_DIR}"
+else
+  download_with_retry "${RETRY_TIMES}" "${RETRY_INTERVAL_SEC}"
+fi
 
 if [[ ! -d "${SRC_DIR}" ]]; then
   echo "[ERROR] Expected extracted directory not found: ${SRC_DIR}"
@@ -209,5 +266,9 @@ else
   echo "[3/3] Sync completed."
 fi
 
-echo "Source: ${ARCHIVE_URL}"
+if [[ -n "${LOCAL_FILE}" ]]; then
+  echo "Source: ${LOCAL_FILE} (local)"
+else
+  echo "Source: ${ARCHIVE_URL}"
+fi
 echo "Tag:    ${BRANCH}"

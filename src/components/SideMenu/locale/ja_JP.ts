@@ -9,7 +9,6 @@ const ja_JP = {
     targets: 'ホスト',
     collects: 'データ収集設定',
     network_devices: 'ネットワークデバイス',
-    mobile_device: 'モバイルデバイス',
     dashboards: 'ダッシュボード',
     reports: '監視レポート',
     heartbeat: 'テスト',
@@ -38,7 +37,6 @@ const ja_JP = {
     notification_channels: '通知チャネル',
     notification_templates: '通知テンプレート',
     event_pipeline: 'ワークフロー',
-    event_pipeline_executions: '実行記録',
     notification_settings: '通知設定',
     notification_tpls: '通知テンプレート',
     integrations: '統合センター',
@@ -58,7 +56,6 @@ const ja_JP = {
     audit_log: '監査ログ',
     alert_servers: 'アラートエンジン',
     about: '製品について',
-    license_management: 'ライセンス管理',
   },
 };
 

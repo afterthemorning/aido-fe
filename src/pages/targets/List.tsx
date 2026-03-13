@@ -50,7 +50,7 @@ export interface ITargetProps {
   ident: string;
   note: string;
   tags: string[];
-  beat_time: number;
+  update_at: number;
 }
 
 interface IProps {
@@ -435,7 +435,8 @@ export default function List(props: IProps) {
             </Tooltip>
           </Space>
         ),
-        dataIndex: 'beat_time',
+        sorter: true,
+        dataIndex: 'update_at',
         render: (val, reocrd) => {
           let result = moment.unix(val).format('YYYY-MM-DD HH:mm:ss');
           let backgroundColor = GREEN_COLOR;

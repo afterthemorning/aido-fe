@@ -1,11 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Row, Col, Input, Select, Space, Tooltip, Alert, InputNumber } from 'antd';
 import { CloseCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useTranslation, Trans } from 'react-i18next';
-import { SqlMonacoEditor } from '@fc-components/monaco-editor';
 
-import { CommonStateContext } from '@/App';
 import { IS_PLUS } from '@/utils/constant';
 import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
 import QueryName, { generateQueryName } from '@/components/QueryName';
@@ -25,7 +23,6 @@ interface Props {
 
 export default function Query(props: Props) {
   const { t } = useTranslation(NAME_SPACE);
-  const { darkMode } = useContext(CommonStateContext);
   const { datasourceId, field, dbList, disabled, remove } = props;
   const [sqlWarningI18nKey, setSqlWarningI18nKey] = useState<string>('');
   const queries = Form.useWatch(['rule_config', 'queries']);
@@ -116,7 +113,14 @@ export default function Query(props: Props) {
               trigger='onChange'
               rules={[{ required: true, message: t('datasource:query.query_required') }]}
             >
-              <SqlMonacoEditor disabled={disabled} maxHeight={200} placeholder={t('query.query_placeholder')} theme={darkMode ? 'dark' : 'light'} enableAutocomplete={true} />
+              <Input.TextArea
+                autoSize={{
+                  minRows: 1,
+                  maxRows: 10,
+                }}
+                placeholder={t('query.query_placeholder')}
+                disabled={disabled}
+              />
             </Form.Item>
           </InputGroupWithFormItem>
         </Col>

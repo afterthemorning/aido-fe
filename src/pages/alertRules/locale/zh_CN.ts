@@ -34,10 +34,6 @@ const zh_CN = {
   effective_time_tip: '00:00-00:00 和 00:00-23:59 都表示全天生效',
   enable_in_bg: '仅在本业务组生效',
   enable_in_bg_tip: '若告警事件中包含 ident 标签，且对应的机器不属于本业务组，则丢弃该告警事件；若告警事件中不包含 ident 标签，则此过滤条件不生效，会继续后续处理。',
-  time_zone: '时区',
-  time_zone_tip: '时区仅影响规则中的开始时间、结束时间，不影响告警事件查看相关时间字段',
-  local_time: '本地时间',
-
   notify_configs: '通知配置',
   notify_rule_ids: '通知规则',
   switch_to_old: '切换旧版',
@@ -164,7 +160,6 @@ const zh_CN = {
         annotations: '附加信息',
         triggers: '告警条件',
         cron_pattern: '执行频率',
-        time_zone: '时区',
       },
     },
     cloneToHosts: {
@@ -229,7 +224,7 @@ const zh_CN = {
     disabled: '启用',
     severity: '级别',
     status: '状态',
-    status_tip: '告警规则当前是否触发了告警事件，只会统计展示最近30天的数据',
+    status_tip: '告警规则当前是否触发了告警事件，默认统计最近 30 天的数据',
   },
   expired: '告警规则已经被别人修改，为避免相互覆盖，请刷新页面查看最新配置',
   relabel: {
@@ -343,9 +338,9 @@ const zh_CN = {
     select_tip: '克隆查询条件（留空表示直接创建，不克隆）',
   },
   pipeline_configuration: {
-    title: '事件处理工作流',
-    name_placeholder: '请选择事件处理工作流',
-    add_btn: '添加事件处理工作流',
+    title: '事件处理',
+    name_placeholder: '请选择事件处理流水线',
+    add_btn: '添加事件处理流水线',
   },
 };
 export default zh_CN;

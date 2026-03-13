@@ -8,8 +8,7 @@ import { DatasourceCateEnum } from '@/utils/constant';
 import Meta from '@/components/Meta';
 
 import { NAME_SPACE, DATE_TYPE_LIST } from '../../constants';
-import { getDorisIndex } from '../../services';
-import { HandleValueFilterParams, Field } from '../types';
+import { getDorisIndex, Field } from '../../services';
 import { getOrganizeFieldsFromLocalstorage } from '../utils/organizeFieldsLocalstorage';
 import DatabaseSelect from './DatabaseSelect';
 import TableSelect from './TableSelect';
@@ -23,7 +22,7 @@ interface Props {
   organizeFields: string[];
   setOrganizeFields: (organizeFields: string[], setLocalstorage?: boolean) => void;
   onIndexDataChange: (data: Field[]) => void;
-  handleValueFilter: HandleValueFilterParams;
+  handleValueFilter: (params: { key: string; value: string; operator: 'AND' | 'NOT' }) => void;
 
   stackByField?: string;
   setStackByField: (field?: string) => void;
@@ -50,11 +49,9 @@ export default function index(props: Props) {
 
   const form = Form.useFormInstance();
   const syntax = Form.useWatch(['query', 'syntax']);
-  // const navMode = Form.useWatch(['query', 'navMode']);
+  const navMode = Form.useWatch(['query', 'navMode']);
   const database = Form.useWatch(['query', 'database']);
   const table = Form.useWatch(['query', 'table']);
-
-  const navMode = 'fields';
 
   const indexDataService = () => {
     if (datasourceValue && database && table) {
@@ -104,7 +101,7 @@ export default function index(props: Props) {
 
   return (
     <>
-      <Form.Item name={['query', 'navMode']} initialValue='fields' hidden>
+      <Form.Item name={['query', 'navMode']} initialValue='fields'>
         <Segmented
           block
           options={[
@@ -196,7 +193,7 @@ export default function index(props: Props) {
         </div>
       </div>
 
-      {/* <div
+      <div
         className='min-h-0 flex-1 h-full flex-col'
         style={{
           display: navMode === 'schema' ? 'flex' : 'none',
@@ -263,7 +260,7 @@ GROUP BY time`,
             />
           )}
         </div>
-      </div> */}
+      </div>
     </>
   );
 }

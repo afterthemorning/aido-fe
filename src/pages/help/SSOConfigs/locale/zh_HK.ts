@@ -22,12 +22,10 @@ const zh_HK = {
     cover_attributes: '更新用戶信息',
     cover_attributes_tip: '每次登入後，如果用戶信息有變化，會使用釘釘中用戶的信息覆蓋夜鶯中用戶的信息(手機號、郵箱)',
     username_field: '用戶名字段',
-    default_team: '默認團隊',
     username_field_map: {
       phone: '手機號',
       name: '名稱',
       email: '郵箱',
-      userid: '用户ID',
     },
     default_roles: '默認角色',
     auth_url: '登入認證地址',

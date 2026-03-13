@@ -47,7 +47,7 @@ const getInvalidDatasourceIds = (ids: number[], fullDatasourceList: any[]) => {
   return invalid;
 };
 
-function Query({ idx, names, field, remove, invalidDatasourceIds, datasourceList, disabled, fields }) {
+function Query({ idx, names, field, remove, invalidDatasourceIds, datasourceList, disabled }) {
   const { t } = useTranslation('alertRules');
   const form = Form.useFormInstance();
   const match_type = Form.useWatch([...names, field.name, 'match_type']);
@@ -159,16 +159,14 @@ function Query({ idx, names, field, remove, invalidDatasourceIds, datasourceList
           </Col>
         </>
       )}
-      {fields.length > 1 && (
-        <Col flex='none'>
-          <MinusCircleOutlined
-            className='mt-2'
-            onClick={() => {
-              remove(field.name);
-            }}
-          />
-        </Col>
-      )}
+      <Col flex='none'>
+        <MinusCircleOutlined
+          className='mt-2'
+          onClick={() => {
+            remove(field.name);
+          }}
+        />
+      </Col>
     </Row>
   );
 }
@@ -260,7 +258,6 @@ export default function index(props: IProps) {
                   invalidDatasourceIds={invalidDatasourceIds}
                   datasourceList={datasourceList}
                   disabled={disabled}
-                  fields={fields}
                 />
               );
             })}

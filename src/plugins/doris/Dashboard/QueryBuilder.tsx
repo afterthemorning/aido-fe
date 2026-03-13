@@ -8,7 +8,7 @@ import Collapse, { Panel } from '@/pages/dashboard/Editor/Components/Collapse';
 import { alphabet } from '@/utils/constant';
 import ExpressionPanel from '@/pages/dashboard/Editor/Components/ExpressionPanel';
 import AddQueryButtons from '@/pages/dashboard/Editor/Components/AddQueryButtons';
-import QueryExtraActions from '@/pages/dashboard/Components/QueryExtraActions';
+import HideButton from '@/pages/dashboard/Components/HideButton';
 
 import { NAME_SPACE } from '../constants';
 import QueryStringBuilder from './QueryStringBuilder';
@@ -50,7 +50,9 @@ export default function DorisQueryBuilder({ datasourceValue }) {
                       key={field.key}
                       extra={
                         <Space>
-                          <QueryExtraActions field={field} add={add} />
+                          <Form.Item noStyle {...field} name={[field.name, 'hide']}>
+                            <HideButton />
+                          </Form.Item>
                           {fields.length > 1 ? (
                             <DeleteOutlined
                               onClick={() => {

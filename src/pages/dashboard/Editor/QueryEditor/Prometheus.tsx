@@ -8,7 +8,7 @@ import { alphabet } from '@/utils/constant';
 import Resolution from '@/components/Resolution';
 import PromQLInputNG, { interpolateString } from '@/components/PromQLInputNG';
 import { getRealStep } from '@/pages/dashboard/Renderer/datasource/prometheus';
-import QueryExtraActions from '@/pages/dashboard/Components/QueryExtraActions';
+import HideButton from '@/pages/dashboard/Components/HideButton';
 import { useGlobalState } from '@/pages/dashboard/globalState';
 
 import Collapse, { Panel } from '../Components/Collapse';
@@ -66,7 +66,9 @@ export default function Prometheus({ panelWidth, datasourceValue, range }) {
                     key={field.key}
                     extra={
                       <Space>
-                        <QueryExtraActions field={field} add={add} />
+                        <Form.Item noStyle {...field} name={[field.name, 'hide']}>
+                          <HideButton />
+                        </Form.Item>
                         {fields.length > 1 ? (
                           <DeleteOutlined
                             onClick={() => {

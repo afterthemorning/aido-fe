@@ -28,8 +28,8 @@ export const getRecordingRule = function (id): Promise<any> {
   });
 };
 
-export const editRecordingRule = function (data: any[], rule_id: number) {
-  return request(`/api/n9e/recording-rule/${rule_id}`, {
+export const editRecordingRule = function (data: any[], busiId: number, strategyId: number) {
+  return request(`/api/n9e/busi-group/${busiId}/recording-rule/${strategyId}`, {
     method: RequestMethod.Put,
     data: data,
   });

@@ -34,7 +34,7 @@ import { CommonStateContext } from '@/App';
 import { Explorer as TDengine } from '@/plugins/TDengine';
 import { Explorer as CK } from '@/plugins/clickHouse';
 import { allCates } from '@/components/AdvancedWrap/utils';
-import ViewSelect, { ModalState } from '@/components/ViewSelect';
+// import ViewSelect from '@/components/ViewSelect';
 
 import { useGlobalState } from './globalState';
 import Prometheus from './Prometheus';
@@ -120,12 +120,6 @@ const Panel = (props: IProps) => {
   const explorerContainerRef = useRef<HTMLDivElement>(null);
   const [promql, setPromql] = React.useState<string>();
 
-  const [viewSelectValue, setViewSelectValue] = React.useState<number>();
-  const [viewSelectFilters, setViewSelectFilters] = React.useState<{ searchText: string; publicCate?: number }>({ searchText: '', publicCate: undefined });
-  const [viewModalState, setViewModalState] = React.useState<ModalState>({
-    visible: false,
-  });
-
   useEffect(() => {
     setTabKey(props.tabKey);
   }, [props.tabKey]);
@@ -141,133 +135,123 @@ const Panel = (props: IProps) => {
       >
         <div className='explorer-content'>
           <Row gutter={8}>
-            {type === 'metric' && (
-              <Col flex='none'>
-                <ViewSelect<Query>
-                  value={viewSelectValue}
-                  onChange={(value) => {
-                    setViewSelectValue(value);
-                  }}
-                  filters={viewSelectFilters}
-                  setFilters={setViewSelectFilters}
-                  modalState={viewModalState}
-                  setModalState={setViewModalState}
-                  disabled={!_.includes([DatasourceCateEnum.doris, DatasourceCateEnum.prometheus], datasourceCate)}
-                  page={location.pathname}
-                  getFilterValues={() => {
-                    const formValues = form.getFieldsValue();
-                    if (datasourceCate === DatasourceCateEnum.prometheus) {
-                      const filterValues = {
-                        datasourceCate: formValues.datasourceCate,
-                        datasourceValue: formValues.datasourceValue,
+            {/* <Col flex='none'>
+              <ViewSelect<Query>
+                disabled={!_.includes([DatasourceCateEnum.doris, DatasourceCateEnum.prometheus], datasourceCate)}
+                page={location.pathname}
+                getFilterValues={() => {
+                  const formValues = form.getFieldsValue();
+                  if (datasourceCate === DatasourceCateEnum.prometheus) {
+                    const filterValues = {
+                      datasourceCate: formValues.datasourceCate,
+                      datasourceValue: formValues.datasourceValue,
+                      query: {
+                        query: promql || '',
+                      },
+                    };
+                    return filterValues;
+                  } else {
+                    let range = formValues.query?.range;
+                    if (moment.isMoment(range?.start) && moment.isMoment(range?.end)) {
+                      range = {
+                        start: range.start.unix(),
+                        end: range.end.unix(),
+                      };
+                    }
+                    const filterValues = {
+                      datasourceCate: formValues.datasourceCate,
+                      datasourceValue: formValues.datasourceValue,
+                      query: {
+                        ...formValues.query,
+                        range,
+                      },
+                    };
+                    return filterValues;
+                  }
+                }}
+                renderOptionExtra={(filterValues) => {
+                  const { datasourceCate, datasourceValue } = filterValues;
+                  return (
+                    <div className='flex items-center gap-2'>
+                      <img src={_.get(_.find(allCates, { value: datasourceCate }), 'logo')} alt={datasourceCate} className='w-[12px] h-[12px]' />
+                      <span>{_.find(datasourceList, { id: datasourceValue })?.name ?? datasourceValue}</span>
+                    </div>
+                  );
+                }}
+                onSelect={(filterValues) => {
+                  filterValues.datasourceCate = filterValues.datasourceCate || defaultDatasourceCate;
+                  filterValues.datasourceValue = filterValues.datasourceValue || defaultDatasourceValue;
+                  if (datasourceCate === DatasourceCateEnum.prometheus) {
+                    form.setFieldsValue({
+                      datasourceCate: filterValues.datasourceCate,
+                      datasourceValue: filterValues.datasourceValue,
+                    });
+                    setPromql(filterValues.query?.query || '');
+                  } else if (datasourceCate === DatasourceCateEnum.doris) {
+                    // 完全重置表单后再设置新值，避免旧值残留
+                    form.setFieldsValue({
+                      query: undefined,
+                    });
+                    let range = filterValues.query?.range;
+                    if (_.isNumber(range?.start) && _.isNumber(range?.end)) {
+                      range = {
+                        start: moment.unix(range.start),
+                        end: moment.unix(range.end),
+                      };
+                    }
+                    form.setFieldsValue({
+                      ...filterValues,
+                      refreshFlag: _.uniqueId('refreshFlag_'),
+                      query: {
+                        ...filterValues.query,
+                        mode: filterValues.query?.mode || 'query',
+                        range,
+                      },
+                    });
+                  }
+                  if (panelIdx === 0) {
+                    history.replace({
+                      search: `?data_source_name=${filterValues.datasourceCate ?? defaultDatasourceCate}&${filterValues.datasourceValue ?? defaultDatasourceValue}`,
+                    });
+                  }
+                }}
+                oldFilterValues={
+                  datasourceCate === DatasourceCateEnum.prometheus
+                    ? {
+                        datasourceCate,
+                        datasourceValue: form.getFieldValue('datasourceValue'),
                         query: {
                           query: promql || '',
                         },
-                      };
-                      return filterValues;
-                    } else {
-                      let range = formValues.query?.range;
+                      }
+                    : undefined
+                }
+                adjustOldFilterValues={(values) => {
+                  if (values) {
+                    if (datasourceCate !== DatasourceCateEnum.prometheus) {
+                      // 去掉 query 中值为 undefined 的字段
+                      const cleanedQuery = omitUndefinedDeep(values.query) || {};
+                      let range = cleanedQuery.range;
                       if (moment.isMoment(range?.start) && moment.isMoment(range?.end)) {
                         range = {
                           start: range.start.unix(),
                           end: range.end.unix(),
                         };
                       }
-                      const filterValues = {
-                        datasourceCate: formValues.datasourceCate,
-                        datasourceValue: formValues.datasourceValue,
+                      return {
+                        datasourceCate: values.datasourceCate,
+                        datasourceValue: values.datasourceValue,
                         query: {
-                          ...formValues.query,
+                          ...cleanedQuery,
                           range,
                         },
                       };
-                      return filterValues;
                     }
-                  }}
-                  renderOptionExtra={(filterValues) => {
-                    const { datasourceCate, datasourceValue } = filterValues;
-                    return (
-                      <div className='flex items-center gap-2'>
-                        <img src={_.get(_.find(allCates, { value: datasourceCate }), 'logo')} alt={datasourceCate} className='w-[12px] h-[12px]' />
-                        <span>{_.find(datasourceList, { id: datasourceValue })?.name ?? datasourceValue}</span>
-                      </div>
-                    );
-                  }}
-                  onSelect={(filterValues) => {
-                    filterValues.datasourceCate = filterValues.datasourceCate || defaultDatasourceCate;
-                    filterValues.datasourceValue = filterValues.datasourceValue || defaultDatasourceValue;
-                    if (datasourceCate === DatasourceCateEnum.prometheus) {
-                      form.setFieldsValue({
-                        datasourceCate: filterValues.datasourceCate,
-                        datasourceValue: filterValues.datasourceValue,
-                      });
-                      setPromql(filterValues.query?.query || '');
-                    } else if (datasourceCate === DatasourceCateEnum.doris) {
-                      // 完全重置表单后再设置新值，避免旧值残留
-                      form.setFieldsValue({
-                        query: undefined,
-                      });
-                      let range = filterValues.query?.range;
-                      if (_.isNumber(range?.start) && _.isNumber(range?.end)) {
-                        range = {
-                          start: moment.unix(range.start),
-                          end: moment.unix(range.end),
-                        };
-                      }
-                      form.setFieldsValue({
-                        ...filterValues,
-                        refreshFlag: _.uniqueId('refreshFlag_'),
-                        query: {
-                          ...filterValues.query,
-                          mode: filterValues.query?.mode || 'query',
-                          range,
-                        },
-                      });
-                    }
-                    if (panelIdx === 0) {
-                      history.replace({
-                        search: `?data_source_name=${filterValues.datasourceCate ?? defaultDatasourceCate}&${filterValues.datasourceValue ?? defaultDatasourceValue}`,
-                      });
-                    }
-                  }}
-                  oldFilterValues={
-                    datasourceCate === DatasourceCateEnum.prometheus
-                      ? {
-                          datasourceCate,
-                          datasourceValue: form.getFieldValue('datasourceValue'),
-                          query: {
-                            query: promql || '',
-                          },
-                        }
-                      : undefined
                   }
-                  adjustOldFilterValues={(values) => {
-                    if (values) {
-                      if (datasourceCate !== DatasourceCateEnum.prometheus) {
-                        // 去掉 query 中值为 undefined 的字段
-                        const cleanedQuery = omitUndefinedDeep(values.query) || {};
-                        let range = cleanedQuery.range;
-                        if (moment.isMoment(range?.start) && moment.isMoment(range?.end)) {
-                          range = {
-                            start: range.start.unix(),
-                            end: range.end.unix(),
-                          };
-                        }
-                        return {
-                          datasourceCate: values.datasourceCate,
-                          datasourceValue: values.datasourceValue,
-                          query: {
-                            ...cleanedQuery,
-                            range,
-                          },
-                        };
-                      }
-                    }
-                    return {};
-                  }}
-                />
-              </Col>
-            )}
+                  return {};
+                }}
+              />
+            </Col> */}
             <Col flex='none'>
               <>
                 <Form.Item name='datasourceCate' hidden>

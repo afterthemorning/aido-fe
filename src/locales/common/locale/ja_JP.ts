@@ -83,7 +83,7 @@ const ja_JP = {
     host: 'マシン',
     error_msg: 'エラー',
     username: 'ユーザー名',
-    nickname: 'ユーザーニックネーム',
+    nickname: '表示名',
   },
   datasource: {
     prod: '監視タイプ',
@@ -256,7 +256,6 @@ const ja_JP = {
   'msg.sort.success': 'ソート成功',
   copy_success: 'コピー成功 {{num}} 件のレコード',
   request_fail_msg: 'ネットワークリクエストタイムアウト、しばらくしてから再試行してください',
-  trim_validator_msg: '前後にスペースがあります。手動で削除してください',
 };
 
 export default ja_JP;

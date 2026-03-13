@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Space, Table, Button, Tag, Input, Modal, Drawer, Select } from 'antd';
+import { Space, Table, Button, Tag, Input, Modal, Drawer } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import _ from 'lodash';
-import { Link } from 'react-router-dom';
-
 import usePagination from '@/components/usePagination';
 
-import { NS } from '../../constants';
-import { Item, getList, deleteItems } from '../../services';
-import Add from '../Add';
-import Edit from '../Edit';
-import MoreOperations from './MoreOperations';
+import { NS } from '../constants';
+import { Item, getList, deleteItems } from '../services';
+import Add from './Add';
+import Edit from './Edit';
 
 export default function List() {
   const { t } = useTranslation(NS);
   const [filter, setFilter] = useState<{
-    search?: string;
-    use_case?: string;
-    trigger_mode?: string;
-    disabled?: boolean;
+    search: string;
   }>();
   const [data, setData] = useState<{
     list: Item[];
@@ -29,7 +23,6 @@ export default function List() {
     list: [],
     loading: false,
   });
-  const [selectedRows, setSelectedRows] = useState<Item[]>([]);
 
   const pagination = usePagination({ PAGESIZE_KEY: 'event-pipelines-pagesize' });
 
@@ -46,9 +39,8 @@ export default function List() {
 
   const [eventPipelineDrawerState, setEventPipelineDrawerState] = useState<{
     visible: boolean;
-    action: 'add' | 'edit' | 'clone';
+    action: 'add' | 'edit';
     id?: number;
-    data?: any;
   }>({
     visible: false,
     action: 'add',
@@ -66,11 +58,6 @@ export default function List() {
     featchData();
   }, []);
 
-  const disabledMap = {
-    false: <Tag color='green'>{t('disabled.false')}</Tag>,
-    true: <Tag color='red'>{t('disabled.true')}</Tag>,
-  };
-
   return (
     <>
       <div className='flex justify-between items-center pb-2'>
@@ -87,56 +74,6 @@ export default function List() {
             }}
             prefix={<SearchOutlined />}
           />
-          <Select
-            allowClear
-            dropdownMatchSelectWidth={false}
-            placeholder={t('use_case.label')}
-            options={[
-              {
-                label: t('use_case.firemap'),
-                value: 'firemap',
-              },
-              {
-                label: t('use_case.event_pipeline'),
-                value: 'event_pipeline',
-              },
-            ]}
-            value={filter?.use_case}
-            onChange={(value) => setFilter((prev) => ({ ...prev, use_case: value }))}
-          />
-          <Select
-            allowClear
-            placeholder={t('trigger_mode.label')}
-            dropdownMatchSelectWidth={false}
-            options={[
-              {
-                label: t('trigger_mode.event'),
-                value: 'event',
-              },
-              {
-                label: t('trigger_mode.api'),
-                value: 'api',
-              },
-            ]}
-            value={filter?.trigger_mode}
-            onChange={(value) => setFilter((prev) => ({ ...prev, trigger_mode: value }))}
-          />
-          <Select
-            allowClear
-            placeholder={t('disabled.label')}
-            options={[
-              {
-                label: t('disabled.false'),
-                value: false,
-              },
-              {
-                label: t('disabled.true'),
-                value: true,
-              },
-            ]}
-            value={filter?.disabled}
-            onChange={(value) => setFilter((prev) => ({ ...prev, disabled: value }))}
-          />
         </Space>
         <Space>
           <Button
@@ -150,7 +87,6 @@ export default function List() {
           >
             {t('common:btn.add')}
           </Button>
-          <MoreOperations selectedRows={selectedRows} />
         </Space>
       </div>
       <Table
@@ -160,7 +96,7 @@ export default function List() {
           {
             title: t('common:table.name'),
             dataIndex: 'name',
-            render: (val, item: Item) => {
+            render: (val, item) => {
               return (
                 <a
                   onClick={() => {
@@ -179,31 +115,6 @@ export default function List() {
           {
             title: t('common:table.note'),
             dataIndex: 'description',
-          },
-          {
-            title: t('use_case.label'),
-            dataIndex: 'use_case',
-            width: 100,
-            render: (value) => {
-              return <Tag>{t(`use_case.${value}`)}</Tag>;
-            },
-          },
-          {
-            title: t('trigger_mode.label'),
-            dataIndex: 'trigger_mode',
-            width: 100,
-            render: (value) => {
-              return <Tag>{t(`trigger_mode.${value}`)}</Tag>;
-            },
-          },
-          {
-            title: t('disabled.label'),
-            dataIndex: 'disabled',
-            key: 'disabled',
-            width: 100,
-            render: (value) => {
-              return disabledMap[value] || value;
-            },
           },
           {
             title: t('teams'),
@@ -228,20 +139,9 @@ export default function List() {
           {
             title: t('common:table.operations'),
             width: 200,
-            render: (item: Item) => {
+            render: (item) => {
               return (
                 <Space>
-                  <a
-                    onClick={() => {
-                      setEventPipelineDrawerState({
-                        visible: true,
-                        action: 'clone',
-                        data: _.omit(item, 'id'),
-                      });
-                    }}
-                  >
-                    {t('common:btn.clone')}
-                  </a>
                   <a
                     onClick={() => {
                       setEventPipelineDrawerState({
@@ -273,44 +173,19 @@ export default function List() {
                   >
                     {t('common:btn.delete')}
                   </Button>
-                  <Link to={`/event-pipelines-executions?pipeline_id=${item.id}`}>{t('executions.title')}</Link>
                 </Space>
               );
             },
           },
         ]}
         dataSource={_.filter(data.list, (item) => {
-          let pass = true;
           if (filter?.search) {
-            if (!_.includes(item.name, filter.search)) {
-              pass = false;
-            }
+            return _.includes(item.name, filter.search);
           }
-          if (filter?.use_case) {
-            if (item.use_case !== filter.use_case) {
-              pass = false;
-            }
-          }
-          if (filter?.trigger_mode) {
-            if (item.trigger_mode !== filter.trigger_mode) {
-              pass = false;
-            }
-          }
-          if (filter?.disabled !== undefined) {
-            if (item.disabled !== filter.disabled) {
-              pass = false;
-            }
-          }
-          return pass;
+          return true;
         })}
         loading={data.loading}
         pagination={pagination}
-        rowSelection={{
-          selectedRowKeys: selectedRows.map((item) => item.id),
-          onChange: (_selectedRowKeys: React.Key[], selectedRows: Item[]) => {
-            setSelectedRows(selectedRows);
-          },
-        }}
       />
       <Drawer
         title={t(`${NS}:title_${eventPipelineDrawerState.action}`)}
@@ -333,18 +208,6 @@ export default function List() {
         {eventPipelineDrawerState.action === 'edit' && eventPipelineDrawerState?.id && (
           <Edit
             id={eventPipelineDrawerState.id}
-            onOk={() => {
-              resetEventPipelineDrawerState();
-              featchData();
-            }}
-            onCancel={() => {
-              resetEventPipelineDrawerState();
-            }}
-          />
-        )}
-        {eventPipelineDrawerState.action === 'clone' && eventPipelineDrawerState?.data && (
-          <Add
-            initialValues={eventPipelineDrawerState.data}
             onOk={() => {
               resetEventPipelineDrawerState();
               featchData();

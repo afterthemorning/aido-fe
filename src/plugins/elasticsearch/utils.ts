@@ -1,4 +1,4 @@
-export const normalizeTime = (value?: number, unit?: 'second' | 'min' | 'hour' | 'day') => {
+export const normalizeTime = (value?: number, unit?: 'second' | 'min' | 'hour') => {
   if (!value) {
     return value;
   }

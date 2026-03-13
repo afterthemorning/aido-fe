@@ -9,7 +9,6 @@ const ru_RU = {
     targets: 'хостов',
     collects: 'Настройка сбора данных',
     network_devices: 'Сетевые устройства',
-    mobile_device: 'Мобильные устройства',
     dashboards: 'Панель мониторинга',
     reports: 'Отчёты мониторинга',
     heartbeat: 'Тестирование',
@@ -38,7 +37,6 @@ const ru_RU = {
     notification_channels: 'Каналы уведомлений',
     notification_templates: 'Шаблоны уведомлений',
     event_pipeline: 'Рабочий процесс',
-    event_pipeline_executions: 'Записи выполнения',
     notification_settings: 'Настройка уведомлений',
     notification_tpls: 'Шаблоны',
     integrations: 'Интеграции',
@@ -58,7 +56,6 @@ const ru_RU = {
     audit_log: 'Журнал аудита',
     alert_servers: 'Система оповещений',
     about: 'О продукте',
-    license_management: 'Управление лицензиями',
   },
 };
 

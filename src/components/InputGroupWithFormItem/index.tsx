@@ -13,14 +13,13 @@ interface IProps {
   addonAfter?: React.ReactNode;
   addonAfterWithContainer?: React.ReactNode;
   size?: 'small' | 'middle';
-  className?: string;
 }
 
 export default function index(props: IProps) {
-  const { children, label, labelWidth = 'max-content', labelMinWidth, noStyle = false, customStyle, addonAfter, addonAfterWithContainer, size = 'middle', className } = props;
+  const { children, label, labelWidth = 'max-content', labelMinWidth, noStyle = false, customStyle, addonAfter, addonAfterWithContainer, size = 'middle' } = props;
 
   return (
-    <Input.Group compact className={classNames('input-group-with-form-item', className)}>
+    <Input.Group compact className='input-group-with-form-item'>
       <span
         className={classNames({
           'ant-input-group-addon': !noStyle,

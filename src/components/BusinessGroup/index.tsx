@@ -35,7 +35,6 @@ export {
 };
 
 interface IProps {
-  selected?: string;
   onSelect?: (key: string, item: any) => void;
   title?: string;
   renderHeadExtra?: () => React.ReactNode;
@@ -93,7 +92,6 @@ export default function index(props: IProps) {
   const query = queryString.parse(location.search);
   const history = useHistory();
   const { title = t('common:business_groups'), renderHeadExtra, onSelect, showSelected = true } = props;
-  const selected = props.selected || businessGroup.key;
   const [collapse, setCollapse] = useState(localStorage.getItem('leftlist') === '1');
   const [width, setWidth] = useState(_.toNumber(localStorage.getItem('leftwidth') || 200));
   const { busiGroups, siteInfo, setBusiGroups } = useContext(CommonStateContext);
@@ -232,7 +230,7 @@ export default function index(props: IProps) {
                   >
                     <div
                       className={classNames('n9e-list-item px-[8px] py-[6px] cursor-pointer break-all', {
-                        active: showSelected ? itemKey === selected : false,
+                        active: showSelected ? itemKey === businessGroup.key : false,
                       })}
                       onClick={() => {
                         businessGroupOnChange(itemKey);
@@ -257,8 +255,8 @@ export default function index(props: IProps) {
             <div className='scroll-container overflow-x-hidden overflow-y-auto min-h-0 h-full'>
               {!_.isEmpty(businessGroupTreeData) && (
                 <Tree
-                  defaultExpandedKeys={getCollapsedKeys(businessGroupTreeData, getLocaleExpandedKeys(), selected)}
-                  selectedKeys={showSelected && selected ? [selected] : undefined}
+                  defaultExpandedKeys={getCollapsedKeys(businessGroupTreeData, getLocaleExpandedKeys(), businessGroup.key)}
+                  selectedKeys={showSelected && businessGroup.key ? [businessGroup.key] : undefined}
                   onSelect={(_selectedKeys, e) => {
                     const itemKey = e.node.key;
                     businessGroupOnChange(itemKey);

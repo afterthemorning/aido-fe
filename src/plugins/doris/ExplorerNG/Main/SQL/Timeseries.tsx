@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext, useMemo, useRef } from 'react';
 import _ from 'lodash';
 import moment from 'moment';
-import { Spin, Empty, Form, Space, Radio, Tooltip, Select } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import { Spin, Empty, Form, Space, Radio, Tooltip, Button, Select, Input } from 'antd';
+import { QuestionCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { AlignedData, Options } from 'uplot';
 import { useSize } from 'ahooks';
-
 import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
 import { CommonStateContext } from '@/App';
 import UPlotChart, { tooltipPlugin, paddingSide, axisBuilder, seriesBuider, cursorBuider, scalesBuilder } from '@/components/UPlotChart';
 import { parseRange } from '@/components/TimeRangePicker';
+import { OutlinedSelect } from '@/components/OutlinedSelect';
 import { getSerieName } from '@/pages/dashboard/Renderer/datasource/utils';
 import { NAME_SPACE as logExplorerNS } from '@/pages/logExplorer/constants';
 import { hexPalette } from '@/pages/dashboard/config';
@@ -23,17 +23,12 @@ import valueFormatter from '@/pages/dashboard/Renderer/utils/valueFormatter';
 import { NAME_SPACE } from '../../../constants';
 import { getDsQuery } from '../../../services';
 import replaceTemplateVariables from '../../utils/replaceTemplateVariables';
-import AddTo from '../../components/AddTo';
 import ResetZoomButton from './ResetZoomButton';
 
 interface Props {
   sqlVizType: string;
   width: number;
   setExecuteLoading: (loading: boolean) => void;
-  timeseriesKeys: {
-    value: string[];
-    label: string[];
-  };
 }
 
 function Graph(props: {
@@ -61,7 +56,7 @@ function Graph(props: {
         tooltipPlugin({
           id,
           mode: 'all',
-          sort: 'asc',
+          sort: 'none',
           pointValueformatter: (val) => {
             return valueFormatter(
               {
@@ -154,9 +149,11 @@ function Graph(props: {
 
 export default function TimeseriesCpt(props: Props) {
   const { t } = useTranslation(NAME_SPACE);
-  const { sqlVizType, width, setExecuteLoading, timeseriesKeys } = props;
+  const { sqlVizType, width, setExecuteLoading } = props;
   const form = Form.useFormInstance();
   const refreshFlag = Form.useWatch('refreshFlag');
+  const labelKey = Form.useWatch(['query', 'keys', 'labelKey']);
+  const valueKey = Form.useWatch(['query', 'keys', 'valueKey']);
 
   const eleRef = useRef<HTMLDivElement>(null);
   const eleSize = useSize(eleRef);
@@ -221,7 +218,7 @@ export default function TimeseriesCpt(props: Props) {
           });
       });
     }
-  }, [refreshFlag]);
+  }, [refreshFlag, labelKey, valueKey]);
 
   const seriesData = useMemo(() => {
     return _.map(data.baseSeries, (subItem) => {
@@ -242,9 +239,18 @@ export default function TimeseriesCpt(props: Props) {
     });
   }, [dataRefresh, activeLegend, JSON.stringify(seriesData), unit]);
 
+  // useEffect(() => {
+  //   if (refreshFlag === undefined) {
+  //     setData({
+  //       frames: [],
+  //       baseSeries: [],
+  //     });
+  //   }
+  // }, [refreshFlag]);
+
   return (
     <>
-      <div className='flex-shrink-0 mb-[18px] flex justify-between items-center'>
+      <div className='flex-shrink-0 mb-[18px]'>
         <Space wrap align='start'>
           <Form.Item className='input-group-with-form-item-content-small' style={{ margin: 0 }}>
             <Radio.Group
@@ -292,21 +298,7 @@ export default function TimeseriesCpt(props: Props) {
               ]}
               style={{ margin: 0 }}
             >
-              <Select
-                allowClear
-                className='min-w-[120px] no-padding-small-multiple-select'
-                mode='tags'
-                size='small'
-                // builder 生成的 sql 同时设置这里的 options
-                options={_.map(timeseriesKeys.value, (item) => {
-                  return { label: item, value: item };
-                })}
-                onChange={() => {
-                  form.setFieldsValue({
-                    refreshFlag: _.uniqueId('refreshFlag_'),
-                  });
-                }}
-              />
+              <Select className='min-w-[120px] no-padding-small-multiple-select' mode='tags' open={false} size='small' />
             </Form.Item>
           </InputGroupWithFormItem>
           <InputGroupWithFormItem
@@ -321,21 +313,7 @@ export default function TimeseriesCpt(props: Props) {
             }
           >
             <Form.Item name={['query', 'keys', 'labelKey']} style={{ margin: 0 }}>
-              <Select
-                allowClear
-                className='min-w-[120px] no-padding-small-multiple-select'
-                mode='tags'
-                size='small'
-                // builder 生成的 sql 同时设置这里的 options
-                options={_.map(timeseriesKeys.label, (item) => {
-                  return { label: item, value: item };
-                })}
-                onChange={() => {
-                  form.setFieldsValue({
-                    refreshFlag: _.uniqueId('refreshFlag_'),
-                  });
-                }}
-              />
+              <Select className='min-w-[120px] no-padding-small-multiple-select' mode='tags' open={false} size='small' />
             </Form.Item>
           </InputGroupWithFormItem>
           <InputGroupWithFormItem label={t('common:unit')} size='small'>
@@ -354,12 +332,11 @@ export default function TimeseriesCpt(props: Props) {
             </Form.Item>
           </InputGroupWithFormItem>
         </Space>
-        <AddTo />
       </div>
       <>
         {!_.isEmpty(data.frames) ? (
-          <div className='min-h-0 best-looking-scroll'>
-            <div ref={eleRef} className='min-h-[422px] relative'>
+          <div className='best-looking-scroll'>
+            <div ref={eleRef} className='min-h-[480px] relative'>
               <div className='n9e-antd-table-height-full'>
                 <Spin spinning={loading}>
                   {eleSize?.width && eleSize?.height && (

@@ -9,7 +9,6 @@ const zh_CN = {
     targets: '机器',
     collects: '采集规则',
     network_devices: '网络设备',
-    mobile_device: '移动设备',
     dashboards: '仪表盘',
     reports: '巡检报告',
     heartbeat: '拨测',
@@ -38,7 +37,6 @@ const zh_CN = {
     notification_channels: '通知媒介',
     notification_templates: '消息模板',
     event_pipeline: '工作流',
-    event_pipeline_executions: '执行记录',
     notification_settings: '通知设置', // 废弃的
     notification_tpls: '通知模板', // 废弃的
     integrations: '集成中心',
@@ -58,7 +56,6 @@ const zh_CN = {
     audit_log: '审计日志',
     alert_servers: '告警引擎',
     about: '关于产品',
-    license_management: '证书管理',
   },
 };
 export default zh_CN;

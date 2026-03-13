@@ -52,9 +52,3 @@ export const alertRulesEnableTryrun = (data) => {
     data,
   });
 };
-
-export const getTimezones = (): Promise<string[]> => {
-  return request('/api/n9e/timezones', {
-    method: RequestMethod.Get,
-  }).then((res) => res.dat);
-};

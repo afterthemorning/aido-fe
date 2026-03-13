@@ -11,6 +11,26 @@ DRY_RUN="0"
 RETRY_TIMES="${RETRY_TIMES:-3}"
 RETRY_INTERVAL_SEC="${RETRY_INTERVAL_SEC:-15}"
 
+setup_utf8_locale() {
+  local chosen=""
+
+  if ! command -v locale >/dev/null 2>&1; then
+    return
+  fi
+
+  for loc in C.UTF-8 en_US.UTF-8 UTF-8; do
+    if locale -a 2>/dev/null | grep -qx "${loc}"; then
+      chosen="${loc}"
+      break
+    fi
+  done
+
+  if [[ -n "${chosen}" ]]; then
+    export LANG="${chosen}"
+    export LC_ALL="${chosen}"
+  fi
+}
+
 require_clean_worktree() {
   if ! git -C "${TARGET_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     echo "[ERROR] ${TARGET_DIR} is not a git repository"
@@ -72,6 +92,8 @@ for cmd in curl tar rsync mktemp; do
     exit 1
   fi
 done
+
+setup_utf8_locale
 
 # ── latest-tag check ──────────────────────────────────────────────────────────
 # Query the GitHub Releases API to find the latest published release tag and

@@ -1,7 +1,6 @@
 import request from '@/utils/request';
 import { RequestMethod } from '@/store/common';
-import { DorisDBParams, DorisDBTableParams } from './types';
-import { Field, FieldSampleParams, FilterConfig, AggregateConfig } from './ExplorerNG/types';
+import { DorisDBParams, DorisDBTableParams, Field } from './types';
 
 export type { Field };
 
@@ -99,9 +98,7 @@ export function getDorisIndex(data: BaseParams & { database: string; table: stri
   return request('/api/n9e-plus/doris-index', {
     method: RequestMethod.Post,
     data,
-  }).then((res) => {
-    return res.dat || [];
-  });
+  }).then((res) => res.dat || []);
 }
 
 export function getDorisHistogram(data: {
@@ -115,7 +112,6 @@ export function getDorisHistogram(data: {
       from: number;
       to: number;
       query: string;
-      query_builder_filter?: FilterConfig[];
       group_by?: string;
       default_field?: string;
     },
@@ -127,22 +123,48 @@ export function getDorisHistogram(data: {
   }).then((res) => res.dat || []);
 }
 
+export function getDorisHistogramV2(data: {
+  cate: string;
+  datasource_id: number;
+  query: [
+    {
+      database: string;
+      table: string;
+      time_field: string;
+      from: number;
+      to: number;
+      query: string;
+      group_by?: string;
+      default_field?: string;
+    },
+  ];
+}): Promise<{
+  list: any[];
+  total: number;
+}> {
+  return request('/api/n9e-plus/v2/doris-histogram', {
+    method: RequestMethod.Post,
+    data,
+  }).then((res) => res.dat || { list: [], total: 0 });
+}
+
 export function getDorisLogsQuery(data: {
   cate: string;
   datasource_id: number;
-  query: {
-    database: string;
-    table: string;
-    time_field: string;
-    query: string;
-    query_builder_filter?: FilterConfig[];
-    from: number;
-    to: number;
-    lines: number;
-    offset: number;
-    reverse: boolean;
-    default_field?: string;
-  }[];
+  query: [
+    {
+      database: string;
+      table: string;
+      time_field: string;
+      query: string;
+      from: number;
+      to: number;
+      lines: number;
+      offset: number;
+      reverse: boolean;
+      default_field?: string;
+    },
+  ];
 }): Promise<{
   list: { [index: string]: string }[];
   total: number;
@@ -151,6 +173,30 @@ export function getDorisLogsQuery(data: {
     method: RequestMethod.Post,
     data,
   }).then((res) => res.dat || { list: [], total: 0 });
+}
+
+export function getDorisLogsQueryV2(data: {
+  cate: string;
+  datasource_id: number;
+  query: [
+    {
+      database: string;
+      table: string;
+      time_field: string;
+      query: string;
+      from: number;
+      to: number;
+      lines: number;
+      offset: number;
+      reverse: boolean;
+      default_field?: string;
+    },
+  ];
+}): Promise<{ [index: string]: string }[]> {
+  return request('/api/n9e-plus/v2/doris-logs-query', {
+    method: RequestMethod.Post,
+    data,
+  }).then((res) => res.dat || []);
 }
 
 export const getDsQuery2 = function (data: {
@@ -194,7 +240,6 @@ export function getDorisSQLFormat(data: {
       table: string;
       time_field: string;
       query: string;
-      query_builder_filter?: FilterConfig[];
       from: number;
       to: number;
       lines: number;
@@ -219,7 +264,6 @@ export function getDorisSQLsPreview(data: {
       table: string;
       time_field: string;
       query: string;
-      query_builder_filter?: FilterConfig[];
       from: number;
       to: number;
       default_field?: string;
@@ -227,7 +271,6 @@ export function getDorisSQLsPreview(data: {
 
       func: string; // 'unique_count' | 'ratio' | 'max' | 'min' | 'avg' 等
       field?: string; // func 作用的字段
-      field_filter?: string; // 选择 topn 项时带上的过滤条件
       ref?: string; // topn，只用于 ration 查询范围
     },
   ];
@@ -245,50 +288,6 @@ export function getDorisSQLsPreview(data: {
   };
 }> {
   return request('/api/n9e-plus/doris-sqls-preview', {
-    method: RequestMethod.Post,
-    data,
-  }).then((res) => res.dat);
-}
-
-export function getFiledSample(
-  data: FieldSampleParams & {
-    field: string;
-  },
-): Promise<string[]> {
-  return request('/api/n9e-plus/doris-field-sample', {
-    method: RequestMethod.Post,
-    data,
-  }).then((res) => res.dat);
-}
-
-export function buildSql(data: {
-  cate: string;
-  datasource_id: number;
-  query: [
-    {
-      database: string;
-      table: string;
-      time_field: string;
-      from: number;
-      to: number;
-      filters: FilterConfig[];
-      aggregates: AggregateConfig[];
-      mode: string; // table | timeseries
-      group_by: string[];
-      order_by: {
-        field: string;
-        direction: string;
-      };
-      limit: number;
-    },
-  ];
-}): Promise<{
-  sql: string;
-  mode: string;
-  value_key: string[];
-  label_key: string[];
-}> {
-  return request('/api/n9e-plus/doris-query-builder', {
     method: RequestMethod.Post,
     data,
   }).then((res) => res.dat);

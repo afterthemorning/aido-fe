@@ -16,13 +16,12 @@ import useFieldConfig from '@/pages/logExplorer/components/RenderValue/useFieldC
 
 import { NAME_SPACE, NG_QUERY_LOGS_OPTIONS_CACHE_KEY, DEFAULT_LOGS_PAGE_SIZE, QUERY_LOGS_TABLE_COLUMNS_WIDTH_CACHE_KEY } from '../../../constants';
 import { getDorisLogsQuery, getDorisHistogram } from '../../../services';
-import { Field } from '../../types';
+import { Field } from '../../../types';
 import { getOptionsFromLocalstorage, setOptionsToLocalstorage } from '../../utils/optionsLocalstorage';
 import filteredFields from '../../utils/filteredFields';
 import { scrollToTop, getIsAtBottom } from '../../utils/tableElementMethods';
 import { PinIcon, UnPinIcon } from '../../SideBarNav/FieldsSidebar/PinIcon';
 import { HandleValueFilterParams } from '../../types';
-import QueryBuilderFilters from './QueryBuilderFilters';
 
 // @ts-ignore
 import DownloadModal from 'plus:/components/LogDownload/DownloadModal';
@@ -35,9 +34,9 @@ interface Props {
   indexData: Field[];
   rangeRef: React.MutableRefObject<
     | {
-      from: number;
-      to: number;
-    }
+        from: number;
+        to: number;
+      }
     | undefined
   >;
   snapRangeRef: React.MutableRefObject<{
@@ -48,7 +47,6 @@ interface Props {
   setOrganizeFields: (value: string[]) => void;
   handleValueFilter: HandleValueFilterParams;
   setExecuteLoading: (loading: boolean) => void;
-  executeQuery: () => void;
 
   stackByField?: string;
   setStackByField: (field?: string) => void;
@@ -62,7 +60,7 @@ export default function index(props: Props) {
   const refreshFlag = Form.useWatch('refreshFlag');
   const datasourceValue = Form.useWatch('datasourceValue');
   const queryValues = Form.useWatch('query');
-  const queryStrRef = useRef<string>('');
+
   const {
     tableSelector,
     indexData,
@@ -72,7 +70,6 @@ export default function index(props: Props) {
     setOrganizeFields,
     handleValueFilter,
     setExecuteLoading,
-    executeQuery,
     stackByField,
     setStackByField,
     defaultSearchField,
@@ -99,13 +96,13 @@ export default function index(props: Props) {
     };
     setOptions(mergedOptions);
     setOptionsToLocalstorage(NG_QUERY_LOGS_OPTIONS_CACHE_KEY, mergedOptions);
-    // 只有在修改了 pageLoadMode 时才重置分页参数
     if (reload) {
       setServiceParams({
         ...serviceParams,
         pageSize: DEFAULT_LOGS_PAGE_SIZE,
-        current: 1,
-        refreshFlag: _.uniqueId('refreshFlag_'), // 避免其他参数没变时不触发刷新
+      });
+      form.setFieldsValue({
+        refreshFlag: _.uniqueId('refreshFlag_'),
       });
     }
   };
@@ -116,21 +113,21 @@ export default function index(props: Props) {
 
   const service = () => {
     const queryValues = form.getFieldValue('query'); // 实时获取最新的查询条件
-    if (refreshFlag && datasourceValue && queryValues?.database && queryValues?.table && queryValues?.time_field && queryValues.range) {
+    if (refreshFlag && datasourceValue && queryValues?.database && queryValues?.table && queryValues?.time_field) {
       const range = parseRange(queryValues.range);
       let timeParams =
         fixedRangeRef.current === false
           ? {
-            from: moment(range.start).unix(),
-            to: moment(range.end).unix(),
-          }
+              from: moment(range.start).unix(),
+              to: moment(range.end).unix(),
+            }
           : rangeRef.current!;
       if (snapRangeRef.current && snapRangeRef.current.from && snapRangeRef.current.to) {
         timeParams = snapRangeRef.current as { from: number; to: number };
       }
       rangeRef.current = timeParams;
       const queryStart = Date.now();
-      const reqData = {
+      return getDorisLogsQuery({
         cate: DatasourceCateEnum.doris,
         datasource_id: datasourceValue,
         query: [
@@ -139,7 +136,6 @@ export default function index(props: Props) {
             table: queryValues.table,
             time_field: queryValues.time_field,
             query: queryValues.query,
-            query_builder_filter: queryValues.query_builder_filter,
             from: timeParams.from,
             to: timeParams.to,
             lines: serviceParams.pageSize,
@@ -148,9 +144,7 @@ export default function index(props: Props) {
             default_field: defaultSearchField,
           },
         ],
-      }
-      queryStrRef.current = JSON.stringify(reqData);
-      return getDorisLogsQuery(reqData)
+      })
         .then((res) => {
           if (fixedRangeRef.current === false) {
             loadTimeRef.current = Date.now() - queryStart;
@@ -207,7 +201,6 @@ export default function index(props: Props) {
     data,
     loading,
     run: fetchLogs,
-    mutate: setData,
   } = useRequest<
     {
       list: { [index: string]: string }[];
@@ -222,7 +215,7 @@ export default function index(props: Props) {
 
   const histogramService = () => {
     const queryValues = form.getFieldValue('query'); // 实时获取最新的查询条件
-    if (refreshFlag && datasourceValue && queryValues && queryValues.database && queryValues.table && queryValues.time_field && queryValues.range) {
+    if (refreshFlag && datasourceValue && queryValues && queryValues.database && queryValues.table && queryValues.time_field) {
       const range = parseRange(queryValues.range);
       return getDorisHistogram({
         cate: DatasourceCateEnum.doris,
@@ -235,7 +228,6 @@ export default function index(props: Props) {
             from: moment(range.start).unix(),
             to: moment(range.end).unix(),
             query: queryValues.query,
-            query_builder_filter: queryValues.query_builder_filter,
             group_by: stackByField,
             default_field: defaultSearchField,
           },
@@ -269,11 +261,7 @@ export default function index(props: Props) {
     }
   };
 
-  const {
-    data: histogramData,
-    loading: histogramLoading,
-    mutate: setHistogramData,
-  } = useRequest<
+  const { data: histogramData, loading: histogramLoading } = useRequest<
     {
       data: any[];
       hash: string;
@@ -312,19 +300,10 @@ export default function index(props: Props) {
 
   return (
     <>
-      <QueryBuilderFilters indexData={indexData} snapRangeRef={snapRangeRef} executeQuery={executeQuery} />
       {refreshFlag ? (
         <>
           {!_.isEmpty(data?.list) || !_.isEmpty(histogramData?.data) ? (
             <LogsViewer
-              logClusting={{
-                enabled: true,
-                queryStrRef,
-                logTotal: data?.total || 0,
-                cate: DatasourceCateEnum.doris,
-                datasourceValue: datasourceValue,
-                fieldCacheKey: queryValues?.database + queryValues?.table,
-              }}
               timeField={queryValues?.time_field}
               histogramLoading={histogramLoading}
               histogram={histogramData?.data || []}
@@ -383,7 +362,7 @@ export default function index(props: Props) {
                         </>
                       )}
                       {toggleNode}
-                      {IS_PLUS && <DownloadModal marginLeft={0} queryData={{ ...form.getFieldsValue(), mode: 'query', total: data?.total }} />}
+                      {IS_PLUS && <DownloadModal marginLeft={0} queryData={{ ...form.getFieldsValue(), total: data?.total }} />}
                     </Space>
                   );
                 }
@@ -446,12 +425,12 @@ export default function index(props: Props) {
                   to: undefined,
                 };
                 form.setFieldsValue({
+                  refreshFlag: _.uniqueId('refreshFlag_'),
                   query: {
                     ...query,
                     range,
                   },
                 });
-                executeQuery();
               }}
               onLogRequestParamsChange={(params) => {
                 // 这里只更新 serviceParams 从而只刷新日志数据，不刷新直方图
@@ -491,9 +470,6 @@ export default function index(props: Props) {
                     }));
                   }
                 }
-              }}
-              linesColumnFormat={(val) => {
-                return serviceParams.pageSize * (serviceParams.current - 1) + val;
               }}
               // state context
               fieldConfig={currentFieldConfig}
@@ -537,16 +513,9 @@ export default function index(props: Props) {
                   b: (
                     <a
                       onClick={() => {
-                        setData({
-                          list: [],
-                          total: 0,
-                          hash: _.uniqueId('logs_'),
+                        form.setFieldsValue({
+                          refreshFlag: _.uniqueId('refreshFlag_'),
                         });
-                        setHistogramData({
-                          data: [],
-                          hash: _.uniqueId('histogram_'),
-                        });
-                        executeQuery();
                       }}
                     />
                   ),

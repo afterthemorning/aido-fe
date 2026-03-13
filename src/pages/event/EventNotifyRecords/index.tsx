@@ -39,14 +39,11 @@ export default function index(props: Props) {
       dataIndex: 'notify_rule_id',
       key: 'notify_rule_id',
       render: (val) => {
-        if (val) {
-          return (
-            <Link target='_blank' to={`/notification-rules/edit/${val}`}>
-              {val}
-            </Link>
-          );
-        }
-        return '-';
+        return (
+          <Link target='_blank' to={`/notification-rules/edit/${val}`}>
+            {val}
+          </Link>
+        );
       },
     },
     {

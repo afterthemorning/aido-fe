@@ -96,7 +96,6 @@ const ru_RU = {
     step_tip: 'Интервал времени кривой в секундах',
     query_label: 'Условия запроса',
     trigger_label: 'Условия предупреждения',
-    current_anomaly_time: 'Время текущей аномалии',
   },
 
   sharing_link: {

@@ -1,12 +1,8 @@
 import React, { useMemo, useRef, useState } from 'react';
 import _ from 'lodash';
 import { SortColumn } from 'react-data-grid';
-import { Empty } from 'antd';
+import { Drawer, Empty } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useClickAway } from 'ahooks';
-import moment from 'moment';
-
-import NavigableDrawer from '@/components/NavigableDrawer';
 
 import { NAME_SPACE } from '../../constants';
 import { Field } from '../../types';
@@ -26,8 +22,6 @@ export function useDeepCompareWithRef(value) {
 }
 
 interface Props {
-  id_key: string;
-  raw_key: string;
   /** 索引数据 */
   indexData?: Field[];
   /** 时间字段 */
@@ -35,9 +29,6 @@ interface Props {
   /** 日志数据 */
   data: {
     [index: string]: any;
-  }[];
-  highlights?: {
-    [index: number]: string[];
   }[];
   logsHash?: string;
   colWidths?: { [key: string]: number };
@@ -51,40 +42,11 @@ interface Props {
   /** 排序反转回调 */
   onReverseChange?: (reverse: boolean) => void;
   onOpenOrganizeFieldsModal?: () => void;
-  timeFieldColumnFormat?: (timeFieldValue: string | number) => React.ReactNode;
-  linesColumnFormat?: (linesValue: number) => React.ReactNode;
-  logViewerExtraRender?: (log: { [index: string]: any }) => React.ReactNode;
-  logViewerFilterFields?: (log: Record<string, any>) => string[];
-  logViewerRenderCustomTagsArea?: (log: Record<string, any>) => React.ReactNode;
-  adjustFieldValue?: (formatedValue: string, highlightValue?: string[]) => React.ReactNode;
-  showExistsAction?: boolean;
 }
 
 function Table(props: Props) {
   const { t } = useTranslation(NAME_SPACE);
-  const {
-    id_key,
-    raw_key,
-    indexData,
-    timeField,
-    data,
-    highlights,
-    logsHash,
-    colWidths,
-    tableColumnsWidthCacheKey,
-    options,
-    filterFields,
-    onValueFilter,
-    onReverseChange,
-    onOpenOrganizeFieldsModal,
-    timeFieldColumnFormat,
-    linesColumnFormat,
-    logViewerExtraRender,
-    logViewerFilterFields,
-    logViewerRenderCustomTagsArea,
-    adjustFieldValue,
-    showExistsAction,
-  } = props;
+  const { indexData, timeField, data, colWidths, tableColumnsWidthCacheKey, options, filterFields, onValueFilter, onReverseChange, onOpenOrganizeFieldsModal } = props;
   const fields = useMemo(() => {
     const resolvedFields = getFieldsFromTableData(data);
     return filterFields ? filterFields(resolvedFields) : resolvedFields;
@@ -92,12 +54,11 @@ function Table(props: Props) {
 
   const indexDataFields = useMemo(() => _.map(indexData, 'field'), [indexData]);
   const columnDeps = useDeepCompareWithRef({ indexData: indexDataFields, fields, timeField, options, colWidths, data, tableColumnsWidthCacheKey });
-  const [logViewerDrawerState, setLogViewerDrawerState] = useState<{ visible: boolean; currentIndex: number }>({ visible: false, currentIndex: -1 });
+  const [logViewerDrawerState, setLogViewerDrawerState] = useState<{ visible: boolean; value: any }>({ visible: false, value: null });
 
   const columns = useMemo(
     () =>
       getColumnsFromFields({
-        id_key,
         colWidths,
         indexData,
         fields,
@@ -105,14 +66,9 @@ function Table(props: Props) {
         options,
         onValueFilter,
         data,
-        highlights,
         tableColumnsWidthCacheKey,
         onOpenOrganizeFieldsModal,
         setLogViewerDrawerState,
-        timeFieldColumnFormat,
-        linesColumnFormat,
-        adjustFieldValue,
-        showExistsAction,
       }),
     [columnDeps, onValueFilter, onOpenOrganizeFieldsModal],
   );
@@ -127,40 +83,12 @@ function Table(props: Props) {
       : [],
   );
 
-  const navigableDrawerTitle = useMemo(() => {
-    if (timeField) {
-      const logItem = data[logViewerDrawerState.currentIndex];
-      if (logItem && logItem[timeField]) {
-        return timeFieldColumnFormat ? timeFieldColumnFormat(logItem[timeField]) : moment(logItem[timeField]).format('MM-DD HH:mm:ss.SSS');
-      }
-    }
-    return t('log_viewer_drawer_title');
-  }, [logsHash, timeField, logViewerDrawerState]);
-
-  const drawerRef = useRef<HTMLDivElement>(null);
-
-  useClickAway(
-    (event) => {
-      // 忽略点击发生在 log viewer drawer 内的情况
-      const target = (event && (event as Event).target) as HTMLElement | null;
-      if (target && typeof target.closest === 'function' && target.closest('.log-explorer-ignore-click-away')) {
-        return;
-      }
-      // 只有当 Drawer 打开时才尝试关闭
-      if (logViewerDrawerState.currentIndex > -1) {
-        setLogViewerDrawerState({ visible: false, currentIndex: -1 });
-      }
-    },
-    [drawerRef],
-    ['click'],
-  );
-
   return (
-    <div className='min-h-0 h-full' ref={drawerRef}>
+    <>
       <RDGTable
         className='n9e-event-logs-table'
         rowKeyGetter={(row) => {
-          return row[id_key];
+          return row.___id___;
         }}
         columns={columns}
         rows={data}
@@ -178,8 +106,7 @@ function Table(props: Props) {
         expandable={{
           type: 'drawer',
           onExpandIconClick: (row) => {
-            const idx = _.findIndex(data, { [id_key]: row[id_key] });
-            setLogViewerDrawerState({ visible: true, currentIndex: idx });
+            setLogViewerDrawerState({ visible: true, value: _.omit(row, ['__expanded', '__id', '__type']) });
           },
         }}
         onColumnResize={(idx, width) => {
@@ -202,42 +129,34 @@ function Table(props: Props) {
           }
         }}
       />
-      <NavigableDrawer
-        className='log-explorer-ignore-click-away'
-        title={navigableDrawerTitle}
-        extra={logViewerExtraRender && logViewerExtraRender(data[logViewerDrawerState.currentIndex])}
+      <Drawer
+        title={t('log_viewer_drawer_title')}
         placement='right'
+        width='55%'
         onClose={() => {
-          setLogViewerDrawerState({ visible: false, currentIndex: -1 });
-        }}
-        hasPrev={logViewerDrawerState.currentIndex > 0}
-        hasNext={logViewerDrawerState.currentIndex !== -1 && logViewerDrawerState.currentIndex < data.length - 1}
-        onPrev={() => {
-          setLogViewerDrawerState({ visible: true, currentIndex: logViewerDrawerState.currentIndex - 1 });
-        }}
-        onNext={() => {
-          setLogViewerDrawerState({ visible: true, currentIndex: logViewerDrawerState.currentIndex + 1 });
+          setLogViewerDrawerState({ visible: false, value: null });
         }}
         visible={logViewerDrawerState.visible}
         destroyOnClose
       >
-        {logViewerDrawerState.currentIndex > -1 ? (
+        {logViewerDrawerState.value ? (
           <LogViewer
-            id_key={id_key}
-            raw_key={raw_key}
-            value={data[logViewerDrawerState.currentIndex]}
-            onValueFilter={(params) => {
-              onValueFilter?.(params);
-              setLogViewerDrawerState({ visible: false, currentIndex: -1 });
-            }}
-            logViewerFilterFields={logViewerFilterFields}
-            logViewerRenderCustomTagsArea={logViewerRenderCustomTagsArea}
+            value={logViewerDrawerState.value}
+            rawValue={logViewerDrawerState.value}
+            onValueFilter={
+              onValueFilter
+                ? (params) => {
+                    onValueFilter(params);
+                    setLogViewerDrawerState({ visible: false, value: null });
+                  }
+                : undefined
+            }
           />
         ) : (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
         )}
-      </NavigableDrawer>
-    </div>
+      </Drawer>
+    </>
   );
 }
 

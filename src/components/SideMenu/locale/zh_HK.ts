@@ -37,7 +37,6 @@ const zh_HK = {
     notification_channels: '通知媒介',
     notification_templates: '消息模板',
     event_pipeline: '工作流',
-    event_pipeline_executions: '執行記錄',
     notification_settings: '通知設置',
     notification_tpls: '通知模板',
     integrations: '集成中心',
@@ -57,7 +56,6 @@ const zh_HK = {
     audit_log: '審計日誌',
     alert_servers: '告警引擎',
     about: '關於產品',
-    license_management: '證書管理',
   },
 };
 

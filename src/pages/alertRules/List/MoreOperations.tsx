@@ -201,16 +201,16 @@ export default function MoreOperations(props: MoreOperationsProps) {
         isModalVisible={isModalVisible}
         editModalFinish={async (isOk, fieldsData) => {
           if (isOk && bgid) {
-            if (isPlus && fieldsData?.service_cal_configs) {
+            if (isPlus && fieldsData?.service_cal_ids) {
               const res = await updateServiceCal(
                 {
                   ids: selectRowKeys,
-                  service_cal_configs: fieldsData?.service_cal_configs || [],
+                  service_cal_ids: fieldsData?.service_cal_ids || [],
                 },
                 bgid,
               );
               if (!res.err) {
-                message.success(t('common:success.modify'));
+                message.success('common:success.modify');
                 getAlertRules();
                 setisModalVisible(false);
               } else {

@@ -15,7 +15,7 @@
  *
  */
 import React, { useEffect, useContext } from 'react';
-import { Switch, Route, useLocation, Redirect, useHistory, matchPath } from 'react-router-dom';
+import { Switch, Route, useLocation, Redirect, useHistory } from 'react-router-dom';
 import querystring from 'query-string';
 import _ from 'lodash';
 import { getMenuPerm } from '@/services/common';
@@ -78,7 +78,6 @@ import { Jobs as StrategyBrain } from 'plus:/datasource/anomaly';
 import plusLoader from 'plus:/utils/loader';
 // @ts-ignore
 import useIsPlus from 'plus:/components/useIsPlus';
-import { spaceIdRoutes } from './config';
 
 const Packages = dynamicPackages();
 let lazyRoutes = Packages.reduce((result: any, module: Entry) => {
@@ -122,8 +121,7 @@ export default function Content() {
       !_.includes(['/', '/account/profile/info', '/account/profile/pwd', '/account/profile/token', '/alert-aggr-events'], location.pathname) &&
       !location.pathname.includes('/settings/datasource/edit/') &&
       !location.pathname.includes('/settings/infrastructure/add') &&
-      !location.pathname.includes('/settings/source/') &&
-      !location.pathname.includes('/403')
+      !location.pathname.includes('/settings/source/')
     ) {
       if (profile?.roles.indexOf('Admin') === -1) {
         // 如果没有权限则重定向到 403 页面
@@ -137,15 +135,6 @@ export default function Content() {
       }
     }
   }, []);
-
-  useEffect(() => {
-    if (import.meta.env.VITE_IS_ENT === 'true') {
-      const isMatch = spaceIdRoutes.find((route) => matchPath(location.pathname, { path: route, exact: true }));
-      if (isMatch) {
-        // urlAddSpaceId(history);
-      }
-    }
-  }, [location.pathname]);
 
   return (
     <div className='content'>

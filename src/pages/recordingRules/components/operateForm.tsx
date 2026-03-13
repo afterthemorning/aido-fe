@@ -1,10 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 import _ from 'lodash';
-import { useHistory } from 'react-router-dom';
-import { Form, Input, Button, Modal, message, Space, Select, notification } from 'antd';
+import { useHistory, useParams } from 'react-router-dom';
+import { Form, Input, Button, Modal, message, Space, notification } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useRequest } from 'ahooks';
-
 import { prometheusQuery } from '@/services/warning';
 import { addOrEditRecordingRule, editRecordingRule, deleteRecordingRule } from '@/services/recording';
 import PromQLInputNG from '@/components/PromQLInputNG';
@@ -12,12 +10,11 @@ import DatasourceValueSelect from '@/pages/alertRules/Form/components/Datasource
 import { CommonStateContext } from '@/App';
 import CronPattern from '@/components/CronPattern';
 import KVTagSelect, { validatorOfKVTagSelect } from '@/components/KVTagSelect';
-import { getBusiGroups } from '@/components/BusinessGroup/services';
 
 const DATASOURCE_ALL = 0;
 
 interface Props {
-  initialValues?: any;
+  detail?: any;
   type?: number; // 1:编辑 2:克隆
 }
 
@@ -25,13 +22,17 @@ function getFirstDatasourceId(datasourceIds = [], datasourceList: { id: number }
   return _.isEqual(datasourceIds, [DATASOURCE_ALL]) && datasourceList.length > 0 ? datasourceList?.[0]?.id : datasourceIds?.[0];
 }
 
-const goListPath = '/recording-rules';
-
-const operateForm: React.FC<Props> = ({ type, initialValues = {} }) => {
+const operateForm: React.FC<Props> = ({ type, detail = {} }) => {
   const { t } = useTranslation('recordingRules');
   const history = useHistory(); // 创建的时候默认选中的值
   const [form] = Form.useForm();
-  const { groupedDatasourceList } = useContext(CommonStateContext);
+  const { groupedDatasourceList, businessGroup } = useContext(CommonStateContext);
+  const [refresh, setRefresh] = useState(true);
+  const params: any = useParams();
+  const strategyId = useMemo(() => {
+    return params.id;
+  }, [params]);
+  const curBusiId = detail.group_id || businessGroup.id!;
 
   const addSubmit = () => {
     form.validateFields().then(async (values) => {
@@ -53,19 +54,16 @@ const operateForm: React.FC<Props> = ({ type, initialValues = {} }) => {
       if (type === 1) {
         reqBody = d;
         method = 'Put';
-        const res = await editRecordingRule(reqBody, initialValues.id);
+        const res = await editRecordingRule(reqBody, curBusiId, strategyId);
         if (res.err) {
           message.error(res.error);
         } else {
           message.success(t('common:success.edit'));
-          history.push({
-            pathname: goListPath,
-            search: `ids=${values.group_id}&isLeaf=true`,
-          });
+          history.push('/recording-rules');
         }
       } else {
         reqBody = [d];
-        const { dat } = await addOrEditRecordingRule(reqBody, values.group_id, method);
+        const { dat } = await addOrEditRecordingRule(reqBody, curBusiId, method);
         let errorNum = 0;
         const msg = Object.keys(dat).map((key) => {
           dat[key] && errorNum++;
@@ -73,10 +71,7 @@ const operateForm: React.FC<Props> = ({ type, initialValues = {} }) => {
         });
         if (!errorNum) {
           message.success(`${type === 2 ? t('common:success.clone') : t('common:success.add')}`);
-          history.push({
-            pathname: goListPath,
-            search: `ids=${values.group_id}&isLeaf=true`,
-          });
+          history.push('/recording-rules');
         } else {
           message.error(t(msg));
         }
@@ -84,33 +79,19 @@ const operateForm: React.FC<Props> = ({ type, initialValues = {} }) => {
     });
   };
 
-  const { data: busiGroups } = useRequest(() => getBusiGroups(), {
-    refreshDeps: [],
-  });
-
-  useEffect(() => {
-    if (initialValues) {
-      form.setFieldsValue({
-        ...initialValues,
-        datasource_ids: initialValues.datasource_ids || [DATASOURCE_ALL],
-      });
-    }
-  }, []);
-
   return (
     <div>
       <div className='fc-border p-4'>
-        <Form form={form} className='strategy-form' layout='vertical'>
+        <Form
+          form={form}
+          className='strategy-form'
+          layout='vertical'
+          initialValues={{
+            ...detail,
+            datasource_ids: detail.datasource_ids || [DATASOURCE_ALL],
+          }}
+        >
           <Space direction='vertical' style={{ width: '100%' }}>
-            <Form.Item label={t('group_id')} name='group_id' rules={[{ required: true, message: t('group_id_required') }]}>
-              <Select
-                options={_.map(busiGroups, (item) => {
-                  return { label: item.name, value: item.id };
-                })}
-                showSearch
-                optionFilterProp='label'
-              />
-            </Form.Item>
             <Form.Item
               required
               label={t('name')}
@@ -164,7 +145,7 @@ const operateForm: React.FC<Props> = ({ type, initialValues = {} }) => {
                     Modal.confirm({
                       title: t('common:confirm.delete'),
                       onOk: () => {
-                        deleteRecordingRule([initialValues.id], initialValues.group_id).then(() => {
+                        deleteRecordingRule([detail.id], curBusiId).then(() => {
                           message.success(t('common:success.delete'));
                           history.push('/recording-rules');
                         });

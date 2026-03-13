@@ -5,7 +5,7 @@ import { FormListFieldData } from 'antd/lib/form/FormList';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
-import QueryExtraActions from '@/pages/dashboard/Components/QueryExtraActions';
+import HideButton from '@/pages/dashboard/Components/HideButton';
 import { IS_PLUS, alphabet } from '@/utils/constant';
 import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
 import KQLInput from '@/components/KQLInput';
@@ -24,12 +24,11 @@ interface Props {
   fields: FormListFieldData[];
   field: FormListFieldData;
   index: number;
-  add: () => void;
   remove: (index: number | number[]) => void;
   datasourceValue: number;
 }
 
-export default function QueryPanel({ fields, field, index, add, remove, datasourceValue }: Props) {
+export default function QueryPanel({ fields, field, index, remove, datasourceValue }: Props) {
   const { t } = useTranslation('dashboard');
   const [indexPatterns, setIndexPatterns] = useState<any[]>([]);
   const prefixName = ['targets', field.name];
@@ -71,7 +70,9 @@ export default function QueryPanel({ fields, field, index, add, remove, datasour
       key={field.key}
       extra={
         <Space>
-          <QueryExtraActions field={field} add={add} />
+          <Form.Item noStyle {...field} name={[field.name, 'hide']}>
+            <HideButton />
+          </Form.Item>
           {fields.length > 1 ? (
             <DeleteOutlined
               onClick={() => {

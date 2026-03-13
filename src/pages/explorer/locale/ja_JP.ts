@@ -58,8 +58,6 @@ const ja_JP = {
       del_btn_tips: '削除してよろしいですか？',
       del_btn: '削除',
       emptyText: 'エクスポートレコードが見つかりません。ログクエリを実行し、ダウンロードをクリックしてください。',
-      size: 'ファイルサイズ',
-      reload_btn_tip: 'リロード',
     },
     field_actions: {
       and: 'この検索に追加',

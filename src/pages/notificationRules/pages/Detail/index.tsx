@@ -26,8 +26,7 @@ export default function Detail() {
   const [activeTabKey, setActiveTabKey] = useState('events');
   const [itemData, setData] = useState<RuleItem>();
   const [userGroups, setUserGroups] = useState<{ id: number; name: string }[]>([]);
-  const [alertEscalationEnable, setAlertEscalationEnable] = React.useState<boolean>(false);
-  const [notifyAggrEnable, setNotifyAggrEnable] = React.useState<boolean>(false);
+  const [eventAggr, setEventAggr] = React.useState<boolean>(false);
 
   useEffect(() => {
     if (!id) return;
@@ -37,11 +36,11 @@ export default function Detail() {
   }, [id]);
 
   useEffect(() => {
-    if (!id || (!alertEscalationEnable && !notifyAggrEnable)) return;
+    if (!id || !eventAggr) return;
     getNotifyStatistics(_.toNumber(id), days).then((res) => {
       setNotifyStatistics(res);
     });
-  }, [id, days, alertEscalationEnable, notifyAggrEnable]);
+  }, [id, days, eventAggr]);
 
   useEffect(() => {
     getTeamInfoList().then((res) => {
@@ -49,11 +48,8 @@ export default function Detail() {
     });
     if (getBrainLicense) {
       getBrainLicense().then((res) => {
-        if (res?.['alert-escalation-enable'] === true) {
-          setAlertEscalationEnable(true);
-        }
-        if (res?.['notify-aggr-enable'] === true) {
-          setNotifyAggrEnable(true);
+        if (res?.['event-aggr'] === true) {
+          setEventAggr(true);
         }
       });
     }
@@ -102,7 +98,7 @@ export default function Detail() {
               >
                 <Button type='primary'>{t('common:btn.edit')}</Button>
               </Link>
-              {(alertEscalationEnable || notifyAggrEnable) && (
+              {eventAggr && (
                 <Select
                   value={days}
                   options={[
@@ -130,7 +126,7 @@ export default function Detail() {
               )}
             </Space>
           </div>
-          {(alertEscalationEnable || notifyAggrEnable) && (
+          {eventAggr && (
             <div className='flex-shrink-0'>
               <Row gutter={16}>
                 <Col span={8}>
@@ -157,61 +153,54 @@ export default function Detail() {
                     </div>
                   </div>
                 </Col>
-                {notifyAggrEnable && (
-                  <Col span={8}>
-                    <div className='w-full h-[88px] rounded fc-border bg-fc-100 px-4 py-2'>
-                      <div className='flex items-center gap-2'>
-                        {t('statistics.noise_reduction_ratio', { days })}
-                        <Tooltip
-                          overlayClassName='ant-tooltip-max-width-400'
-                          title={<Trans ns={NS} i18nKey='statistics.noise_reduction_ratio_tip' components={{ b: <strong /> }} />}
+                <Col span={8}>
+                  <div className='w-full h-[88px] rounded fc-border bg-fc-100 px-4 py-2'>
+                    <div className='flex items-center gap-2'>
+                      {t('statistics.noise_reduction_ratio', { days })}
+                      <Tooltip overlayClassName='ant-tooltip-max-width-400' title={<Trans ns={NS} i18nKey='statistics.noise_reduction_ratio_tip' components={{ b: <strong /> }} />}>
+                        <InfoCircleOutlined />
+                      </Tooltip>
+                    </div>
+                    <div className='my-2 flex flex-wrap items-end'>
+                      <div className='mr-2 text-l4 text-title'>{notifyStatistics?.noise_reduction_ratio} %</div>
+                      {notifyStatistics?.noise_reduction_ratio_change && (
+                        <div
+                          className='flex cursor-default items-center'
+                          style={{
+                            color: notifyStatistics?.noise_reduction_ratio_change > 0 ? 'var(--fc-fill-success)' : 'var(--fc-fill-error)',
+                          }}
                         >
-                          <InfoCircleOutlined />
-                        </Tooltip>
-                      </div>
-                      <div className='my-2 flex flex-wrap items-end'>
-                        <div className='mr-2 text-l4 text-title'>{notifyStatistics?.noise_reduction_ratio} %</div>
-                        {notifyStatistics?.noise_reduction_ratio_change && (
-                          <div
-                            className='flex cursor-default items-center'
-                            style={{
-                              color: notifyStatistics?.noise_reduction_ratio_change > 0 ? 'var(--fc-fill-success)' : 'var(--fc-fill-error)',
-                            }}
-                          >
-                            {notifyStatistics?.noise_reduction_ratio_change > 0 ? <UpIcon className='mr-0.5 h-3.5 w-3.5 ' /> : <DownIcon className='mr-0.5 h-3.5 w-3.5' />}
-                            {Math.abs(notifyStatistics?.noise_reduction_ratio_change)} %
-                          </div>
-                        )}
-                      </div>
+                          {notifyStatistics?.noise_reduction_ratio_change > 0 ? <UpIcon className='mr-0.5 h-3.5 w-3.5 ' /> : <DownIcon className='mr-0.5 h-3.5 w-3.5' />}
+                          {Math.abs(notifyStatistics?.noise_reduction_ratio_change)} %
+                        </div>
+                      )}
                     </div>
-                  </Col>
-                )}
-                {alertEscalationEnable && (
-                  <Col span={8}>
-                    <div className='w-full h-[88px] rounded fc-border bg-fc-100 px-4 py-2'>
-                      <div className='flex items-center gap-2'>
-                        {t('statistics.escalation_events', { days })}
-                        <Tooltip overlayClassName='ant-tooltip-max-width-400' title={<Trans ns={NS} i18nKey='statistics.escalation_events_tip' components={{ b: <strong /> }} />}>
-                          <InfoCircleOutlined />
-                        </Tooltip>
-                      </div>
-                      <div className='my-2 flex flex-wrap items-end'>
-                        <div className='mr-2 text-l4 text-title'>{notifyStatistics?.escalation_events}</div>
-                        {notifyStatistics?.escalation_events_change && (
-                          <div
-                            className='flex cursor-default items-center'
-                            style={{
-                              color: notifyStatistics?.escalation_events_change > 0 ? 'var(--fc-fill-error)' : 'var(--fc-fill-success)',
-                            }}
-                          >
-                            {notifyStatistics?.escalation_events_change > 0 ? <UpIcon className='mr-0.5 h-3.5 w-3.5 ' /> : <DownIcon className='mr-0.5 h-3.5 w-3.5' />}
-                            {Math.abs(notifyStatistics?.escalation_events_change)}
-                          </div>
-                        )}
-                      </div>
+                  </div>
+                </Col>
+                <Col span={8}>
+                  <div className='w-full h-[88px] rounded fc-border bg-fc-100 px-4 py-2'>
+                    <div className='flex items-center gap-2'>
+                      {t('statistics.escalation_events', { days })}
+                      <Tooltip overlayClassName='ant-tooltip-max-width-400' title={<Trans ns={NS} i18nKey='statistics.escalation_events_tip' components={{ b: <strong /> }} />}>
+                        <InfoCircleOutlined />
+                      </Tooltip>
                     </div>
-                  </Col>
-                )}
+                    <div className='my-2 flex flex-wrap items-end'>
+                      <div className='mr-2 text-l4 text-title'>{notifyStatistics?.escalation_events}</div>
+                      {notifyStatistics?.escalation_events_change && (
+                        <div
+                          className='flex cursor-default items-center'
+                          style={{
+                            color: notifyStatistics?.escalation_events_change > 0 ? 'var(--fc-fill-error)' : 'var(--fc-fill-success)',
+                          }}
+                        >
+                          {notifyStatistics?.escalation_events_change > 0 ? <UpIcon className='mr-0.5 h-3.5 w-3.5 ' /> : <DownIcon className='mr-0.5 h-3.5 w-3.5' />}
+                          {Math.abs(notifyStatistics?.escalation_events_change)}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </Col>
               </Row>
             </div>
           )}

@@ -37,7 +37,6 @@ export default function GraphPreview({ datasourceValue, query }) {
         cate: DatasourceCateEnum.victorialogs,
         datasource_id: datasourceId,
         query: [{ query: query?.query, start: from, end: to }],
-        limit: 500,
       })
         .then((res) => {
           const data = res?.list;

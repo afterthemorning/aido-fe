@@ -222,13 +222,7 @@ export const updateAlertRules = function (
 export const updateServiceCal = function (
   data: {
     ids: React.Key[];
-    service_cal_configs: {
-      service_cal_ids: number[];
-      time_range: {
-        start: string;
-        end: string;
-      };
-    };
+    service_cal_ids: number[];
   },
   busiId: number,
 ) {

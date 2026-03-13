@@ -35,10 +35,6 @@ const en_US = {
   enable_in_bg: 'Enable in buisness group',
   enable_in_bg_tip:
     'If the alert event contains the ident tag and the corresponding machine does not belong to this business group, the alert event will be discarded; if the alert event does not contain the ident tag, this filter condition will not take effect and will continue to follow-up processing.',
-  time_zone: 'Time zone',
-  time_zone_tip: 'Time zone only affects the start time and end time in the rule, and does not affect the relevant time fields of viewing alert events',
-  local_time: 'Local time',
-
   notify_configs: 'Notification Configuration',
   notify_rule_ids: 'Notification rule',
   switch_to_old: 'Switch to old version',
@@ -166,7 +162,6 @@ const en_US = {
         annotations: 'Annotations',
         triggers: 'Triggers',
         cron_pattern: 'Execution frequency',
-        time_zone: 'Time zone',
       },
     },
     cloneToHosts: {
@@ -231,7 +226,7 @@ const en_US = {
     disabled: 'Enable',
     severity: 'Severity',
     status: 'Status',
-    status_tip: 'Whether the alarm rule currently triggers the alarm event. Only data from the last 30 days will be counted and displayed',
+    status_tip: 'Whether the alarm rule currently triggers the alarm event. The default statistics are the data of the last 30 days',
   },
   expired: 'The alert rule has been modified by others. To avoid mutual coverage, please refresh the page to view the latest configuration',
   relabel: {
@@ -347,9 +342,9 @@ const en_US = {
     select_tip: 'Clone query conditions (leave blank to create directly without cloning)',
   },
   pipeline_configuration: {
-    title: 'Event workflow',
-    name_placeholder: 'Please select event workflow',
-    add_btn: 'Add event workflow',
+    title: 'Event processing',
+    name_placeholder: 'Please select event processing workflow',
+    add_btn: 'Add event processing workflow',
   },
 };
 export default en_US;

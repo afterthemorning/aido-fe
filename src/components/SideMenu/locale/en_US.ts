@@ -9,7 +9,6 @@ const en_US = {
     targets: 'Hosts',
     collects: 'Collection rules',
     network_devices: 'Network devices',
-    mobile_device: 'Mobile device',
     dashboards: 'Dashboards',
     reports: 'Reports',
     heartbeat: 'Heartbeat',
@@ -38,7 +37,6 @@ const en_US = {
     notification_channels: 'Media types',
     notification_templates: 'Message templates',
     event_pipeline: 'Workflow',
-    event_pipeline_executions: 'Execution records',
     notification_settings: 'Notification settings',
     notification_tpls: 'Template',
     integrations: 'Integrations',
@@ -59,7 +57,6 @@ const en_US = {
     audit_log: 'Audit log',
     alert_servers: 'Alerting engines',
     about: 'About',
-    license_management: 'License Management',
   },
 };
 export default en_US;

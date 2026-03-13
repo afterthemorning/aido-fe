@@ -63,6 +63,7 @@ export interface DisplayName {
 }
 
 export default function Login() {
+  const basePrefix = import.meta.env.VITE_PREFIX || '';
   const { t, i18n } = useTranslation(NAME_SPACE);
   const [form] = Form.useForm();
   const location = useLocation();
@@ -89,6 +90,30 @@ export default function Login() {
         message.warning('获取验证码失败');
       }
     });
+  };
+
+  const normalizeRedirect = (target?: string) => {
+    if (!target) {
+      return `${basePrefix || ''}/`;
+    }
+
+    if (/^https?:\/\//i.test(target)) {
+      return target;
+    }
+
+    if (!basePrefix) {
+      return target;
+    }
+
+    if (target === basePrefix || target.startsWith(`${basePrefix}/`)) {
+      return target;
+    }
+
+    if (target.startsWith('/')) {
+      return `${basePrefix}${target}`;
+    }
+
+    return target;
   };
   useSsoWay(redirect);
 
@@ -141,7 +166,7 @@ export default function Login() {
         localStorage.setItem(AccessTokenKey, access_token);
         localStorage.setItem('refresh_token', refresh_token);
         if (!err) {
-          window.location.href = redirect || '/';
+          window.location.href = normalizeRedirect(redirect);
         }
       })
       .catch(() => {

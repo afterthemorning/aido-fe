@@ -78,7 +78,8 @@ check_latest_tag() {
   echo "[INFO] Checking latest release tag from ${SRC_REPO} ..."
   local latest
   # ls-remote returns all refs; pick tags sorted by version (vX.Y.Z), take last.
-  latest="$(git ls-remote --tags --refs "${SRC_REPO}" 'refs/tags/v*' 2>/dev/null \
+  # Use a 10-second timeout so a network outage doesn't block the script.
+  latest="$(GIT_TERMINAL_PROMPT=0 timeout 10 git ls-remote --tags --refs "${SRC_REPO}" 'refs/tags/v*' 2>/dev/null \
     | awk '{print $2}' \
     | sed 's|refs/tags/||' \
     | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' \

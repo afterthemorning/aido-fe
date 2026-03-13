@@ -1,53 +1,12 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Dropdown, Menu, Form, Drawer, Space } from 'antd';
+import { Button, Dropdown, Menu, Form, Drawer } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import type { FormInstance } from 'antd';
 import _ from 'lodash';
 
-import OperateFormBase from '@/pages/recordingRules/components/operateForm';
+import RecordingRuleForm, { ActionButtons } from '@/plus/pages/recordingRules/components/OperateForm';
 
 import { NAME_SPACE } from '../../constants';
-
-// ── local compatibility shim (plus edition not available in OSS build) ────────
-
-interface RecordingRuleFormProps {
-  form?: FormInstance;
-  initialValues?: any;
-  type?: number;
-}
-
-function RecordingRuleForm({ initialValues, type }: RecordingRuleFormProps) {
-  return <OperateFormBase initialValues={initialValues} type={type} />;
-}
-
-interface ActionButtonsProps {
-  form: FormInstance;
-  onOk: () => void;
-  onCancel: () => void;
-}
-
-function ActionButtons({ form, onOk, onCancel }: ActionButtonsProps) {
-  const { t } = useTranslation();
-  return (
-    <Space>
-      <Button
-        type='primary'
-        onClick={() => {
-          form.validateFields().then(() => {
-            form.submit();
-            onOk();
-          });
-        }}
-      >
-        {t('common:btn.save')}
-      </Button>
-      <Button onClick={onCancel}>{t('common:btn.cancel')}</Button>
-    </Space>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
 
 export default function AddTo() {
   const { t } = useTranslation(NAME_SPACE);

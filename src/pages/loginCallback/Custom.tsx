@@ -19,6 +19,7 @@ import { useLocation } from 'react-router';
 import queryString from 'query-string';
 import { authCallbackCustom } from '@/services/login';
 import { AccessTokenKey } from '@/utils/constant';
+import { basePrefix } from '@/App';
 
 export default function Custom() {
   const location = useLocation();
@@ -28,7 +29,7 @@ export default function Custom() {
   useEffect(() => {
     authCallbackCustom({
       ticket: query.ticket,
-      redirect: query.redirect || '/',
+      redirect: query.redirect || `${basePrefix}/`,
     })
       .then((res) => {
         if (res.err === '') {
@@ -62,7 +63,7 @@ export default function Custom() {
         <h1>第三方登录验证失败</h1>
         <div style={{ fontSize: 14 }}>{err}</div>
         <div>
-          <a href='/login'>返回登录页</a>
+          <a href={`${basePrefix}/login`}>返回登录页</a>
         </div>
       </div>
     </div>

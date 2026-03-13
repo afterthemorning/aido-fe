@@ -37,7 +37,45 @@ Trouble shooting: https://answer.flashcat.cloud/questions/10010000000003759
 npm run build
 ```
 
-## Nginx Server
+### Build For Subpath (e.g. /aido)
+
+When deploying behind a subpath, build with `VITE_PREFIX`:
+
+```
+VITE_PREFIX=/aido npm run build
+```
+
+The generated static files will be rooted under `/aido/`.
+
+### Nginx Example For Subpath
+
+```nginx
+server {
+    listen 8765;
+    server_name _;
+
+    # Frontend calls absolute /api/* paths, so keep root API passthrough.
+    location /api/ {
+        proxy_pass http://n9e.api.server;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location = /aido {
+        return 301 /aido/;
+    }
+
+    location /aido/ {
+        root front-end/page/path;    # e.g. /root/n9e/pub
+        try_files $uri /index.html;
+    }
+}
+```
+
+## Nginx Server (Root Path)
 
 ```
 server {

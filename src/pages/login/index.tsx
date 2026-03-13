@@ -35,7 +35,7 @@ import {
   getRSAConfig,
 } from '@/services/login';
 import { RsaEncry } from '@/utils/rsa';
-import { CommonStateContext } from '@/App';
+import { CommonStateContext, basePrefix } from '@/App';
 import { AccessTokenKey } from '@/utils/constant';
 
 // @ts-ignore
@@ -141,7 +141,7 @@ export default function Login() {
         localStorage.setItem(AccessTokenKey, access_token);
         localStorage.setItem('refresh_token', refresh_token);
         if (!err) {
-          window.location.href = redirect || '/';
+          window.location.href = redirect || `${basePrefix}/`;
         }
       })
       .catch(() => {

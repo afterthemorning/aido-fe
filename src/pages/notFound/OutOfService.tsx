@@ -33,7 +33,7 @@ const OutOfService: React.FC = () => {
           type='primary'
           style={{ marginLeft: 16 }}
           onClick={() => {
-            location.href = basePrefix || '/';
+            location.href = `${basePrefix || ''}/`;
           }}
         >
           {t('刷新')}

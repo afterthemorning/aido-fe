@@ -25,7 +25,7 @@ import PageLayout from '@/components/pageLayout';
 import request from '@/utils/request';
 import api from '@/utils/api';
 import TplForm from './tplForm';
-import { CommonStateContext } from '@/App';
+import { CommonStateContext, basePrefix } from '@/App';
 
 const Add = (props: any) => {
   const history = useHistory();
@@ -42,7 +42,7 @@ const Add = (props: any) => {
     }).then(() => {
       message.success(t('msg.create.success'));
       // TODO: 这里返回列表页时需要获取参数里的 ids，不能用 history.push
-      window.location.href = `/job-tpls?ids=${curBusiId}&isLeaf=true`;
+      window.location.href = `${basePrefix}/job-tpls?ids=${curBusiId}&isLeaf=true`;
     });
   };
 

@@ -4,6 +4,7 @@ import { CloseCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useTranslation, Trans } from 'react-i18next';
 
+import { basePrefix } from '@/App';
 import { IS_PLUS } from '@/utils/constant';
 import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
 import QueryName, { generateQueryName } from '@/components/QueryName';
@@ -96,7 +97,7 @@ export default function Query(props: Props) {
                       i18nKey='query.query_tip'
                       components={{
                         br: <br />,
-                        a: <a href='/docs/content/flashcat/log/discover/what-is-sql-mode-in-doris-discover/' target='_blank' />,
+                        a: <a href={`${basePrefix}/docs/content/flashcat/log/discover/what-is-sql-mode-in-doris-discover/`} target='_blank' />,
                       }}
                     />
                   }

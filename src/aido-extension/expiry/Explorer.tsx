@@ -220,7 +220,7 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
   const handleTableChange = (newPagination: TablePaginationConfig, _filters: any, sorter: SorterResult<Record<string, any>> | SorterResult<Record<string, any>>[]) => {
     const currentSorter = Array.isArray(sorter) ? sorter[0] : sorter;
     const nextSortField = getSortFieldFromSorter(currentSorter) || sortField;
-    const nextSortOrder = currentSorter?.order === 'descend' ? 'desc' : 'asc';
+    const nextSortOrder = currentSorter?.order ? (currentSorter.order === 'descend' ? 'desc' : 'asc') : sortOrder;
     setSortField(nextSortField);
     setSortOrder(nextSortOrder);
     loadData({

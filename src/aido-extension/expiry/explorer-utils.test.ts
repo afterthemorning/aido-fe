@@ -50,6 +50,7 @@ describe('aido excel explorer utils', () => {
   it('only allows supported sort fields', () => {
     expect(getSortFieldFromSorter({ field: 'expiry_days' })).toBe('expiry_days');
     expect(getSortFieldFromSorter({ field: 'next_expiry_date' })).toBe('next_expiry_date');
+    expect(getSortFieldFromSorter({ columnKey: 'application_name' })).toBe('application_name');
     expect(getSortFieldFromSorter({ field: 'unknown_field' })).toBeUndefined();
   });
 });

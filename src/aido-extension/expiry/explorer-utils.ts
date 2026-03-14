@@ -77,7 +77,8 @@ export function getTagColorByDays(days: number): 'red' | 'orange' | 'green' {
 }
 
 export function getSortFieldFromSorter(sorter: any): string | undefined {
-  const field = String(sorter?.field ?? '').trim();
+  const rawField = sorter?.field ?? sorter?.columnKey ?? sorter?.dataIndex;
+  const field = Array.isArray(rawField) ? String(rawField[rawField.length - 1] ?? '').trim() : String(rawField ?? '').trim();
   if (!field) {
     return undefined;
   }

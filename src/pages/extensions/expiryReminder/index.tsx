@@ -159,7 +159,7 @@ export default function ExpiryReminder() {
 
       <Modal
         title='Override Record'
-        open={!!overrideModal}
+        visible={!!overrideModal}
         onOk={submitOverride}
         onCancel={() => setOverrideModal(null)}
         destroyOnClose

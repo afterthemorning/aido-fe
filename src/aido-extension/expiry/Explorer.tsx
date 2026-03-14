@@ -246,8 +246,20 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
       undefined;
 
     const parsedSortField = getSortFieldFromSorter(currentSorter);
-    const nextSortField = parsedSortField || sortField;
-    const nextSortOrder = currentSorter?.order ? (currentSorter.order === 'descend' ? 'desc' : 'asc') : sortOrder;
+    let nextSortField = parsedSortField || sortField;
+    let nextSortOrder: 'asc' | 'desc' = sortOrder;
+
+    if (currentSorter?.order) {
+      nextSortOrder = currentSorter.order === 'descend' ? 'desc' : 'asc';
+    } else if (parsedSortField) {
+      // Keep a strict two-state cycle for remote sorting: asc <-> desc.
+      if (parsedSortField === sortField) {
+        nextSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+      } else {
+        nextSortField = parsedSortField;
+        nextSortOrder = 'asc';
+      }
+    }
 
     setSortField(nextSortField);
     setSortOrder(nextSortOrder);

@@ -132,3 +132,34 @@ export function buildExplorerRowKey(row: Record<string, any>, fallbackIndex: num
 
   return `${fingerprint}::${fallbackIndex}`;
 }
+
+export function sortRowsClientSide(rows: Array<Record<string, any>>, sortField: string, sortOrder: 'asc' | 'desc') {
+  const list = [...rows];
+  const direction = sortOrder === 'desc' ? -1 : 1;
+
+  list.sort((a, b) => {
+    const av = a?.[sortField];
+    const bv = b?.[sortField];
+
+    if (sortField === 'expiry_days') {
+      const an = Number(av ?? Number.NEGATIVE_INFINITY);
+      const bn = Number(bv ?? Number.NEGATIVE_INFINITY);
+      if (an < bn) return -1 * direction;
+      if (an > bn) return 1 * direction;
+      return 0;
+    }
+
+    if (sortField === 'disabled') {
+      const ab = String(av ?? '').toLowerCase() === 'true' || String(av ?? '') === '1';
+      const bb = String(bv ?? '').toLowerCase() === 'true' || String(bv ?? '') === '1';
+      if (ab === bb) return 0;
+      return (ab ? 1 : -1) * direction;
+    }
+
+    const as = String(av ?? '');
+    const bs = String(bv ?? '');
+    return as.localeCompare(bs) * direction;
+  });
+
+  return list;
+}

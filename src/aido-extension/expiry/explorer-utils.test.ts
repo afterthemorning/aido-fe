@@ -5,6 +5,7 @@ import {
   getDisplayedDays,
   getSortFieldFromSorter,
   normalizeDays,
+  sortRowsClientSide,
 } from './explorer-utils';
 
 describe('aido excel explorer utils', () => {
@@ -69,5 +70,21 @@ describe('aido excel explorer utils', () => {
     const key2 = buildExplorerRowKey(duplicatedRow, 1);
 
     expect(key1).not.toBe(key2);
+  });
+
+  it('sorts rows client-side by selected field and direction', () => {
+    const rows = [
+      { application_name: 'beta', expiry_days: 5, disabled: false },
+      { application_name: 'alpha', expiry_days: 1, disabled: true },
+    ];
+
+    const byNameAsc = sortRowsClientSide(rows, 'application_name', 'asc');
+    expect(byNameAsc[0].application_name).toBe('alpha');
+
+    const byDaysDesc = sortRowsClientSide(rows, 'expiry_days', 'desc');
+    expect(byDaysDesc[0].expiry_days).toBe(5);
+
+    const byStatusAsc = sortRowsClientSide(rows, 'disabled', 'asc');
+    expect(byStatusAsc[0].disabled).toBe(false);
   });
 });

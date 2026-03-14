@@ -14,6 +14,7 @@ import {
   getKeywordFieldsLabel,
   getSortFieldFromSorter,
   getTagColorByDays,
+  sortRowsClientSide,
 } from './explorer-utils';
 
 interface Props {
@@ -88,8 +89,9 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
         sortOrder: currentSortOrder,
       });
       const rowList = Array.isArray(res.list) ? res.list : [];
+      const sortedList = sortRowsClientSide(rowList, currentSortField, currentSortOrder);
       setRows(
-        rowList.map((row, index) => {
+        sortedList.map((row, index) => {
           return {
             ...row,
             __row_key: buildExplorerRowKey(row, index),
@@ -142,6 +144,7 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
         key: 'application_name',
         width: 180,
         sorter: true,
+        sortDirections: ['ascend', 'descend'],
         sortOrder: sortField === 'application_name' ? getAidoExcelSortOrder(sortOrder) : null,
         ellipsis: true,
         render: (v) => renderHighlightedText(v, keyword),
@@ -152,6 +155,7 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
         key: 'environment',
         width: 120,
         sorter: true,
+        sortDirections: ['ascend', 'descend'],
         sortOrder: sortField === 'environment' ? getAidoExcelSortOrder(sortOrder) : null,
         ellipsis: true,
         render: (v) => renderHighlightedText(v, keyword),
@@ -162,6 +166,7 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
         key: 'category',
         width: 120,
         sorter: true,
+        sortDirections: ['ascend', 'descend'],
         sortOrder: sortField === 'category' ? getAidoExcelSortOrder(sortOrder) : null,
         ellipsis: true,
         render: (v) => renderHighlightedText(v, keyword),
@@ -172,6 +177,7 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
         key: 'support_owner',
         width: 130,
         sorter: true,
+        sortDirections: ['ascend', 'descend'],
         sortOrder: sortField === 'support_owner' ? getAidoExcelSortOrder(sortOrder) : null,
         ellipsis: true,
         render: (v) => renderHighlightedText(v, keyword),
@@ -182,6 +188,7 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
         key: 'email',
         width: 180,
         sorter: true,
+        sortDirections: ['ascend', 'descend'],
         sortOrder: sortField === 'email' ? getAidoExcelSortOrder(sortOrder) : null,
         ellipsis: true,
         render: (v) => renderHighlightedText(v, keyword),
@@ -192,6 +199,7 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
         key: 'next_expiry_date',
         width: 140,
         sorter: true,
+        sortDirections: ['ascend', 'descend'],
         sortOrder: sortField === 'next_expiry_date' ? getAidoExcelSortOrder(sortOrder) : null,
         ellipsis: true,
         render: (v) => renderHighlightedText(v, keyword),
@@ -202,6 +210,7 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
         key: 'expiry_days',
         width: 120,
         sorter: true,
+        sortDirections: ['ascend', 'descend'],
         sortOrder: sortField === 'expiry_days' ? getAidoExcelSortOrder(sortOrder) : null,
         render: (_, row) => {
           const days = getDisplayedDays(row.expiry_days, row.next_expiry_date);
@@ -217,6 +226,7 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
         key: 'disabled',
         width: 110,
         sorter: true,
+        sortDirections: ['ascend', 'descend'],
         sortOrder: sortField === 'disabled' ? getAidoExcelSortOrder(sortOrder) : null,
         render: (disabled) => {
           const isDisabled = Boolean(disabled);
@@ -229,9 +239,16 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
   }, [keyword, sortField, sortOrder, t]);
 
   const handleTableChange = (newPagination: TablePaginationConfig, _filters: any, sorter: SorterResult<Record<string, any>> | SorterResult<Record<string, any>>[]) => {
-    const currentSorter = Array.isArray(sorter) ? sorter[0] : sorter;
-    const nextSortField = getSortFieldFromSorter(currentSorter) || sortField;
+    const sorterList = (Array.isArray(sorter) ? sorter : [sorter]).filter(Boolean);
+    const currentSorter =
+      sorterList.find((item) => item?.order) ||
+      sorterList.find((item) => getSortFieldFromSorter(item)) ||
+      undefined;
+
+    const parsedSortField = getSortFieldFromSorter(currentSorter);
+    const nextSortField = parsedSortField || sortField;
     const nextSortOrder = currentSorter?.order ? (currentSorter.order === 'descend' ? 'desc' : 'asc') : sortOrder;
+
     setSortField(nextSortField);
     setSortOrder(nextSortOrder);
     loadData({

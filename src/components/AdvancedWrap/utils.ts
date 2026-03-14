@@ -140,7 +140,7 @@ export const baseCates: Cate[] = [
   {
     value: 'aido-excel',
     label: 'AIDO Excel',
-    type: ['metric'],
+    type: ['metric', 'logging'],
     alertRule: true,
     dashboard: false,
     dashboardVariable: false,

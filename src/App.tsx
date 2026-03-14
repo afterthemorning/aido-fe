@@ -245,7 +245,14 @@ function App() {
         }
         document.title = siteInfo?.page_title || 'Nightingale';
         if (iconLink) {
-          iconLink.href = siteInfo?.favicon_url || '/image/favicon.ico';
+          const favicon = siteInfo?.favicon_url || '/image/favicon.ico';
+          if (/^(https?:)?\/\//.test(favicon) || favicon.startsWith('data:')) {
+            iconLink.href = favicon;
+          } else if (basePrefix && favicon.startsWith('/') && !favicon.startsWith(`${basePrefix}/`)) {
+            iconLink.href = `${basePrefix}${favicon}`;
+          } else {
+            iconLink.href = favicon;
+          }
         }
         if (siteInfo?.font_family) {
           document.body.style.fontFamily = siteInfo.font_family;

@@ -289,6 +289,11 @@ export default function index(props: IProps) {
         .finally(() => {
           setLoading(false);
         });
+    }).catch((e: any) => {
+      // Form validation rejection should not surface as an unhandled promise error.
+      if (!_.get(e, 'errorFields')) {
+        console.error(e);
+      }
     });
   };
 

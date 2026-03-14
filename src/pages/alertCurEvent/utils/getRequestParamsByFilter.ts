@@ -5,6 +5,7 @@ import { FilterType } from '../types';
 export default function getRequestParamsByFilter(filter: FilterType) {
   const params = Object.assign(
     { range: filter.range },
+    filter.aggr_rule_id ? { rid: filter.aggr_rule_id } : {},
     !_.isEmpty(filter.datasource_ids) ? { datasource_ids: _.join(filter.datasource_ids, ',') } : {},
     !_.isEmpty(filter.severity) ? { severity: _.join(filter.severity, ',') } : {},
     filter.query ? { query: filter.query } : {},

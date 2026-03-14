@@ -44,8 +44,16 @@ function SettingsTab({ data }: { data: any }) {
   };
 
   const previewColumns: ColumnsType<Record<string, string>> = React.useMemo(() => {
-    const first = preview?.sample_rows?.[0] || {};
-    return Object.keys(first).map((k) => ({
+    const keySet = new Set<string>();
+    (preview?.sample_rows || []).forEach((row) => {
+      Object.keys(row || {}).forEach((k) => {
+        if (k) {
+          keySet.add(k);
+        }
+      });
+    });
+
+    return Array.from(keySet).map((k) => ({
       title: k,
       dataIndex: k,
       key: k,

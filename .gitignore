@@ -15,3 +15,13 @@ build.sh
 scripts/all_locales.json
 src/plus
 public/bound
+src/pages/login/index.tsx
+src/pages/loginCallback/cas.tsx
+src/pages/loginCallback/Custom.tsx
+src/pages/loginCallback/DingTalk.tsx
+src/pages/loginCallback/Feishu.tsx
+src/pages/loginCallback/index.tsx
+src/pages/loginCallback/oauth.tsx
+src/pages/notFound/OutOfService.tsx
+src/pages/taskTpl/add.tsx
+src/plugins/doris/AlertRule/Query.tsx

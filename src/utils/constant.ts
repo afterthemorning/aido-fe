@@ -74,6 +74,8 @@ export enum BaseDatasourceCateEnum {
   pgsql = 'pgsql',
   doris = 'doris',
   victorialogs = 'victorialogs',
+  aidoExcel = 'aido-excel',
+  aidoSharepoint = 'aido-sharepoint',
 }
 
 export const DatasourceCateEnum = { ...BaseDatasourceCateEnum, ...AdvancedDatasourceCateEnum };

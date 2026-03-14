@@ -7,6 +7,8 @@ import MySQL from '@/plugins/mysql/Datasource/Detail';
 import PgSQL from '@/plugins/pgsql/Datasource/Detail';
 import Doris from '@/plugins/doris/Datasource/Detail';
 import Victorialogs from '@/plugins/victorialogs/Datasource/Detail';
+import AidoExcel from '@/plugins/aidoExcel/Datasource/Detail';
+import AidoSharepoint from '@/plugins/aidoSharepoint/Datasource/Detail';
 
 import Prometheus from './Prometheus/Detail';
 import ElasticSearch from './ElasticSearch/Detail';
@@ -50,6 +52,12 @@ export default function Form(props) {
   }
   if (props.data.plugin_type === DatasourceCateEnum.victorialogs) {
     return <Victorialogs {...props} />;
+  }
+  if (props.data.plugin_type === DatasourceCateEnum.aidoExcel) {
+    return <AidoExcel {...props} />;
+  }
+  if (props.data.plugin_type === DatasourceCateEnum.aidoSharepoint) {
+    return <AidoSharepoint {...props} />;
   }
   return <Plus type={props.data.plugin_type} {...props} />;
 }

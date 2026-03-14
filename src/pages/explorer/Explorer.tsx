@@ -34,6 +34,7 @@ import { CommonStateContext } from '@/App';
 import { Explorer as TDengine } from '@/plugins/TDengine';
 import { Explorer as CK } from '@/plugins/clickHouse';
 import { allCates } from '@/components/AdvancedWrap/utils';
+import AidoExcelExplorer from '@/aido-extension/expiry/Explorer';
 // import ViewSelect from '@/components/ViewSelect';
 
 import { useGlobalState } from './globalState';
@@ -343,6 +344,8 @@ const Panel = (props: IProps) => {
                   return <Loki datasourceValue={datasourceValue} headerExtra={headerExtraRef.current} form={form} defaultFormValuesControl={defaultFormValuesControl} />;
                 } else if (datasourceCate === DatasourceCateEnum.ck) {
                   return <CK datasourceValue={datasourceValue} headerExtra={headerExtraRef.current} />;
+                } else if (datasourceCate === DatasourceCateEnum.aidoExcel) {
+                  return <AidoExcelExplorer datasourceValue={datasourceValue} />;
                 }
                 return (
                   <PlusExplorer

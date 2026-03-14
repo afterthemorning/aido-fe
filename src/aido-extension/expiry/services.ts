@@ -28,3 +28,19 @@ export async function upsertSchedule(payload: {
     data: payload,
   }).then((res) => res.dat);
 }
+
+export interface ExpiryLogQueryResp {
+  total: number;
+  list: Array<Record<string, any>>;
+}
+
+export async function queryAidoExcelLogs(datasourceId: number): Promise<ExpiryLogQueryResp> {
+  return request('/api/n9e/logs-query', {
+    method: RequestMethod.Post,
+    data: {
+      cate: 'aido-excel',
+      datasource_id: datasourceId,
+      queries: [{}],
+    },
+  }).then((res) => res.dat || { total: 0, list: [] });
+}

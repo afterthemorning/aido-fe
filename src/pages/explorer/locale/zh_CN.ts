@@ -159,6 +159,7 @@ const zh_CN = {
       disabled: '已禁用',
     },
     search_placeholder: '关键字搜索（应用名、负责人、邮箱等）',
+    keyword_fields_tip: '搜索字段：{{fields}}',
     total_tip: '共 {{total}} 条记录（最多展示 200 条，可输入关键字缩小范围）',
     last_loaded_at: '最近加载时间：{{time}}',
     pagination_total: '共 {{total}} 条',

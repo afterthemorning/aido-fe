@@ -159,6 +159,7 @@ const zh_HK = {
       disabled: '已禁用',
     },
     search_placeholder: '關鍵字搜尋（應用名、負責人、郵箱等）',
+    keyword_fields_tip: '搜尋字段：{{fields}}',
     total_tip: '共 {{total}} 條記錄（最多展示 200 條，可輸入關鍵字縮小範圍）',
     last_loaded_at: '最近加載時間：{{time}}',
     pagination_total: '共 {{total}} 條',

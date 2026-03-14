@@ -1,5 +1,6 @@
 import request from '@/utils/request';
 import { RequestMethod } from '@/store/common';
+import { AidoExcelLogQueryParams, buildAidoExcelLogQuery } from './explorer-utils';
 
 export interface ExpirySchedule {
   datasource_id: number;
@@ -34,13 +35,14 @@ export interface ExpiryLogQueryResp {
   list: Array<Record<string, any>>;
 }
 
-export async function queryAidoExcelLogs(datasourceId: number): Promise<ExpiryLogQueryResp> {
+export async function queryAidoExcelLogs(datasourceId: number, params?: AidoExcelLogQueryParams): Promise<ExpiryLogQueryResp> {
+  const query = buildAidoExcelLogQuery(params);
   return request('/api/n9e/logs-query', {
     method: RequestMethod.Post,
     data: {
       cate: 'aido-excel',
       datasource_id: datasourceId,
-      query: [{}],
+      query: [query],
     },
   }).then((res) => res.dat || { total: 0, list: [] });
 }

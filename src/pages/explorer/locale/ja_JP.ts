@@ -159,6 +159,7 @@ const ja_JP = {
       disabled: '無効',
     },
     search_placeholder: 'キーワード検索（アプリ名、担当者、メールなど）',
+    keyword_fields_tip: '検索対象フィールド: {{fields}}',
     total_tip: '合計 {{total}} 件（最大 200 件表示、キーワードで絞り込み可能）',
     last_loaded_at: '最終読み込み時刻: {{time}}',
     pagination_total: '合計 {{total}} 件',

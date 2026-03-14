@@ -159,6 +159,7 @@ const ru_RU = {
       disabled: 'Отключено',
     },
     search_placeholder: 'Поиск по ключевым словам (приложение, владелец, email и т.д.)',
+    keyword_fields_tip: 'Поля поиска: {{fields}}',
     total_tip: 'Всего {{total}} записей (максимум 200, используйте поиск для сужения)',
     last_loaded_at: 'Последняя загрузка: {{time}}',
     pagination_total: 'Всего {{total}}',

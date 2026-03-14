@@ -1,9 +1,19 @@
-import React, { useMemo, useState } from 'react';
-import { Button, Col, Input, Row, Space, Table, message } from 'antd';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Button, Col, Input, Row, Space, Table, Tag, message } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+import type { TablePaginationConfig } from 'antd/es/table';
+import type { SorterResult } from 'antd/es/table/interface';
 import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
 
 import { queryAidoExcelLogs } from './services';
+import {
+  getAidoExcelSortOrder,
+  getDisplayedDays,
+  getKeywordFieldsLabel,
+  getSortFieldFromSorter,
+  getTagColorByDays,
+} from './explorer-utils';
 
 interface Props {
   datasourceValue: number;
@@ -35,71 +45,235 @@ function renderHighlightedText(input: unknown, keyword: string) {
 }
 
 export default function AidoExcelExplorer({ datasourceValue }: Props) {
+  const { t } = useTranslation('explorer');
   const [loading, setLoading] = useState(false);
   const [rows, setRows] = useState<Array<Record<string, any>>>([]);
+  const [total, setTotal] = useState(0);
   const [keyword, setKeyword] = useState('');
+  const [loadedAt, setLoadedAt] = useState<Date | null>(null);
+  const [pagination, setPagination] = useState<TablePaginationConfig>({
+    current: 1,
+    pageSize: 20,
+    showSizeChanger: true,
+  });
+  const [sortField, setSortField] = useState('expiry_days');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-  const loadData = async () => {
+  const searchFieldsLabel = useMemo(() => getKeywordFieldsLabel(t), [t]);
+
+  const loadData = async (opts?: {
+    page?: number;
+    limit?: number;
+    keyword?: string;
+    sortField?: string;
+    sortOrder?: 'asc' | 'desc';
+  }) => {
     if (!datasourceValue) {
       return;
     }
+    const page = opts?.page ?? pagination.current ?? 1;
+    const limit = opts?.limit ?? pagination.pageSize ?? 20;
+    const queryText = opts?.keyword ?? keyword;
+    const currentSortField = opts?.sortField ?? sortField;
+    const currentSortOrder = opts?.sortOrder ?? sortOrder;
+
     setLoading(true);
     try {
-      const res = await queryAidoExcelLogs(datasourceValue);
+      const res = await queryAidoExcelLogs(datasourceValue, {
+        page,
+        limit,
+        queryString: queryText,
+        sortField: currentSortField,
+        sortOrder: currentSortOrder,
+      });
       setRows(Array.isArray(res.list) ? res.list : []);
+      setTotal(_.toNumber(res.total) || 0);
+      setLoadedAt(new Date());
+      setPagination((prev) => ({
+        ...prev,
+        current: page,
+        pageSize: limit,
+      }));
     } catch (e: any) {
-      message.error(e.message || 'Load datasource logs failed');
+      setRows([]);
+      setTotal(0);
+      message.error(e.message || t('aido_excel.empty_no_data'));
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredRows = useMemo(() => {
-    if (!keyword.trim()) {
-      return rows;
+  useEffect(() => {
+    // Zero-click first query when switching to aido-excel datasource.
+    setKeyword('');
+    setSortField('expiry_days');
+    setSortOrder('asc');
+    setPagination((prev) => ({
+      ...prev,
+      current: 1,
+      pageSize: 20,
+    }));
+    if (datasourceValue) {
+      loadData({
+        page: 1,
+        limit: 20,
+        keyword: '',
+        sortField: 'expiry_days',
+        sortOrder: 'asc',
+      });
     }
-    const kw = keyword.trim().toLowerCase();
-    return rows.filter((row) => {
-      return Object.values(row || {}).some((v) => String(v ?? '').toLowerCase().includes(kw));
-    });
-  }, [rows, keyword]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [datasourceValue]);
 
   const columns: ColumnsType<Record<string, any>> = useMemo(() => {
-    const keySet = new Set<string>();
-    filteredRows.forEach((row) => {
-      Object.keys(row || {}).forEach((k) => keySet.add(k));
-    });
-    return Array.from(keySet).map((k) => ({
-      title: k,
-      dataIndex: k,
-      key: k,
-      width: 180,
-      sorter: (a, b) => String(_.get(a, k, '')).localeCompare(String(_.get(b, k, ''))),
-      ellipsis: true,
-      render: (v) => {
-        const text = _.isObject(v) ? JSON.stringify(v) : String(v ?? '');
-        return renderHighlightedText(text, keyword);
+    return [
+      {
+        title: t('aido_excel.columns.application_name'),
+        dataIndex: 'application_name',
+        key: 'application_name',
+        width: 180,
+        sorter: true,
+        sortOrder: sortField === 'application_name' ? getAidoExcelSortOrder(sortOrder) : null,
+        ellipsis: true,
+        render: (v) => renderHighlightedText(v, keyword),
       },
-    }));
-  }, [filteredRows, keyword]);
+      {
+        title: t('aido_excel.columns.environment'),
+        dataIndex: 'environment',
+        key: 'environment',
+        width: 120,
+        sorter: true,
+        sortOrder: sortField === 'environment' ? getAidoExcelSortOrder(sortOrder) : null,
+        ellipsis: true,
+        render: (v) => renderHighlightedText(v, keyword),
+      },
+      {
+        title: t('aido_excel.columns.category'),
+        dataIndex: 'category',
+        key: 'category',
+        width: 120,
+        sorter: true,
+        sortOrder: sortField === 'category' ? getAidoExcelSortOrder(sortOrder) : null,
+        ellipsis: true,
+        render: (v) => renderHighlightedText(v, keyword),
+      },
+      {
+        title: t('aido_excel.columns.support_owner'),
+        dataIndex: 'support_owner',
+        key: 'support_owner',
+        width: 130,
+        sorter: true,
+        sortOrder: sortField === 'support_owner' ? getAidoExcelSortOrder(sortOrder) : null,
+        ellipsis: true,
+        render: (v) => renderHighlightedText(v, keyword),
+      },
+      {
+        title: t('aido_excel.columns.email'),
+        dataIndex: 'email',
+        key: 'email',
+        width: 180,
+        sorter: true,
+        sortOrder: sortField === 'email' ? getAidoExcelSortOrder(sortOrder) : null,
+        ellipsis: true,
+        render: (v) => renderHighlightedText(v, keyword),
+      },
+      {
+        title: t('aido_excel.columns.next_expiry_date'),
+        dataIndex: 'next_expiry_date',
+        key: 'next_expiry_date',
+        width: 140,
+        sorter: true,
+        sortOrder: sortField === 'next_expiry_date' ? getAidoExcelSortOrder(sortOrder) : null,
+        ellipsis: true,
+        render: (v) => renderHighlightedText(v, keyword),
+      },
+      {
+        title: t('aido_excel.columns.expiry_days'),
+        dataIndex: 'expiry_days',
+        key: 'expiry_days',
+        width: 120,
+        sorter: true,
+        sortOrder: sortField === 'expiry_days' ? getAidoExcelSortOrder(sortOrder) : null,
+        render: (_, row) => {
+          const days = getDisplayedDays(row.expiry_days, row.next_expiry_date);
+          if (days === null) {
+            return t('aido_excel.na');
+          }
+          return <Tag color={getTagColorByDays(days)}>{t('aido_excel.days_tag', { count: days })}</Tag>;
+        },
+      },
+      {
+        title: t('aido_excel.columns.status'),
+        dataIndex: 'disabled',
+        key: 'status',
+        width: 110,
+        render: (disabled) => {
+          const isDisabled = Boolean(disabled);
+          return (
+            <Tag color={isDisabled ? 'default' : 'success'}>{isDisabled ? t('aido_excel.status.disabled') : t('aido_excel.status.enabled')}</Tag>
+          );
+        },
+      },
+    ];
+  }, [keyword, sortField, sortOrder, t]);
+
+  const handleTableChange = (newPagination: TablePaginationConfig, _filters: any, sorter: SorterResult<Record<string, any>> | SorterResult<Record<string, any>>[]) => {
+    const currentSorter = Array.isArray(sorter) ? sorter[0] : sorter;
+    const nextSortField = getSortFieldFromSorter(currentSorter) || sortField;
+    const nextSortOrder = currentSorter?.order === 'descend' ? 'desc' : 'asc';
+    setSortField(nextSortField);
+    setSortOrder(nextSortOrder);
+    loadData({
+      page: newPagination.current || 1,
+      limit: newPagination.pageSize || 20,
+      keyword,
+      sortField: nextSortField,
+      sortOrder: nextSortOrder,
+    });
+  };
 
   return (
     <div>
       <Row gutter={8} style={{ marginBottom: 8 }}>
         <Col flex='none'>
-          <Button type='primary' onClick={loadData} loading={loading}>Load Imported Data</Button>
+          <Button
+            type='primary'
+            onClick={() => {
+              loadData({
+                page: 1,
+                limit: pagination.pageSize || 20,
+                keyword,
+                sortField,
+                sortOrder,
+              });
+            }}
+            loading={loading}
+          >
+            {t('query_btn')}
+          </Button>
         </Col>
         <Col flex='320px'>
           <Input
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
-            placeholder='Search in loaded rows'
+            onPressEnter={() => {
+              loadData({
+                page: 1,
+                limit: pagination.pageSize || 20,
+                keyword,
+                sortField,
+                sortOrder,
+              });
+            }}
+            placeholder={t('aido_excel.search_placeholder')}
             allowClear
           />
         </Col>
         <Col flex='auto'>
-          <Space className='second-color'>
-            Rows: {filteredRows.length}
+          <Space direction='vertical' size={0} className='second-color'>
+            <span>{t('aido_excel.total_tip', { total })}</span>
+            <span>{t('aido_excel.keyword_fields_tip', { fields: searchFieldsLabel })}</span>
+            {loadedAt && <span>{t('aido_excel.last_loaded_at', { time: loadedAt.toLocaleString() })}</span>}
           </Space>
         </Col>
       </Row>
@@ -108,9 +282,17 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
         size='small'
         loading={loading}
         columns={columns}
-        dataSource={filteredRows}
+        dataSource={rows}
         scroll={{ x: true, y: 560 }}
-        pagination={{ pageSize: 20, showSizeChanger: true }}
+        onChange={handleTableChange}
+        pagination={{
+          ...pagination,
+          total,
+          showTotal: (all) => t('aido_excel.pagination_total', { total: all }),
+        }}
+        locale={{
+          emptyText: loadedAt ? t('aido_excel.empty_no_data') : t('aido_excel.empty_click_query'),
+        }}
       />
     </div>
   );

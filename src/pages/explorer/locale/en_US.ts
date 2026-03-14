@@ -159,6 +159,7 @@ const en_US = {
       disabled: 'Disabled',
     },
     search_placeholder: 'Keyword search (application, owner, email, etc.)',
+    keyword_fields_tip: 'Search fields: {{fields}}',
     total_tip: '{{total}} records in total (up to 200 shown, use keyword to narrow down)',
     last_loaded_at: 'Last loaded at: {{time}}',
     pagination_total: 'Total {{total}} items',

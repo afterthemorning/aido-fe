@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, Modal, Popconfirm, Space, Table, Tag, Tooltip, Typography, Upload, message } from 'antd';
+import { Button, Form, Input, Modal, Popconfirm, Select, Space, Table, Tag, Tooltip, Typography, message } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { UploadOutlined, EditOutlined, DeleteOutlined, StopOutlined, PlayCircleOutlined, ReloadOutlined } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
+import { EditOutlined, DeleteOutlined, StopOutlined, PlayCircleOutlined, ReloadOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 
-import { ExpiryRecord, listRecords, overrideClear, overrideUpsert, recordDisable, uploadExcel } from './services';
+import { getDatasourceBriefList } from '@/services/common';
+import { ExpiryRecord, listRecords, overrideClear, overrideUpsert, recordDisable } from './services';
 
 const { Title } = Typography;
 
@@ -17,16 +17,26 @@ function expiryTag(days: number) {
 }
 
 export default function ExpiryReminder() {
-  const { t } = useTranslation('expiryReminder');
   const [data, setData] = useState<ExpiryRecord[]>([]);
   const [loading, setLoading] = useState(false);
   const [overrideModal, setOverrideModal] = useState<ExpiryRecord | null>(null);
   const [form] = Form.useForm();
+  const [datasources, setDatasources] = useState<{ id: number; name: string }[]>([]);
+  const [datasourceId, setDatasourceId] = useState<number | undefined>();
+
+  useEffect(() => {
+    getDatasourceBriefList().then((list) => {
+      const excel = list.filter((d) => d.plugin_type === 'aido-excel');
+      setDatasources(excel);
+      if (excel.length === 1) setDatasourceId(excel[0].id);
+    });
+  }, []);
 
   const reload = async () => {
+    if (!datasourceId) return;
     setLoading(true);
     try {
-      setData(await listRecords());
+      setData(await listRecords(datasourceId));
     } catch (e: any) {
       message.error(e.message);
     } finally {
@@ -34,18 +44,7 @@ export default function ExpiryReminder() {
     }
   };
 
-  useEffect(() => { reload(); }, []);
-
-  const handleUpload = async (file: File) => {
-    try {
-      const result = await uploadExcel(file);
-      message.success(`Imported ${result.imported} records, skipped ${result.skipped}`);
-      reload();
-    } catch (e: any) {
-      message.error(`Upload failed: ${e.message}`);
-    }
-    return false; // prevent default upload behaviour
-  };
+  useEffect(() => { reload(); }, [datasourceId]);
 
   const openOverride = (rec: ExpiryRecord) => {
     setOverrideModal(rec);
@@ -140,10 +139,16 @@ export default function ExpiryReminder() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
         <Title level={4} style={{ margin: 0 }}>Expiry Reminder</Title>
         <Space>
-          <Upload accept='.xlsx' showUploadList={false} beforeUpload={handleUpload}>
-            <Button icon={<UploadOutlined />}>Import Excel</Button>
-          </Upload>
-          <Button icon={<ReloadOutlined />} onClick={reload} loading={loading}>Refresh</Button>
+          {datasources.length > 1 && (
+            <Select
+              style={{ width: 200 }}
+              placeholder='Select Excel datasource'
+              value={datasourceId}
+              onChange={setDatasourceId}
+              options={datasources.map((d) => ({ label: d.name, value: d.id }))}
+            />
+          )}
+          <Button icon={<ReloadOutlined />} onClick={reload} loading={loading} disabled={!datasourceId}>Refresh</Button>
         </Space>
       </div>
 

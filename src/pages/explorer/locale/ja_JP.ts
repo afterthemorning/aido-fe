@@ -143,6 +143,30 @@ const ja_JP = {
     total: 'ログの数',
     stack_group_by_tip: 'このフィールド値でスタックされたトレンドチャートを表示',
   },
+  aido_excel: {
+    columns: {
+      application_name: 'アプリ名',
+      environment: '環境',
+      category: 'カテゴリ',
+      support_owner: '担当者',
+      email: 'メール',
+      next_expiry_date: '有効期限日',
+      expiry_days: '残り日数',
+      status: '状態',
+    },
+    status: {
+      enabled: '有効',
+      disabled: '無効',
+    },
+    search_placeholder: 'キーワード検索（アプリ名、担当者、メールなど）',
+    total_tip: '合計 {{total}} 件（最大 200 件表示、キーワードで絞り込み可能）',
+    last_loaded_at: '最終読み込み時刻: {{time}}',
+    pagination_total: '合計 {{total}} 件',
+    empty_click_query: '「クエリ実行」をクリックしてデータを読み込み',
+    empty_no_data: 'データがありません',
+    days_tag: '{{count}} 日',
+    na: '--',
+  },
 };
 
 export default ja_JP;

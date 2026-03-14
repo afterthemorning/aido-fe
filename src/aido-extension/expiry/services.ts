@@ -40,7 +40,7 @@ export async function queryAidoExcelLogs(datasourceId: number): Promise<ExpiryLo
     data: {
       cate: 'aido-excel',
       datasource_id: datasourceId,
-      queries: [{}],
+      query: [{}],
     },
   }).then((res) => res.dat || { total: 0, list: [] });
 }

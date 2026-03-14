@@ -33,8 +33,8 @@ import { getDefaultDatasourceValue, setDefaultDatasourceValue } from '@/utils';
 import { CommonStateContext } from '@/App';
 import { Explorer as TDengine } from '@/plugins/TDengine';
 import { Explorer as CK } from '@/plugins/clickHouse';
-import { allCates } from '@/components/AdvancedWrap/utils';
 import AidoExcelExplorer from '@/aido-extension/expiry/Explorer';
+import { allCates } from '@/components/AdvancedWrap/utils';
 // import ViewSelect from '@/components/ViewSelect';
 
 import { useGlobalState } from './globalState';

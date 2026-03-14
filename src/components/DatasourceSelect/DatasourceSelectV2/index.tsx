@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { Cate } from '@/components/AdvancedWrap/utils';
+import DatasourceIcon from '@/components/DatasourceIcon';
 
 import { ProSvg } from '../DatasourceCateSelect';
 
@@ -56,7 +57,7 @@ export default function index(props: SelectProps & Props) {
                   label: (
                     <div className='flex justify-between'>
                       <div className='flex items-center gap-2'>
-                        <img src={item.logo} alt={item.label} height={16} />
+                        <DatasourceIcon logo={item.logo} label={item.label} ident={item.value} size={16} />
                         {item.label}
                       </div>
                       {item.graphPro && <ProSvg />}
@@ -64,7 +65,7 @@ export default function index(props: SelectProps & Props) {
                   ),
                   label2: (
                     <div className='flex items-center gap-2'>
-                      <img src={item.logo} alt={item.label} height={16} />
+                      <DatasourceIcon logo={item.logo} label={item.label} ident={item.value} size={16} />
                       {item.label}
                     </div>
                   ),
@@ -96,7 +97,7 @@ export default function index(props: SelectProps & Props) {
           return {
             label: (
               <div className='flex items-center gap-2'>
-                <img src={datasourceCate?.logo} alt={datasourceCate?.label} height={16} />
+                <DatasourceIcon logo={datasourceCate?.logo} label={datasourceCate?.label} ident={item.plugin_type} size={16} />
                 {item.name}
               </div>
             ),

@@ -5,6 +5,7 @@ import _ from 'lodash';
 
 import { CommonStateContext } from '@/App';
 import { Cate } from '@/components/AdvancedWrap/utils';
+import DatasourceIcon from '@/components/DatasourceIcon';
 
 import './style.less';
 
@@ -48,7 +49,7 @@ export default function index(props: SelectProps & Props) {
           optionLabel: (
             <div>
               <Space>
-                <img src={datasourceCate?.logo} alt={datasourceCate?.label} height={16} />
+                <DatasourceIcon logo={datasourceCate?.logo} label={datasourceCate?.label} ident={item.plugin_type} size={16} />
                 {item.name}
               </Space>
             </div>
@@ -56,7 +57,7 @@ export default function index(props: SelectProps & Props) {
           label: (
             <div className='flex items-center gap-2 justify-between'>
               <Space>
-                <img src={datasourceCate?.logo} alt={datasourceCate?.label} height={16} />
+                <DatasourceIcon logo={datasourceCate?.logo} label={datasourceCate?.label} ident={item.plugin_type} size={16} />
                 {item.name}
                 {item.is_default && <Tag color='var(--fc-fill-primary)'>default</Tag>}
               </Space>

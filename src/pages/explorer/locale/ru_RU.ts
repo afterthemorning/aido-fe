@@ -143,6 +143,30 @@ const ru_RU = {
     total: 'Количество записей журнала',
     stack_group_by_tip: 'Отобразить сложенный график тенденций по этому значению поля',
   },
+  aido_excel: {
+    columns: {
+      application_name: 'Приложение',
+      environment: 'Среда',
+      category: 'Категория',
+      support_owner: 'Ответственный',
+      email: 'Email',
+      next_expiry_date: 'Дата истечения',
+      expiry_days: 'Осталось дней',
+      status: 'Статус',
+    },
+    status: {
+      enabled: 'Включено',
+      disabled: 'Отключено',
+    },
+    search_placeholder: 'Поиск по ключевым словам (приложение, владелец, email и т.д.)',
+    total_tip: 'Всего {{total}} записей (максимум 200, используйте поиск для сужения)',
+    last_loaded_at: 'Последняя загрузка: {{time}}',
+    pagination_total: 'Всего {{total}}',
+    empty_click_query: 'Нажмите "Запрос", чтобы загрузить данные',
+    empty_no_data: 'Нет данных',
+    days_tag: '{{count}} дн.',
+    na: '--',
+  },
 };
 
 export default ru_RU;

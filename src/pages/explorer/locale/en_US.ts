@@ -143,5 +143,29 @@ const en_US = {
     total: 'Total',
     stack_group_by_tip: 'Display stacked trend chart by this field value',
   },
+  aido_excel: {
+    columns: {
+      application_name: 'Application',
+      environment: 'Environment',
+      category: 'Category',
+      support_owner: 'Owner',
+      email: 'Email',
+      next_expiry_date: 'Expiry Date',
+      expiry_days: 'Days Left',
+      status: 'Status',
+    },
+    status: {
+      enabled: 'Enabled',
+      disabled: 'Disabled',
+    },
+    search_placeholder: 'Keyword search (application, owner, email, etc.)',
+    total_tip: '{{total}} records in total (up to 200 shown, use keyword to narrow down)',
+    last_loaded_at: 'Last loaded at: {{time}}',
+    pagination_total: 'Total {{total}} items',
+    empty_click_query: 'Click "Execute" to load data',
+    empty_no_data: 'No data',
+    days_tag: '{{count}} day',
+    na: '--',
+  },
 };
 export default en_US;

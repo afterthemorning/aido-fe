@@ -137,6 +137,16 @@ export const baseCates: Cate[] = [
     alertPro: false,
     logo: '/image/logos/victorialogs.png',
   },
+  {
+    value: 'aido-excel',
+    label: 'AIDO Excel',
+    type: ['metric'],
+    alertRule: true,
+    dashboard: false,
+    dashboardVariable: false,
+    graphPro: false,
+    alertPro: false,
+  },
 ];
 
 export const allCates = [...baseCates, ...advancedCates];

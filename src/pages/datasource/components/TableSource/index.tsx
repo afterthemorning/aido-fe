@@ -7,6 +7,7 @@ import { CheckCircleFilled, MinusCircleFilled, WarningOutlined, MoreOutlined } f
 import { CommonStateContext } from '@/App';
 import usePagination from '@/components/usePagination';
 import { allCates } from '@/components/AdvancedWrap/utils';
+import DatasourceIcon from '@/components/DatasourceIcon';
 import localeCompare from '@/pages/dashboard/Renderer/utils/localeCompare';
 
 import Rename from '../Rename';
@@ -94,7 +95,7 @@ const TableSource = (props: IPropsType) => {
         const finded = _.find(allCates, { value: val });
         return (
           <Space>
-            <img alt={val} src={finded?.logo} height={20} />
+            <DatasourceIcon logo={finded?.logo} label={finded?.label} ident={val} size={20} />
             <span>{finded?.label}</span>
           </Space>
         );

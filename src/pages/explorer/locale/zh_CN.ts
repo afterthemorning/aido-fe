@@ -143,5 +143,29 @@ const zh_CN = {
     total: '日志条数',
     stack_group_by_tip: '以此字段值展示堆叠趋势图',
   },
+  aido_excel: {
+    columns: {
+      application_name: '应用名称',
+      environment: '环境',
+      category: '类型',
+      support_owner: '负责人',
+      email: '邮箱',
+      next_expiry_date: '到期日期',
+      expiry_days: '剩余天数',
+      status: '状态',
+    },
+    status: {
+      enabled: '启用',
+      disabled: '已禁用',
+    },
+    search_placeholder: '关键字搜索（应用名、负责人、邮箱等）',
+    total_tip: '共 {{total}} 条记录（最多展示 200 条，可输入关键字缩小范围）',
+    last_loaded_at: '最近加载时间：{{time}}',
+    pagination_total: '共 {{total}} 条',
+    empty_click_query: '点击"查询"加载数据',
+    empty_no_data: '暂无数据',
+    days_tag: '{{count}} 天',
+    na: '--',
+  },
 };
 export default zh_CN;

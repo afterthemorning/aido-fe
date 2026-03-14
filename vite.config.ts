@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, type ProxyOptions } from 'vite';
 import { md } from './plugins/md';
 import plusResolve from './plugins/plusResolve';
 import prefixPlugin from './plugins/vite-plugin-prefix';
@@ -51,6 +51,21 @@ export default defineConfig(({ mode }) => {
   }
 
   const baseName = env.VITE_PREFIX || '';
+  const apiPrefixPath = baseName ? `${baseName}/api` : '';
+  const proxyConfig: Record<string, string | ProxyOptions> = {
+    '/api': {
+      target: proxyURL,
+      changeOrigin: true,
+    },
+  };
+
+  if (apiPrefixPath) {
+    proxyConfig[apiPrefixPath] = {
+      target: proxyURL,
+      changeOrigin: true,
+      rewrite: (path) => path.replace(new RegExp(`^${baseName}/api`), '/api'),
+    };
+  }
 
   return {
     base: baseName + '/',
@@ -90,12 +105,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       hmr: false,
-      proxy: {
-        '/api': {
-          target: proxyURL,
-          changeOrigin: true,
-        },
-      },
+      proxy: proxyConfig,
     },
     build: {
       commonjsOptions: {

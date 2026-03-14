@@ -9,6 +9,31 @@ interface Props {
   datasourceValue: number;
 }
 
+function renderHighlightedText(input: unknown, keyword: string) {
+  const text = String(input ?? '');
+  const kw = keyword.trim();
+  if (!kw) {
+    return text;
+  }
+  const lower = text.toLowerCase();
+  const lowerKw = kw.toLowerCase();
+  const parts: React.ReactNode[] = [];
+  let from = 0;
+  let idx = lower.indexOf(lowerKw, from);
+  while (idx >= 0) {
+    if (idx > from) {
+      parts.push(text.slice(from, idx));
+    }
+    parts.push(<mark key={`${idx}-${from}`}>{text.slice(idx, idx + kw.length)}</mark>);
+    from = idx + kw.length;
+    idx = lower.indexOf(lowerKw, from);
+  }
+  if (from < text.length) {
+    parts.push(text.slice(from));
+  }
+  return <>{parts}</>;
+}
+
 export default function AidoExcelExplorer({ datasourceValue }: Props) {
   const [loading, setLoading] = useState(false);
   const [rows, setRows] = useState<Array<Record<string, any>>>([]);
@@ -49,10 +74,14 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
       dataIndex: k,
       key: k,
       width: 180,
+      sorter: (a, b) => String(_.get(a, k, '')).localeCompare(String(_.get(b, k, ''))),
       ellipsis: true,
-      render: (v) => (_.isObject(v) ? JSON.stringify(v) : String(v ?? '')),
+      render: (v) => {
+        const text = _.isObject(v) ? JSON.stringify(v) : String(v ?? '');
+        return renderHighlightedText(text, keyword);
+      },
     }));
-  }, [filteredRows]);
+  }, [filteredRows, keyword]);
 
   return (
     <div>

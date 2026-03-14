@@ -3,6 +3,7 @@ import _ from 'lodash';
 import classNames from 'classnames';
 import { Cate } from '@/components/AdvancedWrap';
 import { CommonStateContext } from '@/App';
+import DatasourceIcon from '@/components/DatasourceIcon';
 import './style.less';
 
 interface IProps {
@@ -32,7 +33,7 @@ export default function DatasourceCateSelectV2(props: IProps) {
               }
             }}
           >
-            <img src={item.logo} style={{ height: 42 }} />
+            <DatasourceIcon logo={item.logo} label={item.label} ident={item.value} size={42} />
             <div>{item.label}</div>
           </div>
         );

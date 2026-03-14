@@ -143,6 +143,30 @@ const zh_HK = {
     total: '日誌條數',
     stack_group_by_tip: '以此字段值展示堆疊趨勢圖',
   },
+  aido_excel: {
+    columns: {
+      application_name: '應用名稱',
+      environment: '環境',
+      category: '類型',
+      support_owner: '負責人',
+      email: '郵箱',
+      next_expiry_date: '到期日期',
+      expiry_days: '剩餘天數',
+      status: '狀態',
+    },
+    status: {
+      enabled: '啟用',
+      disabled: '已禁用',
+    },
+    search_placeholder: '關鍵字搜尋（應用名、負責人、郵箱等）',
+    total_tip: '共 {{total}} 條記錄（最多展示 200 條，可輸入關鍵字縮小範圍）',
+    last_loaded_at: '最近加載時間：{{time}}',
+    pagination_total: '共 {{total}} 條',
+    empty_click_query: '點擊"查詢"加載數據',
+    empty_no_data: '暫無數據',
+    days_tag: '{{count}} 天',
+    na: '--',
+  },
 };
 
 export default zh_HK;

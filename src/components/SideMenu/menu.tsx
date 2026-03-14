@@ -161,6 +161,17 @@ export const getMenuList = (embeddedProductMenu: MenuItem[] = [], hideDeprecated
       ],
     },
     {
+      key: 'extensions',
+      label: 'menu.extensions',
+      icon: <IconFont type='icon-Menu_AlarmManagement' />,
+      children: [
+        {
+          key: '/extensions/expiry-reminder',
+          label: 'menu.expiry_reminder',
+        },
+      ],
+    },
+    {
       key: 'setting',
       label: 'menu.setting',
       icon: <IconFont type='icon-Menu_SystemInformation' />,

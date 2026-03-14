@@ -61,6 +61,7 @@ import TaskResult from '@/pages/task/result';
 import TaskDetail from '@/pages/task/detail';
 import Version from '@/pages/help/version';
 import Servers from '@/pages/help/servers';
+import ExpiryReminder from '@/pages/expiryReminder';
 import Datasource, { Form as DatasourceAdd } from '@/pages/datasource';
 import RecordingRule, { Add as RecordingRuleAdd, Edit as RecordingRuleEdit } from '@/pages/recordingRules';
 import TraceExplorer, { Dependencies as TraceDependencies } from '@/pages/traceCpt/Explorer';
@@ -198,6 +199,7 @@ export default function Content() {
 
         <Route exact path='/system/version' component={Version} />
         <Route exact path='/system/alerting-engines' component={Servers} />
+        <Route exact path='/extensions/expiry-reminder' component={ExpiryReminder} />
         <Route exact path='/datasources' component={Datasource} />
         <Route exact path='/datasources/:action/:type' component={DatasourceAdd} />
         <Route exact path='/datasources/:action/:type/:id' component={DatasourceAdd} />

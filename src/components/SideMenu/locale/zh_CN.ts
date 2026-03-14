@@ -56,6 +56,8 @@ const zh_CN = {
     audit_log: '审计日志',
     alert_servers: '告警引擎',
     about: '关于产品',
+    extensions: '扩展功能',
+    expiry_reminder: '到期提醒',
   },
 };
 export default zh_CN;

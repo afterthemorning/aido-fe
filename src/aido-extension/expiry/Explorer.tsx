@@ -19,6 +19,17 @@ interface Props {
   datasourceValue: number;
 }
 
+function getRowKey(row: Record<string, any>) {
+  const recordKey = String(_.get(row, 'record_key') || '').trim();
+  if (recordKey) {
+    return recordKey;
+  }
+  const applicationName = String(_.get(row, 'application_name') || '').trim();
+  const environment = String(_.get(row, 'environment') || '').trim();
+  const expiryDate = String(_.get(row, 'next_expiry_date') || '').trim();
+  return [applicationName, environment, expiryDate].join('::');
+}
+
 function renderHighlightedText(input: unknown, keyword: string) {
   const text = String(input ?? '');
   const kw = keyword.trim();
@@ -205,8 +216,10 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
       {
         title: t('aido_excel.columns.status'),
         dataIndex: 'disabled',
-        key: 'status',
+        key: 'disabled',
         width: 110,
+        sorter: true,
+        sortOrder: sortField === 'disabled' ? getAidoExcelSortOrder(sortOrder) : null,
         render: (disabled) => {
           const isDisabled = Boolean(disabled);
           return (
@@ -278,7 +291,7 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
         </Col>
       </Row>
       <Table<Record<string, any>>
-        rowKey={(row, idx) => String(_.get(row, 'record_key') || idx)}
+        rowKey={getRowKey}
         size='small'
         loading={loading}
         columns={columns}

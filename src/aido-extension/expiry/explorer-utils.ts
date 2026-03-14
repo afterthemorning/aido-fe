@@ -8,6 +8,8 @@ const SUPPORTED_SORT_FIELDS = [
   'email',
   'next_expiry_date',
   'expiry_days',
+  'disabled',
+  'status',
   'record_key',
 ];
 
@@ -84,6 +86,9 @@ export function getSortFieldFromSorter(sorter: any): string | undefined {
   }
   if (!SUPPORTED_SORT_FIELDS.includes(field)) {
     return undefined;
+  }
+  if (field === 'status') {
+    return 'disabled';
   }
   return field;
 }

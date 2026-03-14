@@ -87,4 +87,15 @@ describe('aido excel explorer utils', () => {
     const byStatusAsc = sortRowsClientSide(rows, 'disabled', 'asc');
     expect(byStatusAsc[0].disabled).toBe(false);
   });
+
+  it('sorts expiry_days with fallback next_expiry_date when days are missing', () => {
+    const rows = [
+      { application_name: 'late', expiry_days: null, next_expiry_date: '2099-12-31' },
+      { application_name: 'soon', expiry_days: 5, next_expiry_date: '' },
+      { application_name: 'middle', expiry_days: null, next_expiry_date: '2099-01-01' },
+    ];
+
+    const sorted = sortRowsClientSide(rows, 'expiry_days', 'asc');
+    expect(sorted[0].application_name).toBe('soon');
+  });
 });

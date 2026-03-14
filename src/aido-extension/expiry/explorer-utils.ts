@@ -142,10 +142,15 @@ export function sortRowsClientSide(rows: Array<Record<string, any>>, sortField: 
     const bv = b?.[sortField];
 
     if (sortField === 'expiry_days') {
-      const an = Number(av ?? Number.NEGATIVE_INFINITY);
-      const bn = Number(bv ?? Number.NEGATIVE_INFINITY);
-      if (an < bn) return -1 * direction;
-      if (an > bn) return 1 * direction;
+      const ad = getDisplayedDays(av, a?.next_expiry_date);
+      const bd = getDisplayedDays(bv, b?.next_expiry_date);
+
+      if (ad === null && bd === null) return 0;
+      if (ad === null) return 1;
+      if (bd === null) return -1;
+
+      if (ad < bd) return -1 * direction;
+      if (ad > bd) return 1 * direction;
       return 0;
     }
 

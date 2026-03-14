@@ -1,4 +1,5 @@
 import {
+  buildExplorerRowKey,
   buildAidoExcelLogQuery,
   fallbackDaysByDate,
   getDisplayedDays,
@@ -54,5 +55,19 @@ describe('aido excel explorer utils', () => {
     expect(getSortFieldFromSorter({ field: 'status' })).toBe('disabled');
     expect(getSortFieldFromSorter({ columnKey: 'disabled' })).toBe('disabled');
     expect(getSortFieldFromSorter({ field: 'unknown_field' })).toBeUndefined();
+  });
+
+  it('builds unique fallback row keys for duplicated rows', () => {
+    const duplicatedRow = {
+      application_name: 'Retail1 ( internal )',
+      environment: 'PRD',
+      next_expiry_date: '2026-12-31',
+      record_key: '',
+    };
+
+    const key1 = buildExplorerRowKey(duplicatedRow, 0);
+    const key2 = buildExplorerRowKey(duplicatedRow, 1);
+
+    expect(key1).not.toBe(key2);
   });
 });

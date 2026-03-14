@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import { queryAidoExcelLogs } from './services';
 import {
+  buildExplorerRowKey,
   getAidoExcelSortOrder,
   getDisplayedDays,
   getKeywordFieldsLabel,
@@ -17,17 +18,6 @@ import {
 
 interface Props {
   datasourceValue: number;
-}
-
-function getRowKey(row: Record<string, any>) {
-  const recordKey = String(_.get(row, 'record_key') || '').trim();
-  if (recordKey) {
-    return recordKey;
-  }
-  const applicationName = String(_.get(row, 'application_name') || '').trim();
-  const environment = String(_.get(row, 'environment') || '').trim();
-  const expiryDate = String(_.get(row, 'next_expiry_date') || '').trim();
-  return [applicationName, environment, expiryDate].join('::');
 }
 
 function renderHighlightedText(input: unknown, keyword: string) {
@@ -97,7 +87,15 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
         sortField: currentSortField,
         sortOrder: currentSortOrder,
       });
-      setRows(Array.isArray(res.list) ? res.list : []);
+      const rowList = Array.isArray(res.list) ? res.list : [];
+      setRows(
+        rowList.map((row, index) => {
+          return {
+            ...row,
+            __row_key: buildExplorerRowKey(row, index),
+          };
+        }),
+      );
       setTotal(_.toNumber(res.total) || 0);
       setLoadedAt(new Date());
       setPagination((prev) => ({
@@ -291,7 +289,7 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
         </Col>
       </Row>
       <Table<Record<string, any>>
-        rowKey={getRowKey}
+        rowKey={(row) => String(_.get(row, '__row_key'))}
         size='small'
         loading={loading}
         columns={columns}

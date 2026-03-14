@@ -109,3 +109,26 @@ export function getKeywordFieldsLabel(t: TFunction<'explorer'>): string {
   ];
   return fields.join(', ');
 }
+
+export function buildExplorerRowKey(row: Record<string, any>, fallbackIndex: number): string {
+  const recordKey = String(row?.record_key ?? '').trim();
+  if (recordKey) {
+    return recordKey;
+  }
+
+  const fingerprint = [
+    row?.application_name,
+    row?.environment,
+    row?.category,
+    row?.support_owner,
+    row?.email,
+    row?.next_expiry_date,
+    row?.expiry_days,
+    row?.disabled,
+    row?.datasource_id,
+  ]
+    .map((v) => String(v ?? '').trim())
+    .join('::');
+
+  return `${fingerprint}::${fallbackIndex}`;
+}

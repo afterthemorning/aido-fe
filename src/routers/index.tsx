@@ -61,7 +61,7 @@ import TaskResult from '@/pages/task/result';
 import TaskDetail from '@/pages/task/detail';
 import Version from '@/pages/help/version';
 import Servers from '@/pages/help/servers';
-import ExpiryReminder from '@/pages/expiryReminder';
+import ExpiryReminder from '@/pages/extensions/expiryReminder';
 import Datasource, { Form as DatasourceAdd } from '@/pages/datasource';
 import RecordingRule, { Add as RecordingRuleAdd, Edit as RecordingRuleEdit } from '@/pages/recordingRules';
 import TraceExplorer, { Dependencies as TraceDependencies } from '@/pages/traceCpt/Explorer';

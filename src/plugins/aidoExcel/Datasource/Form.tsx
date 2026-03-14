@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Form, Card, Input } from 'antd';
+import { Form, Card, Input, Divider } from 'antd';
 
 import Name from '@/pages/datasource/components/items/Name';
 import Description from '@/pages/datasource/components/items/Description';
@@ -19,7 +19,7 @@ export default function FormCpt({ action, data, onFinish, submitLoading }: any) 
       initialValues={data}
       className='settings-source-form'
     >
-      <Card title={action === 'add' ? 'Create Aido Excel Datasource' : 'Edit Aido Excel Datasource'}>
+      <Card title={action === 'add' ? 'Create AIDO Excel Datasource' : 'Edit AIDO Excel Datasource'}>
         <Name />
         <Form.Item
           label='File Path'
@@ -31,6 +31,27 @@ export default function FormCpt({ action, data, onFinish, submitLoading }: any) 
         <Form.Item label='Sheet Name' name={['settings', `${cate}.sheet_name`]}>
           <Input autoComplete='off' placeholder='Sheet1' />
         </Form.Item>
+
+        <Divider orientation='left'>Column Mapping (Optional)</Divider>
+        <Form.Item label='Application Name Column' name={['settings', `${cate}.column.application_name`]}>
+          <Input autoComplete='off' placeholder='Application Name' />
+        </Form.Item>
+        <Form.Item label='Environment Column' name={['settings', `${cate}.column.environment`]}>
+          <Input autoComplete='off' placeholder='Environment' />
+        </Form.Item>
+        <Form.Item label='Category Column' name={['settings', `${cate}.column.category`]}>
+          <Input autoComplete='off' placeholder='Category' />
+        </Form.Item>
+        <Form.Item label='Support Owner Column' name={['settings', `${cate}.column.support_owner`]}>
+          <Input autoComplete='off' placeholder='Support Owner' />
+        </Form.Item>
+        <Form.Item label='Email Column' name={['settings', `${cate}.column.email`]}>
+          <Input autoComplete='off' placeholder='Email' />
+        </Form.Item>
+        <Form.Item label='Next Expiry Date Column' name={['settings', `${cate}.column.next_expiry_date`]}>
+          <Input autoComplete='off' placeholder='Next Expiry Date' />
+        </Form.Item>
+
         <Cluster cate={cate} clusterRef={clusterRef} />
         <Description />
       </Card>

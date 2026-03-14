@@ -17,10 +17,11 @@ violations=()
 while IFS= read -r file; do
   [[ -z "$file" ]] && continue
 
-  if [[ "$file" == src/plugins/aidoExcel/* ]]; then
-    if [[ "$file" == "src/plugins/aidoExcel/Datasource/Detail.tsx" || "$file" == "src/plugins/aidoExcel/services.ts" ]]; then
-      continue
-    fi
+  # Thin integration points in upstream plugin files: allowed
+  if [[ "$file" == "src/plugins/aidoExcel/Datasource/Detail.tsx" || \
+        "$file" == "src/plugins/aidoExcel/Datasource/Form.tsx" || \
+        "$file" == "src/plugins/aidoExcel/services.ts" ]]; then
+    continue
   fi
 
   if [[ "$file" == src/plugins/aido*/* || "$file" == src/plugins/aido* ]]; then

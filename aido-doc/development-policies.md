@@ -384,6 +384,16 @@ Commit: `chore(deps): upgrade vite/router/ts/tailwind/jest to latest release`
   - `npx tsc --noEmit --skipLibCheck` passed.
   - `npm run build` passed (EXIT 0).
 
+### Guardrail Exception: 2026-03-15 Phase D3 Tailwind 4 Upgrade
+
+**Reason:** Tailwind major version upgrade modifies dependency tree heavily in lockfile while source-level config changes are intentionally minimal.
+- `package.json` / `package-lock.json`: upgraded `tailwindcss` to `4.2.1`, added `@tailwindcss/postcss@4.2.1`.
+- `postcss.config.js`: switched plugin key from `tailwindcss` to `@tailwindcss/postcss` for v4 compatibility.
+- Validation in this batch:
+  - `npx tsc --noEmit --skipLibCheck` passed.
+  - `npm run build` passed (EXIT 0).
+  - `npm test -- --runInBand` passed (25 suites, 139 tests).
+
 **Reason:** Initial delivery of Phase 2 (Backoffice Integration) as a single coherent batch.
 - `src/routers/index.tsx`: 2 lines added — 1 import + 1 Route declaration. No routing logic changed.
 - `src/components/menu/index.tsx`: 4 lines added — new menu item entry in existing structure.

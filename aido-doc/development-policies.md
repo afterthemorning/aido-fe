@@ -34,6 +34,52 @@ Guardrail trigger conditions:
 Required exception heading format:
 - `### Guardrail Exception: YYYY-MM-DD <topic>`
 
+## Frontend Upgrade Assessment (Latest Release Target)
+
+Effective date: 2026-03-15
+
+Scope decision:
+- This upgrade initiative is frontend-only for this phase.
+- Backend dependencies in `aido` remain unchanged.
+- Final objective is to reach latest release versions for the frontend stack with phased risk control.
+
+### Compatibility Matrix (Current vs Latest)
+
+| Component | Current | Latest Release | Compatibility | Risk | Notes |
+|---|---:|---:|---|---|---|
+| antd | 4.21.0 | 6.3.2 | Not directly compatible | High | `antd@6` requires React 18+ and has API/theming migration impact. |
+| react | 17.x | 19.2.4 | Partial (via phased upgrade) | High | Recommend 17 -> 18 first, then assess 19 migration separately. |
+| react-dom | 17.x | 19.2.4 | Partial (via phased upgrade) | High | Must move together with React upgrade. |
+| react-router-dom | 5.2.0 | 7.13.1 | Breaking changes | High | Route definition and navigation APIs require broad refactor. |
+| vite | 4.5.14 | 8.0.0 | Partial | Medium | Plugin/config compatibility validation required. |
+| @vitejs/plugin-react | 4.4.1 | 6.0.1 | Coupled with Vite major upgrade | Medium | Upgrade together with Vite. |
+| typescript | 4.9.4 | 5.9.3 | Partial | Medium | New type-checking errors expected and must be fixed incrementally. |
+| ahooks | 3.5.0 | 3.9.6 | Mostly compatible | Low | Can be upgraded in early batches. |
+
+### Known Migration Surface (Frontend)
+
+- `antd` imports in source: ~742
+- `visible` prop usage patterns: ~237
+- `Tabs.TabPane` usage: ~69
+- `overlayClassName` / `dropdownClassName` usage: ~61
+- Existing theme path is Less + `modifyVars`, which increases migration complexity for newer Ant Design theming.
+
+### Execution Policy (Frontend-Only, Latest Target)
+
+1. Phase A (stabilization):
+  - Upgrade to latest `antd@4` patch line first (`4.24.16`) to reduce drift safely.
+2. Phase B (runtime baseline):
+  - Upgrade React/ReactDOM from 17 to 18 and complete compatibility fixes.
+3. Phase C (UI framework major):
+  - Upgrade `antd` to 6.x and migrate component API usage and theming strategy.
+4. Phase D (supporting stack to latest):
+  - Upgrade Router, Vite, plugin-react, and TypeScript to latest release versions.
+
+Acceptance criteria for completion:
+- All frontend framework/tooling targets reach latest release versions at merge time.
+- Dev startup, build, and core routes pass smoke checks.
+- No backend dependency upgrade is included in this initiative.
+
 ## Exception Notes
 
 ### 2026-03-14: AIDO Excel plugin integration paths

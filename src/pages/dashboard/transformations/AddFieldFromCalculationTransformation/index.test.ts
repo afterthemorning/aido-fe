@@ -95,7 +95,7 @@ describe('AddFieldFromCalculationTransformation', () => {
         expression: (row) => row.value * 2, // 未提供 timeSeriesExpression
       });
 
-      expect(() => transformation.apply([input])).toThrowError('timeSeriesExpression is required for TimeSeries');
+      expect(() => transformation.apply([input])).toThrow('timeSeriesExpression is required for TimeSeries');
     });
   });
 

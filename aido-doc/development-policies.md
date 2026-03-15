@@ -374,6 +374,16 @@ Commit: `chore(deps): upgrade vite/router/ts/tailwind/jest to latest release`
   - `npm run build` passed (EXIT 0).
   - `npm test -- --runInBand` passed (25 suites, 139 tests).
 
+### Guardrail Exception: 2026-03-15 Phase D2 Test Stack Upgrade (Jest 30)
+
+**Reason:** Test framework upgrade regenerates lockfile with high changed-line count; source code changes are minimal and focused on test compatibility.
+- `package.json` / `package-lock.json`: upgraded `jest` to `30.3.0`, `@types/jest` to `30.0.0`, `ts-jest` to `29.4.6`.
+- `src/pages/dashboard/transformations/AddFieldFromCalculationTransformation/index.test.ts`: replaced removed matcher `toThrowError` with `toThrow` for Jest 30 compatibility.
+- Validation in this batch:
+  - `npm test -- --runInBand` passed (25 suites, 139 tests).
+  - `npx tsc --noEmit --skipLibCheck` passed.
+  - `npm run build` passed (EXIT 0).
+
 **Reason:** Initial delivery of Phase 2 (Backoffice Integration) as a single coherent batch.
 - `src/routers/index.tsx`: 2 lines added — 1 import + 1 Route declaration. No routing logic changed.
 - `src/components/menu/index.tsx`: 4 lines added — new menu item entry in existing structure.

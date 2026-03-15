@@ -191,7 +191,7 @@ export default function List() {
             {
               title: t('common:table.operations'),
               width: 160,
-              render: (record) => {
+              render: (_, record) => {
                 return (
                   <Space>
                     <Link

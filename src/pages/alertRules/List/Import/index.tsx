@@ -33,7 +33,6 @@ interface IProps {
   type?: ModalType;
 }
 
-const TabPane = Tabs.TabPane;
 
 function Import(props: IProps & ModalWrapProps) {
   const { t } = useTranslation('alertRules');
@@ -44,11 +43,20 @@ function Import(props: IProps & ModalWrapProps) {
     <Modal
       className='dashboard-import-modal'
       title={
-        <Tabs activeKey={modalType} onChange={(e: ModalType) => setModalType(e)} className='custom-import-alert-title'>
-          <TabPane tab={t('batch.import_builtin')} key='ImportBuiltin'></TabPane>
-          <TabPane tab={t('batch.import.title')} key='Import'></TabPane>
-          <TabPane tab={t('batch.import_prometheus')} key='ImportPrometheus'></TabPane>
-        </Tabs>
+        <Tabs activeKey={modalType} onChange={(e: ModalType) => setModalType(e)} className='custom-import-alert-title' items={[
+          {
+          key: 'ImportBuiltin',
+          label: t('batch.import_builtin'),
+        },
+          {
+          key: 'Import',
+          label: t('batch.import.title'),
+        },
+          {
+          key: 'ImportPrometheus',
+          label: t('batch.import_prometheus'),
+        }
+        ]} />
       }
       visible={visible}
       onCancel={() => {

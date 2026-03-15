@@ -257,9 +257,13 @@ function EditField(props: Props & ModalWrapProps) {
           setTabVal(val);
         }}
         destroyInactiveTabPane={false}
-      >
-        <Tabs.TabPane tab={t('link')} key='link'>
-          <div style={{ marginBottom: 20, background: 'var(--fc-fill-3)', padding: '8px 12px', borderRadius: 4 }}>
+       items={[
+        {
+        key: 'link',
+        label: t('link'),
+        children: (
+          <>
+            <div style={{ marginBottom: 20, background: 'var(--fc-fill-3)', padding: '8px 12px', borderRadius: 4 }}>
             <div style={{ display: 'flex' }} className='tip-collapse'>
               <InfoCircleOutlined style={{ margin: '2px 4px' }} className='text-primary' />
               <div style={{ flex: 1 }}>
@@ -288,9 +292,15 @@ function EditField(props: Props & ModalWrapProps) {
               selectOption={fieldsAll.map((item) => ({ label: item.name, value: item.name }))}
             />
           </Form>
-        </Tabs.TabPane>
-        <Tabs.TabPane tab={t('displayStyle')} key='displayStyle'>
-          <div style={{ display: 'flex', marginBottom: 20, background: 'var(--fc-fill-3)', padding: '8px 12px', borderRadius: 6 }} className='tip-collapse'>
+          </>
+        ),
+      },
+        {
+        key: 'displayStyle',
+        label: t('displayStyle'),
+        children: (
+          <>
+            <div style={{ display: 'flex', marginBottom: 20, background: 'var(--fc-fill-3)', padding: '8px 12px', borderRadius: 6 }} className='tip-collapse'>
             <InfoCircleOutlined style={{ margin: '2px 4px' }} className='text-primary' />
             <div>
               <div>{t('可为指定字段设置展示样式，如，格式、别名等。')}</div>
@@ -298,8 +308,10 @@ function EditField(props: Props & ModalWrapProps) {
             </div>
           </div>
           <StyleConfig {...{ form: styleConfigForm, fieldsAll, t }} />
-        </Tabs.TabPane>
-      </Tabs>
+          </>
+        ),
+      }
+      ]} />
     </Drawer>
   );
 }

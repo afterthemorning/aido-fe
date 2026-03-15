@@ -126,7 +126,7 @@ export default function DisplayItem(props: IProps) {
             }}
             dropdownMatchSelectWidth={_.toNumber(options?.length) > 100}
             value={selected}
-            dropdownClassName='overflow-586'
+            popupClassName='overflow-586'
             maxTagPlaceholder={(omittedValues) => {
               return (
                 <Tooltip
@@ -245,7 +245,7 @@ export default function DisplayItem(props: IProps) {
             showSearch
             dropdownMatchSelectWidth={_.toNumber(options?.length) > 100}
             value={selected}
-            dropdownClassName='overflow-586'
+            popupClassName='overflow-586'
             maxTagPlaceholder={(omittedValues) => {
               return (
                 <Tooltip

@@ -68,15 +68,12 @@ export default function Header(props: Props) {
           setActiveKey(key);
           setLocalActiveKey(key);
         }}
-      >
-        {_.map(items, (item, idx) => {
-          return (
-            <Tabs.TabPane closable={items.length !== 1} tab={`Query ${idx + 1}`} key={item.key}>
-              <></>
-            </Tabs.TabPane>
-          );
-        })}
-      </Tabs>
+        items={_.map(items, (item, idx) => ({
+          key: item.key,
+          label: `Query ${idx + 1}`,
+          closable: items.length !== 1,
+        }))}
+      />
     </div>
   );
 }

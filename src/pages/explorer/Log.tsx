@@ -97,49 +97,42 @@ const MetricExplorerPage = () => {
                 setActiveKey(key);
                 setLocalActiveKey(key);
               }}
-            >
-              {_.map(items, (item, idx) => {
-                return (
-                  <Tabs.TabPane closable={items.length !== 1} tab={`${t('query_tab')} ${idx + 1}`} key={item.key}>
-                    <Explorer
-                      tabKey={item.key}
-                      type='logging'
-                      defaultCate='elasticsearch'
-                      defaultFormValuesControl={{
-                        isInited: item.isInited,
-                        setIsInited: () => {
-                          const newItems = _.map(items, (i) => {
-                            if (i.key === item.key) {
-                              return {
-                                ...i,
-                                isInited: true,
-                              };
-                            }
-                            return i;
-                          });
-                          setItems(newItems);
-                        },
-                        defaultFormValues: item.formValues,
-                        setDefaultFormValues: (newValues) => {
-                          const newItems = _.map(items, (i) => {
-                            if (i.key === item.key) {
-                              return {
-                                ...i,
-                                isInited: true,
-                                formValues: newValues,
-                              };
-                            }
-                            return i;
-                          });
-                          setLocalItems(newItems);
-                          setItems(newItems);
-                        },
-                      }}
-                    />
-                  </Tabs.TabPane>
-                );
-              })}
-            </Tabs>
+              items={_.map(items, (item, idx) => ({
+                key: item.key,
+                label: `${t('query_tab')} ${idx + 1}`,
+                closable: items.length !== 1,
+                children: (
+                  <Explorer
+                    tabKey={item.key}
+                    type='logging'
+                    defaultCate='elasticsearch'
+                    defaultFormValuesControl={{
+                      isInited: item.isInited,
+                      setIsInited: () => {
+                        const newItems = _.map(items, (i) => {
+                          if (i.key === item.key) {
+                            return { ...i, isInited: true };
+                          }
+                          return i;
+                        });
+                        setItems(newItems);
+                      },
+                      defaultFormValues: item.formValues,
+                      setDefaultFormValues: (newValues) => {
+                        const newItems = _.map(items, (i) => {
+                          if (i.key === item.key) {
+                            return { ...i, isInited: true, formValues: newValues };
+                          }
+                          return i;
+                        });
+                        setLocalItems(newItems);
+                        setItems(newItems);
+                      },
+                    }}
+                  />
+                ),
+              }))}
+            />
           </div>
         </div>
       </div>

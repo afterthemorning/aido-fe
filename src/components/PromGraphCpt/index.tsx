@@ -66,7 +66,6 @@ interface IProps {
   showExportButton?: boolean; // 是否显示导出按钮
 }
 
-const TabPane = Tabs.TabPane;
 
 export default function index(props: IProps) {
   const { t } = useTranslation('promGraphCpt');
@@ -241,9 +240,13 @@ export default function index(props: IProps) {
           }}
           type='card'
           tabBarExtraContent={queryStats && <QueryStatsView {...queryStats} />}
-        >
-          <TabPane tab='Table' key='table'>
-            <Table
+         items={[
+          {
+          key: 'table',
+          label: 'Table',
+          children: (
+            <>
+              <Table
               url={url}
               contentMaxHeight={contentMaxHeight}
               datasourceValue={datasourceValue}
@@ -260,9 +263,15 @@ export default function index(props: IProps) {
               defaultUnit={defaultUnit}
               showExportButton={showExportButton}
             />
-          </TabPane>
-          <TabPane tab='Graph' key='graph'>
-            <Panel>
+            </>
+          ),
+        },
+          {
+          key: 'graph',
+          label: 'Graph',
+          children: (
+            <>
+              <Panel>
               <Graph
                 url={url}
                 contentMaxHeight={contentMaxHeight}
@@ -288,8 +297,10 @@ export default function index(props: IProps) {
                 defaultUnit={defaultUnit}
               />
             </Panel>
-          </TabPane>
-        </Tabs>
+            </>
+          ),
+        }
+        ]} />
       </div>
     </div>
   );

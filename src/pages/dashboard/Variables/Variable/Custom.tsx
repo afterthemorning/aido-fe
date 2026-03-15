@@ -121,7 +121,7 @@ export default function Custom(props: Props) {
           }}
           dropdownMatchSelectWidth={_.toNumber(options?.length) > 100}
           value={value}
-          dropdownClassName='overflow-586'
+          popupClassName='overflow-586'
           maxTagPlaceholder={(omittedValues) => {
             return (
               <Tooltip

@@ -25,9 +25,13 @@ export default function index(props: Props) {
   }, [JSON.stringify(query)]);
 
   return (
-    <Tabs className='dashboard-detail-inspect'>
-      <Tabs.TabPane tab={t('panel.inspect.query')} key='query'>
-        {multipleQuery && (
+    <Tabs className='dashboard-detail-inspect' items={[
+      {
+      key: 'query',
+      label: t('panel.inspect.query'),
+      children: (
+        <>
+          {multipleQuery && (
           <Select
             style={{ width: '100%', marginBottom: 10 }}
             options={_.map(query, (item) => {
@@ -63,9 +67,15 @@ export default function index(props: Props) {
             value={queryByType ? JSON.stringify(queryByType, null, 2) : ''}
           />
         </div>
-      </Tabs.TabPane>
-      <Tabs.TabPane tab={t('panel.inspect.json')} key='json'>
-        <CodeMirror
+        </>
+      ),
+    },
+      {
+      key: 'json',
+      label: t('panel.inspect.json'),
+      children: (
+        <>
+          <CodeMirror
           height='100%'
           basicSetup
           editable
@@ -84,7 +94,9 @@ export default function index(props: Props) {
           ]}
           value={values ? JSON.stringify(values, null, 2) : ''}
         />
-      </Tabs.TabPane>
-    </Tabs>
+        </>
+      ),
+    }
+    ]} />
   );
 }

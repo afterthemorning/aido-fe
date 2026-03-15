@@ -100,16 +100,34 @@ export default function index(props: Props) {
           <div ref={tabBarExtraContentElementRef} />
         </Space>
       }
-    >
-      <Tabs.TabPane tab={t('explorer.view.group')} key='group'>
-        {tabBarExtraContentElementRef.current && <Group tabBarExtraContentElement={tabBarExtraContentElementRef.current} data={data} />}
-      </Tabs.TabPane>
-      <Tabs.TabPane tab={t('explorer.view.table')} key='table'>
-        {tabBarExtraContentElementRef.current && <Table tabBarExtraContentElement={tabBarExtraContentElementRef.current} data={data} />}
-      </Tabs.TabPane>
-      <Tabs.TabPane tab={t('explorer.view.json')} key='json'>
-        {tabBarExtraContentElementRef.current && <JSON tabBarExtraContentElement={tabBarExtraContentElementRef.current} data={data} />}
-      </Tabs.TabPane>
-    </Tabs>
+     items={[
+      {
+      key: 'group',
+      label: t('explorer.view.group'),
+      children: (
+        <>
+          {tabBarExtraContentElementRef.current && <Group tabBarExtraContentElement={tabBarExtraContentElementRef.current} data={data} />}
+        </>
+      ),
+    },
+      {
+      key: 'table',
+      label: t('explorer.view.table'),
+      children: (
+        <>
+          {tabBarExtraContentElementRef.current && <Table tabBarExtraContentElement={tabBarExtraContentElementRef.current} data={data} />}
+        </>
+      ),
+    },
+      {
+      key: 'json',
+      label: t('explorer.view.json'),
+      children: (
+        <>
+          {tabBarExtraContentElementRef.current && <JSON tabBarExtraContentElement={tabBarExtraContentElementRef.current} data={data} />}
+        </>
+      ),
+    }
+    ]} />
   );
 }

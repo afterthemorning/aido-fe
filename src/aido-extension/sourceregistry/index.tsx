@@ -584,19 +584,30 @@ function AuditTab() {
 // ---- Main Page ----
 export default function SourceRegistryPage() {
   const { t } = useTranslation('sourceRegistry');
-  const { TabPane } = Tabs;
 
   return (
     <PageLayout title={t('title')}>
       <div style={{ padding: 16 }}>
-        <Tabs>
-          <TabPane key='sources' tab={t('tabs.sources')}>
-            <SourcesTab />
-          </TabPane>
-          <TabPane key='audit' tab={t('tabs.audit')}>
-            <AuditTab />
-          </TabPane>
-        </Tabs>
+        <Tabs items={[
+          {
+          key: 'sources',
+          label: t('tabs.sources'),
+          children: (
+            <>
+              <SourcesTab />
+            </>
+          ),
+        },
+          {
+          key: 'audit',
+          label: t('tabs.audit'),
+          children: (
+            <>
+              <AuditTab />
+            </>
+          ),
+        }
+        ]} />
       </div>
     </PageLayout>
   );

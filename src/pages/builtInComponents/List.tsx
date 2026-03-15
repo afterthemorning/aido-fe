@@ -252,37 +252,56 @@ export default function index() {
               setActiveTab(activeKey);
               localStorage.setItem(BUILT_IN_ACTIVE_TAB_KEY, activeKey);
             }}
-          >
-            <Tabs.TabPane tab={t('tab_instructions')} key='tab_instructions' className='builtin-drawer-tab-pane'>
-              <Instructions
-                value={readme}
-                onChange={(newValue) => {
-                  setReadme(newValue);
-                }}
-                editabled={readmeEditabled}
-                setReadmeEditabled={setReadmeEditabled}
-              />
-            </Tabs.TabPane>
-            {IS_PLUS && (
-              <Tabs.TabPane tab={t('tab_collectTpls')} key='tab_collectTpls'>
-                <CollectTpls component={activeComponent.ident} component_id={activeComponent.id} />
-              </Tabs.TabPane>
-            )}
-            <Tabs.TabPane tab={t('tab_metrics')} key='tab_metrics'>
-              <Metrics component={activeComponent.ident} />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab={t('tab_dashboards')} key='tab_dashboards'>
-              <Dashboards component_id={activeComponent.id} />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab={t('tab_alertRules')} key='tab_alertRules'>
-              <AlertRules component_id={activeComponent.id} />
-            </Tabs.TabPane>
-            {IS_ENT && (
-              <Tabs.TabPane tab={t('tab_firemap')} key='tab_firemap'>
-                <Firemap component_id={activeComponent.id} />
-              </Tabs.TabPane>
-            )}
-          </Tabs>
+            items={[
+              {
+                key: 'tab_instructions',
+                label: t('tab_instructions'),
+                children: (
+                  <Instructions
+                    value={readme}
+                    onChange={(newValue) => {
+                      setReadme(newValue);
+                    }}
+                    editabled={readmeEditabled}
+                    setReadmeEditabled={setReadmeEditabled}
+                  />
+                ),
+              },
+              ...(IS_PLUS
+                ? [
+                    {
+                      key: 'tab_collectTpls',
+                      label: t('tab_collectTpls'),
+                      children: <CollectTpls component={activeComponent.ident} component_id={activeComponent.id} />,
+                    },
+                  ]
+                : []),
+              {
+                key: 'tab_metrics',
+                label: t('tab_metrics'),
+                children: <Metrics component={activeComponent.ident} />,
+              },
+              {
+                key: 'tab_dashboards',
+                label: t('tab_dashboards'),
+                children: <Dashboards component_id={activeComponent.id} />,
+              },
+              {
+                key: 'tab_alertRules',
+                label: t('tab_alertRules'),
+                children: <AlertRules component_id={activeComponent.id} />,
+              },
+              ...(IS_ENT
+                ? [
+                    {
+                      key: 'tab_firemap',
+                      label: t('tab_firemap'),
+                      children: <Firemap component_id={activeComponent.id} />,
+                    },
+                  ]
+                : []),
+            ]}
+          />
         )}
       </Drawer>
     </PageLayout>

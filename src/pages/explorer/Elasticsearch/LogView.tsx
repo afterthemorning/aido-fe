@@ -72,9 +72,13 @@ export default function LogView(props: Props) {
           {t('log.copyToClipboard')}
         </Space>
       }
-    >
-      <Tabs.TabPane tab='Table' key='table'>
-        <Table
+     items={[
+      {
+      key: 'table',
+      label: 'Table',
+      children: (
+        <>
+          <Table
           className='n9e-es-explorer-log-view-table'
           dataSource={dataSource}
           columns={[
@@ -121,10 +125,18 @@ export default function LogView(props: Props) {
           size='small'
           pagination={false}
         />
-      </Tabs.TabPane>
-      <Tabs.TabPane tab='JSON' key='json'>
-        <HighLightJSON value={value} query={{ start, end }} urlTemplates={fieldConfig?.linkArr} extractArr={fieldConfig?.regExtractArr} />
-      </Tabs.TabPane>
-    </Tabs>
+        </>
+      ),
+    },
+      {
+      key: 'json',
+      label: 'JSON',
+      children: (
+        <>
+          <HighLightJSON value={value} query={{ start, end }} urlTemplates={fieldConfig?.linkArr} extractArr={fieldConfig?.regExtractArr} />
+        </>
+      ),
+    }
+    ]} />
   );
 }

@@ -67,9 +67,13 @@ export default function LogView(props: Props) {
           {t('log.copyToClipboard')}
         </Space>
       }
-    >
-      <Tabs.TabPane tab='Table' key='table'>
-        <Table
+     items={[
+      {
+      key: 'table',
+      label: 'Table',
+      children: (
+        <>
+          <Table
           showHeader={false}
           rowKey='field'
           dataSource={data}
@@ -91,10 +95,18 @@ export default function LogView(props: Props) {
           size='small'
           pagination={false}
         />
-      </Tabs.TabPane>
-      <Tabs.TabPane tab='JSON' key='json'>
-        <HighLightJSON value={value.___raw___} query={{ start, end }} urlTemplates={fieldConfig?.linkArr} extractArr={fieldConfig?.regExtractArr} />
-      </Tabs.TabPane>
-    </Tabs>
+        </>
+      ),
+    },
+      {
+      key: 'json',
+      label: 'JSON',
+      children: (
+        <>
+          <HighLightJSON value={value.___raw___} query={{ start, end }} urlTemplates={fieldConfig?.linkArr} extractArr={fieldConfig?.regExtractArr} />
+        </>
+      ),
+    }
+    ]} />
   );
 }

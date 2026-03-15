@@ -41,15 +41,12 @@ export default function index() {
             onChange={(activeKey) => {
               setActiveKey(activeKey);
             }}
-          >
-            {data.map((item) => {
-              return (
-                <Tabs.TabPane tab={t(item.name)} key={item.name}>
-                  <Item activeKey={activeKey} item={item} />
-                </Tabs.TabPane>
-              );
-            })}
-          </Tabs>
+            items={data.map((item) => ({
+              key: item.name,
+              label: t(item.name),
+              children: <Item activeKey={activeKey} item={item} />,
+            }))}
+          />
         </Card>
       </main>
     </PageLayout>

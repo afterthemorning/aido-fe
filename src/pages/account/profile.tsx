@@ -25,7 +25,6 @@ import Info from './info';
 import './profile.less';
 import './locale';
 
-const { TabPane } = Tabs;
 export default function Profile() {
   const { t } = useTranslation('account');
   const { tab } = useParams<{ tab: string }>();
@@ -39,17 +38,35 @@ export default function Profile() {
     <PageLayout title={t('title')}>
       <div>
         <div>
-          <Tabs activeKey={tab} className='profile' onChange={handleChange}>
-            <TabPane tab={t('profile.title')} key='info'>
-              <Info />
-            </TabPane>
-            <TabPane tab={t('password.title')} key='pwd'>
-              <ChangePassword />
-            </TabPane>
-            <TabPane tab={t('token.title')} key='token'>
-              <Token />
-            </TabPane>
-          </Tabs>
+          <Tabs activeKey={tab} className='profile' onChange={handleChange} items={[
+            {
+            key: 'info',
+            label: t('profile.title'),
+            children: (
+              <>
+                <Info />
+              </>
+            ),
+          },
+            {
+            key: 'pwd',
+            label: t('password.title'),
+            children: (
+              <>
+                <ChangePassword />
+              </>
+            ),
+          },
+            {
+            key: 'token',
+            label: t('token.title'),
+            children: (
+              <>
+                <Token />
+              </>
+            ),
+          }
+          ]} />
         </div>
       </div>
     </PageLayout>

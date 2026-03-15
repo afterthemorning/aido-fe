@@ -107,9 +107,13 @@ export default function Prometheus(props: IProps) {
               }, 200);
             }}
             type='card'
-          >
-            <Tabs.TabPane tab='Table' key='table'>
-              <div
+           items={[
+            {
+            key: 'table',
+            label: 'Table',
+            children: (
+              <>
+                <div
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -119,11 +123,19 @@ export default function Prometheus(props: IProps) {
                 <AdvancedSettings mode='table' span={8} prefixName={['query']} expanded expandTriggerVisible={false} />
                 <Table form={form} datasourceValue={datasourceValue} refreshFlag={refreshFlag} setRefreshFlag={setRefreshFlag} />
               </div>
-            </Tabs.TabPane>
-            <Tabs.TabPane tab='Graph' key='graph'>
-              <Graph form={form} datasourceValue={datasourceValue} refreshFlag={refreshFlag} setRefreshFlag={setRefreshFlag} />
-            </Tabs.TabPane>
-          </Tabs>
+              </>
+            ),
+          },
+            {
+            key: 'graph',
+            label: 'Graph',
+            children: (
+              <>
+                <Graph form={form} datasourceValue={datasourceValue} refreshFlag={refreshFlag} setRefreshFlag={setRefreshFlag} />
+              </>
+            ),
+          }
+          ]} />
         </div>
       </div>
     </div>

@@ -33,7 +33,6 @@ interface IProps {
   type: ModalType;
 }
 
-const TabPane = Tabs.TabPane;
 const BetaSvg = () => (
   <svg viewBox='0 0 1024 1024' version='1.1' xmlns='http://www.w3.org/2000/svg' p-id='1912' width='1em' height='1em' fill='currentColor'>
     <path
@@ -86,12 +85,22 @@ export default function Import(props: IProps) {
       maskClosable={false}
       destroyOnClose
       title={
-        <Tabs activeKey={modalType} onChange={(e: ModalType) => setModalType(e)} className='custom-import-alert-title'>
-          <TabPane tab={t('batch.import_builtin')} key='ImportBuiltin'></TabPane>
-          <TabPane tab={t('batch.import_grafana_url')} key='ImportGrafanaURL'></TabPane>
-          <TabPane tab={t('batch.import')} key='Import'></TabPane>
-          <TabPane
-            tab={
+        <Tabs activeKey={modalType} onChange={(e: ModalType) => setModalType(e)} className='custom-import-alert-title' items={[
+          {
+          key: 'ImportBuiltin',
+          label: t('batch.import_builtin'),
+        },
+          {
+          key: 'ImportGrafanaURL',
+          label: t('batch.import_grafana_url'),
+        },
+          {
+          key: 'Import',
+          label: t('batch.import'),
+        },
+          {
+          key: 'ImportGrafana',
+          label: 
               <div
                 style={{
                   position: 'relative',
@@ -106,10 +115,9 @@ export default function Import(props: IProps) {
                   }}
                 />
               </div>
-            }
-            key='ImportGrafana'
-          ></TabPane>
-        </Tabs>
+            ,
+        }
+        ]} />
       }
       visible={visible}
       onCancel={() => {

@@ -414,13 +414,25 @@ export default function Detail(props: Props) {
   const { data } = props;
 
   return (
-    <Tabs defaultActiveKey='settings'>
-      <Tabs.TabPane tab='Settings' key='settings'>
-        <SettingsTab data={data} />
-      </Tabs.TabPane>
-      <Tabs.TabPane tab='Expiry Records' key='expiry'>
-        <ExpiryTab datasourceId={data.id} />
-      </Tabs.TabPane>
-    </Tabs>
+    <Tabs defaultActiveKey='settings' items={[
+      {
+      key: 'settings',
+      label: 'Settings',
+      children: (
+        <>
+          <SettingsTab data={data} />
+        </>
+      ),
+    },
+      {
+      key: 'expiry',
+      label: 'Expiry Records',
+      children: (
+        <>
+          <ExpiryTab datasourceId={data.id} />
+        </>
+      ),
+    }
+    ]} />
   );
 }

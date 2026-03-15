@@ -37,8 +37,6 @@ const titleMap = {
   add: '新建快捷视图',
   edit: '编辑快捷视图',
 };
-const { TabPane } = Tabs;
-
 function FormCpt(props: ModalWrapProps & IProps) {
   const { t } = useTranslation('objectExplorer');
   const { datasourceValue, action, visible, initialValues = {}, destroy, range, onOk, admin } = props;
@@ -70,10 +68,15 @@ function FormCpt(props: ModalWrapProps & IProps) {
     <Modal
       className='n9e-metric-views-modal'
       title={
-        <Tabs className='custom-import-title' activeKey={activeKey} onChange={setActiveKey}>
-          <TabPane tab={t(`list.${action}_title`)} key='form' />
-          {action === 'add' && <TabPane tab={t('list.import_title')} key='import' />}
-        </Tabs>
+        <Tabs
+          className='custom-import-title'
+          activeKey={activeKey}
+          onChange={setActiveKey}
+          items={[
+            { key: 'form', label: t(`list.${action}_title`) },
+            ...(action === 'add' ? [{ key: 'import', label: t('list.import_title') }] : []),
+          ]}
+        />
       }
       visible={visible}
       onCancel={() => {

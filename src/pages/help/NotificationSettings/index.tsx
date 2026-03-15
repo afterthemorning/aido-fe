@@ -62,15 +62,12 @@ export default function index() {
                 search: `?tab=${val}`,
               });
             }}
-          >
-            {panes.map((pane) => {
-              return (
-                <Tabs.TabPane tab={pane.tab} key={pane.key}>
-                  {pane.content}
-                </Tabs.TabPane>
-              );
-            })}
-          </Tabs>
+            items={panes.map((pane) => ({
+              key: pane.key,
+              label: pane.tab,
+              children: pane.content,
+            }))}
+          />
         </div>
       </div>
     </PageLayout>

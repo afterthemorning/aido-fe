@@ -218,6 +218,22 @@ grep -rn 'from.*@ant-design/icons' src --include='*.tsx' | grep -oP "'[A-Za-z]+'
 npx tsc --noEmit --skipLibCheck 2>&1 | head -100
 ```
 Fix errors file-by-file. Common patterns:
+
+### Guardrail Exception: 2026-03-15 Tabs API migration batch
+
+Reason:
+- antd Tabs.TabPane -> items migration and related compatibility adjustments touch many frontend files in one coordinated pass and exceed the staged-line guardrail threshold.
+
+Affected paths:
+- src/pages/**
+- src/plugins/**
+- src/components/**
+- src/aido-extension/**
+
+Conflict mitigation plan:
+- keep migration scope limited to Tabs API and strict prop-compatibility fixes only;
+- validate with typecheck/build before commit;
+- avoid unrelated refactors and preserve existing behavior.
 - `FormInstance` generics changed
 - `TableColumnType` key narrowing stricter
 - `UploadFile` type generics

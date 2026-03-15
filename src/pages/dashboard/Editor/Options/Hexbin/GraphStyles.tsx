@@ -87,7 +87,7 @@ export default function GraphStyles() {
         <Row gutter={10}>
           <Col span={12}>
             <Form.Item label={t('panel.custom.colorRange')} name={[...namePrefix, 'colorRange']}>
-              <Select dropdownClassName='color-scales' optionLabelProp='label'>
+              <Select popupClassName='color-scales' optionLabelProp='label'>
                 {_.map(colors, (item) => {
                   return (
                     <Select.Option key={item.label} label={item.label} value={_.join(item.value, ',')}>

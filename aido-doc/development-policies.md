@@ -249,6 +249,19 @@ Conflict mitigation plan:
 - keep change limited to style import chain and Tailwind directives only;
 - verify with full build and runtime computed-style probe;
 - avoid unrelated runtime, routing, or service-layer refactors.
+
+### Guardrail Exception: 2026-03-15 Antd default theme rollback
+
+Reason:
+- User requested to restore Ant Design default style globally; this requires editing high-risk app bootstrap path `src/App.tsx`.
+
+Affected paths:
+- src/App.tsx
+
+Conflict mitigation plan:
+- keep change limited to removing `ConfigProvider` theme custom tokens/components only;
+- validate with typecheck and runtime smoke check;
+- do not mix with unrelated page-level refactors in the same commit.
 - `FormInstance` generics changed
 - `TableColumnType` key narrowing stricter
 - `UploadFile` type generics

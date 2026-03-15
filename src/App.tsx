@@ -17,7 +17,7 @@
 import React, { useEffect, useState, createContext, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Modal 会被注入的代码所使用，请不要删除
-import { ConfigProvider, Empty, Modal, Spin, theme } from 'antd';
+import { ConfigProvider, Empty, Modal, Spin } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
 import ruRU from 'antd/lib/locale/ru_RU';
@@ -37,7 +37,6 @@ import Feedback from '@/components/Feedback';
 import { IRawTimeRange } from '@/components/TimeRangePicker';
 import { getN9eConfig } from '@/pages/siteSettings/services';
 import { getDarkMode, updateDarkMode } from '@/utils/darkMode';
-import getFontFamilyByEnv from '@/utils/getFontFamilyByEnv';
 import SharedDetail from '@/pages/event/DetailNG/SharedDetail';
 import HocRenderer from './components/HocRenderer';
 import HeaderMenu from './components/SideMenu';
@@ -342,61 +341,6 @@ function App() {
         <ConfigProvider
           locale={i18n.language == 'en_US' ? enUS : i18n.language == 'ru_RU' ? ruRU : zhCN}
           empty={{ image: Empty.PRESENTED_IMAGE_DEFAULT }}
-          theme={{
-            algorithm: theme.defaultAlgorithm,
-            token: {
-              colorText: '#2C2C2C',
-              colorPrimary: '#52C41A',
-              colorSuccess: '#51CF66',
-              colorWarning: '#FFD93D',
-              colorError: '#FA5252',
-              colorInfo: '#4DABF7',
-              colorBorder: '#2C2C2C',
-              colorBorderSecondary: '#2C2C2C',
-              lineWidth: 3,
-              lineWidthBold: 3,
-              borderRadius: 12,
-              borderRadiusLG: 16,
-              borderRadiusSM: 8,
-              controlHeight: 40,
-              controlHeightSM: 34,
-              controlHeightLG: 48,
-              fontSize: 15,
-              fontWeightStrong: 600,
-              colorBgBase: '#FFF9F0',
-              colorBgContainer: '#FFFFFF',
-              fontFamily: getFontFamilyByEnv(import.meta.env.VITE_IS_ENT === 'true'),
-            },
-            components: {
-              Button: {
-                primaryShadow: 'none',
-                dangerShadow: 'none',
-                defaultShadow: 'none',
-                fontWeight: 600,
-              },
-              Modal: {
-                boxShadow: 'none',
-              },
-              Card: {
-                boxShadow: '4px 4px 0 #2C2C2C',
-                colorBgContainer: '#FFF0F6',
-              },
-              Tooltip: {
-                colorBorder: '#2C2C2C',
-                colorBgSpotlight: 'rgba(100, 100, 100, 0.95)',
-                borderRadius: 8,
-              },
-              Select: {
-                optionSelectedBg: 'transparent',
-              },
-              Slider: {
-                dotBorderColor: '#237804',
-                dotActiveBorderColor: '#237804',
-                colorPrimaryBorder: '#237804',
-                colorPrimaryBorderHover: '#237804',
-              },
-            },
-          }}
         >
           <Router
             basename={basePrefix}

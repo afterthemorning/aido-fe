@@ -434,6 +434,24 @@ Retrospective:
 - `package.json` / `package-lock.json`: version normalization + caniuse-lite update (tooling fix, not feature code).
 - This exception is a one-time bootstrap commit; future incremental changes will not trigger the threshold.
 
+### Guardrail Exception: 2026-03-15 Vite 8 HMR fix + antd Illustration Style
+
+Reason:
+- `vite.config.ts`: remove `hmr: false` — Vite 8 clientInjectionsPlugin does not
+  substitute `__HMR_CONFIG_NAME__` (and other `__*__` template vars) when hmr is
+  disabled, causing `ReferenceError: __HMR_CONFIG_NAME__ is not defined` at runtime.
+  Removing `hmr: false` restores Vite 8's standard client injection path.
+- `src/App.tsx`: add `empty={{ image: Empty.PRESENTED_IMAGE_DEFAULT }}` on
+  ConfigProvider to enable antd Illustration Style globally.
+
+Affected paths:
+- vite.config.ts
+- src/App.tsx
+
+Conflict mitigation plan:
+- change is surgical: one line removed from server config, one prop + one import in App.tsx;
+- validate with typecheck/build/tests before commit; all green.
+
 ### Guardrail Exception: 2026-03-15 antd6 theme token root wiring
 
 Reason:

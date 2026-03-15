@@ -104,7 +104,6 @@ export default defineConfig(({ mode }) => {
       ],
     },
     server: {
-      hmr: false,
       proxy: proxyConfig,
     },
     build: {

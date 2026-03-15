@@ -17,7 +17,7 @@
 import React, { useEffect, useState, createContext, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Modal 会被注入的代码所使用，请不要删除
-import { ConfigProvider, Modal, Spin } from 'antd';
+import { ConfigProvider, Empty, Modal, Spin } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
 import ruRU from 'antd/lib/locale/ru_RU';
@@ -341,6 +341,7 @@ function App() {
       <CommonStateContext.Provider value={commonState}>
         <ConfigProvider
           locale={i18n.language == 'en_US' ? enUS : i18n.language == 'ru_RU' ? ruRU : zhCN}
+          empty={{ image: Empty.PRESENTED_IMAGE_DEFAULT }}
           theme={{
             token: {
               colorPrimary: '#6C53B1',

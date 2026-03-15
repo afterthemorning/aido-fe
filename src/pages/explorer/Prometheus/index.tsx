@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import moment from 'moment';
 import _ from 'lodash';
@@ -55,7 +55,7 @@ export default function Prometheus(props: IProps) {
     defaultTime,
     onDefaultTimeChange,
   } = props;
-  const history = useHistory();
+  const navigate = useNavigate();
   const { search } = useLocation();
   const query = queryString.parse(search, queryStringOptions);
   const defaultPromQL = promQL ? promQL : typeof query.prom_ql === 'string' ? query.prom_ql : '';
@@ -105,9 +105,9 @@ export default function Prometheus(props: IProps) {
           end = parsedRange.end as any;
         }
         if (panelIdx === 0 && allowReplaceHistory) {
-          history.replace({
+          navigate({
             search: queryString.stringify({ ...query, start, end }),
-          });
+          }, { replace: true });
         }
         if (onDefaultTimeChange) {
           onDefaultTimeChange(newRange);

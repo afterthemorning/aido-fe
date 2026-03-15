@@ -16,7 +16,7 @@
  */
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import _ from 'lodash';
 import { Space, Empty, Spin, Dropdown, Input, Menu, notification, Tooltip } from 'antd';
@@ -36,7 +36,7 @@ const LOCAL_STORAGE_KEY = 'embeddedDashboards_id';
 export default function index() {
   const { darkMode } = useContext(CommonStateContext);
   const { t } = useTranslation('embeddedDashboards');
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const query = queryString.parse(location.search);
   const [loading, setLoading] = useState<boolean>(false);
@@ -58,13 +58,13 @@ export default function index() {
           if (_.find(data, (item) => item.id === localStorage.getItem(LOCAL_STORAGE_KEY))) {
             id = localStorage.getItem(LOCAL_STORAGE_KEY) as string;
           }
-          history.replace({
+          navigate({
             pathname: '/embedded-dashboards',
             search: queryString.stringify({
               ...query,
               id,
             }),
-          });
+          }, { replace: true });
         } else {
           setActiveRecord(undefined);
         }
@@ -74,10 +74,10 @@ export default function index() {
 
   // useKeyPress('esc', () => {
   //   if (query.viewMode === 'fullscreen') {
-  //     history.replace({
+  //     navigate({
   //       pathname: location.pathname,
   //       search: queryString.stringify(_.omit(query, ['viewMode'])),
-  //     });
+  //     }, { replace: true });
   //     notification.close('dashboard_fullscreen');
   //   }
   // });
@@ -108,13 +108,13 @@ export default function index() {
           if (_.find(res, (item) => item.id === localStorage.getItem(LOCAL_STORAGE_KEY))) {
             id = localStorage.getItem(LOCAL_STORAGE_KEY) as string;
           }
-          history.replace({
+          navigate({
             pathname: '/embedded-dashboards',
             search: queryString.stringify({
               ...query,
               id,
             }),
-          });
+          }, { replace: true });
         }
       })
       .finally(() => {
@@ -163,7 +163,7 @@ export default function index() {
                               <Menu.Item
                                 key={item.id}
                                 onClick={() => {
-                                  history.push(`/embedded-dashboards?id=${item.id}`);
+                                  navigate(`/embedded-dashboards?id=${item.id}`);
                                   setDashboardListDropdownVisible(false);
                                   setDashboardListDropdownSearch('');
                                   localStorage.setItem(LOCAL_STORAGE_KEY, item.id);
@@ -201,7 +201,7 @@ export default function index() {
                     style={{ margin: 0 }}
                     onClick={() => {
                       isClickTrigger.current = true;
-                      history.push({
+                      navigate({
                         pathname: location.pathname,
                         search: queryString.stringify({
                           ...query,

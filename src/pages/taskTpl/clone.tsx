@@ -18,7 +18,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Button, Card, Spin, message } from 'antd';
 import { RollbackOutlined } from '@ant-design/icons';
 import _ from 'lodash';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PageLayout from '@/components/pageLayout';
 import request from '@/utils/request';
@@ -28,7 +28,7 @@ import { Tpl } from './interface';
 import { CommonStateContext } from '@/App';
 
 const Add = (props: any) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const id = _.get(props, 'match.params.id');
   const { businessGroup } = useContext(CommonStateContext);
   const curBusiId = businessGroup.id!;
@@ -43,7 +43,7 @@ const Add = (props: any) => {
       body: JSON.stringify(values),
     }).then(() => {
       message.success(t('msg.create.success'));
-      props.history.push({
+      navigate({
         pathname: `/job-tpls`,
       });
     });
@@ -71,7 +71,7 @@ const Add = (props: any) => {
     <PageLayout
       title={
         <>
-          <RollbackOutlined className='back' onClick={() => history.push('/job-tpls')} />
+          <RollbackOutlined className='back' onClick={() => navigate('/job-tpls')} />
           {t('tpl')}
         </>
       }

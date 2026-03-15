@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tabs } from 'antd';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import PageLayout from '@/components/pageLayout';
 import Webhooks from './Webhooks';
@@ -18,7 +18,7 @@ export default function index() {
   const { t } = useTranslation('notificationSettings');
   const { search } = useLocation();
   const query = queryString.parse(search);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [activeKey, setActiveKey] = React.useState((query.tab as string) || 'webhooks');
   const panes = [
     {
@@ -57,7 +57,7 @@ export default function index() {
             activeKey={activeKey}
             onChange={(val) => {
               setActiveKey(val);
-              history.push({
+              navigate({
                 pathname: location.pathname,
                 search: `?tab=${val}`,
               });

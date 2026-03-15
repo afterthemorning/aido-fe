@@ -17,7 +17,7 @@
 import React, { useContext, useEffect, createContext } from 'react';
 import { Form, Space, Button, message, Affix, Card, Alert } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import _ from 'lodash';
 import { CommonStateContext } from '@/App';
 import { addStrategy, EditStrategy } from '@/services/warning';
@@ -44,7 +44,7 @@ export const FormStateContext = createContext({
 
 export default function index(props: IProps) {
   const { type, initialValues, editable = true } = props;
-  const history = useHistory();
+  const navigate = useNavigate();
   const { bgid } = useParams<{ bgid: string }>();
   const { t } = useTranslation('alertRules');
   const [form] = Form.useForm();
@@ -70,7 +70,7 @@ export default function index(props: IProps) {
         message.error(res.error);
       } else {
         message.success(t('common:success.modify'));
-        history.push('/alert-rules');
+        navigate('/alert-rules');
       }
     } else {
       const { dat } = res;
@@ -82,7 +82,7 @@ export default function index(props: IProps) {
 
       if (!errorNum) {
         message.success(`${type === 2 ? t('common:success.clone') : t('common:success.add')}`);
-        history.push('/alert-rules');
+        navigate('/alert-rules');
       } else {
         message.error(t(msg));
       }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 
@@ -22,7 +22,7 @@ const N9E_GIDS_LOCALKEY = 'n9e_subscribes_gids';
 
 export default function List() {
   const { t } = useTranslation('alertSubscribes');
-  const history = useHistory();
+  const navigate = useNavigate();
   const { businessGroup } = useContext(CommonStateContext);
   const [gids, setGids] = useState<string | undefined>(getDefaultGids(N9E_GIDS_LOCALKEY, businessGroup)); // -2: 所有告警策略
   const [refreshFlag, setRefreshFlag] = useState<string>(_.uniqueId('refresh_'));
@@ -64,7 +64,7 @@ export default function List() {
                     type='primary'
                     className='add'
                     onClick={() => {
-                      history.push('/alert-subscribes/add');
+                      navigate('/alert-subscribes/add');
                     }}
                   >
                     {t('common:btn.add')}

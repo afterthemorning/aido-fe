@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useContext, useState } from 'react';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { match } from 'pinyin-pro';
 import { Modal } from 'antd';
 import { RightOutlined, SearchOutlined } from '@ant-design/icons';
@@ -52,7 +52,7 @@ const calcVisibleMenuRange = (scrollTop) => {
 export default forwardRef(function QuickMenu(props: Props, ref) {
   const { t } = useTranslation('menu');
   const { menuList } = props;
-  const history = useHistory();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [menus, setMenus] = useState<QuickMenuItem[]>([]);
@@ -137,7 +137,7 @@ export default forwardRef(function QuickMenu(props: Props, ref) {
         if (activeIndex > -1) {
           const item = filteredMenus[activeIndex] as QuickMenuItem;
           setOpen(false);
-          history.push(item.key);
+          navigate(item.key);
           saveSelectedCount(item.key);
         }
       }
@@ -200,7 +200,7 @@ export default forwardRef(function QuickMenu(props: Props, ref) {
                   className={cn('flex items-center p-2 cursor-pointer rounded', activeIndex === idx ? 'bg-fc-200' : '')}
                   onClick={() => {
                     setOpen(false);
-                    history.push(item.key);
+                    navigate(item.key);
                     saveSelectedCount(item.key);
                   }}
                   onMouseOver={() => {

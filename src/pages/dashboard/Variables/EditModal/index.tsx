@@ -4,7 +4,7 @@ import { ArrowDownOutlined, ArrowUpOutlined, CopyOutlined, DeleteOutlined } from
 import { arrayMoveImmutable } from 'array-move';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 
 import { useGlobalState } from '@/pages/dashboard/globalState';
@@ -22,7 +22,7 @@ interface IProps {
 export default function EditModal(props: IProps) {
   const { t } = useTranslation('dashboard');
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [dashboardMeta] = useGlobalState('dashboardMeta');
   const [variablesWithOptions, setVariablesWithOptions] = useGlobalState('variablesWithOptions');
   const { visible, setVisible, editMode, onChange } = props;
@@ -181,10 +181,10 @@ export default function EditModal(props: IProps) {
                                 // replace url 参数
                                 let newQueryParams = queryString.parse(location.search);
                                 newQueryParams = _.omit(newQueryParams, [record.name]);
-                                history.replace({
+                                navigate({
                                   pathname: location.pathname,
                                   search: queryString.stringify(newQueryParams),
-                                });
+                                }, { replace: true });
 
                                 return newData;
                               });
@@ -260,14 +260,14 @@ export default function EditModal(props: IProps) {
 
                       // replace url 参数
                       const newQueryParams = location.search ? queryString.parse(location.search) : {};
-                      history.replace({
+                      navigate({
                         pathname: location.pathname,
                         search: queryString.stringify(
                           _.assign(newQueryParams, {
                             [val.name]: currentValue,
                           }),
                         ),
-                      });
+                      }, { replace: true });
 
                       // localStorage 本地保存
                       if (dashboardMeta.dashboardId && val !== undefined) {

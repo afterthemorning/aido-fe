@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import queryString from 'query-string';
 import _ from 'lodash';
 import { Space, Spin, Tooltip } from 'antd';
@@ -17,7 +17,7 @@ import { adjustURL } from '../../utils';
 export default function Index() {
   const { darkMode } = useContext(CommonStateContext);
   const { t } = useTranslation(NS);
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { id: paramId } = useParams<{ id: string }>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,7 +37,7 @@ export default function Index() {
 
   useEffect(() => {
     setLoading(true);
-    getEmbeddedProduct(paramId)
+    getEmbeddedProduct(paramId!)
       .then((res) => {
         setData(res);
       })
@@ -65,7 +65,7 @@ export default function Index() {
                 style={{ margin: 0 }}
                 onClick={() => {
                   isClickTrigger.current = true;
-                  history.push({
+                  navigate({
                     pathname: location.pathname,
                     search: queryString.stringify({
                       viewMode: 'fullscreen',

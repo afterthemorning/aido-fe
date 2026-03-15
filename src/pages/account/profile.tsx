@@ -16,7 +16,7 @@
  */
 import React from 'react';
 import { Tabs } from 'antd';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PageLayout from '@/components/pageLayout';
 import ChangePassword from './changePassword';
@@ -26,16 +26,13 @@ import './profile.less';
 import './locale';
 
 const { TabPane } = Tabs;
-interface Param {
-  tab: string;
-}
 export default function Profile() {
   const { t } = useTranslation('account');
-  const { tab } = useParams<Param>();
-  const history = useHistory();
+  const { tab } = useParams<{ tab: string }>();
+  const navigate = useNavigate();
 
   const handleChange = (tab) => {
-    history.push('/account/profile/' + tab);
+    navigate('/account/profile/' + tab);
   };
 
   return (

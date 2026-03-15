@@ -21,7 +21,7 @@ import { CloseCircleOutlined, ExclamationCircleOutlined, SearchOutlined } from '
 import moment from 'moment';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import Tags from '@/components/Tags';
 import PageLayout from '@/components/pageLayout';
@@ -45,7 +45,7 @@ const N9E_GIDS_LOCALKEY = 'n9e_mutes_gids';
 
 const Shield: React.FC = () => {
   const { t } = useTranslation('alertMutes');
-  const history = useHistory();
+  const navigate = useNavigate();
   const { datasourceList, groupedDatasourceList, businessGroup, busiGroups } = useContext(CommonStateContext);
   const [gids, setGids] = useState<string | undefined>(getDefaultGids(N9E_GIDS_LOCALKEY, businessGroup));
   const [query, setQuery] = useState<string>('');
@@ -72,10 +72,8 @@ const Shield: React.FC = () => {
         render: (data, record: any) => {
           return (
             <Link
-              to={{
-                pathname: `/alert-mutes/edit/${record.id}`,
-                state: record,
-              }}
+              to={`/alert-mutes/edit/${record.id}`}
+              state={record}
             >
               {data}
             </Link>
@@ -263,9 +261,8 @@ const Shield: React.FC = () => {
                     display: 'inline-block',
                   }}
                   onClick={() => {
-                    history.push(`/alert-mutes/edit/${record.id}?mode=clone`, {
-                      ...record,
-                      datasource_ids: record.datasource_ids || undefined,
+                    navigate(`/alert-mutes/edit/${record.id}?mode=clone`, {
+                      state: { ...record, datasource_ids: record.datasource_ids || undefined },
                     });
                   }}
                 >
@@ -396,7 +393,7 @@ const Shield: React.FC = () => {
                   type='primary'
                   className='add'
                   onClick={() => {
-                    history.push('/alert-mutes/add');
+                    navigate('/alert-mutes/add');
                   }}
                 >
                   {t('common:btn.add')}

@@ -14,7 +14,7 @@ import Host from '../Detail/Host';
 import PrometheusDetail from '../Detail/Prometheus';
 import LokiDetail from '../Detail/Loki';
 
-const eventDetail = ({ eventDetail, t, history, commonState, indexPatterns }) => {
+const eventDetail = ({ eventDetail, t, navigate, commonState, indexPatterns }) => {
   const { cate, rule_prod } = eventDetail || {};
 
   if (cate === 'host') {
@@ -23,13 +23,13 @@ const eventDetail = ({ eventDetail, t, history, commonState, indexPatterns }) =>
   if (cate === DatasourceCateEnum.prometheus && !_.includes(['firemap', 'northstar'], rule_prod)) {
     return PrometheusDetail({
       eventDetail,
-      history,
+      navigate,
     });
   }
   if (cate === DatasourceCateEnum.loki) {
     return LokiDetail({
       eventDetail,
-      history,
+      navigate,
     });
   }
   if (cate === DatasourceCateEnum.tdengine) {

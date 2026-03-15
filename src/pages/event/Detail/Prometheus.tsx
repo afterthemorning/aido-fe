@@ -9,11 +9,11 @@ import PromQLInput from '@/components/PromQLInput';
 
 interface IProps {
   eventDetail: any;
-  history: any;
+  navigate: (path: any, opts?: any) => void;
 }
 
 export default function PrometheusDetail(props: IProps) {
-  const { eventDetail, history } = props;
+  const { eventDetail, navigate } = props;
 
   if (eventDetail?.rule_config?.version === 'v2') {
     return [
@@ -37,7 +37,7 @@ export default function PrometheusDetail(props: IProps) {
                         }}
                         type='link'
                         onClick={() => {
-                          history.push({
+                          navigate({
                             pathname: '/metric/explorer',
                             search: queryString.stringify({
                               prom_ql,
@@ -98,7 +98,7 @@ export default function PrometheusDetail(props: IProps) {
                 }}
                 type='link'
                 onClick={() => {
-                  history.push({
+                  navigate({
                     pathname: '/metric/explorer',
                     search: queryString.stringify({
                       prom_ql,

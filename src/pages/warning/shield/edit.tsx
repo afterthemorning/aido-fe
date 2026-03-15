@@ -28,7 +28,7 @@ function useQuery() {
 
 const EditShield: React.FC = () => {
   const { t } = useTranslation('alertMutes');
-  const { state } = useLocation<any>();
+  const { state } = useLocation();
   const query = useQuery();
   const isClone = query.get('mode');
 

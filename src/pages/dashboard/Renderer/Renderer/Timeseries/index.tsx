@@ -22,7 +22,7 @@ import querystring from 'query-string';
 import { useTranslation } from 'react-i18next';
 import { Space, Table, Tooltip } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { VerticalRightOutlined, VerticalLeftOutlined } from '@ant-design/icons';
 import { useSize } from 'ahooks';
 import TsGraph from '@fc-plot/ts-graph';
@@ -125,7 +125,7 @@ export default function index(props: IProps) {
   const { t } = useTranslation('dashboard');
   const { time, setRange, values, series, inDashboard = true, chartHeight = '200px', tableHeight = '200px', onClick, isPreview, colors } = props;
   const themeMode = props.themeMode || (darkMode ? 'dark' : 'light');
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { custom, options = {}, targets, overrides } = values;
   const { lineWidth = 1, gradientMode = 'none', scaleDistribution, showPoints, pointSize } = custom;
@@ -358,14 +358,14 @@ export default function index(props: IProps) {
                   end: moment(times[1]),
                 });
                 // 开启了缩放后更新全局时间范围时，url 中保存时间范围数据
-                history.replace({
+                navigate({
                   pathname: location.pathname,
                   search: querystring.stringify({
                     ...(querystring.parse(location.search) || {}),
                     __from: moment(times[0]).valueOf(),
                     __to: moment(times[1]).valueOf(),
                   }),
-                });
+                }, { replace: true });
               }
             }
           : undefined,

@@ -15,7 +15,7 @@
  *
  */
 import React, { ReactNode, useContext, useState, useEffect } from 'react';
-import { useHistory, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import querystring from 'query-string';
 import { useTranslation } from 'react-i18next';
 import { Menu, Dropdown, Space, Drawer } from 'antd';

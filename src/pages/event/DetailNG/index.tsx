@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import moment from 'moment';
 import _ from 'lodash';
 import { Button, message, Space, Spin, Tag, Typography } from 'antd';
@@ -36,7 +36,7 @@ export default function DetailNG(props: Props) {
   const { busiGroups, datasourceList } = commonState;
   const { data: eventDetail, showGraph, token } = props;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   if (eventDetail) eventDetail.cate = eventDetail.cate || 'prometheus'; // TODO: 兼容历史的告警事件
 
@@ -240,7 +240,7 @@ export default function DetailNG(props: Props) {
     ...(eventDetailByCate({
       eventDetail,
       t,
-      history,
+      navigate,
       commonState,
       indexPatterns,
     }) || []),

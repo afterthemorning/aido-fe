@@ -28,7 +28,7 @@ import { getPayloadByUUID } from '../services';
 
 export default function Edit() {
   const { t } = useTranslation('alertRules');
-  const { search } = useLocation<any>();
+  const { search } = useLocation();
   const query = queryString.parse(search);
   const [loading, setLoading] = useState<boolean>(true);
   const [initialValues, setInitialValues] = useState<any>(null);

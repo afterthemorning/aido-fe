@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState, useContext } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Icon, { MenuUnfoldOutlined, MenuFoldOutlined, NotificationFilled } from '@ant-design/icons';
 import _ from 'lodash';
 import querystring from 'query-string';
@@ -232,7 +232,7 @@ const SideMenu = () => {
     sideMenuBgMode = 'dark';
   }
   const sideMenuBgColor = getSideMenuBgColor(sideMenuBgMode as any);
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const [selectedKeys, setSelectedKeys] = useState<string[]>();
   const [collapsed, setCollapsed] = useState<boolean>(Number(localStorage.getItem('menuCollapsed')) === 1);

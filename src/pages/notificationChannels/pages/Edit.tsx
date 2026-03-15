@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { Spin, message } from 'antd';
 import _ from 'lodash';
@@ -16,7 +16,7 @@ import Form from './Form';
 export default function Add() {
   const { t } = useTranslation(NS);
   const { id } = useParams<{ id: string }>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { search } = useLocation();
   const { mode } = queryString.parse(search);
   const [data, setData] = useState<ChannelItem>();
@@ -39,14 +39,14 @@ export default function Add() {
               if (mode === 'clone') {
                 postItems([_.omit(normalizeFormValues(values), ['id']) as ChannelItem]).then(() => {
                   message.success(t('common:success.add'));
-                  history.push({
+                  navigate({
                     pathname: `/${NS}`,
                   });
                 });
               } else {
                 putItem(normalizeFormValues(values)).then(() => {
                   message.success(t('common:success.add'));
-                  history.push({
+                  navigate({
                     pathname: `/${NS}`,
                   });
                 });

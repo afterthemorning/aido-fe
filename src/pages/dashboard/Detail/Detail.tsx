@@ -21,7 +21,7 @@ import semver from 'semver';
 import { useTranslation } from 'react-i18next';
 import { useInterval } from 'ahooks';
 import { v4 as uuidv4 } from 'uuid';
-import { useParams, useHistory, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useBeforeunload } from 'react-beforeunload';
 import queryString from 'query-string';
 import { Alert, Modal, Button, Affix, message, Spin } from 'antd';
@@ -52,10 +52,6 @@ import { scrollToLastPanel, getDefaultTimeRange, getDefaultIntervalSeconds, getD
 import dashboardMigrator from './utils/dashboardMigrator';
 import adjustInitialValues from '../Renderer/utils/adjustInitialValues';
 import './style.less';
-
-interface URLParam {
-  id: string;
-}
 
 interface IProps {
   isPreview?: boolean;
@@ -88,7 +84,7 @@ const builtinParamsToID = (builtinParams) => {
 export default function DetailV2(props: IProps) {
   const { isPreview = false, isBuiltin = false, gobackPath, builtinParams, hideGoBack, hideGoList } = props;
   const { t, i18n } = useTranslation('dashboard');
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { dashboardDefaultRangeIndex, dashboardSaveMode, perms, groupedDatasourceList, darkMode, datasourceList } = useContext(CommonStateContext);
   const isAuthorized = _.includes(perms, '/dashboards/put') && !isPreview;
@@ -96,7 +92,7 @@ export default function DetailV2(props: IProps) {
   const [variablesWithOptions, setVariablesWithOptions] = useGlobalState('variablesWithOptions');
   const [panelClipboard] = useGlobalState('panelClipboard');
   const [, setParamsAiAction] = useParamsAiAction();
-  let { id } = useParams<URLParam>();
+  let { id } = useParams<{ id: string }>();
   const query = queryString.parse(location.search);
   if (isBuiltin) {
     id = builtinParamsToID(query);
@@ -414,7 +410,7 @@ export default function DetailV2(props: IProps) {
           {dashboard.configs?.mode !== 'iframe' ? (
             <>
               <Panels
-                dashboardId={id}
+                dashboardId={id!}
                 isPreview={isPreview}
                 editable={editable}
                 panels={panels}
@@ -533,7 +529,7 @@ export default function DetailV2(props: IProps) {
             type='primary'
             ghost
             onClick={() => {
-              history.push('/help/migrate');
+              navigate('/help/migrate');
             }}
           >
             前往批量迁移大盘

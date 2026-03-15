@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { message, Spin, Modal, Space } from 'antd';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { createGlobalState } from 'react-hooks-global-state';
 import PageLayout, { HelpLink } from '@/components/pageLayout';
@@ -24,7 +24,7 @@ export const { useGlobalState } = createGlobalState<{
 export default function FormCpt() {
   const { t } = useTranslation('datasourceManage');
   const { isPlus } = useContext(CommonStateContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const params = useParams<{ action: string; type: string; id: string }>();
   const { action } = params;
   const id = action === 'edit' ? params.id : undefined;
@@ -70,7 +70,7 @@ export default function FormCpt() {
     })
       .then(() => {
         message.success(action === 'add' ? t('common:success.add') : t('common:success.modify'));
-        history.push({
+        navigate({
           pathname: '/datasources',
         });
       })
@@ -112,7 +112,7 @@ export default function FormCpt() {
           />
         </Space>
       }
-      doc={helpLinkMap[type]}
+      doc={helpLinkMap[type!]}
     >
       <div className='srm'>
         {action === 'edit' && data === undefined ? (

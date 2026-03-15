@@ -15,7 +15,7 @@
  *
  */
 import React, { useContext, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Table, Divider, Checkbox, Row, Col, Input, Select, Button, Space } from 'antd';
 import { SearchOutlined, CodeOutlined } from '@ant-design/icons';
 import { ColumnProps } from 'antd/lib/table';
@@ -61,7 +61,7 @@ function getTableData(options: any, gids: string | undefined, query: string, min
 }
 
 const index = (_props: any) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation('common');
   const [query, setQuery] = useState('');
   const [mine, setMine] = useState(true);
@@ -184,7 +184,7 @@ const index = (_props: any) => {
                   <Button
                     type='primary'
                     onClick={() => {
-                      history.push('/job-tasks/add');
+                      navigate('/job-tasks/add');
                     }}
                   >
                     {t('task.temporary.create')}

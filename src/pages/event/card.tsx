@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useLayoutEffect, useRef, useImperativeHandle, useContext } from 'react';
 import { Button, Row, Col, Drawer, Tag, Table, Dropdown, Menu, Tooltip } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { ReactNode } from 'react-markdown/lib/react-markdown';
 import _, { throttle } from 'lodash';
 import moment from 'moment';
@@ -52,7 +52,7 @@ function Card(props: Props, ref) {
   const { filter, header, refreshFlag } = props;
   const { groupedDatasourceList } = useContext(CommonStateContext);
   const Ref = useRef<HTMLDivElement>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [span, setSpan] = useState<number>(4);
   const [rule, setRule] = useState<string>();
   const [cardList, setCardList] = useState<CardType[]>();
@@ -194,7 +194,7 @@ function Card(props: Props, ref) {
                       size='small'
                       type='link'
                       onClick={() => {
-                        history.push({
+                        navigate({
                           pathname: '/alert-mutes/add',
                           search: queryString.stringify({
                             busiGroup: record.group_id,

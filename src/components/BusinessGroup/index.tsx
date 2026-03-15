@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import _ from 'lodash';
 import classNames from 'classnames';
 import { Resizable } from 're-resizable';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { Button, Input, Popover, Space, Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -90,7 +90,7 @@ export default function index(props: IProps) {
   const { businessGroup, businessGroupOnChange } = useContext(CommonStateContext);
   const location = useLocation();
   const query = queryString.parse(location.search);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { title = t('common:business_groups'), renderHeadExtra, onSelect, showSelected = true } = props;
   const [collapse, setCollapse] = useState(localStorage.getItem('leftlist') === '1');
   const [width, setWidth] = useState(_.toNumber(localStorage.getItem('leftwidth') || 200));
@@ -235,7 +235,7 @@ export default function index(props: IProps) {
                       onClick={() => {
                         businessGroupOnChange(itemKey);
                         onSelect && onSelect(itemKey, item);
-                        history.push({
+                        navigate({
                           pathname: location.pathname,
                           search: queryString.stringify({
                             ..._.omit(query, ['preset-filter']),
@@ -261,7 +261,7 @@ export default function index(props: IProps) {
                     const itemKey = e.node.key;
                     businessGroupOnChange(itemKey);
                     onSelect && onSelect(itemKey, e.node);
-                    history.push({
+                    navigate({
                       pathname: location.pathname,
                       search: queryString.stringify({
                         ..._.omit(query, ['preset-filter']),

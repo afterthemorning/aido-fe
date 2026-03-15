@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import _ from 'lodash';
 import { Spin } from 'antd';
 import queryString from 'query-string';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { useGlobalState } from '../globalState';
 import Variable from './Variable';
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function Main(props: Props) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const [dashboardMeta] = useGlobalState('dashboardMeta');
   const [variablesWithOptions, setVariablesWithOptions] = useGlobalState('variablesWithOptions');
@@ -40,10 +40,10 @@ export default function Main(props: Props) {
       {},
     );
 
-    history.replace({
+    navigate({
       pathname: location.pathname,
       search: queryString.stringify(_.assign(newQueryParams, dataToQueryParams)),
-    });
+    }, { replace: true });
 
     shouldUpdateUrl.current = false;
   }, [variableNameValues, location.search]);

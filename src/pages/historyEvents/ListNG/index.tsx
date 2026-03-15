@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { useAntdTable } from 'ahooks';
 import { Input, Tag, Button, Space, Table, Select, Dropdown, Menu, message } from 'antd';
 import queryString from 'query-string';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import RefreshIcon from '@/components/RefreshIcon';
 import { CommonStateContext } from '@/App';
@@ -56,7 +56,7 @@ interface Props {
 
 const Event = (props: Props) => {
   const { t } = useTranslation('AlertHisEvents');
-  const history = useHistory();
+  const navigate = useNavigate();
   const { feats, datasourceList, profile } = useContext(CommonStateContext);
   const {
     hideHeader = false,
@@ -213,7 +213,7 @@ const Event = (props: Props) => {
                           size='small'
                           type='link'
                           onClick={() => {
-                            history.push({
+                            navigate({
                               pathname: '/alert-mutes/add',
                               search: queryString.stringify({
                                 busiGroup: record.group_id,

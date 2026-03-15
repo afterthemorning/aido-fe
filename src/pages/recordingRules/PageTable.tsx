@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo, useContext } from 'react';
 import { Button, Modal, message, Dropdown, Table, Switch, Select, Space, Tag } from 'antd';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ColumnType } from 'antd/lib/table';
 import moment from 'moment';
@@ -38,7 +38,7 @@ const exportIgnoreAttrsObj = {
 const PageTable: React.FC<Props> = ({ gids }) => {
   const [severity] = useState<number>();
   const { t } = useTranslation('recordingRules');
-  const history = useHistory();
+  const navigate = useNavigate();
   const [selectRowKeys, setSelectRowKeys] = useState<React.Key[]>([]);
   const [selectedRows, setSelectedRows] = useState<strategyItem[]>([]);
   const { groupedDatasourceList, businessGroup, busiGroups } = useContext(CommonStateContext);
@@ -87,11 +87,11 @@ const PageTable: React.FC<Props> = ({ gids }) => {
     setCurrentStrategyData(res || []);
   };
   const goToAddWarningStrategy = () => {
-    history.push(`/recording-rules/add/${businessGroup.id}`);
+    navigate(`/recording-rules/add/${businessGroup.id}`);
   };
 
   const handleClickEdit = (id, isClone = false) => {
-    history.push(`/recording-rules/edit/${id}${isClone ? '?mode=clone' : ''}`);
+    navigate(`/recording-rules/edit/${id}${isClone ? '?mode=clone' : ''}`);
   };
 
   const refreshList = () => {

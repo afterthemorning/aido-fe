@@ -394,6 +394,23 @@ Commit: `chore(deps): upgrade vite/router/ts/tailwind/jest to latest release`
   - `npm run build` passed (EXIT 0).
   - `npm test -- --runInBand` passed (25 suites, 139 tests).
 
+### Guardrail Exception: 2026-03-15 Phase D4 Router 7 Migration
+
+**Reason:** `react-router-dom` 5→7 is a breaking migration that requires coordinated edits across route entrypoints and hook usage in many feature pages.
+- `package.json` / `package-lock.json`: upgraded `react-router-dom` to `7.13.1`, removed `@types/react-router-dom`.
+- `src/App.tsx` and `src/routers/index.tsx`: migrated `Switch`→`Routes`, `Redirect`→`Navigate`, `Route component=`→`Route element=`, removed unsupported `BrowserRouter.getUserConfirmation`.
+- Route hook migration across affected pages/components: `useHistory`→`useNavigate`; `history.push/replace/goBack/go` adapted to `navigate(...)` patterns.
+- `src/components/RouterPrompt/index.tsx`: replaced legacy `history.block` flow with `useBlocker`-based prompt interception.
+- `withRouter` removal completed in task template forms; state-passing patterns updated to v7-compatible `Link state` and `navigate(..., { state })` usage.
+
+Progress record:
+- Phase D4 completed with zero TypeScript errors after migration (`npx tsc --noEmit --skipLibCheck`).
+- Regression completed: build passed, tests passed, dev server smoke startup passed.
+
+Retrospective:
+- Bulk mechanical migration is effective for hook/call API renames, but routing structure files (`src/App.tsx`, `src/routers/index.tsx`) require manual, ordered conversion to avoid route precedence regressions.
+- Utility functions that previously accepted `history` must be reviewed explicitly; automatic replacement can introduce invalid `navigate` references in non-component modules.
+
 **Reason:** Initial delivery of Phase 2 (Backoffice Integration) as a single coherent batch.
 - `src/routers/index.tsx`: 2 lines added — 1 import + 1 Route declaration. No routing logic changed.
 - `src/components/menu/index.tsx`: 4 lines added — new menu item entry in existing structure.

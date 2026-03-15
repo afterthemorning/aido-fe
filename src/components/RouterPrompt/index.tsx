@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Location } from 'history';
+import { useNavigate, useBlocker, Location } from 'react-router-dom';
 import { Modal } from 'antd';
 
 interface Props {
@@ -13,47 +12,44 @@ interface Props {
   cancelText?: string;
   footer?: React.ReactNode;
   message?: React.ReactNode;
-  validator?: (prompt: Location) => boolean; // 自定义校验器
+  validator?: (prompt: Location) => boolean;
 }
 
 export default forwardRef(function RouterPrompt(props: Props, ref) {
   const { defaultPath = '', when, onOK, onCancel, title = 'Unsaved changes', message = 'Are you sure want to leave this page ?', okText, cancelText, footer, validator } = props;
-  const history = useHistory();
+  const navigate = useNavigate();
   const [showPrompt, setShowPrompt] = useState(false);
   const [currentPath, setCurrentPath] = useState(defaultPath);
+
+  const blocker = useBlocker(({ nextLocation }) => {
+    if (!when) return false;
+    if (validator && validator(nextLocation)) return false;
+    setCurrentPath(nextLocation.pathname);
+    setShowPrompt(true);
+    return true;
+  });
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       if (when) {
         event.preventDefault();
-        event.returnValue = message; // 兼容旧版浏览器
+        event.returnValue = message as string;
       }
     };
-
-    if (when) {
-      history.block((prompt) => {
-        if (validator && validator(prompt)) {
-          return undefined;
-        }
-        setCurrentPath(prompt.pathname);
-        setShowPrompt(true);
-        return 'CUSTOM';
-      });
-    } else {
-      history.block(() => {});
-    }
-
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => {
-      history.block(() => {});
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [history, when]);
+  }, [when, message]);
 
   const redirect = useCallback(() => {
-    history.block(() => {});
-    history.push(currentPath);
-  }, [currentPath, history]);
+    if (blocker.state === 'blocked') {
+      blocker.proceed();
+    } else {
+      navigate(currentPath);
+    }
+    setShowPrompt(false);
+  }, [blocker, currentPath, navigate]);
 
   const handleOK = useCallback(async () => {
     if (onOK) {
@@ -64,7 +60,7 @@ export default forwardRef(function RouterPrompt(props: Props, ref) {
     } else {
       redirect();
     }
-  }, [currentPath, history, onOK]);
+  }, [redirect, onOK]);
 
   const handleCancel = useCallback(async () => {
     if (onCancel) {
@@ -73,8 +69,11 @@ export default forwardRef(function RouterPrompt(props: Props, ref) {
         redirect();
       }
     }
+    if (blocker.state === 'blocked') {
+      blocker.reset();
+    }
     setShowPrompt(false);
-  }, [currentPath, history, onCancel]);
+  }, [blocker, redirect, onCancel]);
 
   useImperativeHandle(
     ref,

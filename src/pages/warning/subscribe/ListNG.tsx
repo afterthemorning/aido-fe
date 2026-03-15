@@ -83,10 +83,8 @@ const Subscribe = (props: Props) => {
         render: (data, record: any) => {
           return (
             <Link
-              to={{
-                pathname: `/alert-subscribes/edit/${record.id}`,
-                state: record,
-              }}
+              to={`/alert-subscribes/edit/${record.id}`}
+              state={record}
               target={linkTarget}
             >
               {data}

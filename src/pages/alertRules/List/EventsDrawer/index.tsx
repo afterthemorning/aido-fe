@@ -5,7 +5,7 @@ import { useAntdTable } from 'ahooks';
 import _ from 'lodash';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 
 import TimeRangePicker, { parseRange } from '@/components/TimeRangePicker';
@@ -61,7 +61,7 @@ const fetchData = (rid, filter, { current, pageSize }) => {
 export default function index(props: Props) {
   const { t } = useTranslation('AlertCurEvents');
   const { datasourceList, feats } = useContext(CommonStateContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { title, rid, visible, onClose } = props;
   const [filter, setFilter] = useState<any>({});
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
@@ -198,7 +198,7 @@ export default function index(props: Props) {
                       size='small'
                       type='link'
                       onClick={() => {
-                        history.push({
+                        navigate({
                           pathname: '/alert-mutes/add',
                           search: queryString.stringify({
                             busiGroup: record.group_id,

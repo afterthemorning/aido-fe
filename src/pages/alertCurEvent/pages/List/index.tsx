@@ -4,7 +4,7 @@ import { AlertOutlined, SearchOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import queryString from 'query-string';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDebounceFn } from 'ahooks';
 import moment from 'moment';
 
@@ -34,7 +34,7 @@ const AlertCurEvent: React.FC = () => {
   const { t } = useTranslation(NS);
   const { feats } = useContext(CommonStateContext);
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const query = queryString.parse(location.search);
   const [paramsAiAction, setParamsAiAction] = useParamsAiAction();
 
@@ -42,7 +42,7 @@ const AlertCurEvent: React.FC = () => {
   const [aggrRuleCardEventIds, setAggrRuleCardEventIds] = useState<number[] | undefined>();
   const filter = useMemo(() => getFilterByURLQuery(query, range, aggrRuleCardEventIds), [JSON.stringify(query), range, aggrRuleCardEventIds]);
   const setFilter = (newFilter) => {
-    history.replace({
+    navigate({
       pathname: location.pathname,
       search: queryString.stringify(
         {
@@ -51,7 +51,7 @@ const AlertCurEvent: React.FC = () => {
         },
         { arrayFormat: 'comma' },
       ),
-    });
+    }, { replace: true });
     setAggrRuleCardEventIds(newFilter.event_ids);
     setRange(newFilter.range);
   };

@@ -19,7 +19,7 @@ import { Form, Card, Select, Col, Button, Row, message, Checkbox, Radio, Modal, 
 import { PlusCircleOutlined, EditOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import { addSubscribe, editSubscribe, deleteSubscribes, alertSubscribesTryrun } from '@/services/subscribe';
@@ -82,7 +82,7 @@ interface Props {
 const OperateForm: React.FC<Props> = ({ detail = {} as subscribeItem, type }) => {
   const { t } = useTranslation('alertSubscribes');
   const [form] = Form.useForm(null as any);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { groupedDatasourceList, isPlus, businessGroup } = useContext(CommonStateContext);
   const curBusiId = detail.group_id || businessGroup.id!; // 修改和克隆是用 detail.group_id , 新增用 businessGroup.id
   const [ruleModalShow, setRuleModalShow] = useState<boolean>(false);
@@ -134,12 +134,12 @@ const OperateForm: React.FC<Props> = ({ detail = {} as subscribeItem, type }) =>
     if (type === 1) {
       editSubscribe([{ ...params, id: detail.id }], curBusiId).then((_) => {
         message.success(t('common:success.edit'));
-        history.push('/alert-subscribes');
+        navigate('/alert-subscribes');
       });
     } else {
       addSubscribe(params, curBusiId).then((_) => {
         message.success(t('common:success.add'));
-        history.push('/alert-subscribes');
+        navigate('/alert-subscribes');
       });
     }
   };
@@ -483,7 +483,7 @@ const OperateForm: React.FC<Props> = ({ detail = {} as subscribeItem, type }) =>
                         detail?.id &&
                           deleteSubscribes({ ids: [detail.id] }, curBusiId).then(() => {
                             message.success(t('common:success.delete'));
-                            history.push('/alert-subscribes');
+                            navigate('/alert-subscribes');
                           });
                       },
 

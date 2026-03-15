@@ -58,7 +58,7 @@ export default function Chart() {
   }, []);
 
   const initChart = () => {
-    GetTmpChartData(ids).then((res) => {
+    GetTmpChartData(ids!).then((res) => {
       const data = res.dat
         .filter((item) => !!item)
         .map((item) => {

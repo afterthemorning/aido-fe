@@ -8,11 +8,11 @@ import PromQLInput from '@/components/PromQLInput';
 
 interface IProps {
   eventDetail: any;
-  history: any;
+  navigate: (path: any, opts?: any) => void;
 }
 
 export default function LokiDetail(props: IProps) {
-  const { eventDetail, history } = props;
+  const { eventDetail, navigate } = props;
 
   return [
     {
@@ -34,7 +34,7 @@ export default function LokiDetail(props: IProps) {
                     }}
                     type='link'
                     onClick={() => {
-                      history.push({
+                      navigate({
                         pathname: '/log/explorer',
                         search: queryString.stringify({
                           query: prom_ql,

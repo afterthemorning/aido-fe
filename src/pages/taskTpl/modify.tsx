@@ -15,7 +15,7 @@
  *
  */
 import React, { useState, useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Spin, Card, message, Space } from 'antd';
 import { RollbackOutlined, CopyOutlined } from '@ant-design/icons';
 import _ from 'lodash';
@@ -28,7 +28,7 @@ import { CommonStateContext } from '@/App';
 import { copyToClipBoard } from '@/utils';
 
 const Modify = (props: any) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const id = _.get(props, 'match.params.id');
   const { businessGroup } = useContext(CommonStateContext);
   const curBusiId = businessGroup.id!;
@@ -42,7 +42,7 @@ const Modify = (props: any) => {
       body: JSON.stringify(values),
     }).then(() => {
       message.success(t('msg.modify.success'));
-      props.history.push({
+      navigate({
         pathname: `/job-tpls`,
       });
     });
@@ -70,7 +70,7 @@ const Modify = (props: any) => {
     <PageLayout
       title={
         <>
-          <RollbackOutlined className='back' onClick={() => history.push('/job-tpls')} />
+          <RollbackOutlined className='back' onClick={() => navigate('/job-tpls')} />
           {t('tpl')}
         </>
       }

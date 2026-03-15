@@ -1,24 +1,23 @@
 import queryString from 'query-string';
-import { History } from 'history';
 
 export default function replaceLocationSearch(params: {
   updatedQuery: { [key: string]: string | number | undefined | null }; // 更新后的查询参数
   location: Location;
-  history: History;
+  navigate: (path: any, opts?: any) => void;
   force?: boolean; // 是否强制替换当前页面记录
 }) {
-  const { updatedQuery, location, history, force } = params;
+  const { updatedQuery, location, navigate, force } = params;
   const query = queryString.parse(location.search);
 
   if (force) {
-    history.replace({
+    navigate({
       pathname: location.pathname,
       search: queryString.stringify(updatedQuery),
-    });
+    }, { replace: true });
   } else {
-    history.replace({
+    navigate({
       pathname: location.pathname,
       search: queryString.stringify({ ...query, ...updatedQuery }),
-    });
+    }, { replace: true });
   }
 }

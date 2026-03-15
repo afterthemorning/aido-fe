@@ -15,7 +15,7 @@
  *
  */
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { useHistory, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import querystring from 'query-string';
 import _ from 'lodash';
 import moment from 'moment';
@@ -92,7 +92,7 @@ export default function Title(props: IProps) {
     hideGoBack,
     hideGoList,
   } = props;
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { siteInfo, dashboardSaveMode } = useContext(CommonStateContext);
   const query = querystring.parse(location.search);
@@ -112,10 +112,10 @@ export default function Title(props: IProps) {
 
   useKeyPress('esc', () => {
     if (query.viewMode === 'fullscreen') {
-      history.replace({
+      navigate({
         pathname: location.pathname,
         search: querystring.stringify(_.omit(query, ['viewMode', 'themeMode'])),
-      });
+      }, { replace: true });
       notification.destroy('dashboard_fullscreen');
       setTimeout(() => {
         window.dispatchEvent(new Event('resize'));
@@ -162,8 +162,8 @@ export default function Title(props: IProps) {
                   className='back_icon'
                   onClick={() => {
                     if (allowedLeave) {
-                      goBack(history).catch(() => {
-                        history.push(props.gobackPath || '/dashboards');
+                      goBack(navigate).catch(() => {
+                        navigate(props.gobackPath || '/dashboards');
                       });
                     } else {
                       routerPromptRef.current.showPrompt();
@@ -212,7 +212,7 @@ export default function Title(props: IProps) {
                         <Menu.Item
                           key={item.id}
                           onClick={() => {
-                            history.push(`/dashboards/${item.ident || item.id}`);
+                            navigate(`/dashboards/${item.ident || item.id}`);
                             setDashboardListDropdownVisible(false);
                             setDashboardListDropdownSearch('');
                           }}
@@ -297,26 +297,26 @@ export default function Title(props: IProps) {
                 value={range}
                 onChange={(val) => {
                   // 更改时间范围后同步到 URL
-                  history.replace({
+                  navigate({
                     pathname: location.pathname,
                     search: querystring.stringify({
                       ...querystring.parse(window.location.search),
                       __from: moment.isMoment(val.start) ? val.start.valueOf() : val.start,
                       __to: moment.isMoment(val.end) ? val.end.valueOf() : val.end,
                     }),
-                  });
+                  }, { replace: true });
                   setRange(val);
                 }}
                 intervalSeconds={intervalSeconds}
                 onIntervalSecondsChange={(val) => {
                   const value = val > 0 ? val : undefined;
-                  history.replace({
+                  navigate({
                     pathname: location.pathname,
                     search: querystring.stringify({
                       ...querystring.parse(window.location.search),
                       __refresh: value,
                     }),
-                  });
+                  }, { replace: true });
                   setIntervalSeconds(value);
                 }}
                 showTimezone
@@ -391,10 +391,10 @@ export default function Title(props: IProps) {
                   newQuery.viewMode = 'fullscreen';
                   isClickTrigger.current = true;
                 }
-                history.replace({
+                navigate({
                   pathname: location.pathname,
                   search: querystring.stringify(newQuery),
-                });
+                }, { replace: true });
                 // TODO: 解决仪表盘 layout resize 问题
                 setTimeout(() => {
                   window.dispatchEvent(new Event('resize'));

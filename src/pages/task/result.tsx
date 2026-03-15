@@ -15,7 +15,7 @@
  *
  */
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Table, Divider, Tag, Row, Col, Button, Card } from 'antd';
 import { RollbackOutlined } from '@ant-design/icons';
 import { ColumnProps } from 'antd/lib/table';
@@ -35,7 +35,7 @@ interface HostItem {
 
 const index = (props: any) => {
   const taskResultCls = 'job-task-result';
-  const history = useHistory();
+  const navigate = useNavigate();
   const { businessGroup } = useContext(CommonStateContext);
   const curBusiId = businessGroup.id!;
   const { params } = props.match;
@@ -172,7 +172,7 @@ const index = (props: any) => {
     <PageLayout
       title={
         <>
-          <RollbackOutlined className='back' onClick={() => history.push('/job-tasks')} />
+          <RollbackOutlined className='back' onClick={() => navigate('/job-tasks')} />
           {t('task')}
         </>
       }

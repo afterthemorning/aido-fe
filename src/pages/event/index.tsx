@@ -20,7 +20,7 @@ import { AlertOutlined, ExclamationCircleOutlined, SearchOutlined, AppstoreOutli
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import queryString from 'query-string';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/pageLayout';
 import { deleteAlertEvents } from '@/services/warning';
 import { AutoRefresh } from '@/components/TimeRangePicker';
@@ -78,17 +78,17 @@ const Event: React.FC = () => {
   const [view, setView] = useState<'card' | 'list'>('card');
   const { feats } = useContext(CommonStateContext);
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const query = queryString.parse(location.search);
   const filter = getFilter(query);
   const setFilter = (newFilter) => {
-    history.replace({
+    navigate({
       pathname: location.pathname,
       search: queryString.stringify({
         ...query,
         ..._.omit(newFilter, 'range'), // range 仍然通过 loclalStorage 存储
       }),
-    });
+    }, { replace: true });
   };
   const [refreshFlag, setRefreshFlag] = useState<string>(_.uniqueId('refresh_'));
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);

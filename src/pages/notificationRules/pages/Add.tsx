@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 
 import PageLayout from '@/components/pageLayout';
@@ -11,7 +11,7 @@ import Form from './Form';
 
 export default function Add() {
   const { t } = useTranslation(NS);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <PageLayout title={t('title')} showBack backPath={`/${NS}`} doc='https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v8/quickstart/notify-rules/'>
@@ -20,7 +20,7 @@ export default function Add() {
           onOk={(values) => {
             postItems([values]).then(() => {
               message.success(t('common:success.add'));
-              history.push({
+              navigate({
                 pathname: `/${NS}`,
               });
             });

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tag, Button, Table, Dropdown, Menu, Space } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import _ from 'lodash';
 import queryString from 'query-string';
@@ -61,7 +61,7 @@ function formatDuration(ms: number) {
 
 export default function AlertTable(props: IProps) {
   const { filter, setFilter, selectedRowKeys, setSelectedRowKeys, params, setRefreshFlag } = props;
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation(NS);
   const { datasourceList } = useContext(CommonStateContext);
   const [eventDetailDrawerData, setEventDetailDrawerData] = useState<{
@@ -218,7 +218,7 @@ export default function AlertTable(props: IProps) {
                         size='small'
                         type='link'
                         onClick={() => {
-                          history.push({
+                          navigate({
                             pathname: '/alert-mutes/add',
                             search: queryString.stringify({
                               busiGroup: record.group_id,

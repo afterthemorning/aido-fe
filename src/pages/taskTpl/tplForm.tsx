@@ -16,7 +16,7 @@
  */
 import React, { useEffect, useContext } from 'react';
 import _ from 'lodash';
-import { withRouter } from 'react-router-dom';
+
 import { Button, Form, Input, InputNumber, Select, Space, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { CommonStateContext } from '@/App';
@@ -232,4 +232,4 @@ TplForm.defaultProps = {
   onSubmit: () => {},
 };
 
-export default withRouter(TplForm);
+export default TplForm;

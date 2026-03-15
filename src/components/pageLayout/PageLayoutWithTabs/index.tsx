@@ -15,7 +15,7 @@
  *
  */
 import React, { ReactNode, useContext, useState, useEffect, useLayoutEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import querystring from 'query-string';
 import { useTranslation } from 'react-i18next';
 import { Menu, Dropdown, Space, Drawer, Button, Tooltip } from 'antd';
@@ -68,7 +68,7 @@ const i18nMap = {
 
 const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introIcon, children, customArea, showBack, backPath, doc, tabGroup }) => {
   const { t, i18n } = useTranslation('pageLayout');
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const query = querystring.parse(location.search);
   const { profile, siteInfo, i18nList } = useContext(CommonStateContext);
@@ -103,7 +103,7 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introI
     <Menu>
       <Menu.Item
         onClick={() => {
-          history.push('/account/profile/info');
+          navigate('/account/profile/info');
         }}
       >
         {t('profile')}
@@ -127,7 +127,7 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introI
             if (res.dat && typeof res.dat === 'string') {
               window.location.href = res.dat;
             } else {
-              history.push('/login');
+              navigate('/login');
             }
           });
         }}
@@ -159,9 +159,9 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introI
                         <RollbackOutlined
                           onClick={() => {
                             if (backPath) {
-                              history.push(backPath);
+                              navigate(backPath);
                             } else {
-                              history.goBack();
+                              navigate(-1);
                             }
                           }}
                           style={{

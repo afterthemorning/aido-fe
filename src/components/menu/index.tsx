@@ -16,7 +16,7 @@
  */
 // import { FloatFcMenu } from '@fc-components/menu';
 import React, { FC, useState, useEffect, useContext } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Icon from '@ant-design/icons';
 import _ from 'lodash';
 import classNames from 'classnames';
@@ -247,7 +247,7 @@ const SideMenu: FC = () => {
   const [defaultSelectedKeys, setDefaultSelectedKeys] = useState<string[]>();
   const menuList = isPlus ? getPlusMenu(t) : getMenuList(t);
   const [menus, setMenus] = useState(menuList);
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
   const [collapsed, setCollapsed] = useState<'0' | '1' | '2' | string | null>(localStorage.getItem('menuCollapsed') || '0');
@@ -266,7 +266,7 @@ const SideMenu: FC = () => {
   };
   const handleClick = (key) => {
     if ((key as string).startsWith('/')) {
-      history.push(key as string);
+      navigate(key as string);
     }
   };
   const hideSideMenu = () => {
@@ -352,7 +352,7 @@ const SideMenu: FC = () => {
             collapse: collapsed === '1',
           })}
         >
-          <div className='name' onClick={() => history.push('/')} key='overview'>
+          <div className='name' onClick={() => navigate('/')} key='overview'>
             <img src={imgURL} alt='' className='logo' />
           </div>
         </div>

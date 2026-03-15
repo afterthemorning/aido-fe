@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useContext } from 'react';
 import _ from 'lodash';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Form, Input, Button, Modal, message, Space, notification } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { prometheusQuery } from '@/services/warning';
@@ -24,7 +24,7 @@ function getFirstDatasourceId(datasourceIds = [], datasourceList: { id: number }
 
 const operateForm: React.FC<Props> = ({ type, detail = {} }) => {
   const { t } = useTranslation('recordingRules');
-  const history = useHistory(); // 创建的时候默认选中的值
+  const navigate = useNavigate(); // 创建的时候默认选中的值
   const [form] = Form.useForm();
   const { groupedDatasourceList, businessGroup } = useContext(CommonStateContext);
   const [refresh, setRefresh] = useState(true);
@@ -59,7 +59,7 @@ const operateForm: React.FC<Props> = ({ type, detail = {} }) => {
           message.error(res.error);
         } else {
           message.success(t('common:success.edit'));
-          history.push('/recording-rules');
+          navigate('/recording-rules');
         }
       } else {
         reqBody = [d];
@@ -71,7 +71,7 @@ const operateForm: React.FC<Props> = ({ type, detail = {} }) => {
         });
         if (!errorNum) {
           message.success(`${type === 2 ? t('common:success.clone') : t('common:success.add')}`);
-          history.push('/recording-rules');
+          navigate('/recording-rules');
         } else {
           message.error(t(msg));
         }
@@ -147,7 +147,7 @@ const operateForm: React.FC<Props> = ({ type, detail = {} }) => {
                       onOk: () => {
                         deleteRecordingRule([detail.id], curBusiId).then(() => {
                           message.success(t('common:success.delete'));
-                          history.push('/recording-rules');
+                          navigate('/recording-rules');
                         });
                       },
 
@@ -161,7 +161,7 @@ const operateForm: React.FC<Props> = ({ type, detail = {} }) => {
 
               <Button
                 onClick={() => {
-                  history.push('/recording-rules');
+                  navigate('/recording-rules');
                 }}
               >
                 {t('common:btn.cancel')}

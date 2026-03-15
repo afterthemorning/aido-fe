@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import _ from 'lodash';
 import { Space, Button } from 'antd';
 
@@ -25,7 +25,7 @@ function HeaderExtra(
 ) {
   const { t } = useTranslation('alertRules');
   const { businessGroup, groupedDatasourceList, reloadGroupedDatasourceList, datasourceCateOptions } = useContext(CommonStateContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { gids, selectRowKeys = [], selectedRows = [], getList } = props;
 
   return (
@@ -34,7 +34,7 @@ function HeaderExtra(
         <Button
           type='primary'
           onClick={() => {
-            history.push(`/alert-rules/add/${businessGroup.id}`);
+            navigate(`/alert-rules/add/${businessGroup.id}`);
           }}
           className='strategy-table-search-right-create'
         >

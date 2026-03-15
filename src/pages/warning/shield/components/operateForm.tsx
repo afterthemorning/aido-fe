@@ -17,7 +17,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Form, Input, Card, Select, Col, Button, Row, message, DatePicker, Tooltip, Space, Radio, TimePicker, Checkbox, Alert, Affix } from 'antd';
 import { PlusCircleOutlined, CaretDownOutlined, MinusCircleOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import moment from 'moment';
@@ -52,7 +52,7 @@ const OperateForm: React.FC<Props> = ({ detail = {}, type }: any) => {
   const btimeDefault = new Date().getTime();
   const etimeDefault = new Date().getTime() + 1 * 60 * 60 * 1000; // 默认时长1h
   const [form] = Form.useForm(null as any);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [timeLen, setTimeLen] = useState('1h');
   const { groupedDatasourceList, busiGroups, isPlus, businessGroupOnChange } = useContext(CommonStateContext);
 
@@ -89,13 +89,13 @@ const OperateForm: React.FC<Props> = ({ detail = {}, type }: any) => {
     if (type == 1) {
       editShield(params, curBusiItemId, detail.id).then((_) => {
         message.success(t('common:success.edit'));
-        history.push(historyPushOptions);
+        navigate(historyPushOptions);
       });
     } else {
       businessGroupOnChange(_.toString(curBusiItemId));
       addShield(params, curBusiItemId).then((_) => {
         message.success(t('common:success.add'));
-        history.push(historyPushOptions);
+        navigate(historyPushOptions);
       });
     }
   };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 
@@ -20,7 +20,7 @@ const calcUrlPath = (url: string) => {
 };
 
 export const TabMenu: React.FC<TabMenuProps> = ({ currentMenu, onTabChange }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation('sideMenu');
   const { perms } = useContext(CommonStateContext);
   const [activeTab, setActiveTab] = useState('');
@@ -53,7 +53,7 @@ export const TabMenu: React.FC<TabMenuProps> = ({ currentMenu, onTabChange }) =>
             if (targetTab?.key && currentMenu.parentItem) {
               const storageKey = getStorageKey(currentMenu.parentItem.key);
               localStorage.setItem(storageKey, item.key);
-              history.push(targetTab.key);
+              navigate(targetTab.key);
             }
             onTabChange?.(item.key);
           }}

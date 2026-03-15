@@ -15,7 +15,7 @@
  *
  */
 import React, { useEffect, useState, createContext, useRef } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Modal 会被注入的代码所使用，请不要删除
 import { ConfigProvider, Modal, Spin } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
@@ -340,22 +340,20 @@ function App() {
       <CommonStateContext.Provider value={commonState}>
         <ConfigProvider locale={i18n.language == 'en_US' ? enUS : i18n.language == 'ru_RU' ? ruRU : zhCN}>
           <Router
-            getUserConfirmation={(message, callback) => {
-              if (message === 'CUSTOM') return;
-              window.confirm(message) ? callback(true) : callback(false);
-            }}
             basename={basePrefix}
           >
-            <Switch>
-              <Route exact path='/job-task/:busiId/output/:taskId/:outputType' component={TaskOutput} />
-              <Route exact path='/job-task/:busiId/output/:taskId/:host/:outputType' component={TaskHostOutput} />
-              <Route exact path='/share/alert-his-events/:eventId' component={SharedDetail} />
-              <>
-                {location.pathname !== `${basePrefix}/out-of-service` && <HeaderMenu />}
-                <Content />
-                <HocRenderer></HocRenderer>
-              </>
-            </Switch>
+            <Routes>
+              <Route path='/job-task/:busiId/output/:taskId/:outputType' element={<TaskOutput />} />
+              <Route path='/job-task/:busiId/output/:taskId/:host/:outputType' element={<TaskHostOutput />} />
+              <Route path='/share/alert-his-events/:eventId' element={<SharedDetail />} />
+              <Route path='*' element={
+                <>
+                  {location.pathname !== `${basePrefix}/out-of-service` && <HeaderMenu />}
+                  <Content />
+                  <HocRenderer></HocRenderer>
+                </>
+              } />
+            </Routes>
             <Feedback />
           </Router>
         </ConfigProvider>

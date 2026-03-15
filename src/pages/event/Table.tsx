@@ -18,7 +18,7 @@ import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tag, Button, Table, Tooltip, Dropdown, Menu } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import moment from 'moment';
 import _ from 'lodash';
 import queryString from 'query-string';
@@ -46,7 +46,7 @@ interface IProps {
 
 export default function TableCpt(props: IProps) {
   const { filterObj, filter, setFilter, header, selectedRowKeys, setSelectedRowKeys } = props;
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation('AlertCurEvents');
   const { groupedDatasourceList } = useContext(CommonStateContext);
   const [refreshFlag, setRefreshFlag] = useState<string>(_.uniqueId('refresh_'));
@@ -153,7 +153,7 @@ export default function TableCpt(props: IProps) {
                       size='small'
                       type='link'
                       onClick={() => {
-                        history.push({
+                        navigate({
                           pathname: '/alert-mutes/add',
                           search: queryString.stringify({
                             busiGroup: record.group_id,

@@ -67,10 +67,10 @@ export const scrollToLastPanel = (panels: IPanel[]) => {
   }
 };
 
-export async function goBack(history) {
+export async function goBack(navigate: (delta: number) => void) {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject('nowhere to go'), 100);
-    history.goBack();
+    navigate(-1);  // navigate passed from useNavigate()
     const onBack = () => {
       window.removeEventListener('beforeunload', onBack);
       window.removeEventListener('popstate', onBack);

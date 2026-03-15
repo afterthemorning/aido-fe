@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Space, Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import _ from 'lodash';
 
@@ -42,7 +42,7 @@ export default function BusinessGroupSideBarWithAll(props: Props) {
   const { t } = useTranslation('BusinessGroup');
   const location = useLocation();
   const query = queryString.parse(location.search);
-  const history = useHistory();
+  const navigate = useNavigate();
   const { gids, setGids, localeKey, showPublicOption, publicOptionLabel, allOptionLabel, allOptionTooltip } = props;
 
   return (
@@ -61,7 +61,7 @@ export default function BusinessGroupSideBarWithAll(props: Props) {
                   setGids('-1');
                   localStorage.setItem(localeKey, '-1');
                   // TODO: 选择预置条件时清理掉业务组的 ids 和 isLeaf 参数
-                  history.push({
+                  navigate({
                     pathname: location.pathname,
                     search: queryString.stringify({
                       ..._.omit(query, ['ids', 'isLeaf']),
@@ -81,7 +81,7 @@ export default function BusinessGroupSideBarWithAll(props: Props) {
                 setGids('-2');
                 localStorage.setItem(localeKey, '-2');
                 // TODO: 选择预置条件时清理掉业务组的 ids 和 isLeaf 参数
-                history.push({
+                navigate({
                   pathname: location.pathname,
                   search: queryString.stringify({
                     ..._.omit(query, ['ids', 'isLeaf']),

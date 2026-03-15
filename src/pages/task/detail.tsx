@@ -15,7 +15,7 @@
  *
  */
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Spin, Divider, Button, Card } from 'antd';
 import { RollbackOutlined } from '@ant-design/icons';
 import moment from 'moment';
@@ -29,7 +29,7 @@ import Editor from '../taskTpl/editor';
 import './style.less';
 
 const Detail = (props: any) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { businessGroup } = useContext(CommonStateContext);
   const curBusiId = businessGroup.id!;
   const { t } = useTranslation('common');
@@ -59,7 +59,7 @@ const Detail = (props: any) => {
     <PageLayout
       title={
         <>
-          <RollbackOutlined className='back' onClick={() => history.push('/job-tasks')} />
+          <RollbackOutlined className='back' onClick={() => navigate('/job-tasks')} />
           {t('task')}
         </>
       }

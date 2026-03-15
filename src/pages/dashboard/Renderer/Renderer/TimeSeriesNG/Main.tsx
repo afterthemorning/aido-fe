@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { AlignedData, Options } from 'uplot';
 import _ from 'lodash';
 import moment from 'moment';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import querystring from 'query-string';
 import { useTranslation } from 'react-i18next';
 
@@ -52,7 +52,7 @@ interface Props {
 
 export default function index(props: Props) {
   const { t } = useTranslation('dashboard');
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const {
     frames,
@@ -254,14 +254,14 @@ export default function index(props: Props) {
                           end: moment.unix(max),
                         });
                         // 开启了缩放后更新全局时间范围时，url 中保存时间范围数据
-                        // history.replace({
+                        // navigate({
                         //   pathname: location.pathname,
                         //   search: querystring.stringify({
                         //     ...(querystring.parse(location.search) || {}),
                         //     __from: moment.unix(min).valueOf(),
                         //     __to: moment.unix(max).valueOf(),
                         //   }),
-                        // });
+                        // }, { replace: true });
                       }
                     }
                   } else {

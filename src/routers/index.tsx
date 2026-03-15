@@ -15,7 +15,7 @@
  *
  */
 import React, { useEffect, useContext } from 'react';
-import { Switch, Route, useLocation, Redirect, useHistory } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import querystring from 'query-string';
 import _ from 'lodash';
 import { getMenuPerm } from '@/services/common';
@@ -47,7 +47,7 @@ import Shield, { Add as AddShield, Edit as ShieldEdit } from '@/pages/warning/sh
 import Subscribe, { Add as SubscribeAdd, Edit as SubscribeEdit } from '@/pages/warning/subscribe';
 import Event from '@/pages/event';
 import EventDetail from '@/pages/event/detail';
-import historyEvents from '@/pages/historyEvents';
+import HistoryEvents from '@/pages/historyEvents';
 import Targets from '@/pages/targets';
 import Demo from '@/pages/demo';
 import TaskTpl from '@/pages/taskTpl';
@@ -94,20 +94,18 @@ const lazyPagesRoutes = _.reduce(
 );
 
 function RouteWithSubRoutes(route) {
+  const Component = route.component;
   return (
     <Route
       path={route.path}
-      render={(props) => (
-        // pass the sub-routes down to keep nesting
-        <route.component {...props} routes={route.routes} />
-      )}
+      element={<Component routes={route.routes} />}
     />
   );
 }
 
 export default function Content() {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const isPlus = useIsPlus();
   const { profile, siteInfo, perms } = useContext(CommonStateContext);
 
@@ -131,7 +129,7 @@ export default function Content() {
             return location.pathname.indexOf(item) === -1;
           })
         ) {
-          history.push('/403');
+          navigate('/403');
         }
       }
     }
@@ -139,82 +137,82 @@ export default function Content() {
 
   return (
     <div className='content'>
-      <Switch>
-        <Route path='/demo' component={Demo} />
-        <Route path='/overview' component={Overview} />
-        <Route path='/login' component={Login} exact />
-        <Route path='/callback' component={LoginCallback} exact />
-        <Route path='/callback/cas' component={LoginCallbackCAS} exact />
-        <Route path='/callback/oauth' component={LoginCallbackOAuth} exact />
-        <Route path='/callback/custom' component={LoginCallbackCustom} exact />
-        <Route path='/callback/dingtalk' component={LoginCallbackDingTalk} exact />
-        <Route path='/callback/feishu' component={LoginCallbackFeishu} exact />
-        <Route path='/metric/explorer' component={MetricExplore} exact />
-        <Route path='/log/explorer' component={LogExplore} exact />
-        <Route path='/log/index-patterns' component={IndexPatterns} exact />
-        <Route path='/object/explorer' component={ObjectExplore} exact />
-        <Route path='/busi-groups' component={Business} />
-        <Route path='/users' component={Users} />
-        <Route path='/user-groups' component={Groups} />
-        <Route path='/account/profile/:tab' component={Profile} />
+      <Routes>
+        <Route path='/demo/*' element={<Demo />} />
+        <Route path='/overview' element={<Overview />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/callback' element={<LoginCallback />} />
+        <Route path='/callback/cas' element={<LoginCallbackCAS />} />
+        <Route path='/callback/oauth' element={<LoginCallbackOAuth />} />
+        <Route path='/callback/custom' element={<LoginCallbackCustom />} />
+        <Route path='/callback/dingtalk' element={<LoginCallbackDingTalk />} />
+        <Route path='/callback/feishu' element={<LoginCallbackFeishu />} />
+        <Route path='/metric/explorer' element={<MetricExplore />} />
+        <Route path='/log/explorer' element={<LogExplore />} />
+        <Route path='/log/index-patterns' element={<IndexPatterns />} />
+        <Route path='/object/explorer' element={<ObjectExplore />} />
+        <Route path='/busi-groups/*' element={<Business />} />
+        <Route path='/users/*' element={<Users />} />
+        <Route path='/user-groups/*' element={<Groups />} />
+        <Route path='/account/profile/:tab' element={<Profile />} />
 
-        <Route path='/dashboard/:id' exact component={DashboardDetail} />
-        <Route path='/dashboards/:id' exact component={DashboardDetail} />
-        <Route path='/dashboards/share/:id' component={DashboardShare} />
-        <Route path='/dashboards' component={Dashboard} />
-        <Route path='/chart/:ids' component={Chart} />
+        <Route path='/dashboard/:id' element={<DashboardDetail />} />
+        <Route path='/dashboards/share/:id' element={<DashboardShare />} />
+        <Route path='/dashboards/:id' element={<DashboardDetail />} />
+        <Route path='/dashboards' element={<Dashboard />} />
+        <Route path='/chart/:ids' element={<Chart />} />
 
-        <Route exact path='/alert-rules/add/:bgid' component={AlertRuleAdd} />
-        <Route exact path='/alert-rules/edit/:id' component={AlertRuleEdit} />
-        <Route exact path='/alert-rules' component={AlertRules} />
-        <Route exact path='/alert-rules/brain/:id' component={StrategyBrain} />
-        <Route exact path='/alert-mutes' component={Shield} />
-        <Route exact path='/alert-mutes/add/:from?' component={AddShield} />
-        <Route exact path='/alert-mutes/edit/:id' component={ShieldEdit} />
-        <Route exact path='/alert-subscribes' component={Subscribe} />
-        <Route exact path='/alert-subscribes/add' component={SubscribeAdd} />
-        <Route exact path='/alert-subscribes/edit/:id' component={SubscribeEdit} />
+        <Route path='/alert-rules/add/:bgid' element={<AlertRuleAdd />} />
+        <Route path='/alert-rules/edit/:id' element={<AlertRuleEdit />} />
+        <Route path='/alert-rules/brain/:id' element={<StrategyBrain />} />
+        <Route path='/alert-rules' element={<AlertRules />} />
+        <Route path='/alert-mutes/add/:from?' element={<AddShield />} />
+        <Route path='/alert-mutes/edit/:id' element={<ShieldEdit />} />
+        <Route path='/alert-mutes' element={<Shield />} />
+        <Route path='/alert-subscribes/add' element={<SubscribeAdd />} />
+        <Route path='/alert-subscribes/edit/:id' element={<SubscribeEdit />} />
+        <Route path='/alert-subscribes' element={<Subscribe />} />
 
         {!isPlus && [
-          <Route key='recording-rules' exact path='/recording-rules/:id?' component={RecordingRule} />,
-          <Route key='recording-rules-add' exact path='/recording-rules/add/:group_id' component={RecordingRuleAdd} />,
-          <Route key='recording-rules-edit' exact path='/recording-rules/edit/:id' component={RecordingRuleEdit} />,
+          <Route key='recording-rules-add' path='/recording-rules/add/:group_id' element={<RecordingRuleAdd />} />,
+          <Route key='recording-rules-edit' path='/recording-rules/edit/:id' element={<RecordingRuleEdit />} />,
+          <Route key='recording-rules' path='/recording-rules/:id?' element={<RecordingRule />} />,
         ]}
 
-        <Route exact path='/alert-his-events' component={historyEvents} />
-        <Route exact path='/alert-cur-events/:eventId' component={EventDetail} />
-        <Route exact path='/alert-his-events/:eventId' component={EventDetail} />
-        <Route exact path='/targets' component={Targets} />
+        <Route path='/alert-his-events/:eventId' element={<EventDetail />} />
+        <Route path='/alert-cur-events/:eventId' element={<EventDetail />} />
+        <Route path='/alert-his-events' element={<HistoryEvents />} />
+        <Route path='/targets' element={<Targets />} />
 
-        <Route exact path='/job-tpls' component={TaskTpl} />
-        <Route exact path='/job-tpls/add' component={TaskTplAdd} />
-        <Route exact path='/job-tpls/add/task' component={TaskAdd} />
-        <Route exact path='/job-tpls/:id/detail' component={TaskTplDetail} />
-        <Route exact path='/job-tpls/:id/modify' component={TaskTplModify} />
-        <Route exact path='/job-tpls/:id/clone' component={TaskTplClone} />
-        <Route exact path='/job-tasks' component={Task} />
-        <Route exact path='/job-tasks/add' component={TaskAdd} />
-        <Route exact path='/job-tasks/:id/result' component={TaskResult} />
-        <Route exact path='/job-tasks/:id/detail' component={TaskDetail} />
+        <Route path='/job-tpls/add/task' element={<TaskAdd />} />
+        <Route path='/job-tpls/add' element={<TaskTplAdd />} />
+        <Route path='/job-tpls/:id/detail' element={<TaskTplDetail />} />
+        <Route path='/job-tpls/:id/modify' element={<TaskTplModify />} />
+        <Route path='/job-tpls/:id/clone' element={<TaskTplClone />} />
+        <Route path='/job-tpls' element={<TaskTpl />} />
+        <Route path='/job-tasks/add' element={<TaskAdd />} />
+        <Route path='/job-tasks/:id/result' element={<TaskResult />} />
+        <Route path='/job-tasks/:id/detail' element={<TaskDetail />} />
+        <Route path='/job-tasks' element={<Task />} />
 
-        <Route exact path='/system/version' component={Version} />
-        <Route exact path='/system/alerting-engines' component={Servers} />
-        <Route exact path='/source-registry' component={SourceRegistry} />
-        <Route exact path='/datasources' component={Datasource} />
-        <Route exact path='/datasources/:action/:type' component={DatasourceAdd} />
-        <Route exact path='/datasources/:action/:type/:id' component={DatasourceAdd} />
-        <Route exact path='/system/sso-settings' component={SSOConfigs} />
-        <Route exact path='/help/notification-tpls' component={NotificationTpls} />
-        <Route exact path='/help/notification-settings' component={NotificationSettings} />
-        <Route exact path='/help/migrate' component={MigrateDashboards} />
-        <Route exact path='/system/variable-settings' component={VariableConfigs} />
+        <Route path='/system/version' element={<Version />} />
+        <Route path='/system/alerting-engines' element={<Servers />} />
+        <Route path='/source-registry' element={<SourceRegistry />} />
+        <Route path='/datasources/:action/:type/:id' element={<DatasourceAdd />} />
+        <Route path='/datasources/:action/:type' element={<DatasourceAdd />} />
+        <Route path='/datasources' element={<Datasource />} />
+        <Route path='/system/sso-settings' element={<SSOConfigs />} />
+        <Route path='/help/notification-tpls' element={<NotificationTpls />} />
+        <Route path='/help/notification-settings' element={<NotificationSettings />} />
+        <Route path='/help/migrate' element={<MigrateDashboards />} />
+        <Route path='/system/variable-settings' element={<VariableConfigs />} />
 
-        <Route exact path='/trace/explorer' component={TraceExplorer} />
-        <Route exact path='/trace/dependencies' component={TraceDependencies} />
+        <Route path='/trace/explorer' element={<TraceExplorer />} />
+        <Route path='/trace/dependencies' element={<TraceDependencies />} />
 
-        <Route exact path='/roles' component={Permissions} />
+        <Route path='/roles' element={<Permissions />} />
 
-        {import.meta.env.VITE_IS_ENT !== 'true' && <Route exact path='/system/site-settings' component={SiteSettings} />}
+        {import.meta.env.VITE_IS_ENT !== 'true' && <Route path='/system/site-settings' element={<SiteSettings />} />}
 
         {lazyRoutes.map((route, i) => (
           <RouteWithSubRoutes key={i} {...route} />
@@ -225,14 +223,12 @@ export default function Content() {
         {_.map(plusLoader.routes, (route, i) => (
           <RouteWithSubRoutes key={i} {...route} />
         ))}
-        <Route path='/' exact>
-          <Redirect to={siteInfo?.home_page_url || '/metric/explorer'} />
-        </Route>
-        <Route path='/403' component={Page403} />
-        <Route path='/404' component={NotFound} />
-        <Route path='/out-of-service' component={OutOfService} />
-        <Route path='*' component={NotFound} />
-      </Switch>
+        <Route path='/' element={<Navigate to={siteInfo?.home_page_url || '/metric/explorer'} replace />} />
+        <Route path='/403' element={<Page403 />} />
+        <Route path='/404' element={<NotFound />} />
+        <Route path='/out-of-service' element={<OutOfService />} />
+        <Route path='*' element={<NotFound />} />
+      </Routes>
     </div>
   );
 }

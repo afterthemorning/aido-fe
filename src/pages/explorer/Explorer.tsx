@@ -24,7 +24,7 @@ import { Form, Row, Col } from 'antd';
 import _ from 'lodash';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { DatasourceSelectV3 } from '@/components/DatasourceSelect';
 import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
@@ -111,7 +111,7 @@ const Panel = (props: IProps) => {
   const { datasourceCateOptions, datasourceList, groupedDatasourceList } = useContext(CommonStateContext);
   const [tabKey, setTabKey] = useGlobalState('tabKey');
   const [form] = Form.useForm();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const headerExtraRef = useRef<HTMLDivElement>(null);
   const params = new URLSearchParams(location.search);
@@ -211,9 +211,9 @@ const Panel = (props: IProps) => {
                     });
                   }
                   if (panelIdx === 0) {
-                    history.replace({
+                    navigate({
                       search: `?data_source_name=${filterValues.datasourceCate ?? defaultDatasourceCate}&${filterValues.datasourceValue ?? defaultDatasourceValue}`,
-                    });
+                    }, { replace: true });
                   }
                 }}
                 oldFilterValues={
@@ -302,9 +302,9 @@ const Panel = (props: IProps) => {
                           });
                         }
                         if (panelIdx === 0) {
-                          history.replace({
+                          navigate({
                             search: `?data_source_name=${datasourceCate}&data_source_id=${val}`,
-                          });
+                          }, { replace: true });
                         }
                       }}
                     />

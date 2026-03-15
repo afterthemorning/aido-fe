@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import _ from 'lodash';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { Space } from 'antd';
 import { AlertOutlined } from '@ant-design/icons';
@@ -44,7 +44,7 @@ export default function List() {
   const { t } = useTranslation('AlertHisEvents');
   const location = useLocation();
   const query = queryString.parse(location.search);
-  const history = useHistory();
+  const navigate = useNavigate();
   const filter = getFilter(query);
   const setFilter = (newFilter) => {
     const range = newFilter.range;
@@ -60,14 +60,14 @@ export default function List() {
         };
       }
     }
-    history.replace({
+    navigate({
       pathname: location.pathname,
       search: queryString.stringify({
         ...query,
         ..._.omit(newFilter, 'range'),
         ...currentRange,
       }),
-    });
+    }, { replace: true });
   };
 
   return (

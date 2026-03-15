@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import { Input, Drawer, Space, Tabs, Button, Modal, Tooltip } from 'antd';
 import { SafetyCertificateOutlined, SearchOutlined, CloseOutlined, EditOutlined, DeleteOutlined, StopOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/pageLayout';
 import AuthorizationWrapper from '@/components/AuthorizationWrapper';
 import { IS_PLUS } from '@/utils/constant';
@@ -25,7 +25,7 @@ const BUILT_IN_ACTIVE_TAB_KEY = 'builtin-drawer-active-tab';
 
 export default function index() {
   const { t } = useTranslation('builtInComponents');
-  const history = useHistory();
+  const navigate = useNavigate();
   const { search } = useLocation();
   const query = queryString.parse(search);
   const defaultComponent = query.component as string;
@@ -98,12 +98,12 @@ export default function index() {
                     key={item.ident}
                     className='builtin-cates-grid-item'
                     onClick={() => {
-                      history.replace({
+                      navigate({
                         search: queryString.stringify({
                           ...query,
                           component: item.ident,
                         }),
-                      });
+                      }, { replace: true });
                       setActiveComponent(item);
                       setReadme(item.readme);
                     }}
@@ -181,12 +181,12 @@ export default function index() {
         extra={
           <CloseOutlined
             onClick={() => {
-              history.replace({
+              navigate({
                 search: queryString.stringify({
                   ...query,
                   component: undefined,
                 }),
-              });
+              }, { replace: true });
               setActiveComponent(undefined);
               setReadmeEditabled(false);
               setReadme(activeComponent?.readme || '');
@@ -194,12 +194,12 @@ export default function index() {
           />
         }
         onClose={() => {
-          history.replace({
+          navigate({
             search: queryString.stringify({
               ...query,
               component: undefined,
             }),
-          });
+          }, { replace: true });
           setActiveComponent(undefined);
           setReadmeEditabled(false);
           setReadme(activeComponent?.readme || '');

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Space, Affix, Card } from 'antd';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { useGlobalState } from '../../Form';
@@ -13,7 +13,7 @@ interface IProps {
 
 export default function Footer(props: IProps) {
   const { t } = useTranslation('datasourceManage');
-  const history = useHistory();
+  const navigate = useNavigate();
   const { id, submitLoading, extra } = props;
   const [saveMode, setSaveMode] = useGlobalState('saveMode');
 
@@ -24,7 +24,7 @@ export default function Footer(props: IProps) {
           {id !== undefined ? (
             <Button
               onClick={() => {
-                history.go(-1);
+                navigate(-1);
               }}
             >
               {t('common:btn.back')}

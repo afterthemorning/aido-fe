@@ -18,7 +18,7 @@ import React, { useContext } from 'react';
 import { Button, Card, message } from 'antd';
 import { RollbackOutlined } from '@ant-design/icons';
 import _ from 'lodash';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { useTranslation } from 'react-i18next';
 import PageLayout from '@/components/pageLayout';
@@ -28,7 +28,7 @@ import TplForm from './tplForm';
 import { CommonStateContext, basePrefix } from '@/App';
 
 const Add = (props: any) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const query = queryString.parse(location.search);
   const { businessGroup } = useContext(CommonStateContext);
@@ -50,7 +50,7 @@ const Add = (props: any) => {
     <PageLayout
       title={
         <>
-          <RollbackOutlined className='back' onClick={() => history.push('/job-tpls')} />
+          <RollbackOutlined className='back' onClick={() => navigate('/job-tpls')} />
           {t('tpl')}
         </>
       }

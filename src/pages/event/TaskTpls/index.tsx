@@ -12,7 +12,7 @@ export default function index({ eventDetail }) {
       <div className='desc-content'>
         {_.map(eventDetail?.rule_config?.task_tpls, (item) => {
           return (
-            <Link key={item.tpl_id} href='_blank' to={`/job-tpls/${item.tpl_id}/detail`}>
+            <Link key={item.tpl_id} target='_blank' to={`/job-tpls/${item.tpl_id}/detail`}>
               {item.tpl_name}
             </Link>
           );

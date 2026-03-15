@@ -15,7 +15,7 @@
  *
  */
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Spin, Divider, Card } from 'antd';
 import { RollbackOutlined } from '@ant-design/icons';
 import _ from 'lodash';
@@ -31,7 +31,7 @@ import Editor from './editor';
 import { Tpl } from './interface';
 
 const Detail = (props: any) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const id = _.get(props, 'match.params.id');
   const { businessGroup } = useContext(CommonStateContext);
   const curBusiId = businessGroup.id!;
@@ -61,7 +61,7 @@ const Detail = (props: any) => {
     <PageLayout
       title={
         <>
-          <RollbackOutlined className='back' onClick={() => history.push('/job-tpls')} />
+          <RollbackOutlined className='back' onClick={() => navigate('/job-tpls')} />
           {t('tpl')}
         </>
       }

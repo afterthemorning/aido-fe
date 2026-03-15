@@ -17,7 +17,7 @@
 import React, { useEffect, useState, createContext, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Modal 会被注入的代码所使用，请不要删除
-import { ConfigProvider, Empty, Modal, Spin } from 'antd';
+import { ConfigProvider, Empty, Modal, Spin, theme } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
 import ruRU from 'antd/lib/locale/ru_RU';
@@ -343,39 +343,57 @@ function App() {
           locale={i18n.language == 'en_US' ? enUS : i18n.language == 'ru_RU' ? ruRU : zhCN}
           empty={{ image: Empty.PRESENTED_IMAGE_DEFAULT }}
           theme={{
+            algorithm: theme.defaultAlgorithm,
             token: {
-              colorPrimary: '#6C53B1',
-              colorText: '#262626',
-              colorTextDisabled: 'rgba(0, 0, 0, 0.5)',
-              colorPrimaryBg: '#F0ECF9',
-              fontSize: 12,
+              colorText: '#2C2C2C',
+              colorPrimary: '#52C41A',
+              colorSuccess: '#51CF66',
+              colorWarning: '#FFD93D',
+              colorError: '#FA5252',
+              colorInfo: '#4DABF7',
+              colorBorder: '#2C2C2C',
+              colorBorderSecondary: '#2C2C2C',
+              lineWidth: 3,
+              lineWidthBold: 3,
+              borderRadius: 12,
+              borderRadiusLG: 16,
+              borderRadiusSM: 8,
+              controlHeight: 40,
+              controlHeightSM: 34,
+              controlHeightLG: 48,
+              fontSize: 15,
+              fontWeightStrong: 600,
+              colorBgBase: '#FFF9F0',
+              colorBgContainer: '#FFFFFF',
               fontFamily: getFontFamilyByEnv(import.meta.env.VITE_IS_ENT === 'true'),
             },
             components: {
-              Tabs: {
-                inkBarColor: '#6C53B1',
+              Button: {
+                primaryShadow: 'none',
+                dangerShadow: 'none',
+                defaultShadow: 'none',
+                fontWeight: 600,
               },
-              Menu: {
-                itemColor: '#8C8C8C',
-                itemBg: '#f0f0f0',
-                subMenuItemBg: '#f0f0f0',
+              Modal: {
+                boxShadow: 'none',
               },
-              Table: {
-                rowHoverBg: '#EAE8F2',
-                headerBg: '#f0f0f0',
+              Card: {
+                boxShadow: '4px 4px 0 #2C2C2C',
+                colorBgContainer: '#FFF0F6',
+              },
+              Tooltip: {
+                colorBorder: '#2C2C2C',
+                colorBgSpotlight: 'rgba(100, 100, 100, 0.95)',
+                borderRadius: 8,
               },
               Select: {
-                multipleItemBg: '#EAE6F3',
-                multipleItemBorderColor: '#6C53B1',
+                optionSelectedBg: 'transparent',
               },
-              Radio: {
-                buttonCheckedBg: '#EAE6F3',
-              },
-              Form: {
-                itemMarginBottom: 18,
-              },
-              Button: {
-                paddingInline: 12,
+              Slider: {
+                dotBorderColor: '#237804',
+                dotActiveBorderColor: '#237804',
+                colorPrimaryBorder: '#237804',
+                colorPrimaryBorderHover: '#237804',
               },
             },
           }}

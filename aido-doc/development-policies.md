@@ -452,6 +452,20 @@ Conflict mitigation plan:
 - change is surgical: one line removed from server config, one prop + one import in App.tsx;
 - validate with typecheck/build/tests before commit; all green.
 
+### Guardrail Exception: 2026-03-15 antd Illustration Style token alignment
+
+Reason:
+- update root `ConfigProvider` theme in `src/App.tsx` to align with official antd
+  Illustration Style token/component guidance (algorithm + token + components).
+
+Affected paths:
+- src/App.tsx
+
+Conflict mitigation plan:
+- keep change limited to `ConfigProvider` theme configuration and related import only;
+- preserve project-specific font family behavior via `getFontFamilyByEnv`;
+- run typecheck/build/tests and verify dev `@vite/client` injection output.
+
 ### Guardrail Exception: 2026-03-15 antd6 theme token root wiring
 
 Reason:

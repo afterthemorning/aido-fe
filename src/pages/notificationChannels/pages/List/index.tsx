@@ -188,7 +188,8 @@ export default function List() {
                     <Link
                       className='table-operator-area-normal'
                       to={{
-                        pathname: `/${NS}/edit/${record.id}?mode=clone`,
+                        pathname: `/${NS}/edit/${record.id}`,
+                        search: '?mode=clone',
                       }}
                       target='_blank'
                     >

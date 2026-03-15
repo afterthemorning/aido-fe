@@ -21,7 +21,8 @@ const errorHandler = (error: ResponseError<any>): Response => {
     else if (!error.silence) {
       notification.error({
         key: error.message,
-        message: <ErrorWithDetail error={error} />,
+        title: error.message,
+        description: <ErrorWithDetail error={error} />,
       });
     }
     // 暂时认定只有开启 silence 的时候才需要传递 error 详情以便更加精确的处理错误

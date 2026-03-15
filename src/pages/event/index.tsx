@@ -60,7 +60,7 @@ export function deleteAlertEventsModal(ids: number[], onSuccess = () => {}, t) {
     title: t('delete_confirm.title'),
     icon: <ExclamationCircleOutlined />,
     content: t('delete_confirm.content'),
-    maskClosable: true,
+    mask: { closable: true },
     okButtonProps: { danger: true },
     zIndex: 1001,
     onOk() {

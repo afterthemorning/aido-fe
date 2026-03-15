@@ -127,12 +127,14 @@ function index(props: IProps) {
         closable={false}
         footer={null}
         forceRender
-        destroyOnClose
+        destroyOnHidden
         width='100%'
         className='n9e-dashboard-editor-modal'
         style={{ top: 0, padding: 0 }}
-        bodyStyle={{
-          height: 'calc(100% - 65px)',
+        styles={{
+          body: {
+            height: 'calc(100% - 65px)',
+          },
         }}
       >
         <div className='h-full' ref={viewModalContainerRef} />

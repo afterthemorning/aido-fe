@@ -355,7 +355,8 @@ export default function AlertRules(props: Props) {
                   <Link
                     className='table-operator-area-normal'
                     to={{
-                      pathname: `/alert-rules/edit/${record.id}?mode=clone`,
+                      pathname: `/alert-rules/edit/${record.id}`,
+                      search: '?mode=clone',
                     }}
                     target='_blank'
                   >

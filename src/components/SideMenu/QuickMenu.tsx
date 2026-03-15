@@ -176,8 +176,10 @@ export default forwardRef(function QuickMenu(props: Props, ref) {
       onCancel={() => {
         setOpen(false);
       }}
-      bodyStyle={{
-        padding: 0,
+      styles={{
+        body: {
+          padding: 0,
+        },
       }}
       closeIcon={null}
       footer={

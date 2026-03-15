@@ -574,3 +574,26 @@ Conflict mitigation plan:
 - keep edits scoped to ConfigProvider theme wiring and less compatibility fallback only;
 - validate with typecheck/build/tests before commit;
 - avoid unrelated router/service/main-entry changes.
+
+### Guardrail Exception: 2026-03-15 scan artifacts and list navigation alignment
+
+Reason:
+- this commit intentionally includes large scan output artifacts for baseline tracking, exceeding the staged line threshold.
+- change scope also touches a high-risk menu entry path while aligning list page navigation links to clone/edit routes.
+
+Affected paths:
+- scripts/external-scan.js
+- scripts/route-page-scan.js
+- tmp-console-scan.json
+- tmp-external-scan.json
+- tmp-route-page-scan.json
+- src/components/SideMenu/QuickMenu.tsx
+- src/components/menu/SideMenu/QuickMenu.tsx
+- src/pages/alertRules/List/ListNG.tsx
+- src/pages/notificationRules/pages/List.tsx
+- src/pages/notificationChannels/pages/List/index.tsx
+
+Conflict mitigation plan:
+- keep behavior changes limited to route link alignment and avoid structural menu refactors;
+- include scan files as point-in-time artifacts only for this sync commit;
+- validate with TypeScript noEmit check and focused Playwright spot checks.

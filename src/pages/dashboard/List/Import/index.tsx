@@ -82,8 +82,8 @@ export default function Import(props: IProps) {
     <Modal
       width={900}
       className='dashboard-import-modal'
-      maskClosable={false}
-      destroyOnClose
+      mask={{ closable: false }}
+      destroyOnHidden
       title={
         <Tabs activeKey={modalType} onChange={(e: ModalType) => setModalType(e)} className='custom-import-alert-title' items={[
           {

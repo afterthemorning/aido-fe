@@ -363,6 +363,17 @@ Commit: `chore(deps): upgrade vite/router/ts/tailwind/jest to latest release`
 - Added lightweight TS compatibility declaration for rc-picker import paths: `src/types/rc-picker-compat.d.ts`.
 - Validation result in this batch: `npx tsc --noEmit --skipLibCheck` returns 0 errors.
 
+### Guardrail Exception: 2026-03-15 Phase D1 Toolchain Upgrade (Vite 8 / TS 5.9)
+
+**Reason:** Build toolchain major upgrade requires editing a high-risk core file (`vite.config.ts`) to match Vite 8/Rolldown behavior.
+- `package.json` / `package-lock.json`: upgraded `vite` to `8.0.0`, `@vitejs/plugin-react` to `6.0.1`, `typescript` to `5.9.3`.
+- `vite.config.ts`: migrated `rollupOptions.output.manualChunks` from object form to function form (required by Vite 8/Rolldown).
+- `src/pages/targets/index.tsx`: fixed TS5 stricter `ReactNode` inference (`void` path removed from modal children).
+- Validation in this batch:
+  - `npx tsc --noEmit --skipLibCheck` passed.
+  - `npm run build` passed (EXIT 0).
+  - `npm test -- --runInBand` passed (25 suites, 139 tests).
+
 **Reason:** Initial delivery of Phase 2 (Backoffice Integration) as a single coherent batch.
 - `src/routers/index.tsx`: 2 lines added — 1 import + 1 Route declaration. No routing logic changed.
 - `src/components/menu/index.tsx`: 4 lines added — new menu item entry in existing structure.

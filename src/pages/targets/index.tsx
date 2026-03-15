@@ -190,7 +190,9 @@ const OperationModal: React.FC<OperateionModalProps> = ({ operateType, setOperat
         return Promise.resolve();
       },
       isFormItem: false,
-      render() {},
+      render() {
+        return null;
+      },
     }),
   };
   const { operateTitle, requestFunc, isFormItem, render } = operateDetail[`${operateType}Detail`](detailProp);
@@ -321,10 +323,10 @@ const OperationModal: React.FC<OperateionModalProps> = ({ operateType, setOperat
             <Form.Item label={t('targets')} name='idents' rules={[{ required: true }]}> 
               <TextArea autoSize={{ minRows: 3, maxRows: 10 }} placeholder={t('targets_placeholder')} onBlur={formatValue} />
             </Form.Item>
-            {isFormItem && render()}
+            {isFormItem ? render() : null}
           </>
         </Form>
-        {!isFormItem && render()}
+        {isFormItem ? null : render()}
       </>
     </Modal>
   );

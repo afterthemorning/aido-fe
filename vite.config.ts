@@ -116,12 +116,14 @@ export default defineConfig(({ mode }) => {
       sourcemap: false,
       rollupOptions: {
         output: {
-          manualChunks: {
-            vendor: chunk1,
-            vendor1: chunk2,
-            vendor2: chunk3,
-            antdChunk: antdChunk,
-            excelChunk,
+          manualChunks(id) {
+            if (!id.includes('node_modules')) return;
+
+            if (chunk1.some((pkg) => id.includes(`/node_modules/${pkg}/`) || id.includes(`/node_modules/${pkg}.`))) return 'vendor';
+            if (chunk2.some((pkg) => id.includes(`/node_modules/${pkg}/`) || id.includes(`/node_modules/${pkg}.`))) return 'vendor1';
+            if (chunk3.some((pkg) => id.includes(`/node_modules/${pkg}/`) || id.includes(`/node_modules/${pkg}.`))) return 'vendor2';
+            if (antdChunk.some((pkg) => id.includes(`/node_modules/${pkg}/`) || id.includes(`/node_modules/${pkg}.`))) return 'antdChunk';
+            if (excelChunk.some((pkg) => id.includes(`/node_modules/${pkg}/`) || id.includes(`/node_modules/${pkg}.`))) return 'excelChunk';
           },
         },
       },

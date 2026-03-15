@@ -67,6 +67,32 @@ export default defineConfig(({ mode }) => {
     };
   }
 
+  const staticRootPrefixes = ['/image/', '/font/', '/js/', '/n9e-docs/', '/bound/'];
+
+  const rootStaticCompatPlugin = {
+    name: 'root-static-compat-plugin',
+    configureServer(server) {
+      if (!baseName) return;
+      server.middlewares.use((req, _res, next) => {
+        const url = req.url || '';
+        if (!url.startsWith(baseName) && staticRootPrefixes.some((prefix) => url.startsWith(prefix))) {
+          req.url = `${baseName}${url}`;
+        }
+        next();
+      });
+    },
+    configurePreviewServer(server) {
+      if (!baseName) return;
+      server.middlewares.use((req, _res, next) => {
+        const url = req.url || '';
+        if (!url.startsWith(baseName) && staticRootPrefixes.some((prefix) => url.startsWith(prefix))) {
+          req.url = `${baseName}${url}`;
+        }
+        next();
+      });
+    },
+  };
+
   return {
     base: baseName + '/',
     plugins: [
@@ -81,6 +107,7 @@ export default defineConfig(({ mode }) => {
       md(),
       plusResolve(),
       prefixPlugin(baseName),
+      rootStaticCompatPlugin,
     ],
     define: {
       // 'process.env.NODE_ENV': JSON.stringify(mode), // 如确实需要兼容旧代码 NODE_ENV=production , 放开这个

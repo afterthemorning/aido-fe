@@ -487,6 +487,22 @@ Conflict mitigation plan:
 - apply only lexical low-risk prop migrations in bulk;
 - validate with typecheck + tests + all-routes scan and keep temporary scan logs out of commit.
 
+### Guardrail Exception: 2026-03-15 static asset root-path compatibility for subpath dev
+
+Reason:
+- route scan and manual check showed many static URLs still requested as `/image/*`
+  in `/aido` subpath mode, causing repeated 404 noise in console.
+- fix requires touching high-risk root config (`vite.config.ts`) to add a dev/preview
+  middleware that rewrites root static URLs to base-prefixed paths.
+
+Affected paths:
+- vite.config.ts
+
+Conflict mitigation plan:
+- scope middleware to static public directories only (`/image`, `/font`, `/js`, `/n9e-docs`, `/bound`);
+- activate only when `baseName` exists and do not alter API proxy behavior;
+- validate with direct curl checks and full route console scan.
+
 ### Guardrail Exception: 2026-03-15 antd6 theme token root wiring
 
 Reason:

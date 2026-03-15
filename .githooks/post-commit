@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# post-commit: auto-push after every commit.
+# Tries remotes in order: publish, origin. Uses the first one that succeeds.
+set -euo pipefail
+
+BRANCH="$(git symbolic-ref --short HEAD 2>/dev/null || true)"
+if [ -z "$BRANCH" ]; then
+  echo "[post-commit] detached HEAD, skipping push."
+  exit 0
+fi
+
+for REMOTE in publish origin; do
+  if git remote | grep -qx "$REMOTE"; then
+    echo "[post-commit] pushing $BRANCH to $REMOTE main..."
+    if git push "$REMOTE" "$BRANCH":main 2>&1; then
+      echo "[post-commit] push OK ($REMOTE -> main)."
+      exit 0
+    else
+      echo "[post-commit] push failed on $REMOTE, trying next..."
+    fi
+  fi
+done
+echo "[post-commit] all remotes failed. Commit is still local."

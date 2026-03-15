@@ -58,7 +58,7 @@ function Import(props: IProps & ModalWrapProps) {
         }
         ]} />
       }
-      visible={visible}
+      open={visible}
       onCancel={() => {
         refreshList();
         destroy();

@@ -246,7 +246,7 @@ export function MetaModal(props: Props) {
             {t('query.schema')}
           </div>
         }
-        visible={open}
+        open={open}
         onCancel={() => {
           setOpen(false);
         }}

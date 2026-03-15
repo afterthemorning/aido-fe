@@ -153,7 +153,7 @@ function index(props: IProps) {
         </div>
       }
       style={{ top: 0, padding: 0 }}
-      visible={visible}
+      open={visible}
       closable={false}
       destroyOnClose
       footer={[

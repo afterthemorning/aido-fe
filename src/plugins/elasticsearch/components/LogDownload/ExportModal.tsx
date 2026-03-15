@@ -155,7 +155,7 @@ export default function ExportModal(props: IProps) {
       </Button>
       <Modal
         title={<>{t('log.log_export.title')}</>}
-        visible={exportVisible}
+        open={exportVisible}
         onCancel={() => {
           setExportVisible(false);
         }}

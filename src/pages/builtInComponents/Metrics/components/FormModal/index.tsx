@@ -64,7 +64,7 @@ export default function index(props: Props) {
           onCancel={() => {
             setOpen(false);
           }}
-          visible={open}
+          open={open}
           footer={
             <Space>
               <Button

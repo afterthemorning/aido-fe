@@ -119,7 +119,7 @@ export default function Import(props: IProps) {
         }
         ]} />
       }
-      visible={visible}
+      open={visible}
       onCancel={() => {
         onOk();
       }}

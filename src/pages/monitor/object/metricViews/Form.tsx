@@ -78,7 +78,7 @@ function FormCpt(props: ModalWrapProps & IProps) {
           ]}
         />
       }
-      visible={visible}
+      open={visible}
       onCancel={() => {
         destroy();
       }}

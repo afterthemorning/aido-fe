@@ -59,7 +59,7 @@ export default function FormModal(props: Props) {
           </span>
         </div>
       }
-      visible={visible}
+      open={visible}
       onOk={() => {
         form.validateFields().then((values) => {
           onOk(values);

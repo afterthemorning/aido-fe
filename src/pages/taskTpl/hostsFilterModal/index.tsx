@@ -46,7 +46,7 @@ function hostsFilterModal(props: Props & ModalWrapProps) {
                 />
               </Space>
             }
-            visible={visible}
+            open={visible}
             onOk={() => {
               form.validateFields().then((values) => {
                 const { queries } = values;

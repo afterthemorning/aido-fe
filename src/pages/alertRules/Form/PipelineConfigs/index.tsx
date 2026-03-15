@@ -26,10 +26,10 @@ function getOtherPipelineList(pipelineList: EventPipeline[], curPipelineId: numb
   });
 }
 
-const SortableBody = SortableContainer(({ children }) => {
+const SortableBody = SortableContainer(({ children }: React.PropsWithChildren) => {
   return <div>{children}</div>;
-});
-const SortableItem = SortableElement(({ children }) => <div>{children}</div>);
+}) as React.ComponentType<React.PropsWithChildren<any>>;
+const SortableItem = SortableElement(({ children }: React.PropsWithChildren) => <div>{children}</div>) as React.ComponentType<React.PropsWithChildren<any>>;
 const DragHandle = SortableHandle(() => <Button type='text' icon={<DragIcon />} />);
 
 export default function index() {

@@ -20,7 +20,7 @@ interface IProps {
   index: number;
 }
 
-const SortableItem = SortableElement(({ children }) => <div>{children}</div>);
+const SortableItem = SortableElement(({ children }: React.PropsWithChildren) => <div>{children}</div>) as React.ComponentType<React.PropsWithChildren<any>>;
 const DragHandle = SortableHandle(({ children }) => <div className='prom-query-builder-operation-handler'>{children}</div>);
 function renderOperationParamEditor(
   paramDef: QueryBuilderOperationParamDef,

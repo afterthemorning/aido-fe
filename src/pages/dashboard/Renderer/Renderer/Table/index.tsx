@@ -160,7 +160,7 @@ function TableCpt(props: IProps, ref: any) {
       <div style={{ padding: 8 }}>
         <Input
           ref={searchInput}
-          value={selectedKeys[0]}
+          value={selectedKeys[0] as string | number | undefined}
           onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => handleSearch(confirm)}
           style={{ marginBottom: 8, display: 'block' }}

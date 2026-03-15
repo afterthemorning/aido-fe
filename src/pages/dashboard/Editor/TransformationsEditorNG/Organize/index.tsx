@@ -35,10 +35,10 @@ interface IProps {
   onChange?: (value: Value) => void;
 }
 
-const SortableBody = SortableContainer(({ children }) => {
+const SortableBody = SortableContainer(({ children }: React.PropsWithChildren) => {
   return <div>{children}</div>;
-});
-const SortableItem = SortableElement(({ children }) => <div style={{ marginBottom: 8 }}>{children}</div>);
+}) as React.ComponentType<React.PropsWithChildren<any>>;
+const SortableItem = SortableElement(({ children }: React.PropsWithChildren) => <div style={{ marginBottom: 8 }}>{children}</div>) as React.ComponentType<React.PropsWithChildren<any>>;
 const DragHandle = SortableHandle(() => <Button icon={<MenuOutlined />} />);
 
 export default function OrganizeFields(props: IProps) {

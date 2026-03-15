@@ -346,7 +346,13 @@ Commit: `chore(deps): upgrade vite/router/ts/tailwind/jest to latest release`
   - Put non-trivial business logic under `src/aido-extension/expiry/*` and import from plugin files when refactoring in subsequent iterations.
   - Avoid unrelated formatting or structural refactors in plugin files to minimize upstream merge conflicts.
 
-### Guardrail Exception: 2026-03-15 Phase 2 Source Registry Backoffice UI
+### Guardrail Exception: 2026-03-15 Phase B React 18 Upgrade
+
+**Reason:** Bulk React 18 migration — large line count comes from package-lock.json regeneration (dependency tree changes), not feature code.
+- `src/main.tsx`: 1 line changed — `ReactDOM.render` → `createRoot` (required React 18 root API).
+- 13 source files: minimal type annotation fixes for React 18 `@types/react` strictness (children props, forwardRef generics, catch block typing). No logic changed.
+- `package.json` / `package-lock.json`: dependency version bumps (react→18.3.1, react-dom→18.3.1, ahooks→3.9.6, @types/react→18, @types/react-dom→18).
+- Remaining 9 antd 4 type errors are known and will be resolved in Phase C (antd 6 upgrade).
 
 **Reason:** Initial delivery of Phase 2 (Backoffice Integration) as a single coherent batch.
 - `src/routers/index.tsx`: 2 lines added — 1 import + 1 Route declaration. No routing logic changed.

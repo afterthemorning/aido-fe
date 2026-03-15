@@ -234,6 +234,21 @@ Conflict mitigation plan:
 - keep migration scope limited to Tabs API and strict prop-compatibility fixes only;
 - validate with typecheck/build before commit;
 - avoid unrelated refactors and preserve existing behavior.
+
+### Guardrail Exception: 2026-03-15 Tailwind v4 entrypoint fix
+
+Reason:
+- Tailwind utility classes stopped taking effect after v4 migration, and fixing the CSS entrypoint required touching high-risk bootstrap path `src/main.tsx`.
+
+Affected paths:
+- src/main.tsx
+- src/theme/index.less
+- src/theme/tailwind.css
+
+Conflict mitigation plan:
+- keep change limited to style import chain and Tailwind directives only;
+- verify with full build and runtime computed-style probe;
+- avoid unrelated runtime, routing, or service-layer refactors.
 - `FormInstance` generics changed
 - `TableColumnType` key narrowing stricter
 - `UploadFile` type generics

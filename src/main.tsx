@@ -17,6 +17,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { i18nInit } from './i18n'; // loaded and initialized first
+import './theme/tailwind.css';
 import App from './App';
 import { I18nextProvider } from 'react-i18next';
 import { initTheme } from './utils/darkMode';

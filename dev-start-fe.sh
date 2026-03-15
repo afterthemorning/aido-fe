@@ -56,4 +56,4 @@ if [ "$FORCE_OPTIMIZE" = "1" ]; then
   VITE_ARGS+=(--force)
 fi
 
-PROXY="$PROXY_URL" VITE_PREFIX="$VITE_PREFIX_VALUE" npm_config_legacy_peer_deps=true ./node_modules/.bin/vite "${VITE_ARGS[@]}"
+BROWSERSLIST_IGNORE_OLD_DATA=1 PROXY="$PROXY_URL" VITE_PREFIX="$VITE_PREFIX_VALUE" npm_config_legacy_peer_deps=true ./node_modules/.bin/vite "${VITE_ARGS[@]}"

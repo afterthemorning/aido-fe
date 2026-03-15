@@ -48,3 +48,12 @@ Required exception heading format:
   - Keep these plugin files as thin integration adapters.
   - Put non-trivial business logic under `src/aido-extension/expiry/*` and import from plugin files when refactoring in subsequent iterations.
   - Avoid unrelated formatting or structural refactors in plugin files to minimize upstream merge conflicts.
+
+### Guardrail Exception: 2026-03-15 Phase 2 Source Registry Backoffice UI
+
+**Reason:** Initial delivery of Phase 2 (Backoffice Integration) as a single coherent batch.
+- `src/routers/index.tsx`: 2 lines added — 1 import + 1 Route declaration. No routing logic changed.
+- `src/components/menu/index.tsx`: 4 lines added — new menu item entry in existing structure.
+- All UI logic (964 lines) is contained in `src/aido-extension/sourceregistry/` which is a new extension package with zero upstream conflict risk.
+- `package.json` / `package-lock.json`: version normalization + caniuse-lite update (tooling fix, not feature code).
+- This exception is a one-time bootstrap commit; future incremental changes will not trigger the threshold.

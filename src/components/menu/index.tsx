@@ -202,6 +202,10 @@ const getMenuList = (t) => {
           label: t('数据源'),
         },
         {
+          key: '/source-registry',
+          label: t('数据源注册'),
+        },
+        {
           key: '/system/variable-settings',
           label: t('变量设置'),
         },

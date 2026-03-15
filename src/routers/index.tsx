@@ -71,6 +71,7 @@ import NotificationSettings from '@/pages/help/NotificationSettings';
 import MigrateDashboards from '@/pages/help/migrate';
 import VariableConfigs from '@/pages/variableConfigs';
 import SiteSettings from '@/pages/siteSettings';
+import SourceRegistry from '@/aido-extension/sourceregistry';
 import { dynamicPackages, Entry, dynamicPages } from '@/utils';
 // @ts-ignore
 import { Jobs as StrategyBrain } from 'plus:/datasource/anomaly';
@@ -198,6 +199,7 @@ export default function Content() {
 
         <Route exact path='/system/version' component={Version} />
         <Route exact path='/system/alerting-engines' component={Servers} />
+        <Route exact path='/source-registry' component={SourceRegistry} />
         <Route exact path='/datasources' component={Datasource} />
         <Route exact path='/datasources/:action/:type' component={DatasourceAdd} />
         <Route exact path='/datasources/:action/:type/:id' component={DatasourceAdd} />

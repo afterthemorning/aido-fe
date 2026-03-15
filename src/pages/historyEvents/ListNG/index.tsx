@@ -340,7 +340,7 @@ const Event = (props: Props) => {
                   rule_prods: val,
                 });
               }}
-              dropdownMatchSelectWidth={false}
+              popupMatchSelectWidth={false}
             >
               {prodOptions.map((item) => {
                 return (
@@ -381,7 +381,7 @@ const Event = (props: Props) => {
                   severity: val,
                 });
               }}
-              dropdownMatchSelectWidth={false}
+              popupMatchSelectWidth={false}
             >
               <Select.Option value={1}>S1（Critical）</Select.Option>
               <Select.Option value={2}>S2（Warning）</Select.Option>

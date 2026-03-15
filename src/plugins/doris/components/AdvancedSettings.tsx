@@ -116,7 +116,7 @@ function AdvancedSettings(props: IProps) {
               <Col span={span}>
                 <InputGroupWithFormItem label={t('common:unit')}>
                   <Form.Item {...prefixField} name={[...prefixName, 'unit']} initialValue='none' noStyle>
-                    <UnitPicker optionLabelProp='cleanLabel' style={{ width: '100%' }} dropdownMatchSelectWidth={false} />
+                    <UnitPicker optionLabelProp='cleanLabel' style={{ width: '100%' }} popupMatchSelectWidth={false} />
                   </Form.Item>
                 </InputGroupWithFormItem>
               </Col>

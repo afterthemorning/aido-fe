@@ -41,11 +41,17 @@ export function getBusiGroups(query = '', limit: number = 5000) {
       },
       query ? { query } : {},
     ),
-  }).then((res) => {
-    return {
-      dat: _.sortBy(res.dat, (item) => _.lowerCase(item.name)),
-    };
-  });
+  })
+    .then((res) => {
+      return {
+        dat: _.sortBy(res?.dat || [], (item) => _.lowerCase(item.name)),
+      };
+    })
+    .catch(() => {
+      return {
+        dat: [],
+      };
+    });
 }
 
 export function getPerm(busiGroup: string, perm: 'ro' | 'rw') {

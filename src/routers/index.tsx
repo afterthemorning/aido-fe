@@ -93,10 +93,11 @@ const lazyPagesRoutes = _.reduce(
   [],
 );
 
-function RouteWithSubRoutes(route) {
+function renderRouteWithSubRoutes(route, key) {
   const Component = route.component;
   return (
     <Route
+      key={key}
       path={route.path}
       element={<Component routes={route.routes} />}
     />
@@ -214,15 +215,9 @@ export default function Content() {
 
         {import.meta.env.VITE_IS_ENT !== 'true' && <Route path='/system/site-settings' element={<SiteSettings />} />}
 
-        {lazyRoutes.map((route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
-        ))}
-        {_.map(lazyPagesRoutes, (route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
-        ))}
-        {_.map(plusLoader.routes, (route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
-        ))}
+        {lazyRoutes.map((route, i) => renderRouteWithSubRoutes(route, i))}
+        {_.map(lazyPagesRoutes, (route, i) => renderRouteWithSubRoutes(route, `lazy-page-${i}`))}
+        {_.map(plusLoader.routes, (route, i) => renderRouteWithSubRoutes(route, `plus-${i}`))}
         <Route path='/' element={<Navigate to={siteInfo?.home_page_url || '/metric/explorer'} replace />} />
         <Route path='/403' element={<Page403 />} />
         <Route path='/404' element={<NotFound />} />

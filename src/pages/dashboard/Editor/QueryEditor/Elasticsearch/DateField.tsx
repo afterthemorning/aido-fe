@@ -54,7 +54,7 @@ export default function DateField(props: IProps) {
         ]}
       >
         <AutoComplete
-          dropdownMatchSelectWidth={false}
+          popupMatchSelectWidth={false}
           style={{ width: '100%' }}
           disabled={disabled}
           options={_.map(fieldsOptions, (item) => {

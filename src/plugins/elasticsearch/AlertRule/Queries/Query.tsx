@@ -83,7 +83,7 @@ export default function Query(props: Props) {
                           ],
                           hideIndexPattern ? [] : [{ label: t('datasource:es.indexPatterns'), value: 'index_pattern' }],
                         )}
-                        dropdownMatchSelectWidth={false}
+                        popupMatchSelectWidth={false}
                         showArrow={hideIndexPattern ? false : true}
                       />
                     </Form.Item>
@@ -116,7 +116,7 @@ export default function Query(props: Props) {
                   >
                     <AutoComplete
                       style={{ width: '100%' }}
-                      dropdownMatchSelectWidth={false}
+                      popupMatchSelectWidth={false}
                       options={_.filter(indexOptions, (item) => {
                         if (indexSearch) {
                           return item.value.includes(indexSearch);

@@ -147,7 +147,7 @@ export default function index() {
                                 optionFilterProp='originLabel'
                                 optionLabelProp='originLabel'
                                 placeholder={t('pipeline_configuration.name_placeholder')}
-                                dropdownMatchSelectWidth={false}
+                                popupMatchSelectWidth={false}
                               />
                             </Form.Item>
                           </Col>

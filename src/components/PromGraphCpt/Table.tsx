@@ -161,7 +161,7 @@ export default function Table(props: IProps) {
           <Input.Group>
             <span className='ant-input-group-addon'>Unit</span>
             <UnitPicker
-              dropdownMatchSelectWidth={false}
+              popupMatchSelectWidth={false}
               value={unit}
               onChange={(val) => {
                 setUnit(val);

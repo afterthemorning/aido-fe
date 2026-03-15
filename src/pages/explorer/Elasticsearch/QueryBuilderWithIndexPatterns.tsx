@@ -171,7 +171,7 @@ export default function QueryBuilder(props: Props) {
                       value: item.id,
                     };
                   })}
-                  dropdownMatchSelectWidth={false}
+                  popupMatchSelectWidth={false}
                   showSearch
                   optionFilterProp='searchIndex'
                   optionLabelProp='originLabel'
@@ -202,7 +202,7 @@ export default function QueryBuilder(props: Props) {
                 <Select
                   bordered={false}
                   options={SYNTAX_OPTIONS}
-                  dropdownMatchSelectWidth={false}
+                  popupMatchSelectWidth={false}
                   onChange={() => {
                     form.setFieldsValue({
                       query: {

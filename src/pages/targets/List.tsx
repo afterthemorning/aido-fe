@@ -575,7 +575,7 @@ export default function List(props: IProps) {
             allowClear
             placeholder={t('filterDowntime')}
             style={{ width: 'max-content' }}
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
             options={[
               {
                 label: t('filterDowntimeNegative'),

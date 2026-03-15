@@ -185,7 +185,7 @@ export default function Query(props: Props) {
               });
             }
           }}
-          dropdownMatchSelectWidth={_.toNumber(options?.length) > 100}
+          popupMatchSelectWidth={_.toNumber(options?.length) > 100}
           value={value}
           popupClassName='overflow-586'
           maxTagPlaceholder={(omittedValues) => {

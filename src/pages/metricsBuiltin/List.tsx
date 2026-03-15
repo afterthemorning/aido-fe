@@ -377,7 +377,7 @@ export default function index() {
                 placeholder={t('typ')}
                 style={{ width: 140 }}
                 allowClear
-                dropdownMatchSelectWidth={false}
+                popupMatchSelectWidth={false}
                 optionLabelProp='cleanLabel'
               />
               <Select
@@ -398,7 +398,7 @@ export default function index() {
                 placeholder={t('collector')}
                 style={{ width: 140 }}
                 allowClear
-                dropdownMatchSelectWidth={false}
+                popupMatchSelectWidth={false}
               />
               <Select
                 value={filter.unit}
@@ -413,7 +413,7 @@ export default function index() {
                 placeholder={t('unit')}
                 style={{ width: 140 }}
                 allowClear
-                dropdownMatchSelectWidth={false}
+                popupMatchSelectWidth={false}
                 optionLabelProp='cleanLabel'
                 mode='multiple'
                 maxTagCount='responsive'

@@ -261,9 +261,9 @@ function App() {
         // 非匿名访问，需要初始化一些公共数据
         if (!anonymous) {
           const installTs = await getInstallDate();
-          const { dat: profile } = await GetProfile();
-          const { dat: busiGroups } = await getBusiGroups();
-          const { dat: perms } = await getMenuPerm();
+          const { dat: profile } = (await GetProfile()) || {};
+          const { dat: busiGroups } = (await getBusiGroups()) || {};
+          const { dat: perms } = (await getMenuPerm()) || {};
           const datasourceList = await getDatasourceBriefList();
           const { licenseRulesRemaining, licenseExpireDays, feats } = await getLicense(t);
           let versions = { version: '', github_verison: '', newVersion: false };

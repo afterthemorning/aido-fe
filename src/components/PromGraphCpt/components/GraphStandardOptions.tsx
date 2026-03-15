@@ -44,7 +44,7 @@ export default function GraphStandardOptions(props: IProps) {
             size='small'
             optionLabelProp='cleanLabelLink'
             bordered={false}
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
             value={highLevelConfig.unit}
             onChange={(val) => {
               setHighLevelConfig({ ...highLevelConfig, unit: val });
@@ -144,7 +144,7 @@ export default function GraphStandardOptions(props: IProps) {
         size='small'
         optionLabelProp='cleanLabelLink'
         bordered={false}
-        dropdownMatchSelectWidth={false}
+        popupMatchSelectWidth={false}
         value={highLevelConfig.unit}
         onChange={(val) => {
           setHighLevelConfig({ ...highLevelConfig, unit: val });

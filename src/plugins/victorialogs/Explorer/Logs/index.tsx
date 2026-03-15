@@ -84,7 +84,7 @@ export default function index(props: Props) {
       onChange={(key) => {
         setActiveType(key);
       }}
-      destroyInactiveTabPane
+      destroyOnHidden
       tabBarExtraContent={
         <Space size={SIZE * 2}>
           <Space>

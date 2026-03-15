@@ -361,7 +361,7 @@ const PageTable: React.FC<Props> = ({ gids }) => {
             allowClear
             placeholder={t('common:datasource.name')}
             style={{ minWidth: 100 }}
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
             mode='multiple'
             value={datasourceIds}
             onChange={(val) => {

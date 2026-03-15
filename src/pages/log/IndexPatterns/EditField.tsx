@@ -256,7 +256,7 @@ function EditField(props: Props & ModalWrapProps) {
         onChange={(val) => {
           setTabVal(val);
         }}
-        destroyInactiveTabPane={false}
+        destroyOnHidden={false}
        items={[
         {
         key: 'link',
@@ -490,7 +490,7 @@ function LinkFieldRow({
         <Form.Item name={[name, 'field']} style={{ width: '100%' }}>
           <Select
             placeholder={t('field.fieldPlaceholder', { skipInterpolation: true })}
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
             showSearch
             filterOption={(input, option: any) => {
               return option.value.indexOf(input) >= 0;
@@ -540,7 +540,7 @@ function FieldRow({ key, name, form, remove, add, fields }: { key: number; name:
         <Form.Item label={t('keyword')} name={[name, 'field']}>
           <Select
             placeholder={t('field.fieldPlaceholder')}
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
             showSearch
             filterOption={(input, option: any) => {
               return option.value.indexOf(input) >= 0;

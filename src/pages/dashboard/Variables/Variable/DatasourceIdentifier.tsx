@@ -57,7 +57,7 @@ export default function DatasourceIdentifier(props: Props) {
           maxTagCount='responsive'
           defaultActiveFirstOption={false}
           showSearch
-          dropdownMatchSelectWidth={false}
+          popupMatchSelectWidth={false}
           value={value}
           onChange={(newValue) => {
             setValue(newValue as any);

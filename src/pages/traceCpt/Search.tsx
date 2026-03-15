@@ -179,7 +179,7 @@ export default function Index(props: IProps) {
             <Col span={24}>
               <Space style={{ width: '100%', justifyContent: 'start', marginBottom: 8 }}>
                 <InputGroupWithFormItem label={t('common:datasource.type')}>
-                  <Select dropdownMatchSelectWidth={false} style={{ width: '100%' }} value='jaeger'>
+                  <Select popupMatchSelectWidth={false} style={{ width: '100%' }} value='jaeger'>
                     {_.map(
                       [
                         {
@@ -218,7 +218,7 @@ export default function Index(props: IProps) {
                 <Col span={8}>
                   <LabelField label='Service'>
                     <Select
-                      dropdownMatchSelectWidth={false}
+                      popupMatchSelectWidth={false}
                       style={{ width: '100%' }}
                       onChange={handleServiceChange}
                       value={search.service}
@@ -237,7 +237,7 @@ export default function Index(props: IProps) {
                 <Col span={8}>
                   <LabelField label='Operation'>
                     <Form.Item name='operation' style={{ width: '100%' }}>
-                      <Select dropdownMatchSelectWidth={false} style={{ width: '100%' }} showSearch allowClear>
+                      <Select popupMatchSelectWidth={false} style={{ width: '100%' }} showSearch allowClear>
                         {operations.map((item) => (
                           <Select.Option value={item.value} key={item.value}>
                             {item.label}

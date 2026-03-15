@@ -229,7 +229,7 @@ export default function index(props: IProps) {
       {errorContent && <Alert style={{ marginBottom: 16 }} message={errorContent} type='error' />}
       <div style={{ minHeight: 0, height: '100%' }}>
         <Tabs
-          destroyInactiveTabPane
+          destroyOnHidden
           tabBarGutter={0}
           activeKey={tabActiveKey}
           onChange={(key: 'table' | 'graph') => {

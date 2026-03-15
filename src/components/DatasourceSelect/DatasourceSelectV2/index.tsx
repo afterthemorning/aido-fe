@@ -32,7 +32,7 @@ export default function index(props: SelectProps & Props) {
 
   return (
     <Select
-      dropdownMatchSelectWidth={false}
+      popupMatchSelectWidth={false}
       {..._.omit(props, ['datasourceCateList', 'datasourceList'])}
       open={open}
       onDropdownVisibleChange={(visible) => {
@@ -49,7 +49,7 @@ export default function index(props: SelectProps & Props) {
           >
             <Select
               style={{ minWidth: 160 }}
-              dropdownMatchSelectWidth={false}
+              popupMatchSelectWidth={false}
               allowClear
               optionLabelProp='label2'
               options={_.map(_.sortBy(datasourceCateList, 'value'), (item) => {

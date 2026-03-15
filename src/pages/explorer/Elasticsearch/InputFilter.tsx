@@ -145,7 +145,7 @@ function InputFilter(props: Props, ref) {
     <AutoComplete
       {...props}
       onChange={triggerChange}
-      dropdownMatchSelectWidth={false}
+      popupMatchSelectWidth={false}
       allowClear={true}
       options={_.filter(options, (item) => {
         if (searchData) {

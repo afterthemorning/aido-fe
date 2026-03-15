@@ -28,7 +28,7 @@ export default function index(props: IProps) {
         },
       ]}
     >
-      <Select allowClear placeholder={t('query.datasource_placeholder')} style={{ minWidth: 70 }} dropdownMatchSelectWidth={false} disabled={disabled}>
+      <Select allowClear placeholder={t('query.datasource_placeholder')} style={{ minWidth: 70 }} popupMatchSelectWidth={false} disabled={disabled}>
         {_.map(datasourceVars, (item, idx) => {
           return (
             <Select.Option value={`\${${item.name}}`} key={`${item.name}_${idx}`}>

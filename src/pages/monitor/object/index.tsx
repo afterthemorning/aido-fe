@@ -63,7 +63,7 @@ export default function index() {
         >
           {t('common:datasource.name')}：
           <Select
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
             value={datasourceValue}
             onChange={(val) => {
               setDatasourceValue(val);

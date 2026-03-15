@@ -200,7 +200,7 @@ export default function index(props: IProps) {
               <InputGroupWithFormItem label={t('log.limit')}>
                 <Form.Item name='limit' initialValue={100}>
                   <Select
-                    dropdownMatchSelectWidth={false}
+                    popupMatchSelectWidth={false}
                     onChange={(val) => {
                       setLimit(val);
                     }}

@@ -85,7 +85,7 @@ export default function HostIdent(props: Props) {
           }}
           defaultActiveFirstOption={false}
           showSearch
-          dropdownMatchSelectWidth={_.toNumber(options?.length) > 100}
+          popupMatchSelectWidth={_.toNumber(options?.length) > 100}
           value={value}
           popupClassName='overflow-586'
           maxTagPlaceholder={(omittedValues) => {

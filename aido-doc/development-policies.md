@@ -466,6 +466,27 @@ Conflict mitigation plan:
 - preserve project-specific font family behavior via `getFontFamilyByEnv`;
 - run typecheck/build/tests and verify dev `@vite/client` injection output.
 
+### Guardrail Exception: 2026-03-15 route-scan runtime crash fixes and low-risk deprecation cleanup
+
+Reason:
+- all-routes console scan exposed runtime crashes in unauth flow and route rendering.
+- fixes require touching central files (`src/App.tsx`, `src/routers/index.tsx`) and shared
+  layout (`src/components/pageLayout/PageLayoutWithTabs/index.tsx`) plus broad low-risk
+  prop renames for antd compatibility warnings.
+
+Affected paths:
+- src/App.tsx
+- src/routers/index.tsx
+- src/services/common.ts
+- src/components/RouterPrompt/index.tsx
+- src/components/pageLayout/PageLayoutWithTabs/index.tsx
+- multiple UI files with `dropdownMatchSelectWidth -> popupMatchSelectWidth`
+
+Conflict mitigation plan:
+- keep logic edits minimal and scoped to crash roots (`undefined` guards, Route child rendering);
+- apply only lexical low-risk prop migrations in bulk;
+- validate with typecheck + tests + all-routes scan and keep temporary scan logs out of commit.
+
 ### Guardrail Exception: 2026-03-15 antd6 theme token root wiring
 
 Reason:

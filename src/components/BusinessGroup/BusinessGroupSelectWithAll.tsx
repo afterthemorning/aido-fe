@@ -34,7 +34,7 @@ export default function BusinessGroupSelect(props: Props) {
       style={{ minWidth: 80 }}
       value={value}
       onChange={onChange}
-      dropdownMatchSelectWidth={false}
+      popupMatchSelectWidth={false}
       showSearch
       optionFilterProp='label'
       options={getBusinessGroupsOptions(busiGroups, allBusiGroups)}

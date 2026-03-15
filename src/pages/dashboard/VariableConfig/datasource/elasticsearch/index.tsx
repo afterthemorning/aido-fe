@@ -50,7 +50,7 @@ export default function index(props: { datasourceValue: number }) {
       <Col span={12}>
         <Form.Item label={t('datasource:es.date_field')} name={['config', 'date_field']} rules={[{ required: true, message: t('datasource:es.date_field_msg') }]}>
           <AutoComplete
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
             showSearch
             options={_.map(dateFields, (item) => {
               return {

@@ -95,7 +95,7 @@ export default function Prometheus(props: IProps) {
             getMode={getMode}
           />
           <Tabs
-            destroyInactiveTabPane
+            destroyOnHidden
             tabBarGutter={0}
             activeKey={mode}
             onChange={(key: 'table' | 'graph') => {

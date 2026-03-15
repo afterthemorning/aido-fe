@@ -141,7 +141,7 @@ export default function index<FilterValues>(props: Props<FilterValues>) {
             disabled={disabled}
             placeholder={placeholder ?? t('placeholder')}
             className='w-full n9e-view-select'
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
             dropdownRender={(originNode) => {
               return (
                 <Spin spinning={loading}>
@@ -182,7 +182,7 @@ export default function index<FilterValues>(props: Props<FilterValues>) {
                         />
                         <Select
                           allowClear
-                          dropdownMatchSelectWidth={false}
+                          popupMatchSelectWidth={false}
                           placeholder={t('public_cate_placeholder')}
                           options={[
                             {

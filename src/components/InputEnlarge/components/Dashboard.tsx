@@ -66,7 +66,7 @@ export default function Dashboard({ vars }: { vars: string[] }) {
       </Form.Item>
       <Form.Item name={['dashboard', 'businessId']} label={t('业务组')} rules={[{ required: true, message: t('请选择') }]}>
         <Select
-          dropdownMatchSelectWidth={false}
+          popupMatchSelectWidth={false}
           placeholder={t('请选择业务组')}
           onChange={(val) => {
             val && getBoardList(val as number);
@@ -97,7 +97,7 @@ export default function Dashboard({ vars }: { vars: string[] }) {
       </Form.Item>
       <Form.Item name={['dashboard', 'boardId']} label={t('仪表盘')} rules={[{ required: true, message: t('请选择') }]}>
         <Select
-          dropdownMatchSelectWidth={false}
+          popupMatchSelectWidth={false}
           placeholder={t('请选择仪表盘')}
           showSearch
           filterOption={(inputValue, option) => {

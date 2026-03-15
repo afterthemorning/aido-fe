@@ -74,7 +74,7 @@ export default function Query(props: Props) {
                             value: 'index_pattern',
                           },
                         ]}
-                        dropdownMatchSelectWidth={false}
+                        popupMatchSelectWidth={false}
                       />
                     </Form.Item>
                     <Tooltip title={<Trans ns='datasource' i18nKey='datasource:es.index_tip' components={{ 1: <br /> }} />}>
@@ -106,7 +106,7 @@ export default function Query(props: Props) {
                   >
                     <AutoComplete
                       style={{ width: '100%' }}
-                      dropdownMatchSelectWidth={false}
+                      popupMatchSelectWidth={false}
                       options={_.filter(indexOptions, (item) => {
                         if (indexSearch) {
                           return item.value.includes(indexSearch);

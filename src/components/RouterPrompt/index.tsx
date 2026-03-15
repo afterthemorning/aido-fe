@@ -21,13 +21,22 @@ export default forwardRef(function RouterPrompt(props: Props, ref) {
   const [showPrompt, setShowPrompt] = useState(false);
   const [currentPath, setCurrentPath] = useState(defaultPath);
 
-  const blocker = useBlocker(({ nextLocation }) => {
-    if (!when) return false;
-    if (validator && validator(nextLocation)) return false;
-    setCurrentPath(nextLocation.pathname);
-    setShowPrompt(true);
-    return true;
-  });
+  let blocker: { state: string; proceed: () => void; reset: () => void } = {
+    state: 'unblocked',
+    proceed: () => { },
+    reset: () => { },
+  };
+  try {
+    blocker = useBlocker(({ nextLocation }) => {
+      if (!when) return false;
+      if (validator && validator(nextLocation)) return false;
+      setCurrentPath(nextLocation.pathname);
+      setShowPrompt(true);
+      return true;
+    }) as unknown as { state: string; proceed: () => void; reset: () => void };
+  } catch {
+    // Ignore in BrowserRouter context where data-router blocker is unavailable.
+  }
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {

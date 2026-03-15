@@ -277,7 +277,7 @@ export default function index(props: Props) {
             placeholder={t('collector')}
             style={{ width: 140 }}
             allowClear
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
           />
           <Select
             value={filter.unit}
@@ -292,7 +292,7 @@ export default function index(props: Props) {
             placeholder={t('unit')}
             style={{ width: 140 }}
             allowClear
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
             optionLabelProp='cleanLabel'
             mode='multiple'
             maxTagCount='responsive'

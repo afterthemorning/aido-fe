@@ -63,7 +63,7 @@ export default function DateField(props: IProps) {
           },
         ]}
       >
-        <AutoComplete dropdownMatchSelectWidth={false} style={{ width: '100%' }} disabled={disabled} options={fieldsOptions} />
+        <AutoComplete popupMatchSelectWidth={false} style={{ width: '100%' }} disabled={disabled} options={fieldsOptions} />
       </Form.Item>
     </InputGroupWithFormItem>
   );

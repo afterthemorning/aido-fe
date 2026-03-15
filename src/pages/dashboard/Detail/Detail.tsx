@@ -315,7 +315,7 @@ export default function DetailV2(props: IProps) {
   return (
     <PageLayout customArea={<div />}>
       <div className='dashboard-detail-container'>
-        <Spin spinning={loading} tip='Loading...' className='dashboard-detail-loading' />
+        <Spin spinning={loading} description='Loading...' className='dashboard-detail-loading' />
         <div className='dashboard-detail-content scroll-container' ref={containerRef}>
           <Affix
             target={() => {

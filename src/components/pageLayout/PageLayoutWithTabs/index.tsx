@@ -239,8 +239,8 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introI
                   </div>
                   <DropdownCompat overlay={menu} trigger={['click']}>
                     <span className='avator' style={{ cursor: 'pointer' }}>
-                      <img src={profile.portrait || '/image/avatar1.png'} />
-                      <span className='display-name'>{profile.nickname || profile.username}</span>
+                      <img src={profile?.portrait || '/image/avatar1.png'} />
+                      <span className='display-name'>{profile?.nickname || profile?.username}</span>
                       <DownOutlined />
                     </span>
                   </DropdownCompat>

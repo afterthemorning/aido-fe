@@ -480,7 +480,7 @@ export default function AlertRules(props: Props) {
               setFilter(newFilter);
               window.sessionStorage.setItem(FILTER_LOCAL_STORAGE_KEY, JSON.stringify(newFilter));
             }}
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
           >
             <Select.Option value={1}>S1（Critical）</Select.Option>
             <Select.Option value={2}>S2（Warning）</Select.Option>

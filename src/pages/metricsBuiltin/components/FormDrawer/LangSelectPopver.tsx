@@ -43,7 +43,7 @@ export default function LangSelectPopver(props: Props) {
             onChange={(val) => {
               setValue(val);
             }}
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
             style={{ width: 100 }}
           />
           <Button

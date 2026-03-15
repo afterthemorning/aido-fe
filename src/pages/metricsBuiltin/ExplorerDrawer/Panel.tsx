@@ -85,7 +85,7 @@ export default function Panel(props: Props) {
                           >
                             <Select
                               style={{ minWidth: 70 }}
-                              dropdownMatchSelectWidth={false}
+                              popupMatchSelectWidth={false}
                               onChange={(val: string) => {
                                 setDefaultDatasourceValue(cate, val);
                                 if (cate !== 'prometheus') {

@@ -31,7 +31,7 @@ export default function IndexPatternSelect(props: Props) {
             value: item.id,
           };
         })}
-        dropdownMatchSelectWidth={false}
+        popupMatchSelectWidth={false}
         showSearch
         optionFilterProp='label'
       />

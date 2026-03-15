@@ -124,7 +124,7 @@ export default function DisplayItem(props: IProps) {
                 onChange('');
               }
             }}
-            dropdownMatchSelectWidth={_.toNumber(options?.length) > 100}
+            popupMatchSelectWidth={_.toNumber(options?.length) > 100}
             value={selected}
             popupClassName='overflow-586'
             maxTagPlaceholder={(omittedValues) => {
@@ -182,7 +182,7 @@ export default function DisplayItem(props: IProps) {
             maxTagCount='responsive'
             defaultActiveFirstOption={false}
             showSearch
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
             value={selected}
             onChange={(value) => {
               setSelected(value as any);
@@ -205,7 +205,7 @@ export default function DisplayItem(props: IProps) {
             maxTagCount='responsive'
             defaultActiveFirstOption={false}
             showSearch
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
             value={selected}
             onChange={(value) => {
               setSelected(value as any);
@@ -243,7 +243,7 @@ export default function DisplayItem(props: IProps) {
             }}
             defaultActiveFirstOption={false}
             showSearch
-            dropdownMatchSelectWidth={_.toNumber(options?.length) > 100}
+            popupMatchSelectWidth={_.toNumber(options?.length) > 100}
             value={selected}
             popupClassName='overflow-586'
             maxTagPlaceholder={(omittedValues) => {

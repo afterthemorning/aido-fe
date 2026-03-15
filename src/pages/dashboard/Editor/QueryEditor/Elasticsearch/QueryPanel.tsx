@@ -127,7 +127,7 @@ export default function QueryPanel({ fields, field, index, remove, datasourceVal
                     value: 'kuery',
                   },
                 ]}
-                dropdownMatchSelectWidth={false}
+                popupMatchSelectWidth={false}
                 onChange={(val) => {
                   const newTargets = _.cloneDeep(targets);
                   newTargets[field.name].query.filter = '';

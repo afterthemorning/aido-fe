@@ -121,7 +121,7 @@ export default function EventsTable(props: Props) {
                 severity: val,
               });
             }}
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
           >
             <Select.Option value={1}>S1（Critical）</Select.Option>
             <Select.Option value={2}>S2（Warning）</Select.Option>
@@ -138,7 +138,7 @@ export default function EventsTable(props: Props) {
                 eventType: val,
               });
             }}
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
           >
             <Select.Option value={0}>Triggered</Select.Option>
             <Select.Option value={1}>Recovered</Select.Option>

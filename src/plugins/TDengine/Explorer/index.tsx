@@ -97,7 +97,7 @@ export default function Prometheus(props: IProps) {
             setRefreshFlag={setRefreshFlag}
           />
           <Tabs
-            destroyInactiveTabPane
+            destroyOnHidden
             tabBarGutter={0}
             activeKey={mode}
             onChange={(key: 'table' | 'graph') => {

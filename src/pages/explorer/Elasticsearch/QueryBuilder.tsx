@@ -128,7 +128,7 @@ export default function QueryBuilder(props: Props) {
               validateTrigger='onBlur'
             >
               <AutoComplete
-                dropdownMatchSelectWidth={false}
+                popupMatchSelectWidth={false}
                 options={_.filter(indexOptions, (item) => {
                   if (indexSearch) {
                     return _.includes(item.value, indexSearch);
@@ -168,7 +168,7 @@ export default function QueryBuilder(props: Props) {
               <Select
                 bordered={false}
                 options={SYNTAX_OPTIONS}
-                dropdownMatchSelectWidth={false}
+                popupMatchSelectWidth={false}
                 onChange={() => {
                   form.setFieldsValue({
                     query: {
@@ -222,7 +222,7 @@ export default function QueryBuilder(props: Props) {
               ]}
             >
               <AutoComplete
-                dropdownMatchSelectWidth={false}
+                popupMatchSelectWidth={false}
                 style={{ width: '100%' }}
                 options={_.map(dateFields, (item) => {
                   return {

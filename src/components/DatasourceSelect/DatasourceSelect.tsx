@@ -26,7 +26,7 @@ export default function DatasourceSelect(props: Props) {
       style={style}
       maxTagCount={disableResponsive ? undefined : 'responsive'}
       placeholder={t('common:datasource.id')}
-      dropdownMatchSelectWidth={false}
+      popupMatchSelectWidth={false}
       mode='multiple'
       optionFilterProp='label'
       options={_.concat(

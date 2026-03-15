@@ -89,7 +89,7 @@ export default function index(props: Props) {
             onChange={(val) => {
               setFilter({ ...filter, cate: val });
             }}
-            dropdownMatchSelectWidth={false}
+            popupMatchSelectWidth={false}
           >
             {_.map(cateList, (item) => {
               return (

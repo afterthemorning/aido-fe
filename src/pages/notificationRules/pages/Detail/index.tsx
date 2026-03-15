@@ -120,7 +120,7 @@ export default function Detail() {
                     },
                   ]}
                   onChange={setDays}
-                  dropdownMatchSelectWidth={false}
+                  popupMatchSelectWidth={false}
                   className='w-32'
                 />
               )}
@@ -230,7 +230,7 @@ export default function Detail() {
             }}
             tabProps={{
               size: 'small',
-              destroyInactiveTabPane: true,
+              destroyOnHidden: true,
             }}
           >
             <div className='overflow-y-auto h-full'>{contentList[activeTabKey]}</div>

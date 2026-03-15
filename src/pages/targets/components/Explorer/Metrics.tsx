@@ -170,7 +170,7 @@ export default function Metrics(props: Props) {
               placeholder={t('typ')}
               style={{ width: '100%' }}
               allowClear
-              dropdownMatchSelectWidth={false}
+              popupMatchSelectWidth={false}
               optionLabelProp='cleanLabel'
             />
           </Col>
@@ -193,7 +193,7 @@ export default function Metrics(props: Props) {
               placeholder={t('collector')}
               style={{ width: '100%' }}
               allowClear
-              dropdownMatchSelectWidth={false}
+              popupMatchSelectWidth={false}
             />
           </Col>
           <Col span={24}>

@@ -320,7 +320,7 @@ export default function TimeseriesCpt(props: Props) {
             <Form.Item noStyle>
               <UnitPicker
                 size='small'
-                dropdownMatchSelectWidth={false}
+                popupMatchSelectWidth={false}
                 style={{
                   minWidth: 120,
                 }}

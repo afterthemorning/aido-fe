@@ -41,7 +41,7 @@ export default function index(prosp: Props) {
             <Col span={6}>
               <InputGroupWithFormItem label={t('common:unit')}>
                 <Form.Item {...field} name={[field.name, 'unit']} initialValue='none' noStyle>
-                  <UnitPicker optionLabelProp='cleanLabel' style={{ width: '100%' }} dropdownMatchSelectWidth={false} />
+                  <UnitPicker optionLabelProp='cleanLabel' style={{ width: '100%' }} popupMatchSelectWidth={false} />
                 </Form.Item>
               </InputGroupWithFormItem>
             </Col>

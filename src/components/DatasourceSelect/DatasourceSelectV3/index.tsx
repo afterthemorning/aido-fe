@@ -32,7 +32,7 @@ export default function index(props: SelectProps & Props) {
   return (
     <Select
       className='n9e-datasource-select-v3'
-      dropdownMatchSelectWidth={false}
+      popupMatchSelectWidth={false}
       {..._.omit(props, ['datasourceCateList', 'ajustDatasourceList'])}
       showSearch
       optionLabelProp='optionLabel'

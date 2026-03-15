@@ -25,3 +25,5 @@ src/pages/loginCallback/oauth.tsx
 src/pages/notFound/OutOfService.tsx
 src/pages/taskTpl/add.tsx
 src/plugins/doris/AlertRule/Query.tsx
+
+*.npm-cache/*

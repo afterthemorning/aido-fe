@@ -37,6 +37,7 @@ import Feedback from '@/components/Feedback';
 import { IRawTimeRange } from '@/components/TimeRangePicker';
 import { getN9eConfig } from '@/pages/siteSettings/services';
 import { getDarkMode, updateDarkMode } from '@/utils/darkMode';
+import { AccessTokenKey } from '@/utils/constant';
 import SharedDetail from '@/pages/event/DetailNG/SharedDetail';
 import HocRenderer from './components/HocRenderer';
 import HeaderMenu from './components/SideMenu';
@@ -231,6 +232,14 @@ function App() {
       setCommonState({ ...commonState }); // 为了触发重新渲染
       return;
     }
+
+    // Avoid firing protected bootstrap requests when user is not authenticated.
+    if (!anonymous && !localStorage.getItem(AccessTokenKey) && !localStorage.getItem('refresh_token')) {
+      const redirect = `${basePrefix}/login${location.pathname !== `${basePrefix}/` ? `?redirect=${encodeURIComponent(location.pathname + location.search)}` : ''}`;
+      location.href = redirect;
+      return;
+    }
+
     try {
       (async () => {
         const iconLink = document.querySelector("link[rel~='icon']") as any;

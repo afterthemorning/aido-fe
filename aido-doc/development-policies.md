@@ -262,6 +262,20 @@ Conflict mitigation plan:
 - keep change limited to removing `ConfigProvider` theme custom tokens/components only;
 - validate with typecheck and runtime smoke check;
 - do not mix with unrelated page-level refactors in the same commit.
+
+### Guardrail Exception: 2026-03-15 Request storm dedup on refresh
+
+Reason:
+- Refresh path triggered repeated auth recovery and redundant protected bootstrap calls; fixing this required edits in high-risk app bootstrap and request interceptor files.
+
+Affected paths:
+- src/App.tsx
+- src/utils/request.tsx
+
+Conflict mitigation plan:
+- keep changes focused on unauth bootstrap short-circuit and single-flight 401 recovery only;
+- validate with typecheck and runtime API request count probe;
+- avoid mixing feature logic or UI refactors in the same commit.
 - `FormInstance` generics changed
 - `TableColumnType` key narrowing stricter
 - `UploadFile` type generics

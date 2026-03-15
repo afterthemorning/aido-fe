@@ -59,6 +59,55 @@ const combineLoginURL = () => {
   return `${basePrefix}/login${location.pathname != '/' ? '?redirect=' + encodeURIComponent(location.pathname + location.search) : ''}`;
 };
 
+let authHandlingPromise: Promise<void> | null = null;
+let authNavigationTriggered = false;
+
+const navigateOnce = (url: string) => {
+  if (authNavigationTriggered) {
+    return;
+  }
+  authNavigationTriggered = true;
+  location.href = url;
+};
+
+const recoverAuthOnce = (): Promise<void> => {
+  if (authHandlingPromise) {
+    return authHandlingPromise;
+  }
+
+  authHandlingPromise = (async () => {
+    const refreshToken = localStorage.getItem('refresh_token');
+    if (!refreshToken) {
+      navigateOnce(combineLoginURL());
+      return;
+    }
+
+    try {
+      const res = await UpdateAccessToken();
+      if (res?.err) {
+        navigateOnce(combineLoginURL());
+        return;
+      }
+
+      const { access_token, refresh_token } = res?.dat || {};
+      if (!access_token || !refresh_token) {
+        navigateOnce(combineLoginURL());
+        return;
+      }
+
+      localStorage.setItem(AccessTokenKey, access_token);
+      localStorage.setItem('refresh_token', refresh_token);
+      navigateOnce(`${location.pathname}${location.search}`);
+    } catch (error) {
+      navigateOnce(combineLoginURL());
+    }
+  })().finally(() => {
+    authHandlingPromise = null;
+  });
+
+  return authHandlingPromise;
+};
+
 /** 配置request请求时的默认参数 */
 const request = extend({
   errorHandler,
@@ -133,22 +182,15 @@ request.interceptors.response.use(
         });
     } else if (status === 401 && !_.includes(response.url, '/api/n9e-plus/proxy') && !_.includes(response.url, '/api/n9e/proxy')) {
       if (response.url.indexOf('/api/n9e/auth/refresh') > 0) {
-        location.href = combineLoginURL();
+        navigateOnce(combineLoginURL());
       } else {
-        localStorage.getItem('refresh_token')
-          ? UpdateAccessToken().then((res) => {
-              console.log('401 err', res);
-              if (res.err) {
-                location.href = combineLoginURL();
-              } else {
-                const { access_token, refresh_token } = res.dat;
-                localStorage.setItem(AccessTokenKey, access_token);
-                localStorage.setItem('refresh_token', refresh_token);
-                location.href = `${basePrefix}${location.pathname}${location.search}`;
-              }
-            })
-          : (location.href = combineLoginURL());
+        await recoverAuthOnce();
       }
+
+      throw {
+        message: i18next.t('common:request_fail_msg'),
+        silence: true,
+      };
     } else if (
       status === 403 &&
       (response.url.includes('/api/v1') || response.url.includes('/api/v2')) &&

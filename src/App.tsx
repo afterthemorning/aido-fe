@@ -37,6 +37,7 @@ import Feedback from '@/components/Feedback';
 import { IRawTimeRange } from '@/components/TimeRangePicker';
 import { getN9eConfig } from '@/pages/siteSettings/services';
 import { getDarkMode, updateDarkMode } from '@/utils/darkMode';
+import getFontFamilyByEnv from '@/utils/getFontFamilyByEnv';
 import SharedDetail from '@/pages/event/DetailNG/SharedDetail';
 import HocRenderer from './components/HocRenderer';
 import HeaderMenu from './components/SideMenu';
@@ -338,7 +339,46 @@ function App() {
   return (
     <div className='App'>
       <CommonStateContext.Provider value={commonState}>
-        <ConfigProvider locale={i18n.language == 'en_US' ? enUS : i18n.language == 'ru_RU' ? ruRU : zhCN}>
+        <ConfigProvider
+          locale={i18n.language == 'en_US' ? enUS : i18n.language == 'ru_RU' ? ruRU : zhCN}
+          theme={{
+            token: {
+              colorPrimary: '#6C53B1',
+              colorText: '#262626',
+              colorTextDisabled: 'rgba(0, 0, 0, 0.5)',
+              colorPrimaryBg: '#F0ECF9',
+              fontSize: 12,
+              fontFamily: getFontFamilyByEnv(import.meta.env.VITE_IS_ENT === 'true'),
+            },
+            components: {
+              Tabs: {
+                inkBarColor: '#6C53B1',
+              },
+              Menu: {
+                itemColor: '#8C8C8C',
+                itemBg: '#f0f0f0',
+                subMenuItemBg: '#f0f0f0',
+              },
+              Table: {
+                rowHoverBg: '#EAE8F2',
+                headerBg: '#f0f0f0',
+              },
+              Select: {
+                multipleItemBg: '#EAE6F3',
+                multipleItemBorderColor: '#6C53B1',
+              },
+              Radio: {
+                buttonCheckedBg: '#EAE6F3',
+              },
+              Form: {
+                itemMarginBottom: 18,
+              },
+              Button: {
+                paddingInline: 12,
+              },
+            },
+          }}
+        >
           <Router
             basename={basePrefix}
           >

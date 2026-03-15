@@ -18,10 +18,10 @@ import { defineConfig, loadEnv, type ProxyOptions } from 'vite';
 import { md } from './plugins/md';
 import plusResolve from './plugins/plusResolve';
 import prefixPlugin from './plugins/vite-plugin-prefix';
-import getFontFamilyByEnv from './src/utils/getFontFamilyByEnv';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import path from 'path';
+import getFontFamilyByEnv from './src/utils/getFontFamilyByEnv';
 
 const chunk2 = [
   '@codemirror/autocomplete',
@@ -133,6 +133,8 @@ export default defineConfig(({ mode }) => {
         less: {
           additionalData: `@import "/src/global.variable.less";`,
           javascriptEnabled: true,
+          // Compatibility fallback for legacy .less files still using antd v4 variables.
+          // Runtime theming is now handled by ConfigProvider.theme in App.tsx.
           modifyVars: {
             'primary-color': '#6C53B1',
             'primary-background': '#F0ECF9',

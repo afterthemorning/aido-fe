@@ -433,3 +433,17 @@ Retrospective:
 - All UI logic (964 lines) is contained in `src/aido-extension/sourceregistry/` which is a new extension package with zero upstream conflict risk.
 - `package.json` / `package-lock.json`: version normalization + caniuse-lite update (tooling fix, not feature code).
 - This exception is a one-time bootstrap commit; future incremental changes will not trigger the threshold.
+
+### Guardrail Exception: 2026-03-15 antd6 theme token root wiring
+
+Reason:
+- antd v6 theme token migration requires updating root provider and build-time less config, which are guardrail high-risk paths.
+
+Affected paths:
+- src/App.tsx
+- vite.config.ts
+
+Conflict mitigation plan:
+- keep edits scoped to ConfigProvider theme wiring and less compatibility fallback only;
+- validate with typecheck/build/tests before commit;
+- avoid unrelated router/service/main-entry changes.

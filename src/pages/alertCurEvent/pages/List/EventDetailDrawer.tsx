@@ -24,10 +24,10 @@ export default function EventDetailDrawer(props: Props) {
 
   return (
     <Drawer
-      width='80%'
+      size='80%'
       closable={false}
       title={t('detail_title')}
-      destroyOnClose
+      destroyOnHidden
       extra={<CloseOutlined onClick={() => onClose()} />}
       onClose={() => onClose()}
       open={visible}

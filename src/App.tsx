@@ -350,6 +350,7 @@ function App() {
         <ConfigProvider
           locale={i18n.language == 'en_US' ? enUS : i18n.language == 'ru_RU' ? ruRU : zhCN}
           empty={{ image: Empty.PRESENTED_IMAGE_DEFAULT }}
+          warning={{ strict: false }}
         >
           <Router
             basename={basePrefix}

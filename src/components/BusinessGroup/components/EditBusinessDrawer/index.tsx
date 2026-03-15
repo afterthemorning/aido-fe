@@ -140,7 +140,7 @@ export default function index(props: Props) {
     }
   };
   return (
-    <Drawer width={960} closable={false} title={t('common:btn.edit')} destroyOnClose extra={<CloseOutlined onClick={onCloseDrawer} />} onClose={onCloseDrawer} open={open}>
+    <Drawer size={960} closable={false} title={t('common:btn.edit')} destroyOnHidden extra={<CloseOutlined onClick={onCloseDrawer} />} onClose={onCloseDrawer} open={open}>
       <div>
         <Row className='team-info'>
           <Col

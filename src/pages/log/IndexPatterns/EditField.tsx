@@ -208,7 +208,7 @@ function EditField(props: Props & ModalWrapProps) {
   return (
     <Drawer
       width={1000}
-      destroyOnClose
+      destroyOnHidden
       title={
         <Space>
           {t('common:btn.config')}

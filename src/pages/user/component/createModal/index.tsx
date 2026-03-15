@@ -215,7 +215,7 @@ const CreateModal: React.FC<ModalProps> = (props: ModalProps) => {
       open={visible}
       width={width ? width : 700}
       onCancel={onClose}
-      destroyOnClose={true}
+      destroyOnHidden
       footer={[
         <Button key='back' onClick={onClose}>
           {t('common:btn.cancel')}

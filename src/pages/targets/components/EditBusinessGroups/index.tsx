@@ -49,7 +49,7 @@ export default function index(props: Props) {
       </span>
       <Modal
         title={t('update_busi.title')}
-        destroyOnClose
+        destroyOnHidden
         open={visible}
         onCancel={() => {
           setVisible(false);

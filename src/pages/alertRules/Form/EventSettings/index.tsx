@@ -45,9 +45,7 @@ export default function index({ initialValues }) {
           )}
         </Space>
       }
-      bodyStyle={{
-        display: collapsed ? 'none' : 'block',
-      }}
+      styles={{ body: { display: collapsed ? 'none' : 'block' } }}
     >
       <div
         style={{

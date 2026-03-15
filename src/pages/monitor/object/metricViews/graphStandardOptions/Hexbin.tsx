@@ -120,7 +120,7 @@ export default function GraphStandardOptions(props: IProps) {
         <UnitPicker
           size='small'
           optionLabelProp='cleanLabelLink'
-          bordered={false}
+          variant="borderless"
           popupMatchSelectWidth={false}
           value={highLevelConfig.unit}
           onChange={(val) => {

@@ -115,7 +115,7 @@ function FormModal(props: Props & ModalWrapProps) {
   return (
     <Drawer
       width={1000}
-      destroyOnClose
+      destroyOnHidden
       title={t(`${mode}_title`)}
       open={visible}
       onClose={() => {

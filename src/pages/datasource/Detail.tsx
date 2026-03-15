@@ -17,12 +17,10 @@ export default function TimeSeriesDetail(props: Props) {
 
   return (
     <Drawer
-      width={data.plugin_type === 'aido-excel' ? 900 : 584}
+      size={data.plugin_type === 'aido-excel' ? 900 : 584}
       closeIcon={false}
       className='settings-data-source-detail-drawer'
-      bodyStyle={{
-        padding: '0 15px 15px',
-      }}
+      styles={{ body: { padding: '0 15px 15px' } }}
       title=''
       placement='right'
       onClose={onClose}

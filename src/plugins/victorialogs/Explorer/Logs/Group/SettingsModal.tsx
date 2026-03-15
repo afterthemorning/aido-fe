@@ -32,7 +32,7 @@ export default function SettingsModal(props: Props) {
     <Modal
       title={t('explorer.group_view_settings.title')}
       open={settingsModalVisible}
-      destroyOnClose
+      destroyOnHidden
       onCancel={() => setSettingsModalVisible(false)}
       onOk={() => {
         form.validateFields().then((values) => {

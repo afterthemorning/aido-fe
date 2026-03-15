@@ -137,7 +137,7 @@ function Table(props: Props) {
           setLogViewerDrawerState({ visible: false, value: null });
         }}
         open={logViewerDrawerState.visible}
-        destroyOnClose
+        destroyOnHidden
       >
         {logViewerDrawerState.value ? (
           <LogViewer

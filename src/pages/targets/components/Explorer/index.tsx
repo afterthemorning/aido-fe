@@ -34,7 +34,7 @@ export default function index(props: Props) {
           setVisible(false);
           setExplorerDrawerData(undefined);
         }}
-        destroyOnClose
+        destroyOnHidden
       >
         <div className='n9e-hosts-explorer-metrics-container'>
           <div className='n9e-hosts-explorer-metrics-list'>

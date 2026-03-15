@@ -207,9 +207,7 @@ export default function Detail() {
           <Card
             size='small'
             className='fc-border n9e-notification-rule-detail-list w-full min-h-0'
-            bodyStyle={{
-              height: 'calc(100% - 36px)',
-            }}
+            styles={{ body: { height: 'calc(100% - 36px)' } }}
             tabList={[
               {
                 key: 'events',

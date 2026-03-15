@@ -60,7 +60,7 @@ export default function index(props: Props) {
           width={600}
           closable={false}
           title={title}
-          destroyOnClose
+          destroyOnHidden
           onCancel={() => {
             setOpen(false);
           }}

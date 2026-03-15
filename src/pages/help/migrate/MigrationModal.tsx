@@ -21,8 +21,8 @@ export default function MigrationModal(props: MigrationModalProps) {
   return (
     <Modal
       title='迁移设置'
-      destroyOnClose
-      maskClosable={false}
+      destroyOnHidden
+      mask={{ closable: false }}
       closable={false}
       open={visible}
       footer={[

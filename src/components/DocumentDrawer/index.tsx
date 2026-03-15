@@ -70,7 +70,7 @@ function index(props: Props & ModalWrapProps) {
 
   return (
     <Drawer
-      width={width}
+      size={width}
       title={
         <Space>
           {title}

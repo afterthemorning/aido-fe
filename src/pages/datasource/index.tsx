@@ -99,7 +99,7 @@ export default function index() {
       <Modal
         title={t('chooseDataSourceType')}
         open={chooseDataSourceTypeModalVisible}
-        destroyOnClose
+        destroyOnHidden
         width={960}
         footer={null}
         onCancel={() => {

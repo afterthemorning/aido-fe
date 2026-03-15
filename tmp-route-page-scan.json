@@ -19,6 +19,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fdemo%2F",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -29,6 +31,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Foverview",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -39,6 +43,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": true
     },
     {
@@ -51,6 +57,16 @@
         "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
       ],
       "pageErrors": [],
+      "consoleEntries": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+          "url": "http://127.0.0.1:8765/aido/api/n9e/auth/callback?redirect=%2Faido%2F",
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      ],
+      "pageErrorEntries": [],
       "accessible": true
     },
     {
@@ -61,6 +77,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/callback/cas",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": true
     },
     {
@@ -73,6 +91,16 @@
         "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
       ],
       "pageErrors": [],
+      "consoleEntries": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+          "url": "http://127.0.0.1:8765/aido/api/n9e/auth/callback/oauth?redirect=%2Faido%2F",
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      ],
+      "pageErrorEntries": [],
       "accessible": true
     },
     {
@@ -83,6 +111,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/callback/custom",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": true
     },
     {
@@ -95,6 +125,16 @@
         "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
       ],
       "pageErrors": [],
+      "consoleEntries": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+          "url": "http://127.0.0.1:8765/aido/api/n9e/auth/callback/dingtalk?redirect=%2Faido%2F",
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      ],
+      "pageErrorEntries": [],
       "accessible": true
     },
     {
@@ -105,6 +145,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/callback/feishu",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": true
     },
     {
@@ -115,6 +157,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fmetric%2Fexplorer",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -125,6 +169,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Flog%2Fexplorer",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -135,6 +181,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Flog%2Findex-patterns",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -145,6 +193,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fobject%2Fexplorer",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -155,6 +205,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fbusi-groups%2F",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -165,6 +217,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fusers%2F",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -175,6 +229,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fuser-groups%2F",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -185,6 +241,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Faccount%2Fprofile%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -195,6 +253,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fdashboard%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -204,12 +264,19 @@
       "targetUrl": "http://127.0.0.1:8765/aido/dashboards/share/1",
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fdashboards%2Fshare%2F1",
       "consoleErrors": [
-        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
-        "Warning: [antd: Modal] `bodyStyle` is deprecated. Please use `styles.body` instead.",
-        "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead.",
-        "Warning: [antd: Modal] `maskClosable` is deprecated. Please use `mask.closable` instead."
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
       ],
       "pageErrors": [],
+      "consoleEntries": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+          "url": "http://127.0.0.1:8765/aido/api/n9e/datasource/brief",
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      ],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -220,6 +287,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fdashboards%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -230,6 +299,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fdashboards",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -242,6 +313,16 @@
         "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
       ],
       "pageErrors": [],
+      "consoleEntries": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+          "url": "http://127.0.0.1:8765/aido/api/n9e/datasource/brief",
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      ],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -252,6 +333,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Falert-rules%2Fadd%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -262,6 +345,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Falert-rules%2Fedit%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -272,6 +357,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Falert-rules%2Fbrain%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -282,6 +369,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Falert-rules",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -292,6 +381,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Falert-mutes%2Fadd%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -302,6 +393,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Falert-mutes%2Fedit%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -312,6 +405,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Falert-mutes",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -322,6 +417,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Falert-subscribes%2Fadd",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -332,6 +429,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Falert-subscribes%2Fedit%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -342,6 +441,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Falert-subscribes",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -352,6 +453,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Frecording-rules%2Fadd%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -362,6 +465,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Frecording-rules%2Fedit%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -372,6 +477,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Frecording-rules%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -382,6 +489,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Falert-his-events%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -392,6 +501,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Falert-cur-events%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -402,6 +513,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Falert-his-events",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -412,6 +525,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Ftargets",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -420,8 +535,20 @@
       "route": "/job-tpls/add/task",
       "targetUrl": "http://127.0.0.1:8765/aido/job-tpls/add/task",
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fjob-tpls%2Fadd%2Ftask",
-      "consoleErrors": [],
+      "consoleErrors": [
+        "WebSocket connection to 'ws://127.0.0.1:8765/aido/?token=LIsYulAeC9eF' failed: "
+      ],
       "pageErrors": [],
+      "consoleEntries": [
+        {
+          "type": "error",
+          "text": "WebSocket connection to 'ws://127.0.0.1:8765/aido/?token=LIsYulAeC9eF' failed: ",
+          "url": "http://127.0.0.1:8765/aido/@vite/client",
+          "lineNumber": 840,
+          "columnNumber": 0
+        }
+      ],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -432,6 +559,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fjob-tpls%2Fadd",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -442,6 +571,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fjob-tpls%2F1%2Fdetail",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -450,10 +581,10 @@
       "route": "/job-tpls/1/modify",
       "targetUrl": "http://127.0.0.1:8765/aido/job-tpls/1/modify",
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fjob-tpls%2F1%2Fmodify",
-      "consoleErrors": [
-        "WebSocket connection to 'ws://127.0.0.1:8765/aido/?token=LIsYulAeC9eF' failed: "
-      ],
+      "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -464,6 +595,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fjob-tpls%2F1%2Fclone",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -474,6 +607,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fjob-tpls",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -484,6 +619,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fjob-tasks%2Fadd",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -494,6 +631,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fjob-tasks%2F1%2Fresult",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -504,6 +643,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fjob-tasks%2F1%2Fdetail",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -514,6 +655,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fjob-tasks",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -524,6 +667,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fsystem%2Fversion",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -534,6 +679,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fsystem%2Falerting-engines",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -544,6 +691,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fsource-registry",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -554,6 +703,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fdatasources%2F1%2F1%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -564,6 +715,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fdatasources%2F1%2F1",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -574,6 +727,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fdatasources",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -584,6 +739,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fsystem%2Fsso-settings",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -594,6 +751,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fhelp%2Fnotification-tpls",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -604,6 +763,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fhelp%2Fnotification-settings",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -612,8 +773,20 @@
       "route": "/help/migrate",
       "targetUrl": "http://127.0.0.1:8765/aido/help/migrate",
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fhelp%2Fmigrate",
-      "consoleErrors": [],
+      "consoleErrors": [
+        "WebSocket connection to 'ws://127.0.0.1:8765/aido/?token=LIsYulAeC9eF' failed: "
+      ],
       "pageErrors": [],
+      "consoleEntries": [
+        {
+          "type": "error",
+          "text": "WebSocket connection to 'ws://127.0.0.1:8765/aido/?token=LIsYulAeC9eF' failed: ",
+          "url": "http://127.0.0.1:8765/aido/@vite/client",
+          "lineNumber": 840,
+          "columnNumber": 0
+        }
+      ],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -624,6 +797,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fsystem%2Fvariable-settings",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -634,6 +809,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Ftrace%2Fexplorer",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -644,6 +821,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Ftrace%2Fdependencies",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -654,6 +833,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Froles",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -664,6 +845,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fsystem%2Fsite-settings",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -674,6 +857,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2F403",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -684,6 +869,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2F404",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     },
     {
@@ -694,6 +881,8 @@
       "finalUrl": "http://127.0.0.1:8765/aido/login?redirect=%2Faido%2Fout-of-service",
       "consoleErrors": [],
       "pageErrors": [],
+      "consoleEntries": [],
+      "pageErrorEntries": [],
       "accessible": false
     }
   ]

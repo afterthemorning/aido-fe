@@ -200,7 +200,7 @@ export default function QueryBuilder(props: Props) {
             addonAfter={
               <Form.Item name={['query', 'syntax']} noStyle initialValue='kuery'>
                 <Select
-                  bordered={false}
+                  variant="borderless"
                   options={SYNTAX_OPTIONS}
                   popupMatchSelectWidth={false}
                   onChange={() => {

@@ -34,9 +34,7 @@ const EventDetailPage = () => {
         <Card
           className='h-full'
           title={t('AlertCurEvents:detail.title')}
-          bodyStyle={{
-            height: 'calc(100% - 55px)', // Adjust height to account for the title bar
-          }}
+          styles={{ body: { height: 'calc(100% - 55px)' } }}
         >
           <div className='w-full h-full overflow-x-hidden overflow-y-auto'>
             <DetailNG data={eventDetail} showGraph token={__token} />

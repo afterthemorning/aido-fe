@@ -51,7 +51,7 @@ export default function TestModal(props: Props) {
           });
         }}
         width='80%'
-        destroyOnClose
+        destroyOnHidden
       >
         <Spin spinning={loading}>
           {data.type === 'settings' && (

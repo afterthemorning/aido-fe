@@ -62,10 +62,10 @@ export default function index(props: Props) {
 
   return (
     <Drawer
-      width='80%'
+      size='80%'
       closable={false}
       title={title}
-      destroyOnClose
+      destroyOnHidden
       extra={
         <CloseOutlined
           onClick={() => {

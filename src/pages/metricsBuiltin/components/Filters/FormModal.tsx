@@ -104,7 +104,7 @@ export default function FormModal(props: IProps) {
           }
         });
       }}
-      destroyOnClose
+      destroyOnHidden
     >
       <Form layout='vertical' form={form}>
         <Form.Item name='id' hidden>

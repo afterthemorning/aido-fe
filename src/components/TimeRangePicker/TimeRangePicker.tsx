@@ -37,7 +37,8 @@ import { rangeOptions, momentLocaleZhCN } from './config';
 import TimeZonePicker from './TimeZonePicker';
 import './style.less';
 
-moment.locale('zh-cn', momentLocaleZhCN);
+moment.updateLocale('zh-cn', momentLocaleZhCN);
+moment.locale('zh-cn');
 
 const localeMap = {
   zh_CN: zh_CN,

@@ -155,7 +155,7 @@ function index(props: IProps) {
       style={{ top: 0, padding: 0 }}
       open={visible}
       closable={false}
-      destroyOnClose
+      destroyOnHidden
       footer={[
         <Button
           key='cancel'
@@ -180,9 +180,11 @@ function index(props: IProps) {
         setVisible(false);
         props.onCancel && props.onCancel();
       }}
-      bodyStyle={{
-        padding: SIZE * 2,
-        backgroundColor: 'var(--fc-fill-1)',
+      styles={{
+        body: {
+          padding: SIZE * 2,
+          backgroundColor: 'var(--fc-fill-1)',
+        },
       }}
     >
       {/* 除了 text 和 iframe 类型其他的类型比如存在 initialValues?.datasourceCate */}

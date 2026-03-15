@@ -171,7 +171,7 @@ export default function index() {
         width='90%'
         open={!!activeComponent}
         closable={false}
-        destroyOnClose
+        destroyOnHidden
         title={
           <Space>
             <img src={activeComponent?.logo} style={{ height: 24, width: 24 }} />

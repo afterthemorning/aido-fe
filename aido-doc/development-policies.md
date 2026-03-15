@@ -613,3 +613,22 @@ Conflict mitigation plan:
 - no source file changes in this commit; pure dependency version bump;
 - validated with npx tsc --noEmit --skipLibCheck before commit;
 - i18next upgrade confirmed zero breaking risk: no old plural key format, no removed API usage.
+
+### Guardrail Exception: 2026-03-16 antd6 strict-mode warning suppression and deprecated prop cleanup
+
+Reason:
+- antd v6 strict mode emits console warnings for deprecated props (bodyStyle, headStyle, etc.) and triggers double-render via the new `warning.strict` ConfigProvider option.
+- Suppressing warnings requires touching src/App.tsx (ConfigProvider root) alongside all affected component files in a single pass.
+- Large file count is due to bulk alignment of deprecated prop usage across Drawer/Modal/Card/Table usages — each change is minimal (1-3 lines per file).
+
+Affected paths:
+- src/App.tsx (ConfigProvider warning.strict)
+- src/components/** (deprecated prop alignment)
+- src/pages/** (deprecated prop alignment)
+- src/plugins/** (deprecated prop alignment)
+- tmp-route-page-scan.json (scan artifact update)
+
+Conflict mitigation plan:
+- all changes are pure prop renames or config additions; no logic or API changes;
+- TypeScript typecheck passes with zero errors before commit;
+- no new dependencies introduced.

@@ -192,7 +192,7 @@ export default function List() {
         open={eventPipelineDrawerState.visible}
         onClose={resetEventPipelineDrawerState}
         width='80%'
-        destroyOnClose
+        destroyOnHidden
       >
         {eventPipelineDrawerState.action === 'add' && (
           <Add

@@ -43,7 +43,7 @@ export default function GraphStandardOptions(props: IProps) {
           <UnitPicker
             size='small'
             optionLabelProp='cleanLabelLink'
-            bordered={false}
+            variant="borderless"
             popupMatchSelectWidth={false}
             value={highLevelConfig.unit}
             onChange={(val) => {
@@ -79,7 +79,7 @@ export default function GraphStandardOptions(props: IProps) {
             </Checkbox>
             <Select
               size='small'
-              bordered={false}
+              variant="borderless"
               options={[
                 {
                   label: <a>desc</a>,
@@ -113,7 +113,7 @@ export default function GraphStandardOptions(props: IProps) {
       </Checkbox>
       <Select
         size='small'
-        bordered={false}
+        variant="borderless"
         options={[
           {
             label: <a>desc</a>,
@@ -143,7 +143,7 @@ export default function GraphStandardOptions(props: IProps) {
       <UnitPicker
         size='small'
         optionLabelProp='cleanLabelLink'
-        bordered={false}
+        variant="borderless"
         popupMatchSelectWidth={false}
         value={highLevelConfig.unit}
         onChange={(val) => {

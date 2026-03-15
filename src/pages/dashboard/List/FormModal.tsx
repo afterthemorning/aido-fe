@@ -60,7 +60,7 @@ function index(props: Props & ModalWrapProps) {
 
   return (
     <Modal
-      destroyOnClose
+      destroyOnHidden
       title={t(`${action}_title`)}
       open={visible}
       onCancel={destroy}

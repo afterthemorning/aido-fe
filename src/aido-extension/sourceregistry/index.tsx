@@ -118,7 +118,7 @@ function SourceFormModal({ visible, editRecord, onClose, onSaved }: SourceFormPr
       onOk={handleOk}
       confirmLoading={loading}
       width={520}
-      destroyOnClose
+      destroyOnHidden
     >
       <Form form={form} layout='vertical' requiredMark={false}>
         {!isEdit && (
@@ -268,7 +268,7 @@ function KeysDrawer({ sourceId, onClose }: KeysDrawerProps) {
         onCancel={() => setCreateVisible(false)}
         onOk={handleCreateKey}
         width={400}
-        destroyOnClose
+        destroyOnHidden
       >
         <Form layout='vertical'>
           <Form.Item label={t('key.expires_days')}>

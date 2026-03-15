@@ -159,8 +159,10 @@ function index(props: ModalWrapProps & IProps) {
       onCancel={() => {
         props.destroy();
       }}
-      bodyStyle={{
-        padding: '10px 24px 24px 24px',
+      styles={{
+        body: {
+          padding: '10px 24px 24px 24px',
+        },
       }}
       okText={t('common:btn.ok')}
       cancelText={t('common:btn.cancel')}

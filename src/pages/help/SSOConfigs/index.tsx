@@ -30,11 +30,9 @@ export default function index() {
       <main className='p-4'>
         <Global SSOConfigs={data} />
         <Card
-          bordered
+          variant='outlined'
           size='small'
-          bodyStyle={{
-            paddingTop: 2,
-          }}
+          styles={{ body: { paddingTop: 2 } }}
         >
           <Tabs
             activeKey={activeKey}

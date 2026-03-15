@@ -27,7 +27,8 @@ import { rangeOptions, momentLocaleZhCN } from '../config';
 import { isRelativeFormat } from './utils';
 import '../style.less';
 
-moment.locale('zh-cn', momentLocaleZhCN);
+moment.updateLocale('zh-cn', momentLocaleZhCN);
+moment.locale('zh-cn');
 
 const validOptions = rangeOptions.filter((o) => isRelativeFormat(o.start));
 const historyCacheKey = 'flashcat-timeRangePicker-relative-history';

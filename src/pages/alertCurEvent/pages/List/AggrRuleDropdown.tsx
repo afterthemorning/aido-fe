@@ -165,7 +165,7 @@ export default function AggrRuleDropdown(props: Props) {
           setVisibleAggrRuleModal(false);
           setEditForm(undefined);
         }}
-        destroyOnClose
+        destroyOnHidden
       >
         <Form
           form={form}

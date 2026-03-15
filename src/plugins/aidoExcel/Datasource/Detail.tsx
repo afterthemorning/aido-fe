@@ -365,7 +365,7 @@ function ExpiryTab({ datasourceId }: { datasourceId: number }) {
         open={!!overrideModal}
         onOk={submitOverride}
         onCancel={() => setOverrideModal(null)}
-        destroyOnClose
+        destroyOnHidden
       >
         {overrideModal && (
           <div style={{ marginBottom: 16 }}>

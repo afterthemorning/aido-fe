@@ -82,7 +82,7 @@ export default function FormModal(props: Props) {
           }
         });
       }}
-      destroyOnClose
+      destroyOnHidden
     >
       <Form layout='vertical' form={form}>
         <Form.Item name='page' rules={[{ required: true }]} hidden initialValue={page}>

@@ -19,7 +19,7 @@ export default function DeleteEventsModal(props: Props) {
 
   return (
     <Modal
-      destroyOnClose
+      destroyOnHidden
       title={t('delete_events.title')}
       open={visible}
       onCancel={onCancel}

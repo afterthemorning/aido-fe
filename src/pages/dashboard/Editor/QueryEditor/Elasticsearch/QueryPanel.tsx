@@ -116,7 +116,7 @@ export default function QueryPanel({ fields, field, index, remove, datasourceVal
             </Space>
             <Form.Item {...field} name={[field.name, 'query', 'syntax']} noStyle initialValue='lucene' hidden={IS_PLUS}>
               <Select
-                bordered={false}
+                variant="borderless"
                 options={[
                   {
                     label: 'Lucene',

@@ -33,7 +33,7 @@ export default function FormModal(props: Props) {
 
   return (
     <Modal
-      destroyOnClose
+      destroyOnHidden
       title={t(`panel.options.links.${modalState.action}_btn`)}
       open={modalState.visible}
       onCancel={() => {

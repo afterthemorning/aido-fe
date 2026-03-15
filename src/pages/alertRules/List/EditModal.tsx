@@ -253,7 +253,7 @@ const editModal: React.FC<Props> = ({ isModalVisible, editModalFinish, selectedR
         onCancel={() => {
           editModalClose();
         }}
-        destroyOnClose
+        destroyOnHidden
       >
         <Form
           layout='vertical'

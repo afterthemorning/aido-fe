@@ -34,7 +34,7 @@ export default function index<T>(props: Props) {
         title={t('common:select_event')}
         footer={null}
         width='80%'
-        destroyOnClose
+        destroyOnHidden
         open={eventsModalVisible}
         onCancel={() => {
           setEventsModalVisible(false);

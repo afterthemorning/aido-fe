@@ -275,7 +275,7 @@ const ruleModal: React.FC<props> = (props) => {
   return (
     <>
       <Modal
-        destroyOnClose
+        destroyOnHidden
         forceRender
         width='80%'
         title={t('sub_rule_name')}

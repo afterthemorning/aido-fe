@@ -211,13 +211,14 @@ export function MetaModal(props: Props) {
       <Modal
         width={400}
         wrapClassName={`${NAME_SPACE}-explorer-meta-modal`}
-        bodyStyle={{
-          padding: 10,
-          height: 500,
+        styles={{
+          body: {
+            padding: 10,
+            height: 500,
+          },
         }}
         mask={false}
-        maskClosable={false}
-        destroyOnClose
+        destroyOnHidden
         title={
           <div
             className='explorer-meta-modal-title'

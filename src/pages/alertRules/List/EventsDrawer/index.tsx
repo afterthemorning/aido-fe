@@ -274,7 +274,7 @@ export default function index(props: Props) {
   }
 
   return (
-    <Drawer title={title} placement='right' onClose={onClose} open={visible} width='80%'>
+    <Drawer title={title} placement='right' onClose={onClose} open={visible} size='80%'>
       <Row justify='space-between' style={{ width: '100%' }}>
         <Space>
           <TimeRangePicker

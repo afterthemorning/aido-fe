@@ -68,7 +68,7 @@ export default function FormModal(props: Props) {
       onCancel={() => {
         onCancel();
       }}
-      destroyOnClose
+      destroyOnHidden
     >
       <Form layout='vertical' preserve={false} form={form}>
         <Form.Item name='id' hidden>

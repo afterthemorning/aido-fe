@@ -73,7 +73,7 @@ export default function Query(props: Props) {
                   <Space>
                     <Form.Item {...field} name={[field.name, 'index_type']} noStyle initialValue='index'>
                       <Select
-                        bordered={false}
+                        variant="borderless"
                         options={_.concat(
                           [
                             {

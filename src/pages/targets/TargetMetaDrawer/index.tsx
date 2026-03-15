@@ -192,9 +192,9 @@ export default function TargetMetaDrawer(props: IProps) {
         </a>
       </Tooltip>
       <Drawer
-        destroyOnClose
+        destroyOnHidden
         title={t('meta_title')}
-        width={800}
+        size={800}
         placement='right'
         onClose={() => {
           setVisible(false);

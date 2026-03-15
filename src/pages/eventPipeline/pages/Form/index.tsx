@@ -49,9 +49,7 @@ export default function index(props: Props) {
       <Card
         className='mb-2'
         title={<Space>{t('basic_configuration')}</Space>}
-        bodyStyle={{
-          padding: '16px 16px 8px 16px',
-        }}
+        styles={{ body: { padding: '16px 16px 8px 16px' } }}
       >
         <Row gutter={SIZE}>
           <Col span={12}>

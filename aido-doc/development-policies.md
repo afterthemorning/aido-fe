@@ -36,49 +36,300 @@ Required exception heading format:
 
 ## Frontend Upgrade Assessment (Latest Release Target)
 
-Effective date: 2026-03-15
+Effective date: 2026-03-15  
+Last version audit: 2026-03-15 (queried from npm registry)
 
 Scope decision:
 - This upgrade initiative is frontend-only for this phase.
 - Backend dependencies in `aido` remain unchanged.
 - Final objective is to reach latest release versions for the frontend stack with phased risk control.
+- Work branch: `exp/antd6-illustration-lab`
 
-### Compatibility Matrix (Current vs Latest)
+### Version Audit (Registry-Verified, 2026-03-15)
 
-| Component | Current | Latest Release | Compatibility | Risk | Notes |
+| Package | package.json (current) | Latest Release | Source |
+|---|---|---|---|
+| antd | 4.21.0 | **6.3.2** | npm |
+| @ant-design/icons | ^4.6.2 | **6.1.0** | npm |
+| react | ^17.0.0 | **19.2.4** | npm |
+| react-dom | ^17.0.0 | **19.2.4** | npm |
+| react-router-dom | ^5.2.0 | **7.13.1** | npm |
+| vite | ^4.5.14 | **8.0.0** | npm |
+| @vitejs/plugin-react | ^4.4.1 | **6.0.1** | npm |
+| typescript | 4.9.4 | **5.9.3** | npm |
+| ahooks | ^3.5.0 | **3.9.6** | npm |
+| tailwindcss | ^3.3.5 | **4.2.1** | npm |
+| jest | ^29.7.0 | **30.3.0** | npm |
+
+### Compatibility Matrix
+
+| Component | Current | Target | Compatibility | Risk | Notes |
 |---|---:|---:|---|---|---|
-| antd | 4.21.0 | 6.3.2 | Not directly compatible | High | `antd@6` requires React 18+ and has API/theming migration impact. |
-| react | 17.x | 19.2.4 | Partial (via phased upgrade) | High | Recommend 17 -> 18 first, then assess 19 migration separately. |
-| react-dom | 17.x | 19.2.4 | Partial (via phased upgrade) | High | Must move together with React upgrade. |
-| react-router-dom | 5.2.0 | 7.13.1 | Breaking changes | High | Route definition and navigation APIs require broad refactor. |
-| vite | 4.5.14 | 8.0.0 | Partial | Medium | Plugin/config compatibility validation required. |
-| @vitejs/plugin-react | 4.4.1 | 6.0.1 | Coupled with Vite major upgrade | Medium | Upgrade together with Vite. |
-| typescript | 4.9.4 | 5.9.3 | Partial | Medium | New type-checking errors expected and must be fixed incrementally. |
-| ahooks | 3.5.0 | 3.9.6 | Mostly compatible | Low | Can be upgraded in early batches. |
+| antd | 4.21.0 | 6.3.2 | Not direct | High | Requires React 18+; API + theming migration needed |
+| @ant-design/icons | ^4.6.2 | 6.1.0 | Coupled with antd | High | Upgrade together with antd major bump |
+| react | 17.x | 19.2.4 | Phased | High | Recommend 17→18 first, then assess 19 separately |
+| react-dom | 17.x | 19.2.4 | Phased | High | Must move together with react |
+| react-router-dom | 5.2.0 | 7.13.1 | Breaking | High | `Switch`/`Route`/`useHistory` require broad refactor |
+| vite | 4.5.14 | 8.0.0 | Partial | Medium | Config + plugin compat validation required |
+| @vitejs/plugin-react | 4.4.1 | 6.0.1 | Coupled | Medium | Upgrade together with Vite |
+| typescript | 4.9.4 | 5.9.3 | Partial | Medium | New type errors expected; fix incrementally |
+| ahooks | 3.5.0 | 3.9.6 | Compatible | Low | Safe to upgrade early |
+| tailwindcss | 3.3.5 | 4.2.1 | Partial | Medium | CSS class syntax changes; JIT default differs |
+| jest | 29.7.0 | 30.3.0 | Partial | Low | Config and snapshot format changes |
 
 ### Known Migration Surface (Frontend)
 
-- `antd` imports in source: ~742
-- `visible` prop usage patterns: ~237
-- `Tabs.TabPane` usage: ~69
-- `overlayClassName` / `dropdownClassName` usage: ~61
-- Existing theme path is Less + `modifyVars`, which increases migration complexity for newer Ant Design theming.
+- `antd` import sites: ~742
+- `visible` prop on Modal/Drawer (→ `open`): ~237
+- `Tabs.TabPane` usage (→ `items` array API): ~69
+- `overlayClassName` / `dropdownClassName` (→ `popupClassName`): ~61
+- Theme: currently Less + `modifyVars` → must migrate to antd `theme.token` + `ConfigProvider`
+- Router: `Switch` → `Routes`, `useHistory` → `useNavigate`, `withRouter` removed
 
-### Execution Policy (Frontend-Only, Latest Target)
+---
 
-1. Phase A (stabilization):
-  - Upgrade to latest `antd@4` patch line first (`4.24.16`) to reduce drift safely.
-2. Phase B (runtime baseline):
-  - Upgrade React/ReactDOM from 17 to 18 and complete compatibility fixes.
-3. Phase C (UI framework major):
-  - Upgrade `antd` to 6.x and migrate component API usage and theming strategy.
-4. Phase D (supporting stack to latest):
-  - Upgrade Router, Vite, plugin-react, and TypeScript to latest release versions.
+### Phase A — antd 4 Patch Stabilization (4.21.0 → 4.24.16)
 
-Acceptance criteria for completion:
-- All frontend framework/tooling targets reach latest release versions at merge time.
-- Dev startup, build, and core routes pass smoke checks.
-- No backend dependency upgrade is included in this initiative.
+Goal: Reach the last stable patch of antd 4 before the major jump. Safe minor-version change.
+
+Steps:
+1. On branch `exp/antd6-illustration-lab`.
+2. Update `package.json`:
+   - `"antd": "4.24.16"`
+3. Install: `npm --cache ./.npm-cache install`
+4. Run typecheck: `npx tsc --noEmit --skipLibCheck`
+5. Fix any newly reported prop deprecation warnings (non-breaking; resolve one file at a time).
+6. Smoke-check: `npm run dev` → verify key pages render.
+7. Commit: `chore(deps): upgrade antd 4.21.0 → 4.24.16`
+
+Acceptance: `npm run dev` starts without error; no regressions on Sources / Audit / Explorer pages.
+
+---
+
+### Phase B — React 17 → 18
+
+Goal: Move runtime baseline to React 18, which is required by antd 6.
+
+Steps:
+1. Update `package.json`:
+   - `"react": "^18.3.1"`
+   - `"react-dom": "^18.3.1"`
+   - `"@types/react": "^18"`
+   - `"@types/react-dom": "^18"`
+2. Install: `npm --cache ./.npm-cache install`
+3. Migrate root render (usually in `src/main.tsx`):
+   ```ts
+   // Before
+   import ReactDOM from 'react-dom';
+   ReactDOM.render(<App />, document.getElementById('root'));
+
+   // After
+   import { createRoot } from 'react-dom/client';
+   createRoot(document.getElementById('root')!).render(<App />);
+   ```
+4. Fix TypeScript errors: `npx tsc --noEmit --skipLibCheck 2>&1 | head -60`
+   - Common: `ReactNode` narrowing, `children` prop no longer implicit in FC.
+5. Smoke-check: `npm run dev`.
+6. Commit: `chore(deps): upgrade react/react-dom 17 → 18`
+
+Acceptance: App bootstraps; React DevTools shows React 18 runtime.
+
+---
+
+### Phase C — antd 4 → 6 (Major UI Framework Migration)
+
+Goal: Migrate to antd 6.3.2 and @ant-design/icons 6.1.0.  
+**Prerequisite:** Phase B must be complete (React 18 required by antd 6).
+
+#### C.1 Dependency update
+
+```bash
+npm --cache ./.npm-cache install antd@6.3.2 @ant-design/icons@6.1.0
+```
+
+#### C.2 Theme migration
+
+Remove Less `modifyVars` approach. Replace with antd `ConfigProvider` + `theme.token`:
+
+```tsx
+// vite.config.ts — remove css.preprocessorOptions.less.modifyVars block
+// src/App.tsx (or root layout) — add:
+import { ConfigProvider, theme } from 'antd';
+
+<ConfigProvider
+  theme={{
+    token: {
+      colorPrimary: '#your-primary',
+      // map previous modifyVars keys to token equivalents
+    },
+  }}
+>
+  <App />
+</ConfigProvider>
+```
+
+Token mapping reference: https://ant.design/docs/react/migrate-less-variables
+
+#### C.3 API migrations (batch with grep+sed or codemod)
+
+**`visible` → `open`** (~237 sites):
+```bash
+# Preview
+grep -rn 'visible=' src --include='*.tsx' --include='*.ts' | grep -v '//' | wc -l
+# Migrate (Modal, Drawer, Popover, Tooltip, Dropdown)
+find src -name '*.tsx' -o -name '*.ts' | xargs sed -i '' 's/\bvisible={\(.*\)}/open={\1}/g'
+```
+Manual review required after automated pass for false positives.
+
+**`Tabs.TabPane` → `items` array** (~69 sites):
+```tsx
+// Before
+<Tabs>
+  <Tabs.TabPane key="k" tab="Label">content</Tabs.TabPane>
+</Tabs>
+
+// After
+<Tabs items={[{ key: 'k', label: 'Label', children: content }]} />
+```
+Automated codemod difficult; migrate file-by-file starting with `src/aido-extension/`.
+
+**`overlayClassName` / `dropdownClassName` → `popupClassName`** (~61 sites):
+```bash
+find src -name '*.tsx' | xargs sed -i '' \
+  's/overlayClassName=/popupClassName=/g; s/dropdownClassName=/popupClassName=/g'
+```
+
+**`Tabs.TabPane` import cleanup:**
+```bash
+# Remove standalone TabPane from imports; it no longer exists in antd 6
+grep -rn 'TabPane' src --include='*.tsx' | grep import
+```
+
+#### C.4 Icon package
+
+`@ant-design/icons` 6.x is mostly API-compatible. Verify no removed icons:
+```bash
+grep -rn 'from.*@ant-design/icons' src --include='*.tsx' | grep -oP "'[A-Za-z]+'" | sort -u
+```
+
+#### C.5 Typecheck pass
+
+```bash
+npx tsc --noEmit --skipLibCheck 2>&1 | head -100
+```
+Fix errors file-by-file. Common patterns:
+- `FormInstance` generics changed
+- `TableColumnType` key narrowing stricter
+- `UploadFile` type generics
+
+#### C.6 Acceptance and commit
+
+- `npm run dev` starts; all Tabs/Modal/Drawer components render.
+- Commit: `feat(deps): upgrade antd 4→6, migrate component APIs and theme`
+
+---
+
+### Phase D — Supporting Stack to Latest
+
+Goal: Upgrade build tooling and router to latest release.  
+**Prerequisite:** Phase C complete (stable antd 6 baseline).
+
+#### D.1 Vite 4 → 8 + @vitejs/plugin-react 4 → 6
+
+```bash
+npm --cache ./.npm-cache install vite@8.0.0 @vitejs/plugin-react@6.0.1
+```
+
+`vite.config.ts` changes likely required:
+- `css.preprocessorOptions` key renames (Less is no longer needed after Phase C theme migration)
+- `build.target` defaults changed in Vite 5+; review output
+- `server.proxy` config format unchanged
+
+Verify: `npm run build` produces clean dist.
+
+#### D.2 TypeScript 4.9 → 5.9
+
+```bash
+npm --cache ./.npm-cache install typescript@5.9.3
+```
+
+```bash
+npx tsc --noEmit --skipLibCheck 2>&1 | wc -l
+# Resolve remaining strict mode errors incrementally
+```
+
+New TS 5.x features available: `satisfies`, `const type params`, stricter module resolution.
+Do not change `tsconfig.json` `strict` setting unless baseline is clean.
+
+#### D.3 react-router-dom 5 → 7
+
+```bash
+npm --cache ./.npm-cache install react-router-dom@7.13.1
+```
+
+Breaking API changes:
+- `Switch` → `Routes`
+- `<Route component={X}>` → `<Route element={<X />}>`
+- `useHistory()` → `useNavigate()`
+- `withRouter` HOC removed → use hooks
+- `<Redirect>` → `<Navigate>`
+
+Audit entry points:
+```bash
+grep -rn 'useHistory\|withRouter\|<Switch\|<Redirect' src --include='*.tsx' | wc -l
+grep -rn 'from.*react-router-dom' src --include='*.tsx' | wc -l
+```
+
+Work file-by-file from `src/routers/index.tsx` outward.
+
+#### D.4 tailwindcss 3 → 4
+
+```bash
+npm --cache ./.npm-cache install tailwindcss@4.2.1
+```
+
+Tailwind v4 changes:
+- Config moved: `tailwind.config.js` → `@import "tailwindcss"` in CSS with `@theme` block
+- CSS variable-first design; `theme()` function replaced by CSS variables
+- Run migration tool: `npx @tailwindcss/upgrade@latest`
+
+#### D.5 jest 29 → 30
+
+```bash
+npm --cache ./.npm-cache install jest@30.3.0 @types/jest@30
+```
+
+Breaking changes: snapshot format updated (run `jest --updateSnapshot` after upgrade).
+
+#### D.6 ahooks 3.5 → 3.9
+
+```bash
+npm --cache ./.npm-cache install ahooks@3.9.6
+```
+
+Mostly API-compatible minor upgrade. No known breaking changes from 3.5 → 3.9.
+
+#### D.7 Final acceptance
+
+```bash
+npm run build          # Clean production build
+npm run dev            # Dev server starts
+npx tsc --noEmit       # Zero TS errors (goal; use --skipLibCheck if third-party blocks)
+npm test               # Test suite passes
+```
+
+Commit: `chore(deps): upgrade vite/router/ts/tailwind/jest to latest release`
+
+---
+
+### Overall Upgrade Completion Criteria
+
+- [ ] All packages in Version Audit table reach target latest release version
+- [ ] `npm run dev` starts without error
+- [ ] `npm run build` produces clean dist
+- [ ] Core routes smoke-checked: Explorer, Dashboard, Source Registry, Login
+- [ ] No backend (`aido`) dependencies modified
+- [ ] Branch `exp/antd6-illustration-lab` merged to `release/1.0.0` after all phases pass
 
 ## Exception Notes
 

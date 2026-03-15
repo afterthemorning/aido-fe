@@ -503,6 +503,22 @@ Conflict mitigation plan:
 - activate only when `baseName` exists and do not alter API proxy behavior;
 - validate with direct curl checks and full route console scan.
 
+### Guardrail Exception: 2026-03-15 ES indices 502 frontend resilience
+
+Reason:
+- console regression scan showed repeated proxy 502 noise from ES `_cat/indices` requests
+  in unauth/unavailable backend scenarios.
+- fix touches shared warning service path and requires a guarded fallback in `src/services/warning.ts`.
+
+Affected paths:
+- src/pages/explorer/Elasticsearch/services.ts
+- src/services/warning.ts
+
+Conflict mitigation plan:
+- keep API path and backend contract unchanged;
+- only add `silence: true` and empty-list fallback for failed list requests;
+- validate with no-proxy route scan and typecheck.
+
 ### Guardrail Exception: 2026-03-15 antd6 theme token root wiring
 
 Reason:

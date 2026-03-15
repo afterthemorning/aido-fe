@@ -34,9 +34,14 @@ export function getIndices(datasourceValue: number, allow_hide_system_indices = 
   return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/_cat/indices`, {
     method: RequestMethod.Get,
     params,
-  }).then((res) => {
-    return _.sortBy(_.compact(_.map(res, 'index')));
-  });
+    silence: true,
+  })
+    .then((res) => {
+      return _.sortBy(_.compact(_.map(res, 'index')));
+    })
+    .catch(() => {
+      return [];
+    });
 }
 
 export function getFullIndices(datasourceValue: number, target = '*', allow_hide_system_indices = false, crossClusterEnabled = false) {

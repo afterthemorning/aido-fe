@@ -496,9 +496,14 @@ export function getIndices(datasourceValue: number) {
     params: {
       format: 'json',
     },
-  }).then((res) => {
-    return _.sortBy(_.compact(_.map(res, 'index')));
-  });
+    silence: true,
+  })
+    .then((res) => {
+      return _.sortBy(_.compact(_.map(res, 'index')));
+    })
+    .catch(() => {
+      return [];
+    });
 }
 
 export function getESVersion(datasourceValue: number) {

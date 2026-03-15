@@ -10,6 +10,7 @@ import usePagination from '@/components/usePagination';
 import { getMetrics, Record, Filter, getTypes, getCollectors, buildLabelFilterAndExpression } from '@/pages/metricsBuiltin/services';
 import { getComponents, Component } from '@/pages/builtInComponents/services';
 import { escapePromQLString } from '@/pages/dashboard/VariableConfig/utils';
+import DatasourceIcon from '@/components/DatasourceIcon';
 
 interface Props {
   selectedIdents: string[];
@@ -64,7 +65,7 @@ export default function Metrics(props: Props) {
       render: (val) => {
         return (
           <Space>
-            <img src={_.find(typsMeta, (meta) => meta.ident === val)?.logo || '/image/default.png'} alt={val} style={{ width: 16, height: 16 }} />
+            <DatasourceIcon logo={_.find(typsMeta, (meta) => meta.ident === val)?.logo} ident={val} size={16} />
             {val}
           </Space>
         );
@@ -157,7 +158,7 @@ export default function Metrics(props: Props) {
                 return {
                   label: (
                     <Space>
-                      <img src={_.find(typsMeta, (meta) => meta.ident === item)?.logo || '/image/default.png'} alt={item} style={{ width: 16, height: 16 }} />
+                      <DatasourceIcon logo={_.find(typsMeta, (meta) => meta.ident === item)?.logo} ident={item} size={16} />
                       {item}
                     </Space>
                   ),

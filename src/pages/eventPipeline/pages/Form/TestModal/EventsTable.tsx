@@ -13,6 +13,7 @@ import DatasourceSelect from '@/components/DatasourceSelect/DatasourceSelect';
 import { BusinessGroupSelectWithAll } from '@/components/BusinessGroup';
 import { getEvents } from '@/pages/historyEvents/services';
 import { SEVERITY_COLORS } from '@/pages/alertCurEvent/constants';
+import DatasourceIcon from '@/components/DatasourceIcon';
 
 interface Props {
   cate?: string;
@@ -176,7 +177,7 @@ export default function EventsTable(props: Props) {
                     <Space>
                       {currentDatasourceCate && currentDatasource ? (
                         <Space>
-                          <img src={currentDatasourceCate.logo} height={14} />
+                          <DatasourceIcon logo={currentDatasourceCate.logo} label={currentDatasourceCate.label} ident={currentDatasourceCate.value} size={14} />
                           {currentDatasource.name}
                           <span>/</span>
                         </Space>

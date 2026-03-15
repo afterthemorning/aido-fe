@@ -26,6 +26,7 @@ import { getComponents, Component } from '@/pages/builtInComponents/services';
 
 import { postMetrics, putMetric } from '../../services';
 import LangSelectPopver from './LangSelectPopver';
+import DatasourceIcon from '@/components/DatasourceIcon';
 
 interface Props {
   open?: boolean;
@@ -149,7 +150,7 @@ export default function index(props: Props) {
                   return {
                     label: (
                       <Space>
-                        <img src={_.find(typsMeta, (meta) => meta.ident === item)?.logo || '/image/default.png'} alt={item} style={{ width: 16, height: 16 }} />
+                        <DatasourceIcon logo={_.find(typsMeta, (meta) => meta.ident === item)?.logo} ident={item} size={16} />
                         {item}
                       </Space>
                     ),

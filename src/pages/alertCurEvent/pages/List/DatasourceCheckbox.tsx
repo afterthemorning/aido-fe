@@ -8,6 +8,7 @@ import { CommonStateContext } from '@/App';
 import { allCates } from '@/components/AdvancedWrap/utils';
 
 import { NS } from '../../constants';
+import DatasourceIcon from '@/components/DatasourceIcon';
 
 interface Props {
   value?: number[];
@@ -58,7 +59,7 @@ const DatasourceCheckbox: React.FC<Props> = ({ value = [], onChange }) => {
             return (
               <div key={ds.id}>
                 <Checkbox className='py-1 flex items-center overflow-hidden text-ellipsis whitespace-nowrap' value={ds.id}>
-                  {cate?.logo && <img className='w-[14px] h-[14px] mr-2' src={cate.logo} alt={cate.label} />}
+                  <DatasourceIcon logo={cate?.logo} label={cate?.label} ident={cate?.value} size={14} />
                   {ds.name}
                 </Checkbox>
               </div>

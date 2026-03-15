@@ -25,6 +25,7 @@ import EventDetailDrawer from './EventDetailDrawer';
 import AckBtn from 'plus:/parcels/Event/Acknowledge/AckBtn';
 
 import DropdownCompat from '@/components/AntdDropdownCompat';
+import DatasourceIcon from '@/components/DatasourceIcon';
 
 interface IProps {
   filter: FilterType;
@@ -84,7 +85,7 @@ export default function AlertTable(props: IProps) {
               <Space>
                 {currentDatasourceCate && currentDatasource ? (
                   <Space>
-                    <img src={currentDatasourceCate.logo} height={14} />
+                    <DatasourceIcon logo={currentDatasourceCate.logo} label={currentDatasourceCate.label} ident={currentDatasourceCate.value} size={14} />
                     {currentDatasource.name}
                     <span>/</span>
                   </Space>

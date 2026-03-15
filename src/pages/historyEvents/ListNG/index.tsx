@@ -30,6 +30,7 @@ import DeleteEventsModal from './DeleteEventsModal';
 import AckBtn from 'plus:/parcels/Event/Acknowledge/AckBtn';
 
 import DropdownCompat from '@/components/AntdDropdownCompat';
+import DatasourceIcon from '@/components/DatasourceIcon';
 
 export const CACHE_KEY = 'alert_events_range';
 
@@ -92,7 +93,7 @@ const Event = (props: Props) => {
               <Space>
                 {currentDatasourceCate && currentDatasource ? (
                   <Space>
-                    <img src={currentDatasourceCate.logo} height={14} />
+                    <DatasourceIcon logo={currentDatasourceCate.logo} label={currentDatasourceCate.label} ident={currentDatasourceCate.value} size={14} />
                     {currentDatasource.name}
                     <span>/</span>
                   </Space>

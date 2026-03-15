@@ -39,6 +39,7 @@ import Filters, { filtersToStr } from './components/Filters';
 import ExplorerDrawer from './ExplorerDrawer';
 
 import DropdownCompat from '@/components/AntdDropdownCompat';
+import DatasourceIcon from '@/components/DatasourceIcon';
 
 export default function index() {
   const { t, i18n } = useTranslation('metricsBuiltin');
@@ -98,7 +99,7 @@ export default function index() {
       render: (val) => {
         return (
           <Space>
-            <img src={_.find(typsMeta, (meta) => meta.ident === val)?.logo || '/image/default.png'} alt={val} style={{ width: 16, height: 16 }} />
+            <DatasourceIcon logo={_.find(typsMeta, (meta) => meta.ident === val)?.logo} ident={val} size={16} />
             {val}
           </Space>
         );
@@ -364,7 +365,7 @@ export default function index() {
                   return {
                     label: (
                       <Space>
-                        <img src={_.find(typsMeta, (meta) => meta.ident === item)?.logo || '/image/default.png'} alt={item} style={{ width: 16, height: 16 }} />
+                        <DatasourceIcon logo={_.find(typsMeta, (meta) => meta.ident === item)?.logo} ident={item} size={16} />
                         {item}
                       </Space>
                     ),

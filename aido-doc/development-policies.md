@@ -632,3 +632,19 @@ Conflict mitigation plan:
 - all changes are pure prop renames or config additions; no logic or API changes;
 - TypeScript typecheck passes with zero errors before commit;
 - no new dependencies introduced.
+
+### Guardrail Exception: 2026-03-16 replace react-quill with Tiptap and unify DatasourceIcon
+Reason:
+- react-quill is unmaintained (last release 2022, no React 18 support); replacing with @tiptap/react v3 requires updating package-lock.json which accounts for the bulk of the line diff (~1,400 lines from lock file regeneration).
+- DatasourceIcon unification touches 9 source files but each change is 1-3 lines (add import + replace one JSX node).
+- Actual source code changes are small; lock file churn is unavoidable for a dependency swap.
+
+Affected paths:
+- package.json / package-lock.json (react-quill removed, @tiptap/* added)
+- src/components/RichTextEditor/ (new component, 2 files)
+- src/pages/** (9 files, DatasourceIcon unification)
+
+Conflict mitigation plan:
+- TypeScript typecheck passes with zero errors before commit;
+- No logic changes, only JSX node replacements and import additions;
+- New RichTextEditor component is additive only (no existing code modified).

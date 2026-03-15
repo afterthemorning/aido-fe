@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import './index.less';
+import DatasourceIcon from '@/components/DatasourceIcon';
 
 interface Props {
   sourceMap: any;
@@ -21,7 +22,7 @@ export default function SourceCard(props: Props) {
           <Col span={4} key={item.name}>
             <Link to={`/${urlPrefix}/add/${item.type.includes('.') ? _.toLower(item.type).split('.')[0] : _.toLower(item.type)}`}>
               <div className='builtin-cates-grid-item'>
-                <img src={item.logo} width={48} height={48} alt={item.name} />
+                <DatasourceIcon logo={item.logo} label={item.name} ident={item.type} size={48} />
                 <div>{item.name}</div>
               </div>
             </Link>

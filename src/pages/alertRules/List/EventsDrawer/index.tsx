@@ -29,6 +29,7 @@ import AckBtn from 'plus:/parcels/Event/Acknowledge/AckBtn';
 import BatchAckBtn from 'plus:/parcels/Event/Acknowledge/BatchAckBtn';
 
 import DropdownCompat from '@/components/AntdDropdownCompat';
+import DatasourceIcon from '@/components/DatasourceIcon';
 
 export interface Props {
   title?: string;
@@ -102,7 +103,7 @@ export default function index(props: Props) {
               <Space>
                 {currentDatasourceCate && currentDatasource ? (
                   <Space>
-                    <img src={currentDatasourceCate.logo} height={14} />
+                    <DatasourceIcon logo={currentDatasourceCate.logo} label={currentDatasourceCate.label} ident={currentDatasourceCate.value} size={14} />
                     {currentDatasource.name}
                     <span>/</span>
                   </Space>

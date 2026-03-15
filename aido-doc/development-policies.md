@@ -597,3 +597,19 @@ Conflict mitigation plan:
 - keep behavior changes limited to route link alignment and avoid structural menu refactors;
 - include scan files as point-in-time artifacts only for this sync commit;
 - validate with TypeScript noEmit check and focused Playwright spot checks.
+
+### Guardrail Exception: 2026-03-16 dependency batch upgrade i18next react-i18next reactflow
+
+Reason:
+- Planned upgrade of i18next v23→v25, react-i18next v14→v16, reactflow v11.8→v11.11, sanitize-html v2.10→v2.17, @radix-ui/react-scroll-area v1.0→v1.2.
+- Large line count is entirely from package-lock.json churn (lock file diff), not source logic changes.
+- TypeScript typecheck (noEmit --skipLibCheck) passes with zero errors after upgrade.
+
+Affected paths:
+- package.json
+- package-lock.json
+
+Conflict mitigation plan:
+- no source file changes in this commit; pure dependency version bump;
+- validated with npx tsc --noEmit --skipLibCheck before commit;
+- i18next upgrade confirmed zero breaking risk: no old plural key format, no removed API usage.

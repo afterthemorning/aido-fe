@@ -11,12 +11,13 @@ Policy:
 
 Pre-commit enforcement:
 - Script: `scripts/check_decoupling_policy.sh`
+- Script: `scripts/check_guardrails_policy.sh`
 - Hook: `.githooks/pre-commit`
 
 Enable hooks locally:
 ```bash
 git config core.hooksPath .githooks
-chmod +x .githooks/pre-commit scripts/check_decoupling_policy.sh
+chmod +x .githooks/pre-commit scripts/check_decoupling_policy.sh scripts/check_guardrails_policy.sh
 ```
 
 Exception process:
@@ -24,6 +25,14 @@ Exception process:
   - reason it is unavoidable,
   - affected paths,
   - conflict mitigation plan for upstream sync.
+
+Guardrail trigger conditions:
+- staged files exceed threshold (default 40), or
+- staged changed lines exceed threshold (default 800), or
+- changes touch high-risk FE core paths (`src/routers/*`, `src/services/*`, `src/components/SideMenu/*`, `src/main.tsx`, `src/App.tsx`, `vite.config.ts`, `plugins/*`).
+
+Required exception heading format:
+- `### Guardrail Exception: YYYY-MM-DD <topic>`
 
 ## Exception Notes
 

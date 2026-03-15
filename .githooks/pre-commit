@@ -3,3 +3,4 @@ set -euo pipefail
 
 repo_root="$(git rev-parse --show-toplevel)"
 "$repo_root/scripts/check_decoupling_policy.sh"
+"$repo_root/scripts/check_guardrails_policy.sh"

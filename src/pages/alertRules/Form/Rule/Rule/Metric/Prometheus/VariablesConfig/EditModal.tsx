@@ -35,7 +35,7 @@ export default function EditModal(props: Props) {
   return (
     <Modal
       width={800}
-      visible={visible}
+      open={visible}
       onCancel={onCancel}
       onOk={() => {
         form.validateFields().then((values) => {

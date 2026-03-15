@@ -68,7 +68,7 @@ export default function DownloadModal(props: IProps) {
       </a>
       <Modal
         title={t('log.log_download.download_title')}
-        visible={downloadVisible}
+        open={downloadVisible}
         onCancel={() => {
           setDownloadVisible(false);
         }}

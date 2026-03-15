@@ -98,7 +98,7 @@ export default function Row(props: IProps) {
       )}
       <Modal
         title={t('row.edit_title')}
-        visible={editVisble}
+        open={editVisble}
         onCancel={() => {
           setEditVisble(false);
         }}
@@ -139,7 +139,7 @@ export default function Row(props: IProps) {
       </Modal>
       <Modal
         closable={false}
-        visible={deleteVisible}
+        open={deleteVisible}
         onCancel={() => {
           setDeleteVisible(false);
         }}

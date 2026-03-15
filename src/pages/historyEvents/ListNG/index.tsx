@@ -29,6 +29,8 @@ import DeleteEventsModal from './DeleteEventsModal';
 // @ts-ignore
 import AckBtn from 'plus:/parcels/Event/Acknowledge/AckBtn';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 export const CACHE_KEY = 'alert_events_range';
 
 interface Props {
@@ -191,7 +193,7 @@ const Event = (props: Props) => {
                 minWidth: getTextWidth(t('common:table.operations')),
               }}
             >
-              <Dropdown
+              <DropdownCompat
                 overlay={
                   <Menu>
                     {IS_PLUS && (
@@ -252,7 +254,7 @@ const Event = (props: Props) => {
                 }
               >
                 <Button type='link' icon={<MoreOutlined />} />
-              </Dropdown>
+              </DropdownCompat>
             </div>
           );
         },

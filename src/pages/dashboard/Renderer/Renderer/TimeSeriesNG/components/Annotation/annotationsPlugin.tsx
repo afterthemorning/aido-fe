@@ -38,8 +38,8 @@ function Marker({ annotation, content, timeZone, onEdit, onDelete }) {
   return (
     <Popover
       trigger={['hover']}
-      visible={popoverVisible}
-      onVisibleChange={(visible) => {
+      open={popoverVisible}
+      onOpenChange={(visible) => {
         setPopoverVisible(visible);
       }}
       title={

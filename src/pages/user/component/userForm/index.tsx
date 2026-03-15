@@ -179,7 +179,7 @@ const UserForm = React.forwardRef<{ form: any }, UserAndPasswordFormProps>((prop
         <Form.List name='contacts'>
           {(fields, { add, remove }) => (
             <>
-              {fields.map(({ key, name, fieldKey, ...restField }) => (
+              {fields.map(({ key, name, ...restField }) => (
                 <Space
                   key={key}
                   style={{

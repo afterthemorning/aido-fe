@@ -71,7 +71,7 @@ export default function FieldsItem(props: Props) {
       overlayInnerStyle={{
         width: 360,
       }}
-      visible={topNVisible}
+      open={topNVisible}
       title={
         <div className='flex justify-between items-center'>
           {field.field}
@@ -169,7 +169,7 @@ export default function FieldsItem(props: Props) {
           </Spin>
         </div>
       }
-      onVisibleChange={async (visible) => {
+      onOpenChange={async (visible) => {
         if (enableStats && fetchStats && field.indexable) {
           setTopNVisible(visible);
           if (visible) {

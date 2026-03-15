@@ -36,7 +36,7 @@ function Import(props: IProps & ModalWrapProps) {
     <Modal
       className='dashboard-import-modal'
       title={`${t('batch.import.title')} JSON`}
-      visible={visible}
+      open={visible}
       onCancel={() => {
         refreshList();
         destroy();

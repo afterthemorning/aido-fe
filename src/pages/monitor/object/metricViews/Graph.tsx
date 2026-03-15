@@ -36,6 +36,8 @@ import { colors } from '../../../dashboard/Components/ColorRangeMenu/config';
 import HexbinGraphStandardOptions from './graphStandardOptions/Hexbin';
 import { HexbinIcon } from './config';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface IProps {
   datasourceValue: number;
   metric: string;
@@ -270,7 +272,7 @@ export default function Graph(props: IProps) {
         <Space size={'large'}>
           <div>
             {t('graph.function')}：
-            <Dropdown
+            <DropdownCompat
               overlay={
                 <Menu onClick={(e) => setCalcFunc(e.key === 'clear' ? '' : e.key)} selectedKeys={[calcFunc]}>
                   <Menu.Item key='rate'>rate</Menu.Item>
@@ -283,7 +285,7 @@ export default function Graph(props: IProps) {
               <a className='ant-dropdown-link' onClick={(e) => e.preventDefault()}>
                 {calcFunc || t('graph.none')} <DownOutlined />
               </a>
-            </Dropdown>
+            </DropdownCompat>
           </div>
           <div>
             {t('graph.offset')}：
@@ -298,7 +300,7 @@ export default function Graph(props: IProps) {
                 {ag}
               </Tag>
             ))}
-            <Dropdown
+            <DropdownCompat
               overlay={
                 <Menu
                   style={{ maxHeight: '200px', overflowY: 'auto' }}
@@ -319,11 +321,11 @@ export default function Graph(props: IProps) {
               <a className='ant-dropdown-link' onClick={(e) => e.preventDefault()}>
                 <PlusCircleOutlined />
               </a>
-            </Dropdown>
+            </DropdownCompat>
           </div>
           <div>
             {t('graph.aggregation')}：
-            <Dropdown
+            <DropdownCompat
               overlay={
                 <Menu onClick={(e) => setAggrFunc(e.key)} selectedKeys={[aggrFunc]}>
                   <Menu.Item key='sum'>sum</Menu.Item>
@@ -336,7 +338,7 @@ export default function Graph(props: IProps) {
               <a className='ant-dropdown-link' onClick={(e) => e.preventDefault()}>
                 {aggrFunc} <DownOutlined />
               </a>
-            </Dropdown>
+            </DropdownCompat>
           </div>
           {aggrFunc ? (
             <div className='graph-config-inner-item'>
@@ -352,7 +354,7 @@ export default function Graph(props: IProps) {
                   {ag}
                 </Tag>
               ))}
-              <Dropdown
+              <DropdownCompat
                 overlay={
                   <Menu
                     style={{ maxHeight: '200px', overflowY: 'auto' }}
@@ -377,13 +379,13 @@ export default function Graph(props: IProps) {
                 <a className='ant-dropdown-link' onClick={(e) => e.preventDefault()}>
                   <PlusCircleOutlined />
                 </a>
-              </Dropdown>
+              </DropdownCompat>
             </div>
           ) : null}
           {chartType === 'hexbin' && (
             <div>
               {t('graph.calc')}：
-              <Dropdown
+              <DropdownCompat
                 overlay={
                   <Menu onClick={(e) => setReduceFunc(e.key)} selectedKeys={[reduceFunc]}>
                     {_.map(calcsOptions, (val, key) => {
@@ -395,7 +397,7 @@ export default function Graph(props: IProps) {
                 <a className='ant-dropdown-link' onClick={(e) => e.preventDefault()}>
                   {t(`dashboard:calcs.${reduceFunc}`)} <DownOutlined />
                 </a>
-              </Dropdown>
+              </DropdownCompat>
             </div>
           )}
         </Space>

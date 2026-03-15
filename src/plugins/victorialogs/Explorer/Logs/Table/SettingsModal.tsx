@@ -30,7 +30,7 @@ export default function SettingsModal(props: Props) {
   return (
     <Modal
       title={t('explorer.table_view_settings.title')}
-      visible={settingsModalVisible}
+      open={settingsModalVisible}
       destroyOnClose
       onCancel={() => setSettingsModalVisible(false)}
       onOk={() => {

@@ -21,7 +21,7 @@ function FormModal(props: Props & ModalWrapProps) {
     <Modal
       width={750}
       title={t('edit_title')}
-      visible={visible}
+      open={visible}
       onOk={() => {
         form.validateFields().then((values) => {
           setEmbeddedDashboards(values.data);

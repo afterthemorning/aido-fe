@@ -6,6 +6,8 @@ import type { CustomIconComponentProps } from '@ant-design/icons/lib/components/
 import { CommonStateContext } from '@/App';
 import './locale';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 const ComputerSvg = () => (
   <svg width='1em' height='1em' viewBox='0 0 48 48' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
     <rect x='19' y='32' width='10' height='9' stroke='currentColor' strokeWidth='4' strokeLinecap='round' strokeLinejoin='round' />
@@ -64,7 +66,7 @@ export default function DarkModeSelect() {
   const { t } = useTranslation('DarkModeSelect');
 
   return (
-    <Dropdown
+    <DropdownCompat
       overlay={
         <Menu
           items={[
@@ -111,6 +113,6 @@ export default function DarkModeSelect() {
       <Button size='small' type='text'>
         {MODE_ICON[darkMode ? 'dark' : 'light']}
       </Button>
-    </Dropdown>
+    </DropdownCompat>
   );
 }

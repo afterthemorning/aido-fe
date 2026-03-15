@@ -18,7 +18,7 @@ function EditModal(props: ModalWrapProps & IProps) {
   return (
     <Modal
       title={t('contacts.edit_title')}
-      visible={visible}
+      open={visible}
       onCancel={destroy}
       onOk={() => {
         form.validateFields().then((values) => {

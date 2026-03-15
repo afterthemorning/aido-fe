@@ -26,7 +26,7 @@ function OrganizeColumns(props: OrganizeColumnsProps & ModalWrapProps) {
   return (
     <Modal
       title={t('targets:organize_columns.title')}
-      visible={visible}
+      open={visible}
       onCancel={destroy}
       onOk={() => {
         onChange(list);

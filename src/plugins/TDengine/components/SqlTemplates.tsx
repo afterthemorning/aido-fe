@@ -5,6 +5,8 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { getSqlTemplate } from '../services';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface Props {
   onSelect: (val: string) => void;
 }
@@ -21,7 +23,7 @@ export default function SqlTemplates(props: Props) {
   }, []);
 
   return (
-    <Dropdown
+    <DropdownCompat
       trigger={['click']}
       placement='bottomRight'
       overlay={
@@ -47,6 +49,6 @@ export default function SqlTemplates(props: Props) {
       <Button>
         {t('query.sqlTemplates')} <DownOutlined />
       </Button>
-    </Dropdown>
+    </DropdownCompat>
   );
 }

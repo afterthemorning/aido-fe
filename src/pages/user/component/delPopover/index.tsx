@@ -56,7 +56,7 @@ const DelPopover: React.FC<PopoverProps> = (props: PopoverProps) => {
   return (
     <Popover
       trigger='click'
-      visible={visible}
+      open={visible}
       content={
         <div className='popover-wrapper'>
           <ExclamationCircleFilled

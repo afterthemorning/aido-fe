@@ -47,7 +47,7 @@ const MetricsExplorer: React.FC<MetricsExplorer> = ({ url, datasourceValue, show
   }, [show, datasourceValue]);
 
   return (
-    <Modal className='prom-graph-metrics-explorer-modal' width={540} visible={show} title='Metrics Explorer' footer={null} onCancel={() => updateShow(false)} getContainer={false}>
+    <Modal className='prom-graph-metrics-explorer-modal' width={540} open={show} title='Metrics Explorer' footer={null} onCancel={() => updateShow(false)} getContainer={false}>
       <Input
         prefix={<SearchOutlined />}
         onPressEnter={(e) => {

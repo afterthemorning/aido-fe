@@ -43,7 +43,7 @@ export default function PreviewModal(props: Props) {
   return (
     <>
       <Modal
-        visible={visible}
+        open={visible}
         title={t('preview.select_events')}
         width='80%'
         onCancel={() => {
@@ -58,7 +58,7 @@ export default function PreviewModal(props: Props) {
         <EventsTable selectedEventIds={selectedEventIds} onChange={setSelectedEventIds} />
       </Modal>
       <Modal
-        visible={resultModalVisible}
+        open={resultModalVisible}
         title={t('preview.result')}
         width='80%'
         onCancel={() => {

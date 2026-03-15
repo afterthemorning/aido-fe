@@ -52,7 +52,7 @@ export default function SharingLinkModal(props: Props) {
   }, [visible, allowAnonymous, expireValue, expireUnit]);
 
   return (
-    <Modal title={t('sharing_link.title')} visible={visible} footer={null} width={800} onCancel={onClose}>
+    <Modal title={t('sharing_link.title')} open={visible} footer={null} width={800} onCancel={onClose}>
       <div className='mb-2'>
         <Checkbox
           style={{ height: 32, lineHeight: '32px' }}

@@ -197,7 +197,7 @@ export default function index() {
       </Card>
       <Drawer
         title={eventPipelineDrawerState.type === 'list' ? t(`${eventPipelineNS}:title`) : t(`${eventPipelineNS}:title_edit`)}
-        visible={eventPipelineDrawerState.visible}
+        open={eventPipelineDrawerState.visible}
         onClose={() => {
           setEventPipelineDrawerState({ ...eventPipelineDrawerState, visible: false, id: undefined });
           fetchData();

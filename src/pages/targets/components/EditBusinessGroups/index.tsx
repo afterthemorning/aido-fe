@@ -50,7 +50,7 @@ export default function index(props: Props) {
       <Modal
         title={t('update_busi.title')}
         destroyOnClose
-        visible={visible}
+        open={visible}
         onCancel={() => {
           setVisible(false);
         }}

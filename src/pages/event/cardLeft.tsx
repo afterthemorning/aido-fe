@@ -154,7 +154,7 @@ export default function CardLeft(props: Props) {
           </div>
         ))}
 
-      <Modal title={editForm ? t('common:btn.edit') : t('common:btn.add')} visible={visible} onOk={handleOk} onCancel={handleCancel} destroyOnClose>
+      <Modal title={editForm ? t('common:btn.edit') : t('common:btn.add')} open={visible} onOk={handleOk} onCancel={handleCancel} destroyOnClose>
         <Form
           form={form}
           layout='vertical'

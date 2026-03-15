@@ -26,8 +26,8 @@ export default function LangSelectPopver(props: Props) {
   return (
     <Popover
       trigger={['click']}
-      visible={visible}
-      onVisibleChange={(v) => {
+      open={visible}
+      onOpenChange={(v) => {
         if (v && !_.isEmpty(otherLangs)) {
           setVisible(true);
         }

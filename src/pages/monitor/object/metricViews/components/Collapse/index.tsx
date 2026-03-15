@@ -42,8 +42,8 @@ export default function index(props: Props) {
       <div className={collapse ? 'n9e-sidebar-collapse' : ''} style={{ height: '100%' }}>
         <Tooltip
           title={tooltip}
-          visible={tooltipVisible}
-          onVisibleChange={(visible) => {
+          open={tooltipVisible}
+          onOpenChange={(visible) => {
             setTooltipVisible(visible);
           }}
         >

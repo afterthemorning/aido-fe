@@ -34,6 +34,8 @@ import Export from '@/pages/metricsBuiltin/components/Export';
 import Import from '@/pages/metricsBuiltin/components/Import';
 import { HelpLink } from '@/components/pageLayout';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface Props {
   component: string;
 }
@@ -144,7 +146,7 @@ export default function index(props: Props) {
       dataIndex: 'operator',
       render: (data, record: any) => {
         return (
-          <Dropdown
+          <DropdownCompat
             overlay={
               <Menu>
                 {actionAuth.add && (
@@ -205,7 +207,7 @@ export default function index(props: Props) {
             }
           >
             <Button type='link' icon={<MoreOutlined />} />
-          </Dropdown>
+          </DropdownCompat>
         );
       },
     },
@@ -322,7 +324,7 @@ export default function index(props: Props) {
             </FormModal>
           )}
           {(actionAuth.add || actionAuth.delete) && (
-            <Dropdown
+            <DropdownCompat
               overlay={
                 <ul className='ant-dropdown-menu'>
                   {actionAuth.add && (
@@ -395,7 +397,7 @@ export default function index(props: Props) {
                   }}
                 />
               </Button>
-            </Dropdown>
+            </DropdownCompat>
           )}
           <Button
             onClick={() => {

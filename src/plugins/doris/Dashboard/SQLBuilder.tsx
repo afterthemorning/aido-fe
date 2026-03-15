@@ -142,7 +142,7 @@ export default function SQLBuilder(props: Props) {
       </Row>
       <Modal
         width={700}
-        visible={queryWarnModalVisible}
+        open={queryWarnModalVisible}
         footer={[
           <Button
             key='ok'

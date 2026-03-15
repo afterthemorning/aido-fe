@@ -35,8 +35,8 @@ export default function index(props: Props) {
         <Tooltip
           title={tooltipTitle}
           placement='right'
-          visible={visible}
-          onVisibleChange={(newVisible) => {
+          open={visible}
+          onOpenChange={(newVisible) => {
             if (!editabled) {
               setVisible(newVisible);
             }
@@ -90,8 +90,8 @@ export default function index(props: Props) {
       ) : (
         <Tooltip
           title={t('tooltip')}
-          visible={visible1}
-          onVisibleChange={(newVisible) => {
+          open={visible1}
+          onOpenChange={(newVisible) => {
             setVisible1(newVisible);
           }}
         >

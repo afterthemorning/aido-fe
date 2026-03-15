@@ -19,6 +19,8 @@ import useIsPlus from 'plus:/components/useIsPlus';
 // @ts-ignore
 import LabelMappingCloudwatchButton from 'plus:/parcels/Datasource/LabelMapping/Cloudwatch';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 export interface IDefaultES {
   default_id: number;
   system_id: number;
@@ -234,7 +236,7 @@ const TableSource = (props: IPropsType) => {
             )}
 
             {record.plugin_type === 'cloudwatch' && (
-              <Dropdown
+              <DropdownCompat
                 overlay={
                   <Menu>
                     <Menu.Item>
@@ -244,7 +246,7 @@ const TableSource = (props: IPropsType) => {
                 }
               >
                 <Button type='link' icon={<MoreOutlined />} />
-              </Dropdown>
+              </DropdownCompat>
             )}
           </Space>
         );

@@ -32,6 +32,8 @@ import { SeverityColor } from './index';
 // @ts-ignore
 import AckBtn from 'plus:/parcels/Event/Acknowledge/AckBtn';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface IProps {
   filterObj: any;
   header: React.ReactNode;
@@ -133,7 +135,7 @@ export default function TableCpt(props: IProps) {
       width: 80,
       render(value, record) {
         return (
-          <Dropdown
+          <DropdownCompat
             overlay={
               <Menu>
                 <Menu.Item>
@@ -191,7 +193,7 @@ export default function TableCpt(props: IProps) {
             }
           >
             <Button type='link' icon={<MoreOutlined />} />
-          </Dropdown>
+          </DropdownCompat>
         );
       },
     },

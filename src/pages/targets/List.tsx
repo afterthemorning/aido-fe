@@ -30,6 +30,8 @@ import VersionSelect from 'plus:/parcels/Targets/VersionSelect';
 // @ts-ignore
 import { extraColumns } from 'plus:/parcels/Targets';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 export const pageSizeOptions = ['10', '20', '50', '100'];
 
 enum OperateType {
@@ -97,7 +99,7 @@ export default function List(props: IProps) {
       title: (
         <Space>
           {t('common:table.ident')}
-          <Dropdown
+          <DropdownCompat
             trigger={['click']}
             overlay={
               <Menu
@@ -115,7 +117,7 @@ export default function List(props: IProps) {
                   }
 
                   if (_.isEmpty(tobeCopy)) {
-                    message.warn(t('copy.no_data'));
+                    message.warning(t('copy.no_data'));
                     return;
                   }
 
@@ -143,7 +145,7 @@ export default function List(props: IProps) {
                 cursor: 'pointer',
               }}
             />
-          </Dropdown>
+          </DropdownCompat>
         </Space>
       ),
       dataIndex: 'ident',
@@ -608,7 +610,7 @@ export default function List(props: IProps) {
         </Space>
         <Space>
           {editable && (
-            <Dropdown
+            <DropdownCompat
               trigger={['click']}
               overlay={
                 <Menu
@@ -647,7 +649,7 @@ export default function List(props: IProps) {
               <Button>
                 {t('common:btn.batch_operations')} <DownOutlined />
               </Button>
-            </Dropdown>
+            </DropdownCompat>
           )}
           {explorable && <Explorer selectedIdents={selectedIdents} />}
           <Button

@@ -38,6 +38,8 @@ import './index.less';
 // @ts-ignore
 import BatchAckBtn from 'plus:/parcels/Event/Acknowledge/BatchAckBtn';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 const CACHE_KEY = 'alert_active_events_range';
 const getFilter = (query) => {
   return {
@@ -205,7 +207,7 @@ const Event: React.FC = () => {
           }}
         >
           {view === 'list' && (
-            <Dropdown
+            <DropdownCompat
               overlay={
                 <ul className='ant-dropdown-menu'>
                   <li
@@ -237,7 +239,7 @@ const Event: React.FC = () => {
               <Button style={{ marginRight: 8 }} disabled={selectedRowKeys.length === 0}>
                 {t('batch_btn')}
               </Button>
-            </Dropdown>
+            </DropdownCompat>
           )}
           <AutoRefresh
             onRefresh={() => {

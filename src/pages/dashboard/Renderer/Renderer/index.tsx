@@ -105,7 +105,7 @@ function index(props: IProps) {
         setViewModalVisible={setViewModalVisible}
       />
       <Modal
-        visible={viewModalVisible}
+        open={viewModalVisible}
         onCancel={() => {
           setViewModalVisible(false);
         }}

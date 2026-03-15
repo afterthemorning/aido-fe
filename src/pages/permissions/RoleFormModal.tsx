@@ -24,7 +24,7 @@ function CateFormModal(props: ModalWrapProps & IProps) {
   return (
     <Modal
       title={t(`edit_title.${action}`)}
-      visible={visible}
+      open={visible}
       onCancel={destroy}
       onOk={() => {
         form.validateFields().then((values) => {

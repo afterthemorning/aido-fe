@@ -117,7 +117,7 @@ function FormModal(props: Props & ModalWrapProps) {
       width={1000}
       destroyOnClose
       title={t(`${mode}_title`)}
-      visible={visible}
+      open={visible}
       onClose={() => {
         const values = form.getFieldsValue();
         let changed = false;

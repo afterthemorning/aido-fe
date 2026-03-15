@@ -6,7 +6,8 @@ import InputEnlarge from '@/components/InputEnlarge';
 import _ from 'lodash';
 export const RegExtractPrefix = 'regExtract';
 interface Props {
-  visible: boolean;
+  open?: boolean;
+  visible?: boolean;
   onClose: () => void;
   form: FormInstance;
   rawData?: object;
@@ -20,7 +21,8 @@ export interface IRegExtractConfig {
 }
 
 export default function kvMapModal(props: Props) {
-  const { visible, onClose, selectOption, form, rawData } = props;
+  const { open, visible, onClose, selectOption, form, rawData } = props;
+  const modalOpen = open ?? visible ?? false;
   const { t } = useTranslation('es-index-patterns');
   const isMcDonalds = localStorage.getItem('n9e-dark-mode') === '2';
 
@@ -41,7 +43,7 @@ export default function kvMapModal(props: Props) {
   };
 
   return (
-    <Modal title={t('字段提取')} visible={visible} width={800} onOk={validateAndClose} onCancel={validateAndClose}>
+    <Modal title={t('字段提取')} open={modalOpen} width={800} onOk={validateAndClose} onCancel={validateAndClose}>
       <div>
         <div style={{ background: isMcDonalds ? '#fff2cb' : '#6C53B114', marginBottom: 16, padding: 16 }}>
           <InfoCircleOutlined style={{ color: 'var(--fc-primary-color)', marginBottom: 8 }} /> {t('字段提取设置')}

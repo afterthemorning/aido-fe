@@ -16,7 +16,7 @@ function ResultModal(props: ResultModalProps & ModalWrapProps) {
   const { visible, destroy, data } = props;
 
   return (
-    <Modal title={t('common:error.create')} visible={visible} onCancel={destroy} width={600} footer={null}>
+    <Modal title={t('common:error.create')} open={visible} onCancel={destroy} width={600} footer={null}>
       <Table
         size='small'
         dataSource={_.map(data, (v, k) => {

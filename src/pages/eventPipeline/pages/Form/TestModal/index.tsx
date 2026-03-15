@@ -42,7 +42,7 @@ export default function TestModal(props: Props) {
       </Button>
       <Modal
         title={t(`test_modal.title.${data.type}`)}
-        visible={visible}
+        open={visible}
         footer={null}
         onCancel={() => {
           setVisible(false);

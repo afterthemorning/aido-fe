@@ -216,7 +216,7 @@ function EditField(props: Props & ModalWrapProps) {
           {editting ? <CheckOutlined onClick={() => setEditting(false)} /> : <EditOutlined onClick={() => setEditting(true)} />} */}
         </Space>
       }
-      visible={visible}
+      open={visible}
       onClose={destroy}
       footer={
         <Space>
@@ -282,7 +282,7 @@ function EditField(props: Props & ModalWrapProps) {
           <Form form={linkForm}>
             <Link {...{ form: linkForm, fieldsAll }} />
             <RegExtractModal
-              visible={regExtractModalVisible}
+              open={regExtractModalVisible}
               form={linkForm}
               onClose={() => setRegExtractModalVisible(false)}
               selectOption={fieldsAll.map((item) => ({ label: item.name, value: item.name }))}

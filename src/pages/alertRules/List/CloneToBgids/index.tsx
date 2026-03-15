@@ -28,7 +28,7 @@ function index(props: Props & ModalWrapProps) {
     <Modal
       width={800}
       title={t('batch.clone_to_bgids.title')}
-      visible={visible}
+      open={visible}
       onOk={() => {
         form.validateFields().then((values) => {
           rulesClones({
@@ -73,7 +73,7 @@ function index(props: Props & ModalWrapProps) {
       </Form>
       <Modal
         width={800}
-        visible={resultData.visible}
+        open={resultData.visible}
         title={t('batch.clone_to_bgids.result.title')}
         footer={null}
         onCancel={() => {

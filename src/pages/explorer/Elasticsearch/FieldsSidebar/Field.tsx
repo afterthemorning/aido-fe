@@ -68,7 +68,7 @@ export default function Field(props: Props) {
         width: 240,
         minHeight: 240,
       }}
-      visible={topnVisible}
+      open={topnVisible}
       title={fieldLabel}
       content={
         <div className='n9e-es-discover-field-values-topn'>
@@ -128,7 +128,7 @@ export default function Field(props: Props) {
           </Spin>
         </div>
       }
-      onVisibleChange={(visible) => {
+      onOpenChange={(visible) => {
         setTopnVisible(visible);
         if (visible) {
           setTopnLoading(true);

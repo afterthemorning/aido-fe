@@ -110,7 +110,7 @@ export default function NotificationRuleSelect(props: Props) {
           setDrawerVisible(false);
           setDrawerData(undefined);
         }}
-        visible={drawerVisible}
+        open={drawerVisible}
       >
         <div className={`n9e ${notificationRulesCN}`}>
           {drawerData ? (

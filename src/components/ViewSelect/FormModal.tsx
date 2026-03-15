@@ -37,7 +37,7 @@ export default function FormModal(props: Props) {
 
   return (
     <Modal
-      visible={modalStat.visible}
+      open={modalStat.visible}
       title={modalStat.action ? t(modalStat.action) : ''}
       onCancel={() => {
         setModalState({

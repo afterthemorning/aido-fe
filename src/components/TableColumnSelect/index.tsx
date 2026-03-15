@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import './index.less';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 export interface ColumnOption {
   label: string;
   value: string;
@@ -280,10 +282,10 @@ export default function TableColumnSelect(props: IProps) {
   }
 
   return (
-    <Dropdown visible={open} onVisibleChange={setOpen} trigger={['click']} overlay={dropdownContent} placement='bottomRight' overlayClassName='table-column-select-overlay'>
+    <DropdownCompat open={open} onOpenChange={setOpen} trigger={['click']} overlay={dropdownContent} placement='bottomRight' overlayClassName='table-column-select-overlay'>
       <Button size='small' icon={<SettingOutlined />}>
         {buttonText}
       </Button>
-    </Dropdown>
+    </DropdownCompat>
   );
 }

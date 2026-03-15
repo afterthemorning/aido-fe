@@ -45,6 +45,8 @@ import { NAME_SPACE } from './constants';
 import './locale';
 import './login.less';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 const i18nMap = {
   zh_CN: '简体',
   zh_HK: '繁體',
@@ -321,7 +323,7 @@ export default function Login() {
             <div className='text-[14px]'>
               <Space>
                 <div>{t('language')}:</div>
-                <Dropdown
+                <DropdownCompat
                   overlay={
                     <Menu
                       onSelect={({ key }) => {
@@ -338,7 +340,7 @@ export default function Login() {
                   }
                 >
                   <a onClick={(e) => e.preventDefault()}>{curLanguage}</a>
-                </Dropdown>
+                </DropdownCompat>
               </Space>
             </div>
           </Form>

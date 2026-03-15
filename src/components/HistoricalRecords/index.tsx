@@ -88,8 +88,8 @@ export default function index({ localKey, datasourceValue, onSelect, type = 'but
 
   return (
     <Popover
-      visible={visible}
-      onVisibleChange={(newVisible) => {
+      open={visible}
+      onOpenChange={(newVisible) => {
         setVisible(newVisible);
       }}
       content={

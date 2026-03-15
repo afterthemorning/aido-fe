@@ -24,6 +24,8 @@ import EventDetailDrawer from './EventDetailDrawer';
 // @ts-ignore
 import AckBtn from 'plus:/parcels/Event/Acknowledge/AckBtn';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface IProps {
   filter: FilterType;
   setFilter: (filter: FilterType) => void;
@@ -196,7 +198,7 @@ export default function AlertTable(props: IProps) {
               minWidth: getTextWidth(t('common:table.operations')),
             }}
           >
-            <Dropdown
+            <DropdownCompat
               overlay={
                 <Menu>
                   {IS_PLUS && (
@@ -256,7 +258,7 @@ export default function AlertTable(props: IProps) {
               }
             >
               <Button type='link' icon={<MoreOutlined />} />
-            </Dropdown>
+            </DropdownCompat>
           </div>
         );
       },

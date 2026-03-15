@@ -41,6 +41,8 @@ import '../locale';
 // @ts-ignore
 import FeatureNotification from 'plus:/pages/FeatureNotification';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 export { HelpLink };
 
 interface IPageLayoutProps {
@@ -208,7 +210,7 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introI
                     </Button>
                   )}
 
-                  <Dropdown
+                  <DropdownCompat
                     overlay={
                       <Menu
                         onSelect={({ key }) => {
@@ -230,18 +232,18 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introI
                     <Button size='small' type='text' style={{ marginLeft: 12 }} id='i18n-btn'>
                       <LanguageIcon className='text-[12px]' />
                     </Button>
-                  </Dropdown>
+                  </DropdownCompat>
 
                   <div style={{ marginRight: 12 }}>
                     <DarkModeSelect />
                   </div>
-                  <Dropdown overlay={menu} trigger={['click']}>
+                  <DropdownCompat overlay={menu} trigger={['click']}>
                     <span className='avator' style={{ cursor: 'pointer' }}>
                       <img src={profile.portrait || '/image/avatar1.png'} />
                       <span className='display-name'>{profile.nickname || profile.username}</span>
                       <DownOutlined />
                     </span>
-                  </Dropdown>
+                  </DropdownCompat>
                 </div>
                 {sessionStorage.getItem('menuHide') === '1' && <Space className='mr-2'>{rightArea}</Space>}
               </div>
@@ -253,7 +255,7 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introI
       {children && children}
       <Drawer
         closable={false}
-        visible={themeVisible}
+        open={themeVisible}
         onClose={() => {
           setThemeVisible(false);
         }}

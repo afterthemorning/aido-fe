@@ -124,7 +124,7 @@ export default function index(props: Props) {
       </div>
       <Modal
         width={700}
-        visible={queryWarnModalVisible}
+        open={queryWarnModalVisible}
         footer={[
           <Button
             key='ok'

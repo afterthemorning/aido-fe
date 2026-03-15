@@ -189,7 +189,7 @@ export default function List() {
       />
       <Drawer
         title={t(`${NS}:title_${eventPipelineDrawerState.action}`)}
-        visible={eventPipelineDrawerState.visible}
+        open={eventPipelineDrawerState.visible}
         onClose={resetEventPipelineDrawerState}
         width='80%'
         destroyOnClose

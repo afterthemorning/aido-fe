@@ -20,6 +20,8 @@ import BatchAckBtn from 'plus:/parcels/Event/Acknowledge/BatchAckBtn';
 // @ts-ignore
 import AckBtn from 'plus:/parcels/Event/Acknowledge/AckBtn';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface Props {
   filter: any;
   header: ReactNode;
@@ -174,7 +176,7 @@ function Card(props: Props, ref) {
       width: 80,
       render(value, record) {
         return (
-          <Dropdown
+          <DropdownCompat
             overlay={
               <Menu>
                 <Menu.Item>
@@ -232,7 +234,7 @@ function Card(props: Props, ref) {
             }
           >
             <Button type='link' icon={<MoreOutlined />} />
-          </Dropdown>
+          </DropdownCompat>
         );
       },
     },
@@ -284,7 +286,7 @@ function Card(props: Props, ref) {
         title={
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span>{openedCard?.title}</span>
-            <Dropdown
+            <DropdownCompat
               disabled={selectedRowKeys.length === 0}
               overlay={
                 <ul className='ant-dropdown-menu'>
@@ -317,12 +319,12 @@ function Card(props: Props, ref) {
               <Button style={{ marginRight: 8 }} disabled={selectedRowKeys.length === 0}>
                 {t('batch_btn')}
               </Button>
-            </Dropdown>
+            </DropdownCompat>
           </div>
         }
         placement='right'
         onClose={onClose}
-        visible={visible}
+        open={visible}
         width='80%'
       >
         <Table

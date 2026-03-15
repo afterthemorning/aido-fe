@@ -39,7 +39,7 @@ export default function index(props: IProps) {
     <Popover
       trigger='click'
       placement='left'
-      visible={visible}
+      open={visible}
       overlayClassName='color-picker-popover'
       content={
         <div

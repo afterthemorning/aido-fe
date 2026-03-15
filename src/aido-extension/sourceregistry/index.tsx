@@ -112,7 +112,7 @@ function SourceFormModal({ visible, editRecord, onClose, onSaved }: SourceFormPr
 
   return (
     <Modal
-      visible={visible}
+      open={visible}
       title={isEdit ? t('btn.edit') : t('btn.add')}
       onCancel={onClose}
       onOk={handleOk}
@@ -243,7 +243,7 @@ function KeysDrawer({ sourceId, onClose }: KeysDrawerProps) {
 
   return (
     <Drawer
-      visible={!!sourceId}
+      open={!!sourceId}
       title={`${t('source.keys')}: ${sourceId}`}
       width={640}
       onClose={onClose}
@@ -263,7 +263,7 @@ function KeysDrawer({ sourceId, onClose }: KeysDrawerProps) {
       />
 
       <Modal
-        visible={createVisible}
+        open={createVisible}
         title={t('key.create')}
         onCancel={() => setCreateVisible(false)}
         onOk={handleCreateKey}
@@ -285,7 +285,7 @@ function KeysDrawer({ sourceId, onClose }: KeysDrawerProps) {
 
       {createdKey && (
         <Modal
-          visible={!!createdKey}
+          open={!!createdKey}
           title={t('key.created_api_key')}
           onOk={() => setCreatedKey(null)}
           onCancel={() => setCreatedKey(null)}
@@ -354,7 +354,7 @@ function PolicyDrawer({ sourceId, onClose }: PolicyDrawerProps) {
 
   return (
     <Drawer
-      visible={!!sourceId}
+      open={!!sourceId}
       title={`${t('policy.title')}: ${sourceId}`}
       width={480}
       onClose={onClose}

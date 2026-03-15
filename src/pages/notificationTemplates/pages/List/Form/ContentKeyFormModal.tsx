@@ -21,7 +21,7 @@ function ContentKeyFormModal(props: Props & ModalWrapProps) {
   return (
     <Modal
       title={t(`content.${mode}_title`)}
-      visible={visible}
+      open={visible}
       onCancel={() => {
         destroy();
       }}

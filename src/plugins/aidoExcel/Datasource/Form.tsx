@@ -32,7 +32,7 @@ export default function FormCpt({ action, data, onFinish, submitLoading }: any) 
           <Input autoComplete='off' placeholder='Sheet1' />
         </Form.Item>
 
-        <Divider orientation='left'>Column Mapping (Optional)</Divider>
+        <Divider>Column Mapping (Optional)</Divider>
         <Form.Item label='Application Name Column' name={['settings', `${cate}.column.application_name`]}>
           <Input autoComplete='off' placeholder='Application Name' />
         </Form.Item>

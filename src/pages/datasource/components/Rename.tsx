@@ -22,8 +22,8 @@ export default function Rename(props: IProps) {
       <Space>
         {children}
         {/* <Popover
-          visible={visible}
-          onVisibleChange={(visible) => {
+          open={visible}
+          onOpenChange={(visible) => {
             setVisible(visible);
           }}
           content={

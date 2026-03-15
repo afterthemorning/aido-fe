@@ -21,7 +21,7 @@ import { ConfigProvider, Modal, Spin } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
 import ruRU from 'antd/lib/locale/ru_RU';
-import 'antd/dist/antd.less';
+import 'antd/dist/reset.css';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 

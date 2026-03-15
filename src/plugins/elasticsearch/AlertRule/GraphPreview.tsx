@@ -96,8 +96,8 @@ export default function GraphPreview(props: IProps) {
     <div ref={divRef}>
       <Popover
         placement='bottomLeft'
-        visible={visible}
-        onVisibleChange={(visible) => {
+        open={visible}
+        onOpenChange={(visible) => {
           setVisible(visible);
         }}
         title={

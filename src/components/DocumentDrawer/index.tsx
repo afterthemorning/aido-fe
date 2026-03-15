@@ -93,7 +93,7 @@ function index(props: Props & ModalWrapProps) {
           destroy();
         }
       }}
-      visible={visible}
+      open={visible}
     >
       {type === 'md' && (
         <div data-color-mode={darkMode ? 'dark' : 'light'}>

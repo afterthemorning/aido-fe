@@ -21,7 +21,7 @@ function AddModal(props: ModalWrapProps & IProps) {
   return (
     <Modal
       title={t('add_title')}
-      visible={visible}
+      open={visible}
       onCancel={destroy}
       onOk={() => {
         form.validateFields().then((values) => {

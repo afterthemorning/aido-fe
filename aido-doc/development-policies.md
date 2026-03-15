@@ -354,6 +354,15 @@ Commit: `chore(deps): upgrade vite/router/ts/tailwind/jest to latest release`
 - `package.json` / `package-lock.json`: dependency version bumps (react→18.3.1, react-dom→18.3.1, ahooks→3.9.6, @types/react→18, @types/react-dom→18).
 - Remaining 9 antd 4 type errors are known and will be resolved in Phase C (antd 6 upgrade).
 
+### Guardrail Exception: 2026-03-15 Phase C Antd 6 Migration Batch 1
+
+**Reason:** antd 4→6 migration requires coordinated wide-touch updates (Popup prop rename, Dropdown overlay compatibility, and type alignment) across many feature modules.
+- `package.json` / `package-lock.json`: upgraded `antd` to `6.3.2` and `@ant-design/icons` to `6.1.0`.
+- Added compatibility shim: `src/components/AntdDropdownCompat/index.tsx` to bridge legacy `overlay` usage while migrating incrementally.
+- Updated antd popup API usage in affected files: `visible`→`open`, `onVisibleChange`→`onOpenChange` for Modal/Drawer/Popover/Tooltip/Dropdown call sites.
+- Added lightweight TS compatibility declaration for rc-picker import paths: `src/types/rc-picker-compat.d.ts`.
+- Validation result in this batch: `npx tsc --noEmit --skipLibCheck` returns 0 errors.
+
 **Reason:** Initial delivery of Phase 2 (Backoffice Integration) as a single coherent batch.
 - `src/routers/index.tsx`: 2 lines added — 1 import + 1 Route declaration. No routing logic changed.
 - `src/components/menu/index.tsx`: 4 lines added — new menu item entry in existing structure.

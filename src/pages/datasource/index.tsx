@@ -98,7 +98,7 @@ export default function index() {
       </div>
       <Modal
         title={t('chooseDataSourceType')}
-        visible={chooseDataSourceTypeModalVisible}
+        open={chooseDataSourceTypeModalVisible}
         destroyOnClose
         width={960}
         footer={null}

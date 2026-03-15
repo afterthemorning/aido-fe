@@ -100,7 +100,7 @@ export default function index(props: Props) {
               {
                 title: t('var_config.value'),
                 dataIndex: 'query',
-                render: (val, record) => {
+                render: (val, record: any) => {
                   if (record.param_type === 'threshold') {
                     return val;
                   }

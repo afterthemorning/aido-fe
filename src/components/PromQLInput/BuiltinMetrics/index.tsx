@@ -7,6 +7,8 @@ import { Record } from '@/pages/metricsBuiltin/services';
 import Content from './Content';
 import './style.less';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface Props {
   addonClassName?: string;
   mode: 'dropdown' | 'modal';
@@ -20,11 +22,11 @@ export default function index(props: Props) {
 
   if (mode === 'dropdown') {
     return (
-      <Dropdown
-        visible={open}
+      <DropdownCompat
+        open={open}
         trigger={['click']}
         overlay={<Content onSelect={onSelect} setOpen={setOpen} />}
-        onVisibleChange={(visible) => {
+        onOpenChange={(visible) => {
           setOpen(visible);
         }}
       >
@@ -34,7 +36,7 @@ export default function index(props: Props) {
             {open ? <DownOutlined /> : <RightOutlined />}
           </Space>
         </div>
-      </Dropdown>
+      </DropdownCompat>
     );
   }
   return (
@@ -50,7 +52,7 @@ export default function index(props: Props) {
         </Space>
       </div>
       <Modal
-        visible={open}
+        open={open}
         onCancel={() => {
           setOpen(false);
         }}

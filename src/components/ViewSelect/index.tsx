@@ -12,6 +12,8 @@ import DropdownTrigger from './DropdownTrigger';
 
 import './style.less';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface Props<FilterValues> {
   disabled?: boolean;
   page: string;
@@ -316,7 +318,7 @@ export default function index<FilterValues>(props: Props<FilterValues>) {
             }}
           />
         </div>
-        <Dropdown
+        <DropdownCompat
           disabled={disabled}
           overlay={
             <Menu
@@ -431,7 +433,7 @@ export default function index<FilterValues>(props: Props<FilterValues>) {
           placement='topLeft'
         >
           <DropdownTrigger disabled={disabled} filterValues={filterValues} oldFilterValues={oldFilterValues} adjustOldFilterValues={adjustOldFilterValues} />
-        </Dropdown>
+        </DropdownCompat>
       </Input.Group>
       <FormModal page={page} modalStat={modalStat} setModalState={setModalState} getFilterValues={getFilterValues} run={run} setSelected={setSelected} />
     </Tooltip>

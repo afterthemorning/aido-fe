@@ -25,7 +25,7 @@ function index(props: Props & ModalWrapProps) {
       maskClosable={false}
       width={900}
       title={t(`componentFormModal.${action}`)}
-      visible={visible}
+      open={visible}
       onOk={() => {
         form
           .validateFields()

@@ -52,7 +52,7 @@ const UnBindTags = (props) => {
   const { visible, uniqueTags } = props;
 
   return (
-    <Modal title={t('tpl.tag.unbind.title')} visible={visible} onOk={handleOk} onCancel={handleCancel}>
+    <Modal title={t('tpl.tag.unbind.title')} open={visible} onOk={handleOk} onCancel={handleCancel}>
       <Form form={form}>
         <FormItem label={t('tpl.tag.unbind.field')} required name='tags' rules={[{ required: true }]}>
           <Select mode='tags'>

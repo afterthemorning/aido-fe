@@ -30,7 +30,7 @@ export default function EventDetailDrawer(props: Props) {
       destroyOnClose
       extra={<CloseOutlined onClick={() => onClose()} />}
       onClose={() => onClose()}
-      visible={visible}
+      open={visible}
       footer={getActions({
         eventDetail: data,
         showDeleteBtn,

@@ -507,7 +507,7 @@ export default function DetailV2(props: IProps) {
       {/*迁移*/}
       <Modal
         title='迁移大盘'
-        visible={migrationVisible}
+        open={migrationVisible}
         onCancel={() => {
           setMigrationVisible(false);
         }}

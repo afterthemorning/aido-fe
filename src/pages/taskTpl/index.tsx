@@ -36,6 +36,8 @@ import { Tpl } from './interface';
 import BindTags from './bindTags';
 import UnBindTags from './unBindTags';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 const N9E_GIDS_LOCALKEY = 'N9E_TASK_TPL_NODE_ID';
 
 function getTableData(options: any, gids: string | undefined, query: string) {
@@ -215,7 +217,7 @@ const index = (_props: any) => {
                       {t('tpl.create')}
                     </Button>
                   </Link>
-                  <Dropdown
+                  <DropdownCompat
                     overlay={
                       <Menu>
                         <Menu.Item>
@@ -244,7 +246,7 @@ const index = (_props: any) => {
                     }
                   >
                     <Button icon={<DownOutlined />}>{t('btn.batch_operations')}</Button>
-                  </Dropdown>
+                  </DropdownCompat>
                 </Col>
               )}
             </Row>

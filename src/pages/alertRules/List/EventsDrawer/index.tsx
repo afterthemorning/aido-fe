@@ -28,6 +28,8 @@ import AckBtn from 'plus:/parcels/Event/Acknowledge/AckBtn';
 // @ts-ignore
 import BatchAckBtn from 'plus:/parcels/Event/Acknowledge/BatchAckBtn';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 export interface Props {
   title?: string;
   rid?: number;
@@ -178,7 +180,7 @@ export default function index(props: Props) {
       fixed: 'right' as const,
       render(_value, record) {
         return (
-          <Dropdown
+          <DropdownCompat
             overlay={
               <Menu>
                 <Menu.Item key='AckBtn'>
@@ -236,7 +238,7 @@ export default function index(props: Props) {
             }
           >
             <Button type='link' icon={<MoreOutlined />} />
-          </Dropdown>
+          </DropdownCompat>
         );
       },
     },
@@ -272,7 +274,7 @@ export default function index(props: Props) {
   }
 
   return (
-    <Drawer title={title} placement='right' onClose={onClose} visible={visible} width='80%'>
+    <Drawer title={title} placement='right' onClose={onClose} open={visible} width='80%'>
       <Row justify='space-between' style={{ width: '100%' }}>
         <Space>
           <TimeRangePicker
@@ -365,7 +367,7 @@ export default function index(props: Props) {
             justifyContent: 'flex-end',
           }}
         >
-          <Dropdown
+          <DropdownCompat
             overlay={
               <ul className='ant-dropdown-menu'>
                 <li
@@ -397,7 +399,7 @@ export default function index(props: Props) {
             <Button style={{ marginRight: 8 }} disabled={selectedRowKeys.length === 0}>
               {t('batch_btn')}
             </Button>
-          </Dropdown>
+          </DropdownCompat>
         </Col>
       </Row>
       <Table

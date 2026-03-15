@@ -27,7 +27,7 @@ function PromQueryBuilderModal(props: ModalWrapProps & IProps) {
     <Modal
       width={800}
       title={t('title')}
-      visible={visible}
+      open={visible}
       closable={false}
       onOk={() => {
         onChange(renderQuery(query));

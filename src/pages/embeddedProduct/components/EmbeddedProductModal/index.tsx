@@ -41,7 +41,7 @@ const EmbeddedProductModal: React.FC<EmbeddedProductModalProps> = ({ open, initi
     <Modal
       width={750}
       title={initialValues ? t('edit') : t('add')}
-      visible={open}
+      open={open}
       onOk={() => {
         form.validateFields().then((values) => {
           const formattedData = {

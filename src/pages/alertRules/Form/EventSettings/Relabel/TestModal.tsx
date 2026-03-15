@@ -39,7 +39,7 @@ export default function TestModal() {
       <Modal
         width={800}
         title={t('relabel.test.title')}
-        visible={visible}
+        open={visible}
         onCancel={() => {
           setVisible(false);
         }}

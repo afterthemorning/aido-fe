@@ -85,8 +85,8 @@ export default function GraphPreview({ cate, datasourceValue, query }) {
     <div ref={divRef}>
       <Popover
         placement='right'
-        visible={visible}
-        onVisibleChange={(visible) => {
+        open={visible}
+        onOpenChange={(visible) => {
           setVisible(visible);
         }}
         title={t('datasource:es.alert.query.preview')}

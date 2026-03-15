@@ -169,7 +169,7 @@ export default function index() {
       </div>
       <Drawer
         width='90%'
-        visible={!!activeComponent}
+        open={!!activeComponent}
         closable={false}
         destroyOnClose
         title={

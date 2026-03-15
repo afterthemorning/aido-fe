@@ -31,7 +31,7 @@ export default function SettingsModal(props: Props) {
   return (
     <Modal
       title={t('explorer.group_view_settings.title')}
-      visible={settingsModalVisible}
+      open={settingsModalVisible}
       destroyOnClose
       onCancel={() => setSettingsModalVisible(false)}
       onOk={() => {

@@ -26,7 +26,7 @@ function TokenView({ value }: { value: string }) {
       </Space>
       <Modal
         title='Token'
-        visible={visible}
+        open={visible}
         footer={null}
         onOk={() => {
           setVisible(false);
@@ -141,7 +141,7 @@ export default function index() {
       />
       <Modal
         title={t('token.createToken')}
-        visible={modalVisible}
+        open={modalVisible}
         onOk={() => {
           form.validateFields().then((values) => {
             postSelfToken(values).then(() => {

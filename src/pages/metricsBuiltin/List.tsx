@@ -38,6 +38,8 @@ import Import from './components/Import';
 import Filters, { filtersToStr } from './components/Filters';
 import ExplorerDrawer from './ExplorerDrawer';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 export default function index() {
   const { t, i18n } = useTranslation('metricsBuiltin');
   const pagination = usePagination({ PAGESIZE_KEY: 'metricsBuiltin-pagesize' });
@@ -214,7 +216,7 @@ export default function index() {
       dataIndex: 'operator',
       render: (data, record: any) => {
         return (
-          <Dropdown
+          <DropdownCompat
             overlay={
               <Menu>
                 {actionAuth.add && (
@@ -275,7 +277,7 @@ export default function index() {
             }
           >
             <Button type='link' icon={<MoreOutlined />} />
-          </Dropdown>
+          </DropdownCompat>
         );
       },
     },
@@ -443,7 +445,7 @@ export default function index() {
                 </Button>
               )}
               {(actionAuth.add || actionAuth.delete) && (
-                <Dropdown
+                <DropdownCompat
                   overlay={
                     <ul className='ant-dropdown-menu'>
                       {actionAuth.add && (
@@ -516,7 +518,7 @@ export default function index() {
                       }}
                     />
                   </Button>
-                </Dropdown>
+                </DropdownCompat>
               )}
               <Button
                 onClick={() => {

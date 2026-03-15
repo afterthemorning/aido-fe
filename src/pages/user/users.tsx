@@ -35,6 +35,8 @@ import Tags from './component/Tags';
 import './index.less';
 import './locale';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 const { confirm } = Modal;
 
 const Resource: React.FC = () => {
@@ -136,7 +138,7 @@ const Resource: React.FC = () => {
       width: i18n.language === 'en_US' || i18n.language === 'ru_RU' ? 80 : 40,
       render: (text: string, record) => {
         return (
-          <Dropdown
+          <DropdownCompat
             overlay={
               <Menu>
                 {_.includes(perms, '/users/put') && (
@@ -177,7 +179,7 @@ const Resource: React.FC = () => {
             }
           >
             <Button type='link' icon={<MoreOutlined />} />
-          </Dropdown>
+          </DropdownCompat>
         );
       },
     },

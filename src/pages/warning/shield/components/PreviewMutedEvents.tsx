@@ -115,7 +115,7 @@ export default function PreviewMutedEvents(props: Props) {
       </Button>
       <Modal
         title={t('alertMutes:preview_muted_title')}
-        visible={visible}
+        open={visible}
         footer={[
           <Button
             key='cancel'

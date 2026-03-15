@@ -28,7 +28,7 @@ function FormModal(props: IProps & ModalWrapProps) {
     <Modal
       className='dashboard-import-modal'
       title={t(`${mode}_title`)}
-      visible={visible}
+      open={visible}
       onCancel={() => {
         destroy();
       }}

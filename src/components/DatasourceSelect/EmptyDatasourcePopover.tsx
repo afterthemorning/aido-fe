@@ -31,7 +31,7 @@ export default function EmptyDatasourcePopover(props: IProps) {
           {t('common:datasource.empty_modal.title')} {_.includes(profile?.roles, 'Admin') ? <Link to={linkUrl}>{t('common:datasource.empty_modal.btn1')}</Link> : null}
         </>
       }
-      visible={_.isEmpty(datasourceList)}
+      open={_.isEmpty(datasourceList)}
       placement={placement ?? 'rightTop'}
       getPopupContainer={getPopupContainer}
     >

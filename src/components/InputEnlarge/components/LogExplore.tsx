@@ -61,7 +61,7 @@ export default function LogExplore({
       {url && (
         <Drawer
           title='Log Explore'
-          visible={true}
+          open={true}
           onClose={() => {
             setUrl('');
             sessionStorage.removeItem('menuHide');

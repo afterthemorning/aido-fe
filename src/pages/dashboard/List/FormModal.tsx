@@ -62,7 +62,7 @@ function index(props: Props & ModalWrapProps) {
     <Modal
       destroyOnClose
       title={t(`${action}_title`)}
-      visible={visible}
+      open={visible}
       onCancel={destroy}
       onOk={() => {
         form.validateFields().then(async (values) => {

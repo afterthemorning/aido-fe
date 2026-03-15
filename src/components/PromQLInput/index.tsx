@@ -240,7 +240,7 @@ const ExpressionInput = (
     <Tooltip
       title={tooltip}
       placement='topRight'
-      visible={tooltipVisible}
+      open={tooltipVisible}
       getPopupContainer={() => {
         return containerRef.current || document.body;
       }}

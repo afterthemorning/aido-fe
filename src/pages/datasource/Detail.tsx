@@ -26,7 +26,7 @@ export default function TimeSeriesDetail(props: Props) {
       title=''
       placement='right'
       onClose={onClose}
-      visible={visible}
+      open={visible}
       footer={
         <Button type='primary'>
           <Link to={`/datasources/edit/${data.plugin_type}/${data.id}`}>{t('common:btn.edit')}</Link>

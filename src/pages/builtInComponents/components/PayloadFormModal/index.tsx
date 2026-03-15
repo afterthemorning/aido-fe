@@ -50,7 +50,7 @@ function index(props: Props & ModalWrapProps) {
     <Modal
       width={800}
       title={t(`formModal.${action}.${initialValues.type}`)}
-      visible={visible}
+      open={visible}
       onOk={() => {
         form
           .validateFields()

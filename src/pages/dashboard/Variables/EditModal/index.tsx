@@ -45,7 +45,7 @@ export default function EditModal(props: IProps) {
     <Modal
       title={t(`var.title.${mode}`)}
       width={1000}
-      visible={visible}
+      open={visible}
       onOk={() => {
         setVisible(false);
       }}

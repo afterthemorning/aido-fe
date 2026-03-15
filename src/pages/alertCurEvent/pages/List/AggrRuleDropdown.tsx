@@ -139,7 +139,7 @@ export default function AggrRuleDropdown(props: Props) {
       </Space>
       <Modal
         title={editForm ? t('common:btn.edit') : t('common:btn.add')}
-        visible={visibleAggrRuleModal}
+        open={visibleAggrRuleModal}
         onOk={async () => {
           form.validateFields().then((values) => {
             const func = editForm ? updateAggrAlerts : AddAggrAlerts;

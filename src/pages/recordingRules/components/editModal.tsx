@@ -85,7 +85,7 @@ const editModal: React.FC<Props> = ({ isModalVisible, editModalFinish }) => {
     <>
       <Modal
         title={t('batch.update.title')}
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={modelOk}
         onCancel={() => {
           editModalClose();

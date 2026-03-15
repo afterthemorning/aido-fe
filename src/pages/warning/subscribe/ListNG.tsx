@@ -23,6 +23,8 @@ import { defaultColumnsConfigs, LOCAL_STORAGE_KEY } from './constants';
 import './locale';
 import './index.less';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 export { default as Add } from './add';
 export { default as Edit } from './edit';
 
@@ -281,7 +283,7 @@ const Subscribe = (props: Props) => {
             fixed: 'right',
             render: (text: string, record: subscribeItem) => {
               return (
-                <Dropdown
+                <DropdownCompat
                   overlay={
                     <Menu>
                       <Menu.Item>
@@ -334,7 +336,7 @@ const Subscribe = (props: Props) => {
                   }
                 >
                   <Button type='link' icon={<MoreOutlined />} />
-                </Dropdown>
+                </DropdownCompat>
               );
             },
           },

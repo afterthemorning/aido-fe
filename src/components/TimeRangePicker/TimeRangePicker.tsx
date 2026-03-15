@@ -181,8 +181,8 @@ const AbsoluteTimePicker = ({
               }}
             />
           }
-          visible={visible}
-          onVisibleChange={(v) => {
+          open={visible}
+          onOpenChange={(v) => {
             setVisible(v);
           }}
         >
@@ -393,8 +393,8 @@ export default function index(props: ITimeRangePickerProps) {
         }
         trigger='click'
         placement='bottomRight'
-        visible={visible}
-        onVisibleChange={(v) => {
+        open={visible}
+        onOpenChange={(v) => {
           !disabled && setVisible(v);
           onVisibleChange && onVisibleChange(v);
         }}

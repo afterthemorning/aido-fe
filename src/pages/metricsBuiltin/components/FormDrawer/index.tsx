@@ -76,7 +76,7 @@ export default function index(props: Props) {
       onClose={() => {
         onOpenChange(false);
       }}
-      visible={open}
+      open={open}
       footer={
         <Space>
           <Button

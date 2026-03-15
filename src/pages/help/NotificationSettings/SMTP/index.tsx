@@ -60,8 +60,8 @@ export default function index() {
             </Button>
             <Popover
               trigger={['click']}
-              visible={testPopoverVisible}
-              onVisibleChange={(visible) => {
+              open={testPopoverVisible}
+              onOpenChange={(visible) => {
                 setTestPopoverVisible(visible);
               }}
               content={

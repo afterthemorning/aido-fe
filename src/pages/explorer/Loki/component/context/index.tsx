@@ -78,7 +78,7 @@ function LogContext(props: IProps & ModalWrapProps) {
     }
   }, [sortOrder]);
   return (
-    <Modal title={t('log.context')} centered width={960} onCancel={destroy} visible={visible} footer={null}>
+    <Modal title={t('log.context')} centered width={960} onCancel={destroy} open={visible} footer={null}>
       <div style={{ marginBottom: 10 }}>
         <Space>
           <Input.Group>

@@ -17,6 +17,8 @@ import EditModal from './components/editModal';
 import Import from './components/Import';
 import Export from './components/Export';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface Props {
   gids?: string;
 }
@@ -381,7 +383,7 @@ const PageTable: React.FC<Props> = ({ gids }) => {
                 {t('common:btn.add')}
               </Button>
               <div className={'table-more-options'}>
-                <Dropdown overlay={menu} trigger={['click']}>
+                <DropdownCompat overlay={menu} trigger={['click']}>
                   <Button onClick={(e) => e.stopPropagation()}>
                     {t('common:btn.more')}
                     <DownOutlined
@@ -390,7 +392,7 @@ const PageTable: React.FC<Props> = ({ gids }) => {
                       }}
                     />
                   </Button>
-                </Dropdown>
+                </DropdownCompat>
               </div>
             </Space>
           </div>

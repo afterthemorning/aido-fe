@@ -29,6 +29,8 @@ import { Record } from './types';
 import FormModal from './FormModal';
 import { adjustURL } from './utils';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 const LOCAL_STORAGE_KEY = 'embeddedDashboards_id';
 
 export default function index() {
@@ -135,10 +137,10 @@ export default function index() {
           <span>
             {activeRecord ? (
               <Space size={16}>
-                <Dropdown
+                <DropdownCompat
                   trigger={['click']}
-                  visible={dashboardListDropdownVisible}
-                  onVisibleChange={(visible) => {
+                  open={dashboardListDropdownVisible}
+                  onOpenChange={(visible) => {
                     setDashboardListDropdownVisible(visible);
                   }}
                   overlay={
@@ -180,7 +182,7 @@ export default function index() {
                     {activeRecord.name}
                     <DownOutlined style={{ marginRight: 0, fontSize: 12 }} />
                   </Space>
-                </Dropdown>
+                </DropdownCompat>
                 <AuthorizationWrapper allowedPerms={['/embedded-dashboards/put']}>
                   <SettingOutlined
                     style={{ margin: 0 }}

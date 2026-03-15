@@ -330,7 +330,7 @@ export default function index(props: IProps) {
         )}
       </Form.List>
       <Modal
-        visible={previewModalVisible}
+        open={previewModalVisible}
         title={t('common:datasource.queries.preview')}
         footer={null}
         onCancel={() => {

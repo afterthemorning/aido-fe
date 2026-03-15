@@ -26,6 +26,8 @@ import Edit from './Edit';
 import { ILink } from '../types';
 import './style.less';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface IProps {
   editable?: boolean;
   value?: ILink[];
@@ -71,7 +73,7 @@ export default function index(props: IProps) {
   return (
     <div className='dashboard-detail-links'>
       <Space align='baseline'>
-        <Dropdown
+        <DropdownCompat
           overlay={
             <Menu>
               {editable && (
@@ -108,7 +110,7 @@ export default function index(props: IProps) {
           }
         >
           <Button icon={<LinkOutlined />} />
-        </Dropdown>
+        </DropdownCompat>
       </Space>
     </div>
   );

@@ -60,7 +60,7 @@ export default function EditItems(props: IProps) {
     <Modal
       title={t(`var.title.${mode}`)}
       width={1000}
-      visible={visible}
+      open={visible}
       onOk={() => {
         setVisible(false);
       }}

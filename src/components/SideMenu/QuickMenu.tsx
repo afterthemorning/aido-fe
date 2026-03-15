@@ -172,7 +172,7 @@ export default forwardRef(function QuickMenu(props: Props, ref) {
   return (
     <Modal
       className='quick-menu-modal'
-      visible={open}
+      open={open}
       onCancel={() => {
         setOpen(false);
       }}

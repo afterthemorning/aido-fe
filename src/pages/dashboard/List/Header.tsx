@@ -28,6 +28,8 @@ import FormModal from './FormModal';
 import Import, { ModalType } from './Import';
 import BatchClone from './BatchClone';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface IProps {
   gids?: string;
   selectRowKeys: any[];
@@ -109,7 +111,7 @@ export default function Header(props: IProps) {
           )}
           {businessGroup.isLeaf && gids && gids !== '-1' && gids !== '-2' && (
             <div className={'table-more-options'}>
-              <Dropdown
+              <DropdownCompat
                 overlay={
                   <ul className='ant-dropdown-menu'>
                     <li
@@ -159,7 +161,7 @@ export default function Header(props: IProps) {
                     }}
                   />
                 </Button>
-              </Dropdown>
+              </DropdownCompat>
             </div>
           )}
           <Button

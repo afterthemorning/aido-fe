@@ -39,7 +39,7 @@ function EnhancedModal(props: ModalWrapProps & IProps) {
   };
 
   return (
-    <Modal title={t('enrich.select_tip')} visible={visible} onCancel={destroy} onOk={handleOk}>
+    <Modal title={t('enrich.select_tip')} open={visible} onCancel={destroy} onOk={handleOk}>
       <Select className='w-full' options={queryOptions} onChange={setSelectedRef} allowClear />
     </Modal>
   );

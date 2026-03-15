@@ -91,7 +91,7 @@ export default function index() {
                 title={t('add_transformation')}
                 placement='right'
                 width='50%'
-                visible={addTransformationDrawerVisible}
+                open={addTransformationDrawerVisible}
                 onClose={() => setAddTransformationDrawerVisible(false)}
               >
                 <Row gutter={[SIZE, SIZE]}>

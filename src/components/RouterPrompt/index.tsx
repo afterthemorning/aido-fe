@@ -89,7 +89,7 @@ export default forwardRef(function RouterPrompt(props: Props, ref) {
   );
 
   return showPrompt ? (
-    <Modal title={title} visible={showPrompt} onOk={handleOK} okText={okText} onCancel={handleCancel} cancelText={cancelText} closable={true} footer={footer}>
+    <Modal title={title} open={showPrompt} onOk={handleOK} okText={okText} onCancel={handleCancel} cancelText={cancelText} closable={true} footer={footer}>
       {message}
     </Modal>
   ) : null;

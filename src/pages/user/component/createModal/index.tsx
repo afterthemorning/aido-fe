@@ -212,7 +212,7 @@ const CreateModal: React.FC<ModalProps> = (props: ModalProps) => {
   return (
     <Modal
       title={actionLabel()}
-      visible={visible}
+      open={visible}
       width={width ? width : 700}
       onCancel={onClose}
       destroyOnClose={true}

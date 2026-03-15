@@ -122,7 +122,7 @@ const TeamForm = React.forwardRef<{ form: any }, TeamProps>((props, ref) => {
                     />
                   </Space>
                 </div>
-                {fields.map(({ key, name, fieldKey, ...restField }) => (
+                {fields.map(({ key, name, ...restField }) => (
                   <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align='baseline'>
                     <Form.Item style={{ width: 450 }} {...restField} name={[name, 'user_group_id']} rules={[{ required: true, message: t('business.user_group_msg') }]}>
                       <Select

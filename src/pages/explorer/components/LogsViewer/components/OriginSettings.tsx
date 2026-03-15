@@ -12,6 +12,8 @@ import { SettingOutlined, EyeInvisibleOutlined, PlusSquareOutlined, CloseSquareO
 
 import { OptionsType } from '../types';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 export default forwardRef(function OriginSettings(
   {
     options,
@@ -104,7 +106,7 @@ export default forwardRef(function OriginSettings(
             />
           </div>
         )}
-        <Dropdown
+        <DropdownCompat
           overlay={
             <Menu
               items={_.concat(
@@ -156,7 +158,7 @@ export default forwardRef(function OriginSettings(
           trigger={['click']}
         >
           <SettingOutlined />
-        </Dropdown>
+        </DropdownCompat>
         {!_.isEmpty(options.organizeFields) && (
           <Tooltip title={`当前只显示字段 ${_.join(options.organizeFields, '、')}，可点击设置图标设置显示所有字段`}>
             <EyeInvisibleOutlined
@@ -169,7 +171,7 @@ export default forwardRef(function OriginSettings(
       </Space>
       <Modal
         title={t('logs.settings.organizeFields.title')}
-        visible={organizeFieldsModalVisible}
+        open={organizeFieldsModalVisible}
         onOk={() => {
           updateOptions({
             organizeFields,
@@ -252,7 +254,7 @@ export default forwardRef(function OriginSettings(
       </Modal>
       <Modal
         title={t('logs.settings.jsonSettings.title')}
-        visible={jsonSettingsModalVisible}
+        open={jsonSettingsModalVisible}
         onOk={() => {
           updateOptions(jsonSettings);
           setJsonSettingsModalVisible(false);
@@ -295,7 +297,7 @@ export default forwardRef(function OriginSettings(
       </Modal>
       <Modal
         title={t('logs.settings.pageLoadMode.title')}
-        visible={pageLoadModeModalVisible}
+        open={pageLoadModeModalVisible}
         onOk={() => {
           updateOptions(
             {

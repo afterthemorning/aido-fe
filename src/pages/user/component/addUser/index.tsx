@@ -138,7 +138,7 @@ const AddUser: React.FC<TeamProps> = (props: TeamProps) => {
         className='mt-2'
         size='small'
         rowKey='id'
-        columns={userColumn}
+        columns={userColumn as any}
         {...tableProps}
         rowSelection={{
           preserveSelectedRowKeys: true,

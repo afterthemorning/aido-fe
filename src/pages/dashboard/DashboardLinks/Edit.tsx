@@ -136,7 +136,7 @@ function index(props: ModalWrapProps & IProps) {
       width={820}
       title={t('link.title')}
       style={{ top: 10, padding: 0 }}
-      visible={visible}
+      open={visible}
       closable={false}
       onOk={() => {
         form.validateFields().then((values) => {

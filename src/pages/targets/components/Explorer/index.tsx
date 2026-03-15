@@ -27,7 +27,7 @@ export default function index(props: Props) {
         }}
       />
       <Drawer
-        visible={visible}
+        open={visible}
         title={t('metricsBuiltin:title')}
         width='90%'
         onClose={() => {

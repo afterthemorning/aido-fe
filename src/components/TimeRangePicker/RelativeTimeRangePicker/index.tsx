@@ -243,8 +243,8 @@ export default function index(props: ITimeRangePickerProps) {
         }
         trigger='click'
         placement='bottomRight'
-        visible={visible}
-        onVisibleChange={(v) => {
+        open={visible}
+        onOpenChange={(v) => {
           setVisible(v);
         }}
       >

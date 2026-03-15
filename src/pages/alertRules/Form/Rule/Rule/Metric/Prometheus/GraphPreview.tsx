@@ -28,8 +28,8 @@ export default function GraphPreview({ form, fieldName, promqlFieldName = 'prom_
     <div ref={divRef}>
       <Popover
         placement='right'
-        visible={visible}
-        onVisibleChange={(visible) => {
+        open={visible}
+        onOpenChange={(visible) => {
           setVisible(visible);
           if (!visible) {
             setErrorContent('');

@@ -39,7 +39,7 @@ function FormModal(props: Props & ModalWrapProps) {
   return (
     <Modal
       title={title}
-      visible={visible}
+      open={visible}
       onCancel={() => {
         destroy();
       }}

@@ -36,7 +36,7 @@ function BatchClone(props: IProps & ModalWrapProps) {
     <Modal
       className='dashboard-import-modal'
       title={t('common:btn.batch_clone')}
-      visible={visible}
+      open={visible}
       onCancel={() => {
         destroy();
       }}

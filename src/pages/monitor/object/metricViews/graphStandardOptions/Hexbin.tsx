@@ -22,6 +22,8 @@ import UnitPicker from '@/pages/dashboard/Components/UnitPicker';
 import ColorRangeMenu from '../../../../dashboard/Components/ColorRangeMenu';
 import { colors } from '../../../../dashboard/Components/ColorRangeMenu/config';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface IProps {
   highLevelConfig: any;
   setHighLevelConfig: (val: any) => void;
@@ -44,7 +46,7 @@ export default function GraphStandardOptions(props: IProps) {
       </div>
       <div style={{ marginBottom: 5 }}>
         Color:{' '}
-        <Dropdown
+        <DropdownCompat
           overlay={
             <ColorRangeMenu
               onClick={(e) => {
@@ -63,7 +65,7 @@ export default function GraphStandardOptions(props: IProps) {
             )}{' '}
             <DownOutlined />
           </a>
-        </Dropdown>
+        </DropdownCompat>
       </div>
       <div style={{ marginBottom: 5 }}>
         Reverse color order:{' '}

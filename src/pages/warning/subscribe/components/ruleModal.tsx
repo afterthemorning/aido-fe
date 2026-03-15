@@ -279,7 +279,7 @@ const ruleModal: React.FC<props> = (props) => {
         forceRender
         width='80%'
         title={t('sub_rule_name')}
-        visible={visible}
+        open={visible}
         onCancel={() => {
           modalClose();
           setSelectedRules([]);

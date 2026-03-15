@@ -59,8 +59,8 @@ export default function Token(props: Props) {
   return (
     <Popover
       placement='right'
-      visible={popoverVisible}
-      onVisibleChange={(visible) => {
+      open={popoverVisible}
+      onOpenChange={(visible) => {
         setPopoverVisible(visible);
       }}
       trigger={['click']}

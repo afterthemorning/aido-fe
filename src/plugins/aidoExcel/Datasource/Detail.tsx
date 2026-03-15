@@ -134,7 +134,7 @@ function SettingsTab({ data }: { data: any }) {
 
       <Modal
         title='Expiry Data Preview'
-        visible={previewVisible}
+        open={previewVisible}
         onCancel={() => setPreviewVisible(false)}
         footer={null}
         width={1000}
@@ -362,7 +362,7 @@ function ExpiryTab({ datasourceId }: { datasourceId: number }) {
 
       <Modal
         title='Override Record'
-        visible={!!overrideModal}
+        open={!!overrideModal}
         onOk={submitOverride}
         onCancel={() => setOverrideModal(null)}
         destroyOnClose
@@ -391,7 +391,7 @@ function ExpiryTab({ datasourceId }: { datasourceId: number }) {
 
       <Modal
         title='Import Job Detail'
-        visible={!!jobDetail}
+        open={!!jobDetail}
         footer={null}
         onCancel={() => setJobDetail(null)}
       >

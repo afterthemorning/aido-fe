@@ -19,7 +19,7 @@ function index(props: Props & ModalWrapProps) {
       keyboard={false}
       maskClosable={false}
       title={t('collect_busiGroup_select')}
-      visible={visible}
+      open={visible}
       onOk={() => {
         form.validateFields().then((values) => {
           onOk(values.group_id);

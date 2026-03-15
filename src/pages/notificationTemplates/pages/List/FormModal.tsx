@@ -75,7 +75,7 @@ export default function FormModal(props: IProps) {
   }, [visible]);
 
   return (
-    <Modal title={t(`${mode}_title`)} visible={visible} onCancel={onCancel} footer={null} destroyOnClose>
+    <Modal title={t(`${mode}_title`)} open={visible} onCancel={onCancel} footer={null} destroyOnClose>
       <Form layout='vertical' form={form} preserve={false}>
         {mode === 'edit' && (
           <Form.Item name='id' hidden>

@@ -3,6 +3,8 @@ import { Dropdown, Menu, Modal, InputNumber, Form } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface Props {
   topn: number;
   setTopn: (value: number) => void;
@@ -19,7 +21,7 @@ export default function Settings(props: Props) {
 
   return (
     <>
-      <Dropdown
+      <DropdownCompat
         overlay={
           <Menu
             items={[
@@ -41,10 +43,10 @@ export default function Settings(props: Props) {
         trigger={['click']}
       >
         <SettingOutlined />
-      </Dropdown>
+      </DropdownCompat>
       <Modal
         title={t('log.field_values_topn.settings.title')}
-        visible={topNValuesModalVisible}
+        open={topNValuesModalVisible}
         onOk={() => {
           props.setTopn(topn);
           setTopNValuesModalVisible(false);

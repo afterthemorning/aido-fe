@@ -70,7 +70,7 @@ function index(props: Props & ModalWrapProps) {
     <Modal
       width={800}
       title={t('batch.cloneToHosts.select_hosts.title')}
-      visible={visible}
+      open={visible}
       onOk={() => {
         rulesClone(gid, {
           ids,
@@ -221,7 +221,7 @@ function index(props: Props & ModalWrapProps) {
       />
       <Modal
         width={800}
-        visible={resultData.visible}
+        open={resultData.visible}
         title={t('batch.cloneToHosts.result.title')}
         footer={null}
         onCancel={() => {

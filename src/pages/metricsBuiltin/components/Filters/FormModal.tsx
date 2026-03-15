@@ -77,7 +77,7 @@ export default function FormModal(props: IProps) {
     <Modal
       className='built-in-metrics-filter-form-modal'
       title={t(`filter.${action}_title`)}
-      visible={visible}
+      open={visible}
       onCancel={() => {
         onClose();
       }}

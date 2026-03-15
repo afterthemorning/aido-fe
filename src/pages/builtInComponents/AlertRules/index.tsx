@@ -18,6 +18,8 @@ import { TypeEnum } from '../types';
 import { formatBeautifyJson, formatBeautifyJsons } from '../utils';
 import PayloadFormModal from '../components/PayloadFormModal';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface Props {
   component_id: number;
 }
@@ -248,7 +250,7 @@ export default function index(props: Props) {
             width: 100,
             render: (record) => {
               return (
-                <Dropdown
+                <DropdownCompat
                   overlay={
                     <Menu>
                       <Menu.Item>
@@ -329,7 +331,7 @@ export default function index(props: Props) {
                   }
                 >
                   <Button type='link' icon={<MoreOutlined />} />
-                </Dropdown>
+                </DropdownCompat>
               );
             },
           },

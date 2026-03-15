@@ -50,8 +50,8 @@ export default function GraphPreview({
     <div ref={divRef}>
       <Popover
         placement='right'
-        visible={visible}
-        onVisibleChange={(visible) => {
+        open={visible}
+        onOpenChange={(visible) => {
           setVisible(visible);
         }}
         title={t('common:btn.data_preview')}

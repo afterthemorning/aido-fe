@@ -46,6 +46,8 @@ import PublicForm from './PublicForm';
 
 import './style.less';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 const N9E_GIDS_LOCALKEY = 'N9E_BOARD_NODE_ID';
 const SEARCH_LOCAL_STORAGE_KEY = 'n9e_dashboard_search';
 const PUBLIC_SELECT_GIDS_LOCALKEY = 'N9E_PUBLIC_SELECT_GIDS';
@@ -310,7 +312,7 @@ export default function index() {
                     title: t('common:table.operations'),
                     render: (text: string, record: DashboardType) => {
                       return (
-                        <Dropdown
+                        <DropdownCompat
                           overlay={
                             <Menu>
                               {gids !== '-1' && (
@@ -396,7 +398,7 @@ export default function index() {
                           }
                         >
                           <Button type='link' icon={<MoreOutlined />} />
-                        </Dropdown>
+                        </DropdownCompat>
                       );
                     },
                   },

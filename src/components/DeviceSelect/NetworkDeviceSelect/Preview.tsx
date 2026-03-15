@@ -40,7 +40,7 @@ export default function Preview(props: Props) {
     <div>
       <Modal
         title={t('network_device.preview')}
-        visible={visible}
+        open={visible}
         width={800}
         onCancel={() => {
           setVisible(false);

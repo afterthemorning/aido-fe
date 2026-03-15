@@ -10,6 +10,8 @@ import { DownOutlined, UpOutlined, SyncOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import './style.less';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 const refreshMap = {
   0: 'Off',
   5: '5s',
@@ -79,11 +81,11 @@ function Refresh(props: IProps, ref) {
       <Tooltip title={props.tooltip}>
         <Button disabled={props.disabled} icon={<SyncOutlined className={intervalSeconds ? 'rotate-icon' : ''} />} onClick={props.onRefresh} />
       </Tooltip>
-      <Dropdown
+      <DropdownCompat
         disabled={props.disabled}
         trigger={['click']}
-        visible={visible}
-        onVisibleChange={(visible) => {
+        open={visible}
+        onOpenChange={(visible) => {
           setVisible(visible);
         }}
         overlay={
@@ -112,7 +114,7 @@ function Refresh(props: IProps, ref) {
         >
           {refreshMap[intervalSeconds]} {visible ? <UpOutlined /> : <DownOutlined style={{ fontSize: 12 }} />}
         </Button>
-      </Dropdown>
+      </DropdownCompat>
     </div>
   );
 }

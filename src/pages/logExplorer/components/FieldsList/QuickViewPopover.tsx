@@ -64,8 +64,8 @@ export default function StatisticPopover(props: Props) {
           </div>
         </>
       }
-      visible={statisticPopoverVisible}
-      onVisibleChange={(visible) => {
+      open={statisticPopoverVisible}
+      onOpenChange={(visible) => {
         setStatisticPopoverVisible(visible);
       }}
     >

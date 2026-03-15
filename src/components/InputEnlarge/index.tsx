@@ -31,7 +31,7 @@ export default function InputEnlarge({
   return (
     <div style={{ display: 'flex', flex: 1 }} ref={eleRef}>
       <Tooltip
-        visible={visible}
+        open={visible}
         // @ts-ignore
         title={<Input.TextArea style={{ width: 600 }} autoSize={{ minRows: 2, maxRows: 6 }} value={value} onChange={onChange} />}
         getPopupContainer={() => eleRef.current}

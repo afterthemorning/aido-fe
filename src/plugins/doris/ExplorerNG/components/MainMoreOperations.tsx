@@ -9,11 +9,13 @@ import ExportModal from 'plus:/components/LogDownload/ExportModal';
 // @ts-ignore
 import DrilldownBtn from 'plus:/pages/LogExploreLinkSetting/components/DrilldownBtn';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 export default function MainMoreOperations() {
   const datasourceValue = Form.useWatch('datasourceValue');
 
   return (
-    <Dropdown
+    <DropdownCompat
       overlay={
         <Menu
           items={[
@@ -44,6 +46,6 @@ export default function MainMoreOperations() {
       }
     >
       <Button icon={<MoreOutlined />} />
-    </Dropdown>
+    </DropdownCompat>
   );
 }

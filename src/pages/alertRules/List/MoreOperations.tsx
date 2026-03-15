@@ -29,6 +29,8 @@ import CloneToHosts from './CloneToHosts';
 import CloneToBgids from './CloneToBgids';
 import { downloadFile } from './utils';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface MoreOperationsProps {
   bgid?: number; // 如果 isLeaf 为 true，则 bgid 必须存在
   isLeaf: boolean;
@@ -73,7 +75,7 @@ export default function MoreOperations(props: MoreOperationsProps) {
 
   return (
     <>
-      <Dropdown
+      <DropdownCompat
         overlay={
           <ul className='ant-dropdown-menu'>
             <li
@@ -196,7 +198,7 @@ export default function MoreOperations(props: MoreOperationsProps) {
             }}
           />
         </Button>
-      </Dropdown>
+      </DropdownCompat>
       <EditModal
         isModalVisible={isModalVisible}
         editModalFinish={async (isOk, fieldsData) => {

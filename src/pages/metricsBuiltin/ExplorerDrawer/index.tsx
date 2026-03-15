@@ -42,7 +42,7 @@ export default function ExplorerDrawer(props: Props) {
   }, [data]);
 
   return (
-    <Drawer title={t('explorer')} width={1060} visible={visible} onClose={onClose}>
+    <Drawer title={t('explorer')} width={1060} open={visible} onClose={onClose}>
       {_.map(panels, (panel, idx) => {
         return (
           <div key={panel.uid}>

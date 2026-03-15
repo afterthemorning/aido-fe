@@ -141,7 +141,7 @@ export default function FormCpt({ action, data, onFinish, submitLoading }: any) 
       </Card>
       <Footer id={data?.id} submitLoading={submitLoading} />
       <Drawer
-        visible={helpDrawerVisible}
+        open={helpDrawerVisible}
         width={800}
         title={t('form.prom.prom_installation_title')}
         onClose={() => {

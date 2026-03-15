@@ -199,7 +199,7 @@ export default function TargetMetaDrawer(props: IProps) {
         onClose={() => {
           setVisible(false);
         }}
-        visible={visible}
+        open={visible}
       >
         {_.map(groupsName, (groupName) => {
           return <Group key={groupName} name={groupName} data={information[groupName]} />;

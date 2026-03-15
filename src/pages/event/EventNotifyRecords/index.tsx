@@ -155,7 +155,7 @@ export default function index(props: Props) {
         onClose={() => {
           setVisible(false);
         }}
-        visible={visible}
+        open={visible}
         width='90%'
         closable={false}
       >

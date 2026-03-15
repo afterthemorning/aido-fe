@@ -312,7 +312,7 @@ function Raw(props: Props) {
         onClose={() => {
           setLogViewerDrawerState({ visible: false, value: null });
         }}
-        visible={logViewerDrawerState.visible}
+        open={logViewerDrawerState.visible}
         destroyOnClose
       >
         {logViewerDrawerState.value ? (

@@ -42,6 +42,8 @@ import getPanelCustomTimeDescribe from '../utils/getPanelCustomTimeDescribe';
 import Inspect from '../Inspect';
 import { IProps } from './index';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 function index(
   props: IProps & {
     controllersVisible: boolean;
@@ -229,15 +231,15 @@ function index(
               ) : (
                 <Space size={2} style={{ display: 'flex', justifyContent: 'flex-end' }}>
                   {isAuthorized && !name && <DragOutlined className='renderer-header-controller dashboards-panels-item-drag-handle' />}
-                  <Dropdown
+                  <DropdownCompat
                     trigger={['click']}
                     placement='bottom'
                     getPopupContainer={() => containerEleRef.current!}
                     overlayStyle={{
                       minWidth: '130px',
                     }}
-                    visible={visible}
-                    onVisibleChange={(visible) => {
+                    open={visible}
+                    onOpenChange={(visible) => {
                       setVisible(visible);
                     }}
                     overlay={
@@ -393,7 +395,7 @@ function index(
                     }
                   >
                     <MoreOutlined className='renderer-header-controller' />
-                  </Dropdown>
+                  </DropdownCompat>
                 </Space>
               )}
             </div>
@@ -416,7 +418,7 @@ function index(
         onClose={() => {
           setInspect(false);
         }}
-        visible={inspect}
+        open={inspect}
       >
         <Inspect query={query} values={values} />
       </Drawer>

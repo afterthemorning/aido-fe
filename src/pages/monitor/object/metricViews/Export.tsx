@@ -39,7 +39,7 @@ function Export(props: ModalWrapProps & IProps) {
   return (
     <Modal
       title={t('export_title')}
-      visible={visible}
+      open={visible}
       onCancel={() => {
         destroy();
       }}

@@ -34,7 +34,7 @@ function Import(props: IProps & ModalWrapProps) {
   return (
     <Modal
       title={`${t('batch.import.title')}`}
-      visible={visible}
+      open={visible}
       onCancel={() => {
         onOk();
         destroy();

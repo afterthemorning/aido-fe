@@ -247,7 +247,7 @@ const editModal: React.FC<Props> = ({ isModalVisible, editModalFinish, selectedR
     <>
       <Modal
         title={t('batch.update.name')}
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={modelOk}
         width={860}
         onCancel={() => {

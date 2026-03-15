@@ -169,7 +169,7 @@ export default function Info() {
               <Form.List name='contacts'>
                 {(fields, { add, remove }) => (
                   <>
-                    {fields.map(({ key, name, fieldKey, ...restField }) => (
+                    {fields.map(({ key, name, ...restField }) => (
                       <Space
                         key={key}
                         style={{
@@ -238,7 +238,7 @@ export default function Info() {
           </Col>
         </Row>
       </Form>
-      <Modal title={t('editPicture')} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} wrapClassName='avatar-modal'>
+      <Modal title={t('editPicture')} open={isModalVisible} onOk={handleOk} onCancel={handleCancel} wrapClassName='avatar-modal'>
         <div className='avatar-content'>
           {avatarList.map((i) => {
             return (

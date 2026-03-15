@@ -87,7 +87,7 @@ export default function EventsModal(props: Props) {
       <Modal
         width={800}
         title={t('title')}
-        visible={visible}
+        open={visible}
         onCancel={() => {
           setVisible(false);
         }}

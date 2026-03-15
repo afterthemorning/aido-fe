@@ -28,7 +28,7 @@ export default function Preview(props: Props) {
       >
         {t('common:btn.data_preview')}
       </Button>
-      <Modal title={t('common:btn.data_preview')} visible={modalVisible} onCancel={() => setModalVisible(false)} footer={null} width={800}>
+      <Modal title={t('common:btn.data_preview')} open={modalVisible} onCancel={() => setModalVisible(false)} footer={null} width={800}>
         <div>
           {errorMsg && <Alert className='mb-4' type='error' message={errorMsg} />}
           <Table

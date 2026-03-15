@@ -53,8 +53,8 @@ function FieldValueWithFilterContext({ name, value, onValueFilter, rawValue, ind
   return (
     <Popover
       placement='bottom'
-      visible={popoverVisible}
-      onVisibleChange={(visible) => {
+      open={popoverVisible}
+      onOpenChange={(visible) => {
         if (onValueFilter) {
           setPopoverVisible(visible);
         }

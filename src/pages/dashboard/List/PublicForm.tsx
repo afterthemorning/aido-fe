@@ -44,7 +44,7 @@ function PublicForm(props: IProps & ModalWrapProps) {
 
   return (
     <Modal
-      visible={visible}
+      open={visible}
       title={t('public.name')}
       onCancel={destroy}
       onOk={() => {

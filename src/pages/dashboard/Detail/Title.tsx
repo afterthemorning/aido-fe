@@ -38,6 +38,8 @@ import { IDashboard, ILink } from '../types';
 import { useGlobalState } from '../globalState';
 import { goBack, dashboardTimeCacheKey } from './utils';
 
+import DropdownCompat from '@/components/AntdDropdownCompat';
+
 interface IProps {
   dashboard: IDashboard;
   dashboardLinks?: ILink[];
@@ -114,7 +116,7 @@ export default function Title(props: IProps) {
         pathname: location.pathname,
         search: querystring.stringify(_.omit(query, ['viewMode', 'themeMode'])),
       });
-      notification.close('dashboard_fullscreen');
+      notification.destroy('dashboard_fullscreen');
       setTimeout(() => {
         window.dispatchEvent(new Event('resize'));
       }, 500);
@@ -184,10 +186,10 @@ export default function Title(props: IProps) {
           // 公开仪表盘不显示下拉
           <div className='title'>{dashboard.name}</div>
         ) : (
-          <Dropdown
+          <DropdownCompat
             trigger={['click']}
-            visible={dashboardListDropdownVisible}
-            onVisibleChange={(visible) => {
+            open={dashboardListDropdownVisible}
+            onOpenChange={(visible) => {
               setDashboardListDropdownVisible(visible);
             }}
             overlay={
@@ -227,7 +229,7 @@ export default function Title(props: IProps) {
             <span style={{ cursor: 'pointer' }}>
               <span className='title'>{dashboard.name}</span> <DownOutlined />
             </span>
-          </Dropdown>
+          </DropdownCompat>
         )}
       </div>
 
@@ -262,7 +264,7 @@ export default function Title(props: IProps) {
           {dashboard.configs?.mode !== 'iframe' ? (
             <>
               {isAuthorized && (
-                <Dropdown
+                <DropdownCompat
                   trigger={['click']}
                   overlay={
                     <Menu>
@@ -287,7 +289,7 @@ export default function Title(props: IProps) {
                   <Button type='primary' ghost icon={<AddPanelIcon />}>
                     {t('add_panel')}
                   </Button>
-                </Dropdown>
+                </DropdownCompat>
               )}
               <TimeRangePickerWithRefresh
                 localKey={`${dashboardTimeCacheKey}_${dashboard.id}`}

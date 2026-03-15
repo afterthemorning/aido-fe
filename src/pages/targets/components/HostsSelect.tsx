@@ -34,7 +34,7 @@ export default function HostsSelect(props: Props) {
       />
       <Modal
         title={t('hosts_select.modal_title')}
-        visible={visible}
+        open={visible}
         onCancel={() => setVisible(false)}
         onOk={() => {
           const hosts = _.compact(_.map(_.split(inputValue, '\n'), _.trim));

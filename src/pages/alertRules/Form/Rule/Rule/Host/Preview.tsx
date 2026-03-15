@@ -38,7 +38,7 @@ export default function Preview(props: IProps) {
     <div>
       <Modal
         title={t('host.query.preview')}
-        visible={visible}
+        open={visible}
         width={800}
         onCancel={() => {
           setVisible(false);

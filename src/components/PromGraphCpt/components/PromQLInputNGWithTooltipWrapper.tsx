@@ -22,7 +22,7 @@ export default function PromQLInputNGWithTooltipWrapper(props: Props) {
     <Tooltip
       title={tooltip}
       placement='topRight'
-      visible={tooltipVisible}
+      open={tooltipVisible}
       getPopupContainer={() => {
         return containerRef.current || document.body;
       }}

@@ -17,7 +17,7 @@ function Import(props: IProps & ModalWrapProps) {
   return (
     <Modal
       title={title}
-      visible={visible}
+      open={visible}
       onCancel={() => {
         destroy();
       }}

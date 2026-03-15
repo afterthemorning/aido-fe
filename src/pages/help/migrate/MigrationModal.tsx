@@ -24,7 +24,7 @@ export default function MigrationModal(props: MigrationModalProps) {
       destroyOnClose
       maskClosable={false}
       closable={false}
-      visible={visible}
+      open={visible}
       footer={[
         <Button
           key='back'

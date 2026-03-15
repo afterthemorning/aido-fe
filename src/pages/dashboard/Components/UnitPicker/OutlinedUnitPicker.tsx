@@ -30,7 +30,7 @@ export default function index(props: SelectProps & Props) {
       label={t('panel.standardOptions.unit')}
       showSearch
       optionFilterProp='cleanLabel'
-      {...resetProps}
+      {...(resetProps as any)}
       options={buildUnitOptions(hideOptionLabel, hideSIOption, ajustUnitOptions)}
     />
   );

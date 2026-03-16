@@ -1,5 +1,7 @@
-import React, { useRef } from 'react';
-import { Form, Card, Input, Divider } from 'antd';
+import React, { useMemo, useRef, useState } from 'react';
+import { Form, Card, Input, Divider, Upload } from 'antd';
+import type { UploadFile } from 'antd/es/upload/interface';
+import { UploadOutlined } from '@ant-design/icons';
 
 import Name from '@/pages/datasource/components/items/Name';
 import Description from '@/pages/datasource/components/items/Description';
@@ -10,12 +12,14 @@ export default function FormCpt({ action, data, onFinish, submitLoading }: any) 
   const [form] = Form.useForm();
   const clusterRef = useRef<any>();
   const cate = 'aido-excel';
+  const [excelFiles, setExcelFiles] = useState<UploadFile[]>([]);
+  const selectedExcelFile = useMemo(() => excelFiles[0]?.originFileObj as File | undefined, [excelFiles]);
 
   return (
     <Form
       form={form}
       layout='vertical'
-      onFinish={(values) => onFinish(values, clusterRef.current)}
+      onFinish={(values) => onFinish(values, clusterRef.current, { uploadFile: selectedExcelFile })}
       initialValues={data}
       className='settings-source-form'
     >
@@ -30,6 +34,19 @@ export default function FormCpt({ action, data, onFinish, submitLoading }: any) 
         </Form.Item>
         <Form.Item label='Sheet Name' name={['settings', `${cate}.sheet_name`]}>
           <Input autoComplete='off' placeholder='Sheet1' />
+        </Form.Item>
+        <Form.Item label='Excel File (upload on Save & Test)'>
+          <Upload
+            maxCount={1}
+            fileList={excelFiles}
+            beforeUpload={() => false}
+            onChange={({ fileList }) => setExcelFiles(fileList.slice(-1))}
+            accept='.xlsx,.xls'
+          >
+            <div className='ant-btn'>
+              <UploadOutlined /> Select Excel File
+            </div>
+          </Upload>
         </Form.Item>
 
         <Divider>Column Mapping (Optional)</Divider>

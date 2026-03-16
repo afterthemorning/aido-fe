@@ -9,6 +9,8 @@ import PageLayout, { HelpLink } from '@/components/pageLayout';
 import BreadCrumb from '@/components/BreadCrumb';
 import { CommonStateContext } from '@/App';
 import { allCates } from '@/components/AdvancedWrap/utils';
+import { DatasourceCateEnum } from '@/utils/constant';
+import { triggerImport, uploadDatasourceExcelFile } from '@/plugins/aidoExcel/services';
 
 import { getDataSourceDetailById, submitRequest } from './services';
 import Form from './Datasources/Form';
@@ -32,7 +34,7 @@ export default function FormCpt() {
   const [data, setData] = useState<any>();
   const [submitLoading, setSubmitLoading] = useState(false);
   const [saveMode] = useGlobalState('saveMode');
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: any, extra?: { uploadFile?: File }) => {
     setSubmitLoading(true);
     // 转换 headers 格式
     if (_.get(values, ['http', 'headers'])) {
@@ -60,23 +62,35 @@ export default function FormCpt() {
         ),
       );
     }
-    return submitRequest({
-      ...values,
-      plugin_type: type,
-      id: data?.id,
-      is_enable: data ? undefined : true,
-      is_test: true,
-      force_save: saveMode === 'save',
-    })
-      .then(() => {
-        message.success(action === 'add' ? t('common:success.add') : t('common:success.modify'));
-        navigate({
-          pathname: '/datasources',
-        });
-      })
-      .finally(() => {
-        setSubmitLoading(false);
+    try {
+      const isAidoExcel = type === DatasourceCateEnum.aidoExcel;
+      const shouldUploadAndImport = isAidoExcel && saveMode === 'saveAndTest' && !!data?.id;
+      const targetFilePath = _.get(values, ['settings', `${type}.file_path`]);
+
+      if (shouldUploadAndImport && extra?.uploadFile) {
+        await uploadDatasourceExcelFile(Number(data.id), extra.uploadFile, targetFilePath);
+      }
+
+      await submitRequest({
+        ...values,
+        plugin_type: type,
+        id: data?.id,
+        is_enable: data ? undefined : true,
+        is_test: true,
+        force_save: saveMode === 'save',
       });
+
+      if (shouldUploadAndImport) {
+        await triggerImport(Number(data.id));
+      }
+
+      message.success(action === 'add' ? t('common:success.add') : t('common:success.modify'));
+      navigate({
+        pathname: '/datasources',
+      });
+    } finally {
+      setSubmitLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -121,7 +135,7 @@ export default function FormCpt() {
           <Form
             action={action}
             data={data}
-            onFinish={(values, clusterInstance) => {
+            onFinish={(values, clusterInstance, extra) => {
               if (
                 (type === 'prometheus' && !values.cluster_name) ||
                 (type === 'elasticsearch' && !values.cluster_name && isPlus) ||
@@ -134,7 +148,7 @@ export default function FormCpt() {
                   okText: t('form.cluster_confirm_ok'),
                   cancelText: t('form.cluster_confirm_cancel'),
                   onOk: () => {
-                    onFinish(values);
+                    onFinish(values, extra);
                   },
                   onCancel: () => {
                     if (clusterInstance && clusterInstance.focus) {
@@ -143,7 +157,7 @@ export default function FormCpt() {
                   },
                 });
               } else {
-                onFinish(values);
+                onFinish(values, extra);
               }
             }}
             submitLoading={submitLoading}

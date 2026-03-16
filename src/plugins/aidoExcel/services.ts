@@ -59,6 +59,20 @@ export interface ExpiryImportJob {
   updated_at: number;
 }
 
+export async function uploadDatasourceExcelFile(datasourceId: number, file: File, filePath?: string): Promise<{ file_path: string }> {
+  const formData = new FormData();
+  formData.append('datasource_id', String(datasourceId));
+  formData.append('file', file);
+  if (filePath) {
+    formData.append('file_path', filePath);
+  }
+
+  return request('/api/n9e/expiry/upload', {
+    method: RequestMethod.Post,
+    data: formData,
+  }).then((res) => res.dat);
+}
+
 
 export async function listRecords(datasourceId: number): Promise<ExpiryRecord[]> {
   return request('/api/n9e/expiry/records', {

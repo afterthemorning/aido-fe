@@ -11,8 +11,9 @@ export { KVTags };
 // 校验单个标签格式是否正确
 function isTagValid(tag) {
   const contentRegExp = /^[a-zA-Z_][\w]*={1}[^=]+$/;
+  const normalizedTag = tag === undefined || tag === null ? '' : String(tag).trim();
   return {
-    isCorrectFormat: contentRegExp.test(tag.toString()),
+    isCorrectFormat: normalizedTag.length > 0 && contentRegExp.test(normalizedTag),
   };
 }
 
@@ -36,19 +37,22 @@ export function validatorOfKVTagSelect() {
 export default function KVTagSelect(props) {
   const { t } = useTranslation('KVTagSelect');
   const tagRender = useCallback((content) => {
-    const { isCorrectFormat } = isTagValid(content.value);
+    const tagValue = content?.value;
+    const tagText = tagValue === undefined || tagValue === null ? '' : String(tagValue);
+    const { isCorrectFormat } = isTagValid(tagValue);
+
     return isCorrectFormat ? (
       <Tag className='whitespace-normal break-all' closable={content.closable} onClose={content.onClose}>
-        {content.value}
+        {tagText}
       </Tag>
     ) : (
       <Tooltip title={t('append_tags_msg2')}>
         <Tag className='whitespace-normal break-all' color='error' closable={content.closable} onClose={content.onClose} style={{ marginTop: '2px' }}>
-          {content.value}
+          {tagText}
         </Tag>
       </Tooltip>
     );
-  }, []);
+  }, [t]);
 
   return <Select mode='tags' tokenSeparators={[' ']} open={false} placeholder={t('append_tags_placeholder')} tagRender={tagRender} {...props} />;
 }

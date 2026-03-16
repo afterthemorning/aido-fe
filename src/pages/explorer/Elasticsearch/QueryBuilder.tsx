@@ -3,11 +3,10 @@ import _ from 'lodash';
 import { useDebounceFn } from 'ahooks';
 import { useLocation } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
-import { Tooltip, Form, AutoComplete, Button, FormInstance, Select, Row, Col } from 'antd';
+import { Tooltip, Form, AutoComplete, Button, FormInstance, Select } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
 import TimeRangePicker from '@/components/TimeRangePicker';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
 import KQLInput from '@/components/KQLInput';
 import DocumentDrawer from '@/components/DocumentDrawer';
 import { CommonStateContext } from '@/App';
@@ -104,19 +103,16 @@ export default function QueryBuilder(props: Props) {
   }, [indexValue]);
 
   return (
-    <Row gutter={8}>
-      <Col flex='none'>
-        <div style={{ width: 290 }}>
-          <InputGroupWithFormItem
-            label={
-              <>
-                {t('datasource:es.index')}{' '}
-                <Tooltip title={<Trans ns='datasource' i18nKey='datasource:es.index_tip' components={{ 1: <br /> }} />}>
-                  <QuestionCircleOutlined />
-                </Tooltip>
-              </>
-            }
-          >
+    <div className='es-querybar'>
+      <div className='es-querybar-item es-querybar-item-index'>
+        <div className='es-field'>
+          <div className='es-field-label'>
+            {t('datasource:es.index')}{' '}
+            <Tooltip title={<Trans ns='datasource' i18nKey='datasource:es.index_tip' components={{ 1: <br /> }} />}>
+              <QuestionCircleOutlined />
+            </Tooltip>
+          </div>
+          <div className='es-field-content'>
             <Form.Item
               name={['query', 'index']}
               rules={[
@@ -138,32 +134,61 @@ export default function QueryBuilder(props: Props) {
                 onSearch={(val) => {
                   setIndexSearch(val);
                 }}
+                placeholder={t('common:search')}
               />
             </Form.Item>
-          </InputGroupWithFormItem>
+          </div>
         </div>
-      </Col>
-      <Col flex='auto'>
-        <InputGroupWithFormItem
-          label={
-            <>
-              {t('datasource:es.filter')}{' '}
-              <Tooltip title={t('common:page_help')}>
-                <QuestionCircleOutlined
-                  onClick={() => {
-                    DocumentDrawer({
-                      language: i18n.language,
-                      darkMode,
-                      title: t('common:page_help'),
-                      type: 'iframe',
-                      documentPath: 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/log-analysis/elasticserch/',
-                    });
+      </div>
+      <div className='es-querybar-item es-querybar-item-filter'>
+        <div className='es-field es-field-with-addon'>
+          <div className='es-field-label'>
+            {t('datasource:es.filter')}{' '}
+            <Tooltip title={t('common:page_help')}>
+              <QuestionCircleOutlined
+                onClick={() => {
+                  DocumentDrawer({
+                    language: i18n.language,
+                    darkMode,
+                    title: t('common:page_help'),
+                    type: 'iframe',
+                    documentPath: 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/log-analysis/elasticserch/',
+                  });
+                }}
+              />
+            </Tooltip>
+          </div>
+          <div className='es-field-content'>
+            {syntax === 'lucene' ? (
+              <Form.Item name={['query', 'filter']}>
+                <InputFilter
+                  fields={allFields}
+                  ref={refInputFilter}
+                  onExecute={() => {
+                    setHistory();
+                    onExecute();
                   }}
                 />
-              </Tooltip>
-            </>
-          }
-          addonAfter={
+              </Form.Item>
+            ) : (
+              <Form.Item name={['query', 'filter']}>
+                <KQLInput
+                  datasourceValue={datasourceValue}
+                  query={{
+                    index: indexValue,
+                    date_field: date_field,
+                  }}
+                  placeholder={t('common:search')}
+                  historicalRecords={[]}
+                  onEnter={() => {
+                    setHistory();
+                    onExecute();
+                  }}
+                />
+              </Form.Item>
+            )}
+          </div>
+          <div className='es-field-addon'>
             <Form.Item name={['query', 'syntax']} noStyle initialValue='kuery'>
               <Select
                 variant="borderless"
@@ -178,40 +203,13 @@ export default function QueryBuilder(props: Props) {
                 }}
               />
             </Form.Item>
-          }
-        >
-          {syntax === 'lucene' ? (
-            <Form.Item name={['query', 'filter']}>
-              <InputFilter
-                fields={allFields}
-                ref={refInputFilter}
-                onExecute={() => {
-                  setHistory();
-                  onExecute();
-                }}
-              />
-            </Form.Item>
-          ) : (
-            <Form.Item name={['query', 'filter']}>
-              <KQLInput
-                datasourceValue={datasourceValue}
-                query={{
-                  index: indexValue,
-                  date_field: date_field,
-                }}
-                historicalRecords={[]}
-                onEnter={() => {
-                  setHistory();
-                  onExecute();
-                }}
-              />
-            </Form.Item>
-          )}
-        </InputGroupWithFormItem>
-      </Col>
-      <Col flex='none'>
-        <div style={{ width: 200 }}>
-          <InputGroupWithFormItem label={t('datasource:es.date_field')}>
+          </div>
+        </div>
+      </div>
+      <div className='es-querybar-item es-querybar-item-date'>
+        <div className='es-field'>
+          <div className='es-field-label'>{t('datasource:es.date_field')}</div>
+          <div className='es-field-content'>
             <Form.Item
               name={['query', 'date_field']}
               rules={[
@@ -229,12 +227,13 @@ export default function QueryBuilder(props: Props) {
                     value: item.name,
                   };
                 })}
+                placeholder={t('common:search')}
               />
             </Form.Item>
-          </InputGroupWithFormItem>
+          </div>
         </div>
-      </Col>
-      <Col flex='none'>
+      </div>
+      <div className='es-querybar-item es-querybar-item-range'>
         <Form.Item name={['query', 'range']} initialValue={{ start: 'now-1h', end: 'now' }}>
           <TimeRangePicker
             onChange={() => {
@@ -257,8 +256,8 @@ export default function QueryBuilder(props: Props) {
             }}
           />
         </Form.Item>
-      </Col>
-      <Col flex='none'>
+      </div>
+      <div className='es-querybar-item es-querybar-item-history'>
         <ConditionHistoricalRecords
           localKey={CACHE_KEY_MAP['indices']}
           datasourceValue={datasourceValue!}
@@ -286,8 +285,8 @@ export default function QueryBuilder(props: Props) {
             );
           }}
         />
-      </Col>
-      <Col flex='none'>
+      </div>
+      <div className='es-querybar-item es-querybar-item-submit'>
         <Form.Item>
           <Button
             loading={loading}
@@ -303,7 +302,7 @@ export default function QueryBuilder(props: Props) {
             {t('query_btn')}
           </Button>
         </Form.Item>
-      </Col>
-    </Row>
+      </div>
+    </div>
   );
 }

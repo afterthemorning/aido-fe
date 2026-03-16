@@ -15,6 +15,276 @@
   height: 100%;
 }
 
+.explorer-form-shell {
+  border: 1px solid var(--fc-border-color);
+  border-radius: 6px;
+  background: var(--fc-fill-2);
+  padding: 10px 12px;
+  margin-bottom: 12px;
+
+  .ant-form-item {
+    margin-bottom: 0;
+  }
+}
+
+.explorer-form-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.explorer-form-control {
+  flex: 1 1 460px;
+  min-width: 260px;
+}
+
+.explorer-ds-field {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.explorer-ds-label {
+  width: 120px;
+  min-width: 120px;
+  height: 32px;
+  line-height: 30px;
+  padding: 0 11px;
+  border: 1px solid var(--fc-border-color);
+  border-right: 0 none;
+  border-radius: 6px 0 0 6px;
+  background: var(--fc-fill-3);
+  color: var(--fc-text-2);
+}
+
+.explorer-ds-item {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0 !important;
+
+  .ant-form-item-control,
+  .ant-form-item-control-input,
+  .ant-form-item-control-input-content {
+    min-height: 32px;
+    height: 32px;
+  }
+
+  .ant-select {
+    width: 100%;
+    height: 32px;
+  }
+
+  .ant-select-selector {
+    border-radius: 0;
+  }
+}
+
+.explorer-help-trigger {
+  width: 34px;
+  min-width: 34px;
+  height: 32px;
+  line-height: 30px;
+  text-align: center;
+  border: 1px solid var(--fc-border-color);
+  border-left: 0 none;
+  border-radius: 0 6px 6px 0;
+  background: var(--fc-fill-3);
+  color: var(--fc-text-2);
+  cursor: pointer;
+}
+
+.explorer-help-trigger:hover {
+  color: var(--fc-primary-color);
+}
+
+.explorer-form-extra {
+  margin-left: auto;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.explorer-form-shell-metric {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 1200px) {
+  .explorer-form-main {
+    flex-wrap: wrap;
+  }
+
+  .explorer-form-control {
+    flex-basis: 100%;
+  }
+
+  .explorer-form-extra {
+    width: 100%;
+    margin-left: 0;
+    justify-content: flex-start;
+  }
+
+  .explorer-ds-label {
+    width: 108px;
+    min-width: 108px;
+  }
+}
+
+.metric-explorer-page {
+  height: 100%;
+
+  .metric-explorer-container-wrapper {
+    height: 100%;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .metric-explorer-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .metric-explorer-panel {
+    position: relative;
+    display: flex;
+    min-height: 620px;
+    padding: 16px;
+    border: 1px solid var(--fc-border-color);
+    border-radius: 8px;
+    background: var(--fc-fill-2);
+    box-shadow: 0 1px 8px #00000012;
+
+    .explorer-container {
+      min-width: 0;
+    }
+  }
+
+  .explorer-form-shell {
+    border: 1px solid var(--fc-border-color);
+    border-radius: 8px;
+    background: var(--fc-fill-3);
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+
+  .explorer-form-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .explorer-form-control {
+    flex: 1;
+    min-width: 0;
+    max-width: 760px;
+  }
+
+  .explorer-ds-field {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    width: 100%;
+  }
+
+  .explorer-ds-label {
+    width: 120px;
+    min-width: 120px;
+    height: 32px;
+    line-height: 30px;
+    padding: 0 11px;
+    border: 1px solid var(--fc-border-color);
+    border-right: 0;
+    border-radius: 6px 0 0 6px;
+    background: var(--fc-fill-2);
+    color: var(--fc-text-2);
+  }
+
+  .explorer-ds-item {
+    margin-bottom: 0 !important;
+
+    .ant-form-item-control,
+    .ant-form-item-control-input,
+    .ant-form-item-control-input-content {
+      min-height: 32px;
+      height: 32px;
+    }
+
+    .ant-select,
+    .ant-select-selector {
+      width: 100%;
+      height: 32px;
+    }
+
+    .ant-select-selector {
+      border-radius: 0;
+    }
+  }
+
+  .explorer-help-trigger {
+    width: 34px;
+    min-width: 34px;
+    height: 32px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid var(--fc-border-color);
+    border-left: 0;
+    border-radius: 0 6px 6px 0;
+    background: var(--fc-fill-2);
+    color: var(--fc-text-2);
+    cursor: pointer;
+  }
+
+  .explorer-help-trigger:hover {
+    color: var(--fc-primary-color);
+  }
+
+  .explorer-form-extra {
+    min-height: 32px;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),
+  .ant-table-column-title {
+    z-index: unset !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .metric-explorer-page {
+    .metric-explorer-panel {
+      min-height: 560px;
+      padding: 12px;
+    }
+
+    .explorer-form-main {
+      flex-wrap: wrap;
+    }
+
+    .explorer-form-control {
+      max-width: 100%;
+      min-width: 100%;
+    }
+
+    .explorer-form-extra {
+      width: 100%;
+      margin-left: 0;
+      justify-content: flex-start;
+    }
+
+    .explorer-ds-label {
+      width: 108px;
+      min-width: 108px;
+    }
+  }
+}
+
 .metrics-explorer-modal {
   .metric-list {
     max-height: 56vh;

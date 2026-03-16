@@ -24,7 +24,6 @@ import { useTranslation } from 'react-i18next';
 
 import { CommonStateContext, basePrefix } from '@/App';
 import TimeRangePicker, { IRawTimeRange, parseRange } from '@/components/TimeRangePicker';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
 import Timeseries from '@/pages/dashboard/Renderer/Renderer/Timeseries';
 import { interpolateString, getRealStep } from '@/components/PromQLInputNG';
 import { completeBreakpoints } from '@/pages/dashboard/Renderer/datasource/utils';
@@ -201,75 +200,77 @@ export default function Graph(props: IProps) {
       <div className='prom-graph-graph-controls'>
         <Space wrap>
           <TimeRangePicker value={range} onChange={setRange} dateFormat='YYYY-MM-DD HH:mm:ss' />
-          <InputGroupWithFormItem
-            label={
+          <div className='prom-graph-control-field'>
+            <span className='prom-graph-control-label'>
               <Space>
                 Max data points
                 <Tooltip title={t('dashboard:query.prometheus.maxDataPoints.tip_2')}>
                   <QuestionCircleOutlined />
                 </Tooltip>
               </Space>
-            }
-          >
-            <InputNumber
-              style={{ width: 70 }}
-              placeholder={_.toString(panelWidth ?? 240)}
-              min={1}
-              value={maxDataPoints}
-              onKeyDown={(e: any) => {
-                if (e.code === 'Enter') {
+            </span>
+            <div className='prom-graph-control-content'>
+              <InputNumber
+                style={{ width: 80 }}
+                placeholder={_.toString(panelWidth ?? 240)}
+                min={1}
+                value={maxDataPoints}
+                onKeyDown={(e: any) => {
+                  if (e.code === 'Enter') {
+                    if (e.target.value) {
+                      setMaxDataPoints(_.toNumber(e.target.value));
+                    } else {
+                      setMaxDataPoints(undefined);
+                    }
+                  }
+                }}
+                onBlur={(e) => {
                   if (e.target.value) {
                     setMaxDataPoints(_.toNumber(e.target.value));
                   } else {
                     setMaxDataPoints(undefined);
                   }
-                }
-              }}
-              onBlur={(e) => {
-                if (e.target.value) {
-                  setMaxDataPoints(_.toNumber(e.target.value));
-                } else {
-                  setMaxDataPoints(undefined);
-                }
-              }}
-              controls={false}
-            />
-          </InputGroupWithFormItem>
-          <InputGroupWithFormItem
-            label={
+                }}
+                controls={false}
+              />
+            </div>
+          </div>
+          <div className='prom-graph-control-field'>
+            <span className='prom-graph-control-label'>
               <Space>
                 Min step
                 <Tooltip title={t('dashboard:query.prometheus.minStep.tip')}>
                   <QuestionCircleOutlined />
                 </Tooltip>
               </Space>
-            }
-          >
-            <InputNumber
-              placeholder='15'
-              style={{ width: 60 }}
-              value={minStep}
-              onKeyDown={(e: any) => {
-                if (e.code === 'Enter') {
+            </span>
+            <div className='prom-graph-control-content'>
+              <InputNumber
+                placeholder='15'
+                style={{ width: 70 }}
+                value={minStep}
+                onKeyDown={(e: any) => {
+                  if (e.code === 'Enter') {
+                    if (e.target.value) {
+                      setMinStep(_.toNumber(e.target.value));
+                    } else {
+                      setMinStep(undefined);
+                    }
+                  }
+                }}
+                onBlur={(e) => {
                   if (e.target.value) {
                     setMinStep(_.toNumber(e.target.value));
                   } else {
                     setMinStep(undefined);
                   }
-                }
-              }}
-              onBlur={(e) => {
-                if (e.target.value) {
-                  setMinStep(_.toNumber(e.target.value));
-                } else {
-                  setMinStep(undefined);
-                }
-              }}
-              onStep={(value) => {
-                setMinStep(value);
-              }}
-            />
-          </InputGroupWithFormItem>
+                }}
+                onStep={(value) => {
+                  setMinStep(value);
+                }}
+              />
+            </div>
+          </div>
           <Radio.Group
             options={[
               { label: <LineChartOutlined />, value: ChartType.Line },

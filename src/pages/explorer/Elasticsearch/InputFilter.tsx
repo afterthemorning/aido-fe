@@ -10,6 +10,7 @@ interface Props {
   onExecute: () => void;
   value?: string;
   onChange?: (val) => void;
+  placeholder?: string;
 }
 
 enum IOptionType {
@@ -26,7 +27,7 @@ interface IOption {
 // 默认只显示历史（保存10条)
 // 输入时，关联字段自动加在最后(替换部分输入内容)
 // 选择历史时，覆盖所有内容
-function InputFilter(props: Props, ref) {
+function InputFilter(props: Props, ref: React.Ref<unknown>) {
   const { t } = useTranslation('explorer');
   const { fields, onExecute, onChange, value } = props;
   const [data, setData] = useState<IOption[]>([]);
@@ -190,4 +191,4 @@ function InputFilter(props: Props, ref) {
   );
 }
 
-export default forwardRef(InputFilter);
+export default forwardRef<unknown, Props>(InputFilter);

@@ -47,6 +47,7 @@ const getFilter = (query) => {
     datasource_ids: query.datasource_ids ? _.split(query.datasource_ids, ',').map(Number) : [],
     bgid: query.bgid ? Number(query.bgid) : undefined,
     severity: query.severity ? Number(query.severity) : undefined,
+    notify_status: query.notify_status !== undefined ? Number(query.notify_status) : undefined,
     query: query.query,
     is_recovered: query.is_recovered ? Number(query.is_recovered) : undefined,
     rule_prods: query.rule_prods ? _.split(query.rule_prods, ',') : [],
@@ -186,6 +187,22 @@ const Event: React.FC = () => {
             <Select.Option value={2}>S2（Warning）</Select.Option>
             <Select.Option value={3}>S3（Info）</Select.Option>
           </Select>
+          <Select
+            allowClear
+            style={{ minWidth: 100 }}
+            placeholder={t('notify_status', { defaultValue: '通知状态' })}
+            value={filter.notify_status}
+            onChange={(val) => {
+              setFilter({
+                ...filter,
+                notify_status: val,
+              });
+            }}
+            popupMatchSelectWidth={false}
+          >
+            <Select.Option value={1}>{t('notify_sent', { defaultValue: '已通知' })}</Select.Option>
+            <Select.Option value={0}>{t('notify_not_sent', { defaultValue: '未通知' })}</Select.Option>
+          </Select>
           <Input
             className='search-input'
             prefix={<SearchOutlined />}
@@ -255,6 +272,7 @@ const Event: React.FC = () => {
     { range: filter.range },
     filter.datasource_ids.length ? { datasource_ids: filter.datasource_ids } : {},
     filter.severity ? { severity: filter.severity } : {},
+    filter.notify_status !== undefined ? { notify_status: filter.notify_status } : {},
     filter.query ? { query: filter.query } : {},
     { bgid: filter.bgid },
     filter.rule_prods.length ? { rule_prods: _.join(filter.rule_prods, ',') } : {},

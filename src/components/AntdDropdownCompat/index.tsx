@@ -12,7 +12,7 @@ import React from 'react';
 import { Dropdown, type DropdownProps } from 'antd';
 import cx from 'classnames';
 
-interface DropdownCompatProps extends Omit<DropdownProps, 'overlay' | 'open' | 'onOpenChange'> {
+interface DropdownCompatProps extends Omit<DropdownProps, 'popupRender'> {
   overlay?: React.ReactNode;
   visible?: boolean;
   onVisibleChange?: (open: boolean) => void;
@@ -30,31 +30,21 @@ const DropdownCompat: React.FC<DropdownCompatProps> = ({
   children,
   ...rest
 }) => {
-  const mergedClassNames = {
-    ...rest.classNames,
-    root: cx(rest.classNames?.root, overlayClassName),
-  };
-
-  const mergedStyles = {
-    ...rest.styles,
-    root: {
-      ...(rest.styles?.root || {}),
-      ...(overlayStyle || {}),
-    },
-  };
-
   const open = visible ?? rest.open;
-  const onOpenChange = onVisibleChange ?? rest.onOpenChange;
+  const onOpenChange: DropdownProps['onOpenChange'] = (nextOpen, info) => {
+    onVisibleChange?.(nextOpen);
+    rest.onOpenChange?.(nextOpen, info);
+  };
 
-  if (overlay) {
-    return (
-      <Dropdown {...rest} open={open} onOpenChange={onOpenChange} classNames={mergedClassNames} styles={mergedStyles} popupRender={() => overlay as React.ReactElement}>
-        {children}
-      </Dropdown>
-    );
-  }
+  const mergedOverlayClassName = cx(overlayClassName);
+  const mergedOverlayStyle = {
+    ...(overlayStyle || {}),
+  };
+
+  const popupRender = overlay ? () => overlay as React.ReactElement : undefined;
+
   return (
-    <Dropdown {...rest} open={open} onOpenChange={onOpenChange} classNames={mergedClassNames} styles={mergedStyles}>
+    <Dropdown {...rest} open={open} onOpenChange={onOpenChange} overlayClassName={mergedOverlayClassName} overlayStyle={mergedOverlayStyle} popupRender={popupRender}>
       {children}
     </Dropdown>
   );

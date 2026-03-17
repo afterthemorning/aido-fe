@@ -9,6 +9,7 @@ import moment from 'moment';
 import { postSourceToken } from '@/services/common';
 import { SIZE } from '@/utils/constant';
 import { copy2ClipBoard } from '@/utils';
+import { basePrefix } from '@/App';
 
 interface Props {
   eventId: number;
@@ -28,7 +29,10 @@ export default function SharingLinkModal(props: Props) {
   const [expireValue, setExpireValue] = useState<number>(7);
   const [expireUnit, setExpireUnit] = useState<string>('day'); // day, hour
   const [token, setToken] = useState<string>();
-  const linkSrc = allowAnonymous ? `${window.location.origin}/share/alert-his-events/${eventId}?__token=${token}` : `${window.location.origin}/alert-his-events/${eventId}`;
+  const prefix = basePrefix || '';
+  const linkSrc = allowAnonymous
+    ? `${window.location.origin}${prefix}/share/alert-his-events/${eventId}?__token=${token}`
+    : `${window.location.origin}${prefix}/alert-his-events/${eventId}`;
 
   const { run: fetchToken } = useDebounceFn(
     () => {

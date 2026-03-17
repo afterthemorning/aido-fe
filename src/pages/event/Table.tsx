@@ -130,6 +130,15 @@ export default function TableCpt(props: IProps) {
       },
     },
     {
+      title: t('notify_status', { defaultValue: '通知状态' }),
+      dataIndex: 'has_notify_records',
+      key: 'has_notify_records',
+      width: 100,
+      render: (value) => {
+        return value ? t('notify_sent', { defaultValue: '已通知' }) : t('notify_not_sent', { defaultValue: '未通知' });
+      },
+    },
+    {
       title: t('common:table.operations'),
       dataIndex: 'operate',
       width: 80,

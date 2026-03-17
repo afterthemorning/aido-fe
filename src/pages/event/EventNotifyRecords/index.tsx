@@ -18,21 +18,52 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, Drawer, Space, Table, Tooltip } from 'antd';
 import _ from 'lodash';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getEventNotifyRecords, DatasourceItem } from './services';
 
 interface Props {
-  eventId: number;
+  eventId?: number | string;
+}
+
+function normalizeNotifyRecords(notifies: any): DatasourceItem[] {
+  const records: DatasourceItem[] = [];
+
+  if (_.isArray(notifies)) {
+    _.forEach(notifies, (item: any) => {
+      if (!item) return;
+      records.push({
+        ...item,
+        channel: item.channel || '-',
+      });
+    });
+    return records;
+  }
+
+  if (_.isPlainObject(notifies)) {
+    _.forEach(notifies, (value, key) => {
+      _.forEach(value as any[], (item) => {
+        records.push({
+          ...item,
+          channel: key,
+        });
+      });
+    });
+  }
+
+  return records;
 }
 
 export default function index(props: Props) {
   const { t } = useTranslation('AlertCurEvents');
   const { eventId } = props;
+  const { eventId: routeEventId } = useParams<{ eventId: string }>();
+  const effectiveEventId = _.toString(eventId || routeEventId || '');
   const [data, setData] = useState<{
     alertRulesRecords: DatasourceItem[];
     alertSubscribesRecords: DatasourceItem[];
   }>();
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const columns = [
     {
       title: t('detail.event_notify_records.notify_rule_id'),
@@ -98,18 +129,11 @@ export default function index(props: Props) {
   ];
 
   useEffect(() => {
-    if (eventId && visible) {
-      getEventNotifyRecords(eventId)
+    if (effectiveEventId && visible) {
+      setLoading(true);
+      getEventNotifyRecords(effectiveEventId)
         .then((res) => {
-          const alertRulesRecords: DatasourceItem[] = [];
-          _.forEach(res.notifies, (value, key) => {
-            _.forEach(value, (item) => {
-              alertRulesRecords.push({
-                ...item,
-                channel: key,
-              });
-            });
-          });
+          const alertRulesRecords: DatasourceItem[] = normalizeNotifyRecords(res.notifies);
           const alertSubscribesRecords: DatasourceItem[] = [];
           _.forEach(res.sub_rules, (item) => {
             _.forEach(item.notifies, (value, key) => {
@@ -129,11 +153,15 @@ export default function index(props: Props) {
         })
         .catch(() => {
           setData(undefined);
+        })
+        .finally(() => {
+          setLoading(false);
         });
     } else {
       setData(undefined);
+      setLoading(false);
     }
-  }, [eventId, visible]);
+  }, [effectiveEventId, visible]);
 
   return (
     <div>
@@ -160,11 +188,12 @@ export default function index(props: Props) {
         closable={false}
       >
         <Card className='mb-4' size='small' title={<Space>{t('detail.event_notify_records.alert_rule_notify_records')}</Space>}>
-          <Table size='small' tableLayout='auto' scroll={{ x: 'max-content' }} columns={columns} dataSource={data?.alertRulesRecords} />
+          <Table size='small' loading={loading} tableLayout='auto' scroll={{ x: 'max-content' }} columns={columns} dataSource={data?.alertRulesRecords} />
         </Card>
         <Card size='small' title={<Space>{t('detail.event_notify_records.subscription_rule_notify_records')}</Space>}>
           <Table
             size='small'
+            loading={loading}
             tableLayout='auto'
             scroll={{ x: 'max-content' }}
             columns={_.concat(

@@ -41,6 +41,27 @@ export const download = function (stringList: Array<string> | string, name: stri
  * 将文本添加到剪贴板
  */
 export const copyToClipBoard = (text: string, spliter?: string): boolean => {
+  const onSuccess = () => {
+    if (spliter && text.includes(spliter)) {
+      message.success(`${i18next.t('复制')}${text.split('\n').length}${i18next.t('条数据到剪贴板')}`);
+    } else {
+      message.success(i18next.t('复制到剪贴板'));
+    }
+  };
+
+  // Prefer modern clipboard API when available.
+  if (navigator?.clipboard?.writeText) {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        onSuccess();
+      })
+      .catch(() => {
+        message.error(i18next.t('复制失败'));
+      });
+    return true;
+  }
+
   const fakeElem = document.createElement('textarea');
   fakeElem.style.border = '0';
   fakeElem.style.padding = '0';
@@ -53,26 +74,36 @@ export const copyToClipBoard = (text: string, spliter?: string): boolean => {
   fakeElem.value = text;
 
   document.body.appendChild(fakeElem);
+  fakeElem.focus();
   fakeElem.select();
+  fakeElem.setSelectionRange(0, fakeElem.value.length);
   let succeeded;
   try {
     succeeded = document.execCommand('copy');
-    if (spliter && text.includes(spliter)) {
-      message.success(`${i18next.t('复制')}${text.split('\n').length}${i18next.t('条数据到剪贴板')}`);
-    } else {
-      message.success(i18next.t('复制到剪贴板'));
-    }
+    succeeded ? onSuccess() : message.error(i18next.t('复制失败'));
   } catch (err) {
     message.error(i18next.t('复制失败'));
     succeeded = false;
   }
-  if (succeeded) {
+  if (document.body.contains(fakeElem)) {
     document.body.removeChild(fakeElem);
   }
   return succeeded;
 };
 
 export const copy2ClipBoard = (text: string, silent = false): boolean => {
+  if (navigator?.clipboard?.writeText) {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        !silent && message.success(i18next.t('common:copyToClipboard'));
+      })
+      .catch(() => {
+        message.error(i18next.t('common:copyToClipboardFailed'));
+      });
+    return true;
+  }
+
   const fakeElem = document.createElement('textarea');
   fakeElem.style.border = '0';
   fakeElem.style.padding = '0';
@@ -85,16 +116,18 @@ export const copy2ClipBoard = (text: string, silent = false): boolean => {
   fakeElem.value = text;
 
   document.body.appendChild(fakeElem);
+  fakeElem.focus();
   fakeElem.select();
+  fakeElem.setSelectionRange(0, fakeElem.value.length);
   let succeeded;
   try {
     succeeded = document.execCommand('copy');
-    !silent && message.success(i18next.t('common:copyToClipboard'));
+    succeeded ? !silent && message.success(i18next.t('common:copyToClipboard')) : message.error(i18next.t('common:copyToClipboardFailed'));
   } catch (err) {
     message.error(i18next.t('common:copyToClipboardFailed'));
     succeeded = false;
   }
-  if (succeeded) {
+  if (document.body.contains(fakeElem)) {
     document.body.removeChild(fakeElem);
   }
   return succeeded;

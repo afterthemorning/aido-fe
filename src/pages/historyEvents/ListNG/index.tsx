@@ -150,6 +150,13 @@ const Event = (props: Props) => {
       },
     },
     {
+      title: t('notify_status', { defaultValue: '通知状态' }),
+      dataIndex: 'has_notify_records',
+      render(value) {
+        return value ? t('notify_sent', { defaultValue: '已通知' }) : t('notify_not_sent', { defaultValue: '未通知' });
+      },
+    },
+    {
       title: t('first_trigger_time'),
       dataIndex: 'first_trigger_time',
       fixed: 'right' as const,
@@ -287,6 +294,7 @@ const Event = (props: Props) => {
     { range: filter.range },
     filter.datasource_ids?.length ? { datasource_ids: _.join(filter.datasource_ids, ',') } : {},
     filter.severity !== undefined ? { severity: filter.severity } : {},
+    filter.notify_status !== undefined ? { notify_status: filter.notify_status } : {},
     filter.query ? { query: filter.query } : {},
     filter.is_recovered !== undefined ? { is_recovered: filter.is_recovered } : {},
     { bgid: filter.bgid },
@@ -402,6 +410,21 @@ const Event = (props: Props) => {
             >
               <Select.Option value={0}>Triggered</Select.Option>
               <Select.Option value={1}>Recovered</Select.Option>
+            </Select>
+            <Select
+              style={{ minWidth: 100 }}
+              placeholder={t('notify_status', { defaultValue: '通知状态' })}
+              allowClear
+              value={filter.notify_status}
+              onChange={(val) => {
+                setFilter({
+                  ...filter,
+                  notify_status: val,
+                });
+              }}
+            >
+              <Select.Option value={1}>{t('notify_sent', { defaultValue: '已通知' })}</Select.Option>
+              <Select.Option value={0}>{t('notify_not_sent', { defaultValue: '未通知' })}</Select.Option>
             </Select>
             <Input
               className='min-w-[300px]'

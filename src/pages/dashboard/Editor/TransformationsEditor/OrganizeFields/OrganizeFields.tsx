@@ -5,7 +5,7 @@ import { SortableContainer, SortableElement, SortableHandle } from 'react-sortab
 import { arrayMoveImmutable } from 'array-move';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import Collapse, { Panel } from '../../Components/Collapse';
 import { useGlobalState } from '../../../globalState';
 import './style.less';
@@ -95,7 +95,7 @@ export default function OrganizeFields(props: IProps) {
                     />
                   </Col>
                   <Col flex='auto'>
-                    <InputGroupWithFormItem label={field}>
+                    <FieldGroupV2 label={field}>
                       <Input
                         value={rename}
                         onChange={(e) => {
@@ -109,7 +109,7 @@ export default function OrganizeFields(props: IProps) {
                             });
                         }}
                       />
-                    </InputGroupWithFormItem>
+                    </FieldGroupV2>
                   </Col>
                 </Row>
               </SortableItem>

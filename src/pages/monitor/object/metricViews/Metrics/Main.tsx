@@ -5,7 +5,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import TimeRangePicker, { IRawTimeRange, parseRange } from '@/components/TimeRangePicker';
 
 import { IMatch } from '../../types';
@@ -40,7 +40,7 @@ export default function Main(props: Props) {
               setRange(e);
             }}
           />
-          <InputGroupWithFormItem
+          <FieldGroupV2
             label={
               <Space>
                 Max data points
@@ -73,8 +73,8 @@ export default function Main(props: Props) {
               }}
               controls={false}
             />
-          </InputGroupWithFormItem>
-          <InputGroupWithFormItem
+          </FieldGroupV2>
+          <FieldGroupV2
             label={
               <Space>
                 Min step
@@ -108,7 +108,7 @@ export default function Main(props: Props) {
                 setMinStep(value);
               }}
             />
-          </InputGroupWithFormItem>
+          </FieldGroupV2>
           <Button
             style={{ padding: '4px 8px' }}
             onClick={() => {

@@ -19,42 +19,52 @@ interface Props {
 export default function ContentItem(props: Props) {
   const { t } = useTranslation(NS);
   const { field, remove, isEmailType } = props;
+  const { key: fieldReactKey, ...restField } = field;
+  const form = Form.useFormInstance();
   const fieldKey = Form.useWatch(['content', field.name, 'key']);
 
   return (
     <div className={`${CN}-main-content-item`}>
+      <Form.Item {...restField} name={[field.name, 'key']} hidden>
+        <div />
+      </Form.Item>
       {isEmailType ? (
         <>
           {fieldKey === 'content' && (
-            <Form.Item {...field} name={[field.name, 'value']}>
+            <Form.Item key={`${fieldReactKey}-content-value`} {...restField} name={[field.name, 'value']}>
               <HTML
                 label={
-                  <Form.Item {...field} name={[field.name, 'key']}>
-                    <ContentItemKey hideEdit />
-                  </Form.Item>
+                  <ContentItemKey
+                    value={fieldKey}
+                    hideEdit
+                  />
                 }
               />
             </Form.Item>
           )}
           {fieldKey === 'subject' && (
-            <Form.Item {...field} name={[field.name, 'value']}>
+            <Form.Item key={`${fieldReactKey}-subject-value`} {...restField} name={[field.name, 'value']}>
               <Text
                 label={
-                  <Form.Item {...field} name={[field.name, 'key']}>
-                    <ContentItemKey hideEdit />
-                  </Form.Item>
+                  <ContentItemKey
+                    value={fieldKey}
+                    hideEdit
+                  />
                 }
               />
             </Form.Item>
           )}
         </>
       ) : (
-        <Form.Item {...field} name={[field.name, 'value']} rules={[{ required: true, message: t('content.value_msg') }]}>
+        <Form.Item key={`${fieldReactKey}-markdown-value`} {...restField} name={[field.name, 'value']} rules={[{ required: true, message: t('content.value_msg') }]}>
           <Markdown
             label={
-              <Form.Item {...field} name={[field.name, 'key']}>
-                <ContentItemKey />
-              </Form.Item>
+              <ContentItemKey
+                value={fieldKey}
+                onChange={(newKey) => {
+                  form.setFieldValue(['content', field.name, 'key'], newKey);
+                }}
+              />
             }
             extra={
               <MinusCircleOutlined

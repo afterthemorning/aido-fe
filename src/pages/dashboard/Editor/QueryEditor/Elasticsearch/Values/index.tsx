@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, Input, Select, AutoComplete } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useDebounceFn } from 'ahooks';
 import { getFields } from '@/pages/explorer/Elasticsearch/services';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import { alphabet } from '@/utils/constant';
 
 interface IProps {
@@ -105,7 +106,7 @@ export default function index({ prefixField = {}, prefixFields = [], prefixNameF
                         <Col flex='auto'>
                           <Row gutter={10}>
                             <Col span={func === 'count' ? 24 : 12}>
-                              <Input.Group>
+                              <InputGroupCompat>
                                 {valueRefVisible && <span className='ant-input-group-addon'>{alphabet[index]}</span>}
                                 <Form.Item {...field} name={[field.name, 'func']}>
                                   <Select
@@ -136,11 +137,11 @@ export default function index({ prefixField = {}, prefixFields = [], prefixNameF
                                     ))}
                                   </Select>
                                 </Form.Item>
-                              </Input.Group>
+                              </InputGroupCompat>
                             </Col>
                             {func !== 'count' && func !== 'rawData' && (
                               <Col span={12}>
-                                <InputGroupWithFormItem label='Field key' labelWidth={80}>
+                                <FieldGroupV2 label='Field key' labelWidth={80}>
                                   <Form.Item {...field} name={[field.name, 'field']} rules={[{ required: true, message: '必须填写 field key' }]}>
                                     <AutoComplete
                                       options={_.filter(fieldsOptions, (item) => {
@@ -153,7 +154,7 @@ export default function index({ prefixField = {}, prefixFields = [], prefixNameF
                                       onSearch={setSearch}
                                     />
                                   </Form.Item>
-                                </InputGroupWithFormItem>
+                                </FieldGroupV2>
                               </Col>
                             )}
                           </Row>

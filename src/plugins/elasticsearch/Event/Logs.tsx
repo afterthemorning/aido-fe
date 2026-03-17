@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Drawer, Table, Space, Input, Select } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { DownOutlined, RightOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import _ from 'lodash';
@@ -76,7 +77,7 @@ function index(props: IProps & ModalWrapProps) {
       <div style={{ marginBottom: 10 }}>
         <Space>
           <TimeRangePicker dateFormat='YYYY-MM-DD HH:mm:ss' value={range} onChange={setRange} />
-          <Input.Group>
+          <InputGroupCompat>
             <span className='ant-input-group-addon'>{t('es.event.logs.size')}</span>
             <Select
               value={limit}
@@ -91,8 +92,8 @@ function index(props: IProps & ModalWrapProps) {
               <Select.Option value={100}>100</Select.Option>
               <Select.Option value={500}>500</Select.Option>
             </Select>
-          </Input.Group>
-          <Input.Group>
+          </InputGroupCompat>
+          <InputGroupCompat>
             <span className='ant-input-group-addon'>{t('es.event.logs.fields')}</span>
             <Select
               mode='multiple'
@@ -111,7 +112,7 @@ function index(props: IProps & ModalWrapProps) {
                 );
               })}
             </Select>
-          </Input.Group>
+          </InputGroupCompat>
         </Space>
       </div>
       <Table

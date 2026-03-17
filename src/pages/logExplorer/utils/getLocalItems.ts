@@ -11,6 +11,20 @@ import { DEFAULT_ACTIVE_KEY, LOCALE_KEY } from '../constants';
 export function getLocalItems(params, defaultFormValues = {}) {
   const localItems = localStorage.getItem(LOCALE_KEY);
   let items: any[] = [];
+  const seenKeys = new Set<string>();
+
+  const ensureUniqueKey = (key?: string) => {
+    let nextKey = key && _.toString(key);
+    if (!nextKey || seenKeys.has(nextKey)) {
+      nextKey = getUUID();
+      while (seenKeys.has(nextKey)) {
+        nextKey = getUUID();
+      }
+    }
+    seenKeys.add(nextKey);
+    return nextKey;
+  };
+
   const range_start = _.get(params, 'start');
   const range_end = _.get(params, 'end');
   if (localItems) {
@@ -44,6 +58,7 @@ export function getLocalItems(params, defaultFormValues = {}) {
         }
         return {
           ...item,
+          key: ensureUniqueKey(item?.key),
           isInited: false,
         };
       });
@@ -58,7 +73,7 @@ export function getLocalItems(params, defaultFormValues = {}) {
 
     items = [
       {
-        key: DEFAULT_ACTIVE_KEY,
+        key: ensureUniqueKey(DEFAULT_ACTIVE_KEY),
         isInited: false,
         formValues: searchRange ? { ...defaultFormValues, query: { range: searchRange } } : defaultFormValues,
       },
@@ -87,7 +102,7 @@ export function getLocalItems(params, defaultFormValues = {}) {
       items = [
         ...items,
         {
-          key: getUUID(),
+          key: ensureUniqueKey(getUUID()),
           isInited: false,
           formValues,
         },

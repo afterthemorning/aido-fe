@@ -35,7 +35,10 @@ export default function Header(props: Props) {
         activeKey={activeKey}
         onEdit={(targetKey: string, action: 'add' | 'remove') => {
           if (action === 'add') {
-            const newActiveKey = getUUID();
+            let newActiveKey = getUUID();
+            while (_.some(items, (item) => item.key === newActiveKey)) {
+              newActiveKey = getUUID();
+            }
             const newItems = [
               ...items,
               {

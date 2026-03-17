@@ -4,7 +4,7 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import LogQL from '@/components/LogQL';
 import { CommonStateContext } from '@/App';
 import { DatasourceCateEnum } from '@/utils/constant';
@@ -32,7 +32,7 @@ export default function index(props: IProps) {
 
   return (
     <>
-      <InputGroupWithFormItem
+      <FieldGroupV2
         label={
           <Space>
             {t('query.query')}
@@ -49,7 +49,7 @@ export default function index(props: IProps) {
         <Form.Item {...field} name={[...path, 'sql']}>
           <LogQL datasourceCate={DatasourceCateEnum.mysql} datasourceValue={datasourceValue} query={{}} historicalRecords={[]} placeholder={t('query.query_placeholder2')} />
         </Form.Item>
-      </InputGroupWithFormItem>
+      </FieldGroupV2>
       <AdvancedSettings mode='graph' prefixField={field} prefixName={path} disabled={disabled} expanded />
       <GraphPreview cate={cate} datasourceValue={datasourceValue} query={query} />
     </>

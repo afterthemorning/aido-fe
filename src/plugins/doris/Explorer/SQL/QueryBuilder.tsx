@@ -4,7 +4,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { Form, Space, Tooltip } from 'antd';
 
 import { CommonStateContext } from '@/App';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import TimeRangePicker from '@/components/TimeRangePicker';
 import LogQL from '@/components/LogQL';
 import { DatasourceCateEnum } from '@/utils/constant';
@@ -30,7 +30,7 @@ export default function QueryBuilder(props: Props) {
   return (
     <div style={{ width: '100%' }}>
       <div className='explorer-query'>
-        <InputGroupWithFormItem
+        <FieldGroupV2
           label={
             <Space>
               {t('query.query')}
@@ -61,7 +61,7 @@ export default function QueryBuilder(props: Props) {
               }
             />
           </Form.Item>
-        </InputGroupWithFormItem>
+        </FieldGroupV2>
         <HistoricalRecords
           localKey={SQL_CACHE_KEY}
           datasourceValue={datasourceValue}

@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import { CommonStateContext } from '@/App';
 import { SIZE } from '@/utils/constant';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import TimeRangePicker from '@/components/TimeRangePicker';
 import DocumentDrawer from '@/components/DocumentDrawer';
 import { NAME_SPACE as logExplorerNS } from '@/pages/logExplorer/constants';
@@ -89,7 +89,7 @@ export default function index(props: Props) {
           </Form.Item>
         </Col>
         <Col flex='auto'>
-          <InputGroupWithFormItem
+          <FieldGroupV2
             label={
               <Space>
                 {t(`${logExplorerNS}:query`)}
@@ -156,7 +156,7 @@ export default function index(props: Props) {
                 </Popover>
               )}
             </div>
-          </InputGroupWithFormItem>
+          </FieldGroupV2>
         </Col>
         {syntax === 'query' && (
           <Col flex='none'>

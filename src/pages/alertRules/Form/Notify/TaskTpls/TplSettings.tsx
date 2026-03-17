@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Form, Select, Row, Col } from 'antd';
 import { useTranslation } from 'react-i18next';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 
 interface Props {
   field: any;
@@ -16,7 +16,7 @@ export default function TplSettings(props: Props) {
   return (
     <Row gutter={8}>
       <Col span={12}>
-        <InputGroupWithFormItem label={t('task_tpls.tpl_id')}>
+        <FieldGroupV2 label={t('task_tpls.tpl_id')}>
           <Form.Item
             {...field}
             name={[field.name, 'tpl_id']}
@@ -34,14 +34,14 @@ export default function TplSettings(props: Props) {
               })}
             />
           </Form.Item>
-        </InputGroupWithFormItem>
+        </FieldGroupV2>
       </Col>
       <Col span={12}>
-        <InputGroupWithFormItem label={t('task_tpls.host')}>
+        <FieldGroupV2 label={t('task_tpls.host')}>
           <Form.Item {...field} name={[field.name, 'host']}>
             <Select mode='tags' tokenSeparators={[' ']} open={false} placeholder={t('task_tpls.host_placeholder')} />
           </Form.Item>
-        </InputGroupWithFormItem>
+        </FieldGroupV2>
       </Col>
     </Row>
   );

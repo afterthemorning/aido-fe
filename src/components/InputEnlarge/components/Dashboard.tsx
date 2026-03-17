@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Form, Input, Row, Col, Select, AutoComplete } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { useTranslation, Trans } from 'react-i18next';
 import { rangeOptions } from '@/components/TimeRangePicker/config';
 import { getDashboards, getDashboard } from '@/services/dashboardV2';
@@ -192,7 +193,7 @@ export default function Dashboard({ vars }: { vars: string[] }) {
               }
               return (
                 <Col span={12} key={item.name}>
-                  <Input.Group>
+                  <InputGroupCompat>
                     <span className='ant-input-group-addon'>{item.name}</span>
                     <Component
                       options={options}
@@ -206,7 +207,7 @@ export default function Dashboard({ vars }: { vars: string[] }) {
                         ]);
                       }}
                     />
-                  </Input.Group>
+                  </InputGroupCompat>
                 </Col>
               );
             })}

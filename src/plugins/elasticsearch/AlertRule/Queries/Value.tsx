@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Form, Row, Col, Select, AutoComplete } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { getFields } from '@/pages/explorer/Elasticsearch/services';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 
 interface IProps {
   field?: any;
@@ -60,7 +60,7 @@ export default function Value(props: IProps) {
   return (
     <Row gutter={8}>
       <Col span={func === 'count' || func === 'rawData' ? 24 : 12}>
-        <InputGroupWithFormItem label={t('datasource:es.value')}>
+        <FieldGroupV2 label={t('datasource:es.value')}>
           <Form.Item {...field} name={[field.name, ...midName, 'value', 'func']} noStyle initialValue={functions[0]}>
             <Select style={{ width: '100%' }} disabled={disabled}>
               {functions.map((func) => (
@@ -70,11 +70,11 @@ export default function Value(props: IProps) {
               ))}
             </Select>
           </Form.Item>
-        </InputGroupWithFormItem>
+        </FieldGroupV2>
       </Col>
       {func !== 'count' && func !== 'rawData' && (
         <Col span={12}>
-          <InputGroupWithFormItem label='Field key'>
+          <FieldGroupV2 label='Field key'>
             <Form.Item {...field} name={[field.name, ...midName, 'value', 'field']} noStyle>
               <AutoComplete
                 options={_.filter(fieldsOptions, (item) => {
@@ -88,7 +88,7 @@ export default function Value(props: IProps) {
                 disabled={disabled}
               />
             </Form.Item>
-          </InputGroupWithFormItem>
+          </FieldGroupV2>
         </Col>
       )}
     </Row>

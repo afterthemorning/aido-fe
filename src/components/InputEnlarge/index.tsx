@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef } from 'react';
 import { Input, Tooltip, InputProps, Button } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { FullscreenOutlined, ToolFilled } from '@ant-design/icons';
 import useOnClickOutside from '../useOnClickOutside';
 import { CommonStateContext } from '@/App';
@@ -40,7 +41,7 @@ export default function InputEnlarge({
         overlayInnerStyle={{ width: 615 }}
         placement='topRight'
       >
-        <Input.Group compact>
+        <InputGroupCompat compact>
           <Input style={{ width: linkBuilder ? 'calc(100% - 64px)' : 'calc(100% - 32px)' }} disabled={disabled} value={value} onChange={onChange} {...props} />
           <Button icon={<FullscreenOutlined onClick={() => setVisible(true)} />} />
           {linkBuilder && (
@@ -48,7 +49,7 @@ export default function InputEnlarge({
               <Button icon={<ToolFilled />} onClick={() => setLinkBuilderVisible(true)} />
             </Tooltip>
           )}
-        </Input.Group>
+        </InputGroupCompat>
       </Tooltip>
       <LinkBuilder
         rawData={linkBuilder?.rawData || {}}

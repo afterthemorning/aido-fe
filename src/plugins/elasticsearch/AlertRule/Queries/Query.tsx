@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { Row, Col, Form, Tooltip, AutoComplete, Input, InputNumber, Select, Space } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import GroupBy from '@/pages/dashboard/Editor/QueryEditor/Elasticsearch/GroupBy';
 import QueryName from '@/components/QueryName';
 import DocumentDrawer from '@/components/DocumentDrawer';
@@ -68,7 +69,7 @@ export default function Query(props: Props) {
         <Col flex='auto'>
           <Row gutter={8}>
             <Col span={7}>
-              <InputGroupWithFormItem
+              <FieldGroupV2
                 label={
                   <Space>
                     <Form.Item {...field} name={[field.name, 'index_type']} noStyle initialValue='index'>
@@ -131,10 +132,10 @@ export default function Query(props: Props) {
                   </Form.Item>
                 )}
                 {indexType === 'index_pattern' && <IndexPatternSelect field={field} indexPatterns={indexPatterns} />}
-              </InputGroupWithFormItem>
+              </FieldGroupV2>
             </Col>
             <Col span={indexType === 'index' ? 7 : 12}>
-              <InputGroupWithFormItem
+              <FieldGroupV2
                 label={
                   <span>
                     {t('datasource:es.filter')}{' '}
@@ -158,7 +159,7 @@ export default function Query(props: Props) {
                 <Form.Item {...field} name={[field.name, 'filter']}>
                   <Input disabled={disabled} />
                 </Form.Item>
-              </InputGroupWithFormItem>
+              </FieldGroupV2>
             </Col>
             {indexType === 'index' && (
               <Col span={5}>
@@ -166,7 +167,7 @@ export default function Query(props: Props) {
               </Col>
             )}
             <Col span={5}>
-              <Input.Group>
+              <InputGroupCompat>
                 <span className='ant-input-group-addon'>{t('datasource:es.interval')}</span>
                 <Form.Item {...field} name={[field.name, 'interval']} noStyle initialValue={1}>
                   <InputNumber disabled={disabled} style={{ width: '100%' }} min={0} />
@@ -180,7 +181,7 @@ export default function Query(props: Props) {
                     </Select>
                   </Form.Item>
                 </span>
-              </Input.Group>
+              </InputGroupCompat>
             </Col>
           </Row>
         </Col>

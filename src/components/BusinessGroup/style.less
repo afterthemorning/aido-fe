@@ -1,12 +1,13 @@
 .n9e-biz-group-container {
   &.collapse {
-    width: 0px;
+    width: 16px;
     padding: 0px;
     margin: 0px;
+    border: 0;
     visibility: unset !important; // 解决和 tailwindcss 的 collapse 冲突
 
     .collapse-btn {
-      right: 0px;
+      right: 0;
     }
   }
 
@@ -75,13 +76,18 @@
     position: absolute;
     display: flex;
     align-items: center;
+    justify-content: center;
     top: 50%;
     margin-top: -29px;
-    right: -10px;
+    right: 0;
     height: 58px;
-    width: 10px;
+    width: 16px;
+    font-size: 12px;
     border-radius: 6px;
+    border: 1px solid var(--fc-border-color);
+    color: var(--fc-text-2);
     background: var(--fc-fill-4);
+    z-index: 20;
   }
 }
 

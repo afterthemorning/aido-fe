@@ -24,9 +24,13 @@ import { basePrefix } from '@/App';
 export default function Custom() {
   const location = useLocation();
   const query = queryString.parse(location.search);
-  const [err, setErr] = useState();
+  const [err, setErr] = useState<string | undefined>();
 
   useEffect(() => {
+    if (!query.ticket) {
+      setErr('缺少回调参数 ticket');
+      return;
+    }
     authCallbackCustom({
       ticket: query.ticket,
       redirect: query.redirect || `${basePrefix}/`,

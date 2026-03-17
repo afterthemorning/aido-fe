@@ -1,0 +1,32 @@
+.input-group-compat-wrapper {
+  display: inline-flex;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.input-group-compat {
+  display: inline-flex;
+  align-items: stretch;
+  min-width: 0;
+
+  .ant-input-group-addon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  > :not(.ant-input-group-addon) {
+    min-width: 0;
+  }
+  &.ant-input-group-compact {
+  .ant-input-group-addon + .ant-picker,
+  .ant-input-group-addon + .ant-select,
+  .ant-input-group-addon + .ant-input,
+  .ant-input-group-addon + .ant-input-affix-wrapper,
+  .ant-input-group-addon + .ant-input-number {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+  }
+}

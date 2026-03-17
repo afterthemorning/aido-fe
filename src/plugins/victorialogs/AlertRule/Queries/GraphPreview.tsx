@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { CommonStateContext } from '@/App';
 import { DatasourceCateEnum } from '@/utils/constant';
 import { IRawTimeRange, parseRange } from '@/components/TimeRangePicker';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import getTextWidth from '@/pages/dashboard/Renderer/utils/getTextWidth';
 
 import { logQuery } from '../../services';
@@ -86,7 +86,7 @@ export default function GraphPreview({ datasourceValue, query }) {
           <div className='flex justify-between items-center'>
             <div className='leading-[32px]'>{t('datasource:es.alert.query.preview')}</div>
             <Space>
-              <InputGroupWithFormItem label={t('common:datasource.name')}>
+              <FieldGroupV2 label={t('common:datasource.name')}>
                 <Select
                   className='w-[200px]'
                   value={datasourceId}
@@ -100,7 +100,7 @@ export default function GraphPreview({ datasourceValue, query }) {
                     };
                   })}
                 />
-              </InputGroupWithFormItem>
+              </FieldGroupV2>
             </Space>
           </div>
         }

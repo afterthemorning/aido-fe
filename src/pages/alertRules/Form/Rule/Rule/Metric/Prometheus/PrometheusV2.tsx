@@ -25,7 +25,7 @@ import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 
 import { IS_PLUS } from '@/utils/constant';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import Triggers from '@/pages/alertRules/Form/components/Triggers';
 import { FormStateContext } from '@/pages/alertRules/Form';
 import QueryName, { generateQueryName } from '@/components/QueryName';
@@ -75,7 +75,7 @@ export default function PrometheusV2(props: Props) {
                       </Form.Item>
                     </div>
                     <div className='flex-1 min-w-0'>
-                      <InputGroupWithFormItem label='PromQL'>
+                      <FieldGroupV2 label='PromQL'>
                         <Form.Item
                           {...field}
                           name={[field.name, 'query']}
@@ -85,7 +85,7 @@ export default function PrometheusV2(props: Props) {
                         >
                           <PromQLInputNG readOnly={disabled} datasourceValue={datasourceValue} durationVariablesCompletion={false} />
                         </Form.Item>
-                      </InputGroupWithFormItem>
+                      </FieldGroupV2>
                     </div>
                   </div>
                   {IS_PLUS && (

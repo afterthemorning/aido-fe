@@ -128,6 +128,7 @@ export default function Prometheus(props: IProps) {
       showGlobalMetrics={showGlobalMetrics}
       showBuilder={showBuilder}
       onChange={(newPromQL) => {
+        setPromql(newPromQL || '');
         if (newPromQL) {
           setLocalQueryHistory(`${LOCAL_KEY}-${datasourceValue}`, newPromQL);
         }

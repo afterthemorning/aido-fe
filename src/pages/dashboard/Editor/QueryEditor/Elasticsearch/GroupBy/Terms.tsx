@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Row, Col, Form, Select, Button, InputNumber, AutoComplete } from 'antd';
 import { VerticalRightOutlined, VerticalLeftOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import _ from 'lodash';
 import { groupByCates } from './configs';
 
@@ -27,7 +27,7 @@ export default function Terms({ prefixField, fieldsOptions, values }) {
             </Form.Item>
           </Col>
           <Col span={expanded ? 6 : 12}>
-            <InputGroupWithFormItem label='Field key' labelWidth={80}>
+            <FieldGroupV2 label='Field key' labelWidth={80}>
               <Form.Item {...prefixField} name={[prefixField.name, 'field']} rules={[{ required: true, message: '必须填写 field key' }]}>
                 <AutoComplete
                   popupMatchSelectWidth={false}
@@ -41,36 +41,36 @@ export default function Terms({ prefixField, fieldsOptions, values }) {
                   onSearch={setSearch}
                 />
               </Form.Item>
-            </InputGroupWithFormItem>
+            </FieldGroupV2>
           </Col>
           {expanded && (
             <>
               <Col span={6}>
-                <InputGroupWithFormItem label={t('datasource:es.terms.size')}>
+                <FieldGroupV2 label={t('datasource:es.terms.size')}>
                   <Form.Item {...prefixField} name={[prefixField.name, 'size']} noStyle>
                     <InputNumber style={{ width: '100%' }} min={0} />
                   </Form.Item>
-                </InputGroupWithFormItem>
+                </FieldGroupV2>
               </Col>
               <Col span={6}>
-                <InputGroupWithFormItem label={t('datasource:es.terms.min_doc_count')}>
+                <FieldGroupV2 label={t('datasource:es.terms.min_doc_count')}>
                   <Form.Item {...prefixField} name={[prefixField.name, 'min_doc_count']} noStyle>
                     <InputNumber style={{ width: '100%' }} />
                   </Form.Item>
-                </InputGroupWithFormItem>
+                </FieldGroupV2>
               </Col>
               <Col span={6}>
-                <InputGroupWithFormItem label='Order'>
+                <FieldGroupV2 label='Order'>
                   <Form.Item {...prefixField} name={[prefixField.name, 'order']}>
                     <Select>
                       <Select.Option value='desc'>Descend</Select.Option>
                       <Select.Option value='asc'>Ascend</Select.Option>
                     </Select>
                   </Form.Item>
-                </InputGroupWithFormItem>
+                </FieldGroupV2>
               </Col>
               <Col span={6}>
-                <InputGroupWithFormItem label='OrderBy'>
+                <FieldGroupV2 label='OrderBy'>
                   <Form.Item {...prefixField} name={[prefixField.name, 'order_by']}>
                     <Select>
                       <Select.Option value='_key'>Term value</Select.Option>
@@ -85,7 +85,7 @@ export default function Terms({ prefixField, fieldsOptions, values }) {
                       })}
                     </Select>
                   </Form.Item>
-                </InputGroupWithFormItem>
+                </FieldGroupV2>
               </Col>
             </>
           )}

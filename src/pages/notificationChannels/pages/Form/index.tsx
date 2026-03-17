@@ -19,6 +19,7 @@ import SMTP from './SMTP';
 import Script from './Script';
 import Flashduty from './Flashduty';
 import Pagerduty from './Pagerduty';
+import './index.less';
 
 interface Props {
   initialValues?: ChannelItem;
@@ -63,11 +64,12 @@ export default function FormCpt(props: Props) {
       </Card>
       <Form.Item name='request_type'>
         <Segmented
+          className='notification-channel-request-type'
           options={[
             {
               label: (
-                <div className='flex items-center gap-2'>
-                  <img height={16} src='/image/notification/http.png' />
+                <div className='notification-channel-request-type-option'>
+                  <img className='notification-channel-request-type-icon' src='/image/notification/http.png' alt='http' />
                   {t('http_request_config.title')}
                 </div>
               ),
@@ -75,8 +77,8 @@ export default function FormCpt(props: Props) {
             },
             {
               label: (
-                <div className='flex items-center gap-2'>
-                  <img height={16} src='/image/notification/smtp.png' />
+                <div className='notification-channel-request-type-option'>
+                  <img className='notification-channel-request-type-icon' src='/image/notification/smtp.png' alt='smtp' />
                   {t('smtp_request_config.title')}
                 </div>
               ),
@@ -84,8 +86,8 @@ export default function FormCpt(props: Props) {
             },
             {
               label: (
-                <div className='flex items-center gap-2'>
-                  <img height={16} src='/image/notification/script.png' />
+                <div className='notification-channel-request-type-option'>
+                  <img className='notification-channel-request-type-icon' src='/image/notification/script.png' alt='script' />
                   {t('script_request_config.title')}
                 </div>
               ),
@@ -93,8 +95,8 @@ export default function FormCpt(props: Props) {
             },
             {
               label: (
-                <div className='flex items-center gap-2'>
-                  <img height={16} src='/image/notification/flashduty.png' />
+                <div className='notification-channel-request-type-option'>
+                  <img className='notification-channel-request-type-icon' src='/image/notification/flashduty.png' alt='flashduty' />
                   {t('flashduty_request_config.title')}
                 </div>
               ),
@@ -102,8 +104,8 @@ export default function FormCpt(props: Props) {
             },
             {
               label: (
-                <div className='flex items-center gap-2'>
-                  <img height={16} src='/image/notification/pagerduty.png' />
+                <div className='notification-channel-request-type-option'>
+                  <img className='notification-channel-request-type-icon' src='/image/notification/pagerduty.png' alt='pagerduty' />
                   {t('pagerduty_request_config.title')}
                 </div>
               ),

@@ -19,6 +19,7 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Select, Input, Tooltip, Button, Space } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { SearchOutlined, ClearOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
 import { getLabelValues } from '@/services/metricViews';
 import { IRawTimeRange } from '@/components/TimeRangePicker';
@@ -238,7 +239,7 @@ export default function LabelsValues(props: IProps) {
                 </div>
               </div>
               <div className='n9e-metric-views-dimensionLabel'>
-                <Input.Group compact>
+                <InputGroupCompat compact>
                   <Input
                     style={{ width: 'calc(100% - 32px)' }}
                     prefix={<SearchOutlined />}
@@ -269,7 +270,7 @@ export default function LabelsValues(props: IProps) {
                       }}
                     />
                   </Tooltip>
-                </Input.Group>
+                </InputGroupCompat>
 
                 <div className='n9e-metric-views-dimensionLabel-content'>
                   {_.isEmpty(dimensionLabelValues) ? (

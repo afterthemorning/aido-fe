@@ -1,12 +1,13 @@
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { Form, Row, Col, Space, Input, Tooltip, InputNumber, Select, Alert } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { InfoCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useTranslation, Trans } from 'react-i18next';
 
 import { CommonStateContext } from '@/App';
 import { DatasourceCateEnum } from '@/utils/constant';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import LogQL from '@/components/LogQL';
 import DocumentDrawer from '@/components/DocumentDrawer';
 import { normalizeTime } from '@/pages/alertRules/Form/utils';
@@ -76,7 +77,7 @@ export default function index(props: IProps) {
       )}
       <Row gutter={8}>
         <Col flex='auto'>
-          <InputGroupWithFormItem
+          <FieldGroupV2
             label={
               <Space>
                 {t('query.query')}
@@ -97,10 +98,10 @@ export default function index(props: IProps) {
             <Form.Item {...field} name={[...path, 'sql']}>
               <LogQL datasourceCate={DatasourceCateEnum.doris} datasourceValue={datasourceValue} query={{}} historicalRecords={[]} placeholder={t('query.query_placeholder')} />
             </Form.Item>
-          </InputGroupWithFormItem>
+          </FieldGroupV2>
         </Col>
         <Col flex='none'>
-          <Input.Group>
+          <InputGroupCompat>
             <span className='ant-input-group-addon'>
               {
                 <Space>
@@ -133,7 +134,7 @@ export default function index(props: IProps) {
                 </Select>
               </Form.Item>
             </span>
-          </Input.Group>
+          </InputGroupCompat>
         </Col>
       </Row>
       <AdvancedSettings prefixField={field} prefixName={path} disabled={disabled} expanded showOffset span={8} />

@@ -3,7 +3,7 @@ import { Form, Space } from 'antd';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import { DatasourceSelectV3 } from '@/components/DatasourceSelect';
 import { CommonStateContext } from '@/App';
 import getDefaultTargets from '@/pages/dashboard/utils/getDefaultTargets';
@@ -25,7 +25,7 @@ export default function index({ datasourceValue, variablesWithOptions }) {
         <div />
       </Form.Item>
       <Space align='start'>
-        <InputGroupWithFormItem label={t('common:datasource.id')}>
+        <FieldGroupV2 label={t('common:datasource.id')}>
           <Form.Item
             name='datasourceValue'
             rules={[
@@ -82,7 +82,7 @@ export default function index({ datasourceValue, variablesWithOptions }) {
               }}
             />
           </Form.Item>
-        </InputGroupWithFormItem>
+        </FieldGroupV2>
         <DatasourceSelectExtra datasourceValue={datasourceValue} />
       </Space>
     </>

@@ -1,5 +1,10 @@
 const en_US = {
   title: 'Quick view',
+  empty: {
+    subtitle: 'This page depends on a Prometheus datasource. Please configure one before using object explorer.',
+    contact_admin: 'You do not have admin permission. Please contact an administrator to add a Prometheus datasource.',
+    path_label: 'Configuration path',
+  },
   list: {
     title: 'List',
     public: 'Public',

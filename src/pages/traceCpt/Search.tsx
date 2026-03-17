@@ -7,7 +7,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import logfmtParser from 'logfmt/lib/logfmt_parser';
 import { Link } from 'react-router-dom';
 import TimeRangePicker, { IRawTimeRange, parseRange } from '@/components/TimeRangePicker';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import EmptyDatasourcePopover from '@/components/DatasourceSelect/EmptyDatasourcePopover';
 import { CommonStateContext } from '@/App';
 import { SearchTraceType, SearchTraceIDType } from './type';
@@ -178,7 +178,7 @@ export default function Index(props: IProps) {
           <Row gutter={8}>
             <Col span={24}>
               <Space style={{ width: '100%', justifyContent: 'start', marginBottom: 8 }}>
-                <InputGroupWithFormItem label={t('common:datasource.type')}>
+                <FieldGroupV2 label={t('common:datasource.type')}>
                   <Select popupMatchSelectWidth={false} style={{ width: '100%' }} value='jaeger'>
                     {_.map(
                       [
@@ -194,9 +194,9 @@ export default function Index(props: IProps) {
                       ),
                     )}
                   </Select>
-                </InputGroupWithFormItem>
+                </FieldGroupV2>
                 <EmptyDatasourcePopover datasourceList={datasourceList}>
-                  <InputGroupWithFormItem label={t('common:datasource.id')}>
+                  <FieldGroupV2 label={t('common:datasource.id')}>
                     <Select style={{ minWidth: 121 }} value={curPlugin} onChange={handlePluginChange}>
                       {_.map(datasourceList, (item) => (
                         <Select.Option value={item.id} key={item.id}>
@@ -204,7 +204,7 @@ export default function Index(props: IProps) {
                         </Select.Option>
                       ))}
                     </Select>
-                  </InputGroupWithFormItem>
+                  </FieldGroupV2>
                 </EmptyDatasourcePopover>
                 <Radio.Group optionType='button' buttonStyle='solid' value={isTraceId} onChange={handleTypeSwitch}>
                   <Radio value={false}>{t('mode.query')}</Radio>

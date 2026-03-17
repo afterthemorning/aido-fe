@@ -125,8 +125,9 @@ export default function index(props: IProps) {
     <Resizable
       style={{
         marginRight: collapse ? 0 : 10,
+        overflow: 'visible',
       }}
-      size={{ width: collapse ? 0 : width, height: '100%' }}
+      size={{ width: collapse ? 20 : width, height: '100%' }}
       enable={{
         right: collapse ? false : true,
       }}

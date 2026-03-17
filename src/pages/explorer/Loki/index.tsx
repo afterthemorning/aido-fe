@@ -11,7 +11,7 @@ import TimeRangePicker, { IRawTimeRange, isMathString, parseRange } from '@/comp
 import Timeseries from '@/pages/dashboard/Renderer/Renderer/Timeseries';
 import { createPortal } from 'react-dom';
 import LogQLInput from '@/components/LogQLInput';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import queryString from 'query-string';
 import { LogSortItem, Row, getKeywords, parseResponse } from './util';
 import { getSerieName } from '@/pages/dashboard/Renderer/datasource/utils';
@@ -197,7 +197,7 @@ export default function index(props: IProps) {
         createPortal(
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Space>
-              <InputGroupWithFormItem label={t('log.limit')}>
+              <FieldGroupV2 label={t('log.limit')}>
                 <Form.Item name='limit' initialValue={100}>
                   <Select
                     popupMatchSelectWidth={false}
@@ -212,7 +212,7 @@ export default function index(props: IProps) {
                     ))}
                   </Select>
                 </Form.Item>
-              </InputGroupWithFormItem>
+              </FieldGroupV2>
               <Form.Item name={['query', 'range']} initialValue={defaultTime ? defaultTime : { start: 'now-1h', end: 'now' }}>
                 <TimeRangePicker dateFormat='YYYY-MM-DD HH:mm:ss' onChange={setRange} />
               </Form.Item>

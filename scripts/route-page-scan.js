@@ -33,11 +33,11 @@ function extractRoutesFromRouter() {
 
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext();
-  const page = await context.newPage();
 
   const results = [];
 
   for (let i = 0; i < routes.length; i += 1) {
+    const page = await context.newPage();
     const route = routes[i];
     const targetUrl = `${base}${route}`;
     const consoleErrors = [];
@@ -82,6 +82,7 @@ function extractRoutesFromRouter() {
 
     page.off('console', onConsole);
     page.off('pageerror', onPageError);
+    await page.close().catch(() => {});
 
     const record = {
       index: i + 1,

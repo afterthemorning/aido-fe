@@ -1,5 +1,10 @@
 const zh_CN = {
   title: '快捷視圖',
+  empty: {
+    subtitle: '當前頁面依賴 Prometheus 數據源，請先完成數據源配置後再使用對象探索。',
+    contact_admin: '你當前沒有管理員權限，請聯繫管理員添加 Prometheus 數據源。',
+    path_label: '配置入口',
+  },
   list: {
     title: '快捷視圖清單',
     public: '公開',

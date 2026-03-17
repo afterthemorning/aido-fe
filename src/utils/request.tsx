@@ -121,8 +121,9 @@ request.interceptors.request.use((url, options) => {
   };
   headers['Authorization'] = `Bearer ${localStorage.getItem(AccessTokenKey) || ''}`;
   headers['X-Language'] = i18next.language;
+  const requestUrl = url.startsWith('/api/') ? url : basePrefix + url;
   return {
-    url: basePrefix + url,
+    url: requestUrl,
     options: { ...options, headers, sourcePathname: location.pathname },
   };
 });

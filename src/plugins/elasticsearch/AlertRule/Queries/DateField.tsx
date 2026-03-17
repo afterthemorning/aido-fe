@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Form, AutoComplete } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { getFields } from '@/pages/explorer/Elasticsearch/services';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 
 interface IProps {
   field?: any;
@@ -52,7 +52,7 @@ export default function DateField(props: IProps) {
   }, [datasourceValue, index]);
 
   return (
-    <InputGroupWithFormItem label={t('datasource:es.date_field')} labelWidth={80}>
+    <FieldGroupV2 label={t('datasource:es.date_field')} labelWidth={80}>
       <Form.Item
         {...field}
         name={[field.name, ...midName, 'date_field']}
@@ -65,6 +65,6 @@ export default function DateField(props: IProps) {
       >
         <AutoComplete popupMatchSelectWidth={false} style={{ width: '100%' }} disabled={disabled} options={fieldsOptions} />
       </Form.Item>
-    </InputGroupWithFormItem>
+    </FieldGroupV2>
   );
 }

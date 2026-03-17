@@ -7,7 +7,7 @@ import { useRequest } from 'ahooks';
 
 import { CommonStateContext } from '@/App';
 import { DatasourceCateEnum } from '@/utils/constant';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import ConditionHistoricalRecords from '@/components/HistoricalRecords/ConditionHistoricalRecords';
 import TimeRangePicker from '@/components/TimeRangePicker';
 import DocumentDrawer from '@/components/DocumentDrawer';
@@ -86,7 +86,7 @@ export default function index(props: Props) {
         <Col flex='auto'>
           <Row gutter={10} wrap className='min-w-[300px]'>
             <Col span={12}>
-              <InputGroupWithFormItem label={t('query.database')}>
+              <FieldGroupV2 label={t('query.database')}>
                 <Form.Item name={['query', 'database']} rules={[{ required: true, message: t('query.database_msg') }]}>
                   <DatabaseSelect
                     datasourceValue={datasourceValue}
@@ -101,10 +101,10 @@ export default function index(props: Props) {
                     }}
                   />
                 </Form.Item>
-              </InputGroupWithFormItem>
+              </FieldGroupV2>
             </Col>
             <Col span={12}>
-              <InputGroupWithFormItem label={t('query.table')}>
+              <FieldGroupV2 label={t('query.table')}>
                 <Form.Item name={['query', 'table']} rules={[{ required: true, message: t('query.table_msg') }]}>
                   <TableSelect
                     datasourceValue={datasourceValue}
@@ -119,12 +119,12 @@ export default function index(props: Props) {
                     }}
                   />
                 </Form.Item>
-              </InputGroupWithFormItem>
+              </FieldGroupV2>
             </Col>
           </Row>
         </Col>
         <Col flex='none'>
-          <InputGroupWithFormItem label={t('query.time_field')}>
+          <FieldGroupV2 label={t('query.time_field')}>
             <Form.Item name={['query', 'time_field']} rules={[{ required: true, message: t('query.time_field_msg') }]}>
               <DateFieldSelect
                 dateFields={_.filter(indexData, (item) => {
@@ -133,7 +133,7 @@ export default function index(props: Props) {
                 onChange={executeQuery}
               />
             </Form.Item>
-          </InputGroupWithFormItem>
+          </FieldGroupV2>
         </Col>
         <Col flex='none'>
           <Form.Item name={['query', 'range']} initialValue={logsDefaultRange}>
@@ -147,7 +147,7 @@ export default function index(props: Props) {
         </Col>
       </Row>
       <div className='flex gap-[10px]'>
-        <InputGroupWithFormItem
+        <FieldGroupV2
           label={
             <Space>
               {t('query.query')}
@@ -172,7 +172,7 @@ export default function index(props: Props) {
               }}
             />
           </Form.Item>
-        </InputGroupWithFormItem>
+        </FieldGroupV2>
         <SQLFormatButton rangeRef={rangeRef} defaultSearchIndex={defaultSearchIndex} />
         <ConditionHistoricalRecords
           localKey={QUERY_CACHE_KEY}

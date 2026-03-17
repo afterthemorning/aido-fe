@@ -3,7 +3,7 @@ import { Row, Col, Form, Input, Tooltip, Select } from 'antd';
 import { DownOutlined, RightOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import UnitPicker from '@/pages/dashboard/Components/UnitPicker';
 
 interface IProps {
@@ -41,7 +41,7 @@ function AdvancedSettings(props: IProps) {
           {mode === 'graph' && (
             <>
               <Col span={span}>
-                <InputGroupWithFormItem
+                <FieldGroupV2
                   label={
                     <span>
                       MetricKey{' '}
@@ -55,10 +55,10 @@ function AdvancedSettings(props: IProps) {
                   <Form.Item {...prefixField} name={[...prefixName, 'keys', 'metricKey']} style={{ width: '100%' }}>
                     <Select mode='tags' placeholder={t('query.advancedSettings.tags_placeholder')} disabled={disabled} open={false} />
                   </Form.Item>
-                </InputGroupWithFormItem>
+                </FieldGroupV2>
               </Col>
               <Col span={span}>
-                <InputGroupWithFormItem
+                <FieldGroupV2
                   label={
                     <span>
                       LabelKey{' '}
@@ -72,22 +72,22 @@ function AdvancedSettings(props: IProps) {
                   <Form.Item {...prefixField} name={[...prefixName, 'keys', 'labelKey']} style={{ width: '100%' }}>
                     <Select mode='tags' placeholder={t('query.advancedSettings.tags_placeholder')} disabled={disabled} open={false} />
                   </Form.Item>
-                </InputGroupWithFormItem>
+                </FieldGroupV2>
               </Col>
               {showUnit && (
                 <Col span={span}>
-                  <InputGroupWithFormItem label={t('common:unit')}>
+                  <FieldGroupV2 label={t('common:unit')}>
                     <Form.Item {...prefixField} name={[prefixField.name, 'unit']} initialValue='none' noStyle>
                       <UnitPicker optionLabelProp='cleanLabel' style={{ width: '100%' }} popupMatchSelectWidth={false} />
                     </Form.Item>
-                  </InputGroupWithFormItem>
+                  </FieldGroupV2>
                 </Col>
               )}
             </>
           )}
           {mode === 'table' && (
             <Col span={span}>
-              <InputGroupWithFormItem
+              <FieldGroupV2
                 label={
                   <span>
                     TimeFormat{' '}
@@ -100,7 +100,7 @@ function AdvancedSettings(props: IProps) {
                 <Form.Item {...prefixField} name={[...prefixName, 'keys', 'timeFormat']} style={{ width: '100%' }} initialValue='2006-01-02T15:04:05'>
                   <Input disabled={disabled} />
                 </Form.Item>
-              </InputGroupWithFormItem>
+              </FieldGroupV2>
             </Col>
           )}
         </Row>

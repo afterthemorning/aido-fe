@@ -16,6 +16,7 @@
  */
 import React, { useEffect } from 'react';
 import { Form, Select, Row, Col, InputNumber, Input, Switch } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import _ from 'lodash';
 import { useTranslation, Trans } from 'react-i18next';
 import { Panel } from '../../Components/Collapse';
@@ -82,12 +83,12 @@ export default function GraphStyles() {
         <Row gutter={10}>
           <Col span={12}>
             <Form.Item label={t('panel.custom.serieWidth')}>
-              <Input.Group>
+              <InputGroupCompat>
                 <Form.Item noStyle name={[...namePrefix, 'serieWidth']}>
                   <InputNumber style={{ width: '100%' }} placeholder='auto' />
                 </Form.Item>
                 <span className='ant-input-group-addon'>%</span>
-              </Input.Group>
+              </InputGroupCompat>
             </Form.Item>
           </Col>
           <Col span={12}>

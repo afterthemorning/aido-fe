@@ -1,0 +1,129 @@
+.field-group-v2 {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+
+  .field-group-v2-label {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 11px;
+    border: 1px solid var(--fc-border-color);
+    border-right: 0;
+    border-radius: 6px 0 0 6px;
+    background: var(--fc-fill-2);
+    color: var(--fc-text-2);
+  }
+
+  .field-group-v2-content {
+    flex: 1;
+    min-width: 0;
+
+    .ant-form-item {
+      margin-bottom: 0;
+    }
+
+    .ant-form-item-control,
+    .ant-form-item-control-input,
+    .ant-form-item-control-input-content,
+    .ant-select,
+    .ant-select-selector,
+    .ant-input,
+    .ant-input-affix-wrapper,
+    .ant-input-affix-wrapper input,
+    .ant-input-number,
+    .ant-input-number-input-wrap,
+    .ant-input-number-input {
+      width: 100%;
+    }
+
+    .ant-select-selector,
+    .ant-input,
+    .ant-input-affix-wrapper,
+    .ant-input-number,
+    .ant-input-number .ant-input-number-input-wrap {
+      border-radius: 0;
+    }
+
+    .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input),
+    .ant-select:not(.ant-select-disabled):hover {
+      z-index: 1;
+    }
+  }
+
+  .field-group-v2-addon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0 8px;
+    border: 1px solid var(--fc-border-color);
+    border-left: 0;
+    border-radius: 0 6px 6px 0;
+    background: var(--fc-fill-2);
+    color: var(--fc-text-2);
+  }
+}
+
+.field-group-v2-middle {
+  .field-group-v2-label,
+  .field-group-v2-addon {
+    height: 32px;
+    line-height: 30px;
+  }
+
+  .field-group-v2-content {
+    .ant-form-item-control,
+    .ant-form-item-control-input,
+    .ant-form-item-control-input-content,
+    .ant-select,
+    .ant-select-selector,
+    .ant-input,
+    .ant-input-affix-wrapper,
+    .ant-input-number,
+    .ant-input-number .ant-input-number-input-wrap,
+    .ant-input-number-input {
+      min-height: 32px;
+      height: 32px;
+    }
+  }
+}
+
+.field-group-v2-small {
+  .field-group-v2-label,
+  .field-group-v2-addon {
+    height: 24px;
+    line-height: 22px;
+    padding: 0 8px;
+  }
+
+  .field-group-v2-content {
+    .ant-form-item-control,
+    .ant-form-item-control-input,
+    .ant-form-item-control-input-content,
+    .ant-select,
+    .ant-select-selector,
+    .ant-input,
+    .ant-input-affix-wrapper,
+    .ant-input-number,
+    .ant-input-number .ant-input-number-input-wrap,
+    .ant-input-number-input {
+      min-height: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.field-group-v2-no-style {
+  .field-group-v2-label,
+  .field-group-v2-addon {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+}

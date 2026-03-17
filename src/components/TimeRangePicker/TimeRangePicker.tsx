@@ -16,6 +16,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Button, Popover, Row, Col, Input, Space } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { DownOutlined, UpOutlined, CalendarOutlined, SearchOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { PickerPanel } from 'rc-picker';
 import momentGenerateConfig from 'rc-picker/es/generate/moment';
@@ -106,7 +107,7 @@ const AbsoluteTimePicker = ({
   return (
     <div className='mb-2'>
       <span>{labelMap[type]}</span>
-      <Input.Group compact style={{ marginTop: 4 }}>
+      <InputGroupCompat compact style={{ marginTop: 4 }}>
         <Input
           style={{ width: 'calc(100% - 32px)' }}
           className={rangeStatus[type] === 'invalid' ? 'ant-input-status-error' : ''}
@@ -189,7 +190,7 @@ const AbsoluteTimePicker = ({
         >
           <Button danger={rangeStatus[type] === 'invalid'} icon={<CalendarOutlined />} />
         </Popover>
-      </Input.Group>
+      </InputGroupCompat>
       <div className='flashcat-timeRangePicker-single-status'>{rangeStatus[type] === 'invalid' ? t('invalid') : undefined}</div>
     </div>
   );

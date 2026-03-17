@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Select, Tooltip } from 'antd';
 import _ from 'lodash';
 
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 
 import { IVariable } from '../types';
 import filterOptionsByReg from '../utils/filterOptionsByReg';
@@ -37,7 +37,7 @@ export default function Custom(props: Props) {
 
   return (
     <div>
-      <InputGroupWithFormItem label={label || name}>
+      <FieldGroupV2 label={label || name}>
         <Select
           allowClear
           mode={multi ? 'multiple' : undefined}
@@ -149,7 +149,7 @@ export default function Custom(props: Props) {
             </Select.Option>
           ))}
         </Select>
-      </InputGroupWithFormItem>
+      </FieldGroupV2>
     </div>
   );
 }

@@ -8,7 +8,7 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { CommonStateContext } from '@/App';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import DocumentDrawer from '@/components/DocumentDrawer';
 
 import EyeSwitch from '../../Components/EyeSwitch';
@@ -145,7 +145,7 @@ export default function OrganizeFields(props: IProps) {
                         />
                       </Col>
                       <Col flex='auto'>
-                        <InputGroupWithFormItem label={field}>
+                        <FieldGroupV2 label={field}>
                           <Input
                             value={rename}
                             onChange={(e) => {
@@ -159,7 +159,7 @@ export default function OrganizeFields(props: IProps) {
                                 });
                             }}
                           />
-                        </InputGroupWithFormItem>
+                        </FieldGroupV2>
                       </Col>
                     </Row>
                   </SortableItem>

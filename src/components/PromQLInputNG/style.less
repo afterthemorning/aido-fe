@@ -1,7 +1,37 @@
 .promql-input-ng-container {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+
+  .ant-dropdown-trigger {
+    display: flex;
+    align-items: stretch;
+    flex-shrink: 0;
+  }
+
+  .ant-input-group-addon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    min-height: 32px;
+    border: 1px solid var(--fc-border-color);
+    border-radius: 6px 0 0 6px;
+    border-right: 0;
+    background: var(--fc-fill-2);
+    white-space: nowrap;
+  }
 
   .ant-input-affix-wrapper {
-    padding: 5px 11px;
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    min-height: 32px;
+    padding: 6px 11px;
+    border: 1px solid var(--fc-border-color);
+    border-radius: 0 6px 6px 0;
+    background: var(--fc-fill-2);
+    align-items: center;
 
     &:hover {
       z-index: 2 !important; // TODO: 修复 promql 下拉层会被遮挡的问题
@@ -9,8 +39,17 @@
   }
 
   .ant-input-affix-wrapper>.ant-input {
+    flex: 1;
+    min-width: 0;
     padding: 0;
     border: none;
     outline: none;
+  }
+
+  .ant-input-suffix {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-inline-start: 8px;
   }
 }

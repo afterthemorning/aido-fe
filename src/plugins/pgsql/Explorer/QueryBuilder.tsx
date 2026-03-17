@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { Form, Space } from 'antd';
 
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import TimeRangePicker from '@/components/TimeRangePicker';
 import LogQL from '@/components/LogQL';
 import HistoricalRecords from '@/components/HistoricalRecords';
@@ -27,7 +27,7 @@ export default function QueryBuilder(props: Props) {
   return (
     <div style={{ width: '100%' }}>
       <div className='explorer-query'>
-        <InputGroupWithFormItem label={<Space>{t('query.query')}</Space>}>
+        <FieldGroupV2 label={<Space>{t('query.query')}</Space>}>
           <Form.Item
             name={['query', QUERY_KEY]}
             rules={[
@@ -52,7 +52,7 @@ export default function QueryBuilder(props: Props) {
               placeholder={t('query.query_placeholder')}
             />
           </Form.Item>
-        </InputGroupWithFormItem>
+        </FieldGroupV2>
         <HistoricalRecords
           localKey={HISTORY_RECORDS_CACHE_KEY}
           datasourceValue={datasourceValue}

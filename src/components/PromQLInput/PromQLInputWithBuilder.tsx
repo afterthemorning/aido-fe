@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col, Button, Input } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import PromQueryBuilderModal from '@/components/PromQueryBuilder/PromQueryBuilderModal';
@@ -19,7 +20,7 @@ export default function PromQLInputWithBuilder(props: CMExpressionInputProps & {
     <Row gutter={8}>
       <Col flex='auto'>
         <div className='promql-input-group-container'>
-          <Input.Group>
+          <InputGroupCompat>
             {props.showBuiltinMetrics && (
               <BuiltinMetrics
                 mode='dropdown'
@@ -31,7 +32,7 @@ export default function PromQLInputWithBuilder(props: CMExpressionInputProps & {
             <span className='ant-input-affix-wrapper'>
               <PromQLInput {...inputProps} />
             </span>
-          </Input.Group>
+          </InputGroupCompat>
         </div>
       </Col>
       {props.showBuilder && (

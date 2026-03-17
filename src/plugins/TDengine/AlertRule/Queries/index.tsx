@@ -1,11 +1,12 @@
 import React from 'react';
 import { Form, Space, Input, Row, Col, Card, InputNumber, Select, Tooltip } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { PlusCircleOutlined, CloseCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { IS_PLUS } from '@/utils/constant';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import AdvancedSettings from '@/plugins/TDengine/components/AdvancedSettings';
 import QueryName, { generateQueryName } from '@/components/QueryName';
 
@@ -69,7 +70,7 @@ export default function index({ form, prefixField = {}, fullPrefixName = [], pre
                     </Col>
                     <Col flex='auto'>
                       <div className='tdengine-discover-query'>
-                        <InputGroupWithFormItem
+                        <FieldGroupV2
                           label={
                             <Space>
                               {t('query.query')}
@@ -91,8 +92,8 @@ export default function index({ form, prefixField = {}, fullPrefixName = [], pre
                           <Form.Item {...field} name={[field.name, 'query']}>
                             <Input />
                           </Form.Item>
-                        </InputGroupWithFormItem>
-                        <Input.Group style={{ height: 32, width: 380 }}>
+                        </FieldGroupV2>
+                        <InputGroupCompat style={{ height: 32, width: 380 }}>
                           <span className='ant-input-group-addon'>{t('datasource:es.interval')}</span>
                           <Form.Item {...field} name={[field.name, 'interval']} noStyle>
                             <InputNumber disabled={disabled} style={{ width: '100%' }} />
@@ -106,7 +107,7 @@ export default function index({ form, prefixField = {}, fullPrefixName = [], pre
                               </Select>
                             </Form.Item>
                           </span>
-                        </Input.Group>
+                        </InputGroupCompat>
                         <SqlTemplates
                           onSelect={(sql) => {
                             const queries = _.cloneDeep(form.getFieldValue([...prefixName, 'queries']));

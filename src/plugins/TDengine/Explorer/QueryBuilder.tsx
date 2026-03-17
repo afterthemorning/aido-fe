@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Input, Form, Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form/Form';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import TimeRangePicker from '@/components/TimeRangePicker';
 import SqlTemplates from '../components/SqlTemplates';
 
@@ -19,7 +19,7 @@ export default function QueryBuilder(props: Props) {
   return (
     <div style={{ width: '100%' }}>
       <div className='tdengine-discover-query'>
-        <InputGroupWithFormItem
+        <FieldGroupV2
           label={
             <span>
               查询条件{' '}
@@ -45,7 +45,7 @@ export default function QueryBuilder(props: Props) {
               }}
             />
           </Form.Item>
-        </InputGroupWithFormItem>
+        </FieldGroupV2>
         <Form.Item name={['query', 'range']} initialValue={{ start: 'now-1h', end: 'now' }}>
           <TimeRangePicker />
         </Form.Item>

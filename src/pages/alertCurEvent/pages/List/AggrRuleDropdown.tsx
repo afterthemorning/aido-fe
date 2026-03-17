@@ -4,7 +4,7 @@ import { Input, Form, Modal, Switch, message, Button, Space, Tag, Select, Divide
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import { getAggrAlerts as getAggrRules, AddAggrAlerts, updateAggrAlerts, deleteAggrAlerts } from '@/services/warning';
 import { CommonStateContext } from '@/App';
 import Markdown from '@/components/Markdown';
@@ -50,7 +50,7 @@ export default function AggrRuleDropdown(props: Props) {
   return (
     <>
       <Space>
-        <InputGroupWithFormItem label={t('aggregate_rule')}>
+        <FieldGroupV2 label={t('aggregate_rule')}>
           <Select
             allowClear
             showSearch
@@ -130,7 +130,7 @@ export default function AggrRuleDropdown(props: Props) {
               });
             }}
           />
-        </InputGroupWithFormItem>
+        </FieldGroupV2>
         {filter.aggr_rule_id && (
           <div className=' text-[var(--fc-text-4)]'>
             {cardList?.length} {t('aggr_result')}

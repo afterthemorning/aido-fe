@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { useRequest } from 'ahooks';
 
 import { CommonStateContext } from '@/App';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import { useGlobalState } from '@/pages/dashboard/globalState';
 
 import { IVariable } from '../types';
@@ -92,7 +92,7 @@ export default function Query(props: Props) {
 
   return (
     <div>
-      <InputGroupWithFormItem
+      <FieldGroupV2
         label={
           <Space>
             {errorMsg ? (
@@ -215,7 +215,7 @@ export default function Query(props: Props) {
             </Select.Option>
           ))}
         </Select>
-      </InputGroupWithFormItem>
+      </FieldGroupV2>
     </div>
   );
 }

@@ -24,9 +24,13 @@ import { basePrefix } from '@/App';
 export default function index() {
   const location = useLocation();
   const query = queryString.parse(location.search);
-  const [err, setErr] = useState();
+  const [err, setErr] = useState<string | undefined>();
 
   useEffect(() => {
+    if (!query.ticket) {
+      setErr('缺少回调参数 ticket');
+      return;
+    }
     authCallbackCAS({
       ticket: query.ticket,
       state: localStorage.getItem('CAS_state'),

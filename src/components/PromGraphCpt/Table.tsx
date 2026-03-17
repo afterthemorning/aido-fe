@@ -18,7 +18,8 @@ import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import moment from 'moment';
 import _ from 'lodash';
-import { Input, DatePicker, List, Space, Button, message } from 'antd';
+import { DatePicker, List, Space, Button, message } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { useTranslation } from 'react-i18next';
 import { json2csv } from 'json-2-csv';
 
@@ -144,7 +145,7 @@ export default function Table(props: IProps) {
   const controls = (
     <div className='prom-graph-table-controls'>
       <Space>
-        <Input.Group>
+        <InputGroupCompat>
           <span className='ant-input-group-addon'>Time</span>
           <DatePicker
             value={timestamp ? moment.unix(timestamp) : undefined}
@@ -156,9 +157,9 @@ export default function Table(props: IProps) {
             getPopupContainer={() => document.body}
             disabledDate={(current) => current > moment()}
           />
-        </Input.Group>
+        </InputGroupCompat>
         {showUnitPicker && (
-          <Input.Group>
+          <InputGroupCompat>
             <span className='ant-input-group-addon'>Unit</span>
             <UnitPicker
               popupMatchSelectWidth={false}
@@ -167,7 +168,7 @@ export default function Table(props: IProps) {
                 setUnit(val);
               }}
             />
-          </Input.Group>
+          </InputGroupCompat>
         )}
         {showExportButton && (
           <Button

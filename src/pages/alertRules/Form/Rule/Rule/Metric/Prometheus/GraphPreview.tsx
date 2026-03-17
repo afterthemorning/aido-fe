@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { CommonStateContext } from '@/App';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import PromTable from '@/components/PromGraphCpt/Table';
 import { N9E_PATHNAME } from '@/utils/constant';
 
@@ -39,7 +39,7 @@ export default function GraphPreview({ form, fieldName, promqlFieldName = 'prom_
           <div className='flex justify-between items-center'>
             <div>{t('preview')}</div>
             <Space>
-              <InputGroupWithFormItem label={t('common:datasource.name')}>
+              <FieldGroupV2 label={t('common:datasource.name')}>
                 <Select
                   value={datasourceId}
                   onChange={(value) => {
@@ -53,7 +53,7 @@ export default function GraphPreview({ form, fieldName, promqlFieldName = 'prom_
                     };
                   })}
                 />
-              </InputGroupWithFormItem>
+              </FieldGroupV2>
               <div ref={controlsPortalDomNodeRef} />
             </Space>
           </div>

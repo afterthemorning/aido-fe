@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Select, Tooltip } from 'antd';
 import _ from 'lodash';
 
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import { getMonObjectList } from '@/services/targets';
 
 import { useGlobalState } from '../../globalState';
@@ -60,7 +60,7 @@ export default function HostIdent(props: Props) {
 
   return (
     <div>
-      <InputGroupWithFormItem label={label || name}>
+      <FieldGroupV2 label={label || name}>
         <Select
           allowClear
           mode={multi ? 'tags' : undefined}
@@ -115,7 +115,7 @@ export default function HostIdent(props: Props) {
             </Select.Option>
           ))}
         </Select>
-      </InputGroupWithFormItem>
+      </FieldGroupV2>
     </div>
   );
 }

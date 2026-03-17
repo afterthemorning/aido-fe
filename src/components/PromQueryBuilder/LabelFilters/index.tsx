@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Select, Input, Button, Space } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { PlusCircleOutlined, CloseOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useDynamicList } from 'ahooks';
@@ -59,7 +60,7 @@ export default function index(props: IProps) {
         <div className='prom-query-builder-labels-container'>
           {_.map(list, (item, index) => {
             return (
-              <Input.Group
+              <InputGroupCompat
                 compact
                 key={getKey(index)}
                 style={{
@@ -116,7 +117,7 @@ export default function index(props: IProps) {
                     remove(index);
                   }}
                 />
-              </Input.Group>
+              </InputGroupCompat>
             );
           })}
         </div>

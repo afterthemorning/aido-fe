@@ -3,7 +3,7 @@ import { Form, Space, Row, Col } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import AdvancedSettings from '../../components/AdvancedSettings';
 import { CommonStateContext } from '@/App';
 import GraphPreview from './GraphPreview';
@@ -30,7 +30,7 @@ export default function index({ field = {}, prefixPath = [], path = [], datasour
       <Row gutter={8}>
         <Col flex='auto'>
           <div className='tdengine-discover-query'>
-            <InputGroupWithFormItem
+            <FieldGroupV2
               label={
                 <Space>
                   {t('query.query')}
@@ -47,7 +47,7 @@ export default function index({ field = {}, prefixPath = [], path = [], datasour
               <Form.Item {...field} name={[...path, 'sql']}>
                 <LogQL datasourceCate={DatasourceCateEnum.ck} datasourceValue={datasourceID} query={{}} historicalRecords={[]} placeholder={t('query.query_placeholder2')} />
               </Form.Item>
-            </InputGroupWithFormItem>
+            </FieldGroupV2>
           </div>
         </Col>
       </Row>

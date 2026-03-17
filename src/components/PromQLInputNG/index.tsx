@@ -88,6 +88,7 @@ export default function index(props: MonacoEditorPromQLProps) {
             addonClassName='flex-shrink-0 w-max flex'
             mode='dropdown'
             onSelect={(newValue, metric) => {
+              setValue(newValue);
               onChange?.(newValue);
               onMetricUnitChange?.(metric.unit);
             }}

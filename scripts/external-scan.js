@@ -25,11 +25,11 @@ function getRoutes() {
   const routes = getRoutes();
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext();
-  const page = await context.newPage();
 
   const results = [];
 
   for (const routePath of routes) {
+    const page = await context.newPage();
     const url = `${base}${routePath.startsWith('/') ? routePath : `/${routePath}`}`;
     const errors = [];
     const pageErrors = [];
@@ -52,6 +52,7 @@ function getRoutes() {
 
     page.off('console', onConsole);
     page.off('pageerror', onPageError);
+    await page.close().catch(() => {});
   }
 
   await browser.close();

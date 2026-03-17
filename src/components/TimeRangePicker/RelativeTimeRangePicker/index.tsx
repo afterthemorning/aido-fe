@@ -16,6 +16,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Button, Popover, Row, Col, Input } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { DownOutlined, UpOutlined, SearchOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import moment from 'moment';
@@ -93,7 +94,7 @@ export default function index(props: ITimeRangePickerProps) {
     return (
       <div className='mb-2'>
         <span>{labelMap[key]}</span>
-        <Input.Group compact style={{ marginTop: 4 }}>
+        <InputGroupCompat compact style={{ marginTop: 4 }}>
           <Input
             style={{ width: 'calc(100% - 32px)' }}
             className={rangeStatus[key] === 'invalid' ? 'ant-input-status-error' : ''}
@@ -132,7 +133,7 @@ export default function index(props: ITimeRangePickerProps) {
               }
             }}
           />
-        </Input.Group>
+        </InputGroupCompat>
         <div className='flashcat-timeRangePicker-single-status'>{rangeStatus[key] === 'invalid' ? t('invalid') : undefined}</div>
       </div>
     );

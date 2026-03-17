@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { Input, Select, Dropdown, Button, Menu, Space, Tag, Spin, Modal, message, Tooltip } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { PlusOutlined, SaveOutlined, EditOutlined, DeleteOutlined, ReloadOutlined, SearchOutlined, StarFilled, StarOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { useRequest } from 'ahooks';
@@ -134,7 +135,7 @@ export default function index<FilterValues>(props: Props<FilterValues>) {
 
   return (
     <Tooltip title={disabled ? t('tip') : undefined}>
-      <Input.Group compact className='input-group-with-form-item'>
+      <InputGroupCompat compact className='input-group-with-form-item'>
         <div className='input-group-with-form-item-content'>
           <Select
             allowClear
@@ -434,7 +435,7 @@ export default function index<FilterValues>(props: Props<FilterValues>) {
         >
           <DropdownTrigger disabled={disabled} filterValues={filterValues} oldFilterValues={oldFilterValues} adjustOldFilterValues={adjustOldFilterValues} />
         </DropdownCompat>
-      </Input.Group>
+      </InputGroupCompat>
       <FormModal page={page} modalStat={modalStat} setModalState={setModalState} getFilterValues={getFilterValues} run={run} setSelected={setSelected} />
     </Tooltip>
   );

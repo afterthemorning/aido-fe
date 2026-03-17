@@ -5,7 +5,7 @@ import { DownOutlined, QuestionCircleOutlined, RightOutlined } from '@ant-design
 import { useTranslation } from 'react-i18next';
 
 import { SIZE, IS_PLUS } from '@/utils/constant';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import UnitPicker from '@/pages/dashboard/Components/UnitPicker';
 
 interface Props {
@@ -39,15 +39,15 @@ export default function index(prosp: Props) {
         <Row gutter={SIZE * 2}>
           {IS_PLUS && (
             <Col span={6}>
-              <InputGroupWithFormItem label={t('common:unit')}>
+              <FieldGroupV2 label={t('common:unit')}>
                 <Form.Item {...field} name={[field.name, 'unit']} initialValue='none' noStyle>
                   <UnitPicker optionLabelProp='cleanLabel' style={{ width: '100%' }} popupMatchSelectWidth={false} />
                 </Form.Item>
-              </InputGroupWithFormItem>
+              </FieldGroupV2>
             </Col>
           )}
           <Col span={6}>
-            <InputGroupWithFormItem
+            <FieldGroupV2
               label={
                 <Space>
                   <span>Offset</span>
@@ -60,7 +60,7 @@ export default function index(prosp: Props) {
               <Form.Item {...field} name={[field.name, 'offset']} noStyle>
                 <InputNumber controls={false} min={0} />
               </Form.Item>
-            </InputGroupWithFormItem>
+            </FieldGroupV2>
           </Col>
         </Row>
       </div>

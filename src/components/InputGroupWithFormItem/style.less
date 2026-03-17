@@ -1,33 +1,28 @@
-.ant-input-group.ant-input-group-compact.input-group-with-form-item {
-  display: flex !important;
+.field-group-v2.input-group-with-form-item {
+  display: flex;
 
-  .input-group-with-form-item-label {
+  .field-group-v2-label {
     height: 32px;
     line-height: 30px;
     flex-shrink: 0;
     max-width: 50%;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: unset;
 
-    &-small {
-      height: 24px;
-      line-height: 22px;
-    }
   }
 
-  .input-group-with-form-item-content {
+  .field-group-v2-content {
     width: 100%;
     min-width: 0;
     flex-shrink: 1;
 
-    &-small {
-      .ant-form-item-control-input {
-        min-height: 24px;
-      }
+    .ant-form-item-control-input {
+      min-height: 32px;
     }
   }
 
-  .ant-input-group-addon:last-child {
+  .field-group-v2-addon:last-child {
     border-left: 1px solid var(--fc-border-color);
     width: max-content;
     max-width: unset;
@@ -46,14 +41,13 @@
   }
 }
 
-.input-group-with-form-item-content-small {
-  .ant-form-item-control-input {
-    min-height: 24px;
+.field-group-v2-small.input-group-with-form-item {
+  .field-group-v2-label {
+    height: 24px;
+    line-height: 22px;
   }
-}
 
-.theme-dark {
-  .input-group-with-form-item-content-small {
+  .field-group-v2-content {
     .ant-form-item-control-input {
       min-height: 24px;
     }

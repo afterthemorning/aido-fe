@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Row, Col, Input, Select, Space, Tooltip, Alert, InputNumber } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { CloseCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useTranslation, Trans } from 'react-i18next';
 
 import { IS_PLUS } from '@/utils/constant';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import QueryName, { generateQueryName } from '@/components/QueryName';
 import { normalizeTime } from '@/pages/alertRules/Form/utils';
 
@@ -71,7 +72,7 @@ export default function Query(props: Props) {
           </Form.Item>
         </Col>
         <Col flex='none'>
-          <InputGroupWithFormItem label={t('query.database')}>
+          <FieldGroupV2 label={t('query.database')}>
             <Form.Item {...field} name={[field.name, 'database']}>
               <Select style={{ width: 200 }} disabled={disabled}>
                 {dbList.map((db) => (
@@ -81,10 +82,10 @@ export default function Query(props: Props) {
                 ))}
               </Select>
             </Form.Item>
-          </InputGroupWithFormItem>
+          </FieldGroupV2>
         </Col>
         <Col flex='auto'>
-          <InputGroupWithFormItem
+          <FieldGroupV2
             label={
               <Space>
                 SQL
@@ -122,10 +123,10 @@ export default function Query(props: Props) {
                 disabled={disabled}
               />
             </Form.Item>
-          </InputGroupWithFormItem>
+          </FieldGroupV2>
         </Col>
         <Col flex='none'>
-          <Input.Group>
+          <InputGroupCompat>
             <span className='ant-input-group-addon'>
               {
                 <Space>
@@ -158,7 +159,7 @@ export default function Query(props: Props) {
                 </Select>
               </Form.Item>
             </span>
-          </Input.Group>
+          </InputGroupCompat>
         </Col>
       </Row>
       <AdvancedSettings prefixField={field} prefixName={[field.name]} disabled={disabled} showUnit={IS_PLUS} showOffset span={6} expanded />

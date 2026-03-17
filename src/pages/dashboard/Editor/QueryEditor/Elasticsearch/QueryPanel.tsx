@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import HideButton from '@/pages/dashboard/Components/HideButton';
 import { IS_PLUS, alphabet } from '@/utils/constant';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import KQLInput from '@/components/KQLInput';
 import LegendInput from '@/pages/dashboard/Components/LegendInput';
 import { getESIndexPatterns } from '@/pages/log/IndexPatterns/services';
@@ -180,7 +180,7 @@ export default function QueryPanel({ fields, field, index, remove, datasourceVal
             <DateField datasourceValue={datasourceValue} index={curIndexValues.index} prefixField={field} prefixNames={[field.name, 'query']} />
           </Col>
           <Col span={8}>
-            <InputGroupWithFormItem
+            <FieldGroupV2
               label={
                 <Space>
                   {t('datasource:es.raw.date_format')}
@@ -193,14 +193,14 @@ export default function QueryPanel({ fields, field, index, remove, datasourceVal
               <Form.Item {...field} name={[field.name, 'query', 'date_format']}>
                 <Input />
               </Form.Item>
-            </InputGroupWithFormItem>
+            </FieldGroupV2>
           </Col>
           <Col span={8}>
-            <InputGroupWithFormItem label={t('datasource:es.raw.limit')}>
+            <FieldGroupV2 label={t('datasource:es.raw.limit')}>
               <Form.Item {...field} name={[field.name, 'query', 'limit']}>
                 <InputNumber style={{ width: '100%' }} />
               </Form.Item>
-            </InputGroupWithFormItem>
+            </FieldGroupV2>
           </Col>
         </Row>
       ) : (

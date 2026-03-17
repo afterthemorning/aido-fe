@@ -16,6 +16,7 @@
  */
 import React from 'react';
 import { Form, Input, InputNumber, Button, Select, Row, Col } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { DeleteOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -127,7 +128,7 @@ export default function index(props: Props) {
                           display: hideBase && type === 'base' ? 'none' : 'block',
                         }}
                       >
-                        <Input.Group key={key} compact style={{ marginBottom: 5 }}>
+                        <InputGroupCompat key={key} compact style={{ marginBottom: 5 }}>
                           <Form.Item noStyle {...restField} name={[name, 'color']}>
                             <ColorPicker />
                           </Form.Item>
@@ -146,7 +147,7 @@ export default function index(props: Props) {
                               }}
                             />
                           )}
-                        </Input.Group>
+                        </InputGroupCompat>
                       </div>
                     );
                   }}

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { CommonStateContext } from '@/App';
 import { IS_PLUS } from '@/utils/constant';
 import LogQL from '@/components/LogQL';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import QueryName, { generateQueryName } from '@/components/QueryName';
 
 import { NAME_SPACE, QUERY_KEY } from '../../constants';
@@ -69,11 +69,11 @@ export default function index({ form, prefixField = {}, fullPrefixName = [], pre
                     </Col>
                     <Col flex='auto'>
                       <div className='tdengine-discover-query'>
-                        <InputGroupWithFormItem label={<Space>{t('query.query')}</Space>}>
+                        <FieldGroupV2 label={<Space>{t('query.query')}</Space>}>
                           <Form.Item {...field} name={[field.name, QUERY_KEY]}>
                             <LogQL datasourceCate={NAME_SPACE} datasourceValue={datasourceID} query={{}} historicalRecords={[]} placeholder={t('query.query_placeholder2')} />
                           </Form.Item>
-                        </InputGroupWithFormItem>
+                        </FieldGroupV2>
                       </div>
                     </Col>
                   </Row>

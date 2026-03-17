@@ -17,12 +17,14 @@
 import React, { useState, useContext } from 'react';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import { Select, Result, Space } from 'antd';
+import { Select, Result, Space, Button } from 'antd';
 import { LineChartOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 import PageLayout, { HelpLink } from '@/components/pageLayout';
 import { IRawTimeRange } from '@/components/TimeRangePicker';
 import { CommonStateContext } from '@/App';
 import { getDefaultDatasourceValue, setDefaultDatasourceValue } from '@/utils';
+import { IS_ENT } from '@/utils/constant';
 import { IMatch } from './types';
 import List from './metricViews/List';
 import LabelsValues from './metricViews/LabelsValues';
@@ -37,14 +39,33 @@ export default function index() {
     start: 'now-1h',
     end: 'now',
   });
-  const { groupedDatasourceList } = useContext(CommonStateContext);
+  const { groupedDatasourceList, profile } = useContext(CommonStateContext);
   const datasources = groupedDatasourceList.prometheus;
   const [datasourceValue, setDatasourceValue] = useState<number>(getDefaultDatasourceValue('prometheus', groupedDatasourceList));
+  const isAdmin = _.includes(profile?.roles, 'Admin');
+  const datasourceConfigUrl = IS_ENT ? '/settings/datasource/add/prometheus' : '/datasources/add/prometheus';
 
   if (!datasourceValue) {
     return (
       <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Result title={t('common:datasource.empty_modal.title')} />
+        <Result
+          title={t('common:datasource.empty_modal.title')}
+          subTitle={t('empty.subtitle')}
+          extra={
+            <Space direction='vertical' size={8}>
+              {isAdmin ? (
+                <Link to={datasourceConfigUrl}>
+                  <Button type='primary'>{t('common:datasource.empty_modal.btn1')}</Button>
+                </Link>
+              ) : (
+                <span>{t('empty.contact_admin')}</span>
+              )}
+              <span>
+                {t('empty.path_label')}: <strong>{datasourceConfigUrl}</strong>
+              </span>
+            </Space>
+          }
+        />
       </div>
     );
   }

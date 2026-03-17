@@ -3,7 +3,7 @@ import { Row, Col, Form, Select, Space, Button } from 'antd';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 
 interface Props {
   prefixField?: any;
@@ -104,11 +104,11 @@ export default function index(props: Props) {
                             display: join_type === 'original' || join_type === 'none' || !join_type ? 'none' : 'block',
                           }}
                         >
-                          <InputGroupWithFormItem label={t('trigger.joins.on')}>
+                          <FieldGroupV2 label={t('trigger.joins.on')}>
                             <Form.Item {...field} name={[field.name, 'on']}>
                               <Select disabled={disabled} mode='tags' open={false} />
                             </Form.Item>
-                          </InputGroupWithFormItem>
+                          </FieldGroupV2>
                         </Col>
                         <Col flex='none'>
                           <Space

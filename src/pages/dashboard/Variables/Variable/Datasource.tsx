@@ -3,7 +3,7 @@ import { Select } from 'antd';
 import _ from 'lodash';
 
 import { CommonStateContext } from '@/App';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 
 import { IVariable } from '../types';
 import getValueByOptions from '../utils/getValueByOptions';
@@ -45,7 +45,7 @@ export default function Datasource(props: Props) {
 
   return (
     <div>
-      <InputGroupWithFormItem label={label || name}>
+      <FieldGroupV2 label={label || name}>
         <Select
           style={{
             width: '180px',
@@ -69,7 +69,7 @@ export default function Datasource(props: Props) {
             </Select.Option>
           ))}
         </Select>
-      </InputGroupWithFormItem>
+      </FieldGroupV2>
     </div>
   );
 }

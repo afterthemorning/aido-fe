@@ -2,9 +2,10 @@ import React, { useContext, useRef } from 'react';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { Form, Select, Row, Col, Input } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import PrometheusExplorer from '@/pages/explorer/Prometheus';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import EmptyDatasourcePopover from '@/components/DatasourceSelect/EmptyDatasourcePopover';
 import { IRawTimeRange } from '@/components/TimeRangePicker';
 import { getDefaultDatasourceValue, setDefaultDatasourceValue } from '@/utils';
@@ -42,7 +43,7 @@ export default function Panel(props: Props) {
           <div className='explorer-content'>
             <Row gutter={8}>
               <Col>
-                <InputGroupWithFormItem label={t('common:datasource.type')}>
+                <FieldGroupV2 label={t('common:datasource.type')}>
                   <Form.Item name='datasourceCate' noStyle>
                     <Select
                       value='prometheus'
@@ -54,7 +55,7 @@ export default function Panel(props: Props) {
                       ]}
                     />
                   </Form.Item>
-                </InputGroupWithFormItem>
+                </FieldGroupV2>
               </Col>
               <Col>
                 <Form.Item shouldUpdate={(prev, curr) => prev.datasourceCate !== curr.datasourceCate} noStyle>
@@ -62,7 +63,7 @@ export default function Panel(props: Props) {
                     const cate = getFieldValue('datasourceCate');
                     return (
                       <EmptyDatasourcePopover datasourceCate={cate} datasourceList={groupedDatasourceList[cate]}>
-                        <Input.Group compact>
+                        <InputGroupCompat compact>
                           <span
                             className='ant-input-group-addon'
                             style={{
@@ -112,7 +113,7 @@ export default function Panel(props: Props) {
                               ))}
                             </Select>
                           </Form.Item>
-                        </Input.Group>
+                        </InputGroupCompat>
                       </EmptyDatasourcePopover>
                     );
                   }}

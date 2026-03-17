@@ -16,6 +16,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Select, Input, Tooltip } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import _ from 'lodash';
 import { IVariable } from './definition';
 
@@ -50,7 +51,7 @@ export default function DisplayItem(props: IProps) {
 
   return (
     <div className='tag-content-close-item'>
-      <Input.Group>
+      <InputGroupCompat>
         <span className='ant-input-group-addon'>{label || name}</span>
         {type === 'query' || type === 'custom' ? (
           <Select
@@ -275,7 +276,7 @@ export default function DisplayItem(props: IProps) {
           </Select>
         ) : null}
         {type === 'constant' ? <Input disabled value={value} /> : null}
-      </Input.Group>
+      </InputGroupCompat>
     </div>
   );
 }

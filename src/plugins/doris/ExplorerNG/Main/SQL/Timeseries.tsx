@@ -6,7 +6,7 @@ import { QuestionCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import { AlignedData, Options } from 'uplot';
 import { useSize } from 'ahooks';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import { CommonStateContext } from '@/App';
 import UPlotChart, { tooltipPlugin, paddingSide, axisBuilder, seriesBuider, cursorBuider, scalesBuilder } from '@/components/UPlotChart';
 import { parseRange } from '@/components/TimeRangePicker';
@@ -277,7 +277,7 @@ export default function TimeseriesCpt(props: Props) {
               }}
             />
           </Form.Item>
-          <InputGroupWithFormItem
+          <FieldGroupV2
             size='small'
             label={
               <Space>
@@ -300,8 +300,8 @@ export default function TimeseriesCpt(props: Props) {
             >
               <Select className='min-w-[120px] no-padding-small-multiple-select' mode='tags' open={false} size='small' />
             </Form.Item>
-          </InputGroupWithFormItem>
-          <InputGroupWithFormItem
+          </FieldGroupV2>
+          <FieldGroupV2
             size='small'
             label={
               <Space>
@@ -315,8 +315,8 @@ export default function TimeseriesCpt(props: Props) {
             <Form.Item name={['query', 'keys', 'labelKey']} style={{ margin: 0 }}>
               <Select className='min-w-[120px] no-padding-small-multiple-select' mode='tags' open={false} size='small' />
             </Form.Item>
-          </InputGroupWithFormItem>
-          <InputGroupWithFormItem label={t('common:unit')} size='small'>
+          </FieldGroupV2>
+          <FieldGroupV2 label={t('common:unit')} size='small'>
             <Form.Item noStyle>
               <UnitPicker
                 size='small'
@@ -330,7 +330,7 @@ export default function TimeseriesCpt(props: Props) {
                 }}
               />
             </Form.Item>
-          </InputGroupWithFormItem>
+          </FieldGroupV2>
         </Space>
       </div>
       <>

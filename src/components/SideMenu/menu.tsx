@@ -30,6 +30,7 @@ export const getMenuList = (embeddedProductMenu: MenuItem[] = [], hideDeprecated
           key: 'metrics',
           label: 'menu.metrics',
           type: 'tabs',
+          useSavedPath: false,
           children: [
             { key: '/metric/explorer', label: 'menu.metric_explorer' },
             { key: '/metrics-built-in', label: 'menu.metrics_built_in' },

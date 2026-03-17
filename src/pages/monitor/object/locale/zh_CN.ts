@@ -1,5 +1,10 @@
 const zh_CN = {
   title: '快捷视图',
+  empty: {
+    subtitle: '当前页面依赖 Prometheus 数据源，请先完成数据源配置后再使用对象探索。',
+    contact_admin: '你当前没有管理员权限，请联系管理员添加 Prometheus 数据源。',
+    path_label: '配置入口',
+  },
   list: {
     title: '快捷视图列表',
     public: '公开',

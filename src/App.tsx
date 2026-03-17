@@ -70,6 +70,17 @@ interface Datasource {
   plugin_type: string;
   is_default: boolean;
   identifier?: string;
+  status?: string | number | boolean;
+}
+
+function isDatasourceEnabled(item: Datasource) {
+  if (item.status === undefined || item.status === null) return true;
+  if (item.status === 'enabled' || item.status === 1 || item.status === true) return true;
+  return false;
+}
+
+function normalizeDatasourceList(datasourceList: Datasource[]) {
+  return _.filter(datasourceList, isDatasourceEnabled);
 }
 
 export interface ICommonState {
@@ -147,16 +158,17 @@ function App() {
     datasourceCateOptions: [],
     groupedDatasourceList: {},
     reloadGroupedDatasourceList: async () => {
-      const datasourceList = await getDatasourceBriefList();
+      const datasourceList = normalizeDatasourceList(await getDatasourceBriefList());
       setCommonState((state) => ({ ...state, groupedDatasourceList: _.groupBy(datasourceList, 'plugin_type') }));
     },
     datasourceList: [],
     setDatasourceList: (datasourceList) => {
+      datasourceList = normalizeDatasourceList(datasourceList);
       setCommonState((state) => ({ ...state, datasourceList, groupedDatasourceList: _.groupBy(datasourceList, 'plugin_type') }));
     },
     reloadDatasourceList: async () => {
       const { feats } = await getLicense(t);
-      const datasourceList = await getDatasourceBriefList();
+      const datasourceList = normalizeDatasourceList(await getDatasourceBriefList());
       const datasourceCateOptions = getAuthorizedDatasourceCates(feats, isPlus, (cate) => {
         const groupedDatasourceList = _.groupBy(datasourceList, 'plugin_type');
         return !_.isEmpty(groupedDatasourceList[cate.value]);
@@ -272,11 +284,11 @@ function App() {
           const { dat: profile } = (await GetProfile()) || {};
           const { dat: busiGroups } = (await getBusiGroups()) || {};
           const { dat: perms } = (await getMenuPerm()) || {};
-          const datasourceList = await getDatasourceBriefList();
+          const datasourceList = normalizeDatasourceList(await getDatasourceBriefList());
           const { licenseRulesRemaining, licenseExpireDays, feats } = await getLicense(t);
           let versions = { version: '', github_verison: '', newVersion: false };
           if (!isPlus) {
-            versions = await getVersions();
+            versions = (await getVersions()) || versions;
           }
           /* 兼容旧的业务组组件 */
           const defaultBusiId = commonState.curBusiId || busiGroups?.[0]?.id;
@@ -310,7 +322,7 @@ function App() {
           });
         } else {
           const datasourceList = !_.some([`${basePrefix}/login`, `${basePrefix}/callback`, `${basePrefix}/share/alert-his-events/`], (route) => location.pathname.startsWith(route))
-            ? await getDatasourceBriefList()
+            ? normalizeDatasourceList(await getDatasourceBriefList())
             : [];
           removePreloader();
           initialized.current = true;

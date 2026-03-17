@@ -20,7 +20,7 @@ const documentPathMap = {
   ...(proDocumentPathMap || {}),
 };
 
-export default function index(props: Props) {
+export default function Help(props: Props) {
   const { t, i18n } = useTranslation('explorer');
   const { darkMode } = useContext(CommonStateContext);
   const { datasourceCate } = props;
@@ -28,7 +28,7 @@ export default function index(props: Props) {
   if (!datasourceCate || (datasourceCate && !documentPathMap[datasourceCate])) return null;
 
   return (
-    <span className='ant-input-group-addon'>
+    <span className='ant-input-group-addon explorer-help-trigger'>
       <Tooltip title={t('help')}>
         <QuestionCircleOutlined
           onClick={() => {

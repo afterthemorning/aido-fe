@@ -17,6 +17,7 @@ interface Props {
 export default function Flashduty(props: Props) {
   const { t } = useTranslation(NS);
   const { field, channelItem } = props;
+  const formListField = _.omit(field, 'key');
   const [channelOptions, setChannelOptions] = useState<any[]>();
 
   useEffect(() => {
@@ -42,7 +43,7 @@ export default function Flashduty(props: Props) {
 
   return (
     <div>
-      <Form.Item {...field} label={t('notification_configuration.flashduty.ids')} name={[field.name, 'params', 'ids']}>
+      <Form.Item {...formListField} label={t('notification_configuration.flashduty.ids')} name={[field.name, 'params', 'ids']}>
         <Select options={channelOptions} showSearch optionFilterProp='label' mode='multiple' />
       </Form.Item>
     </div>

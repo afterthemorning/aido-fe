@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { CommonStateContext } from '@/App';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import QueryName, { generateQueryName } from '@/components/QueryName';
 import DocumentDrawer from '@/components/DocumentDrawer';
 
@@ -66,7 +66,7 @@ export default function index({ prefixField = {}, fullPrefixName = [], prefixNam
                     </Col>
                     <Col flex='auto'>
                       <div className='tdengine-discover-query'>
-                        <InputGroupWithFormItem
+                        <FieldGroupV2
                           label={
                             <Space>
                               {t('explorer.query')}
@@ -87,7 +87,7 @@ export default function index({ prefixField = {}, fullPrefixName = [], prefixNam
                           <Form.Item {...field} name={[field.name, 'query']}>
                             <Input.TextArea autoSize={{ minRows: 0 }} />
                           </Form.Item>
-                        </InputGroupWithFormItem>
+                        </FieldGroupV2>
                       </div>
                     </Col>
                   </Row>

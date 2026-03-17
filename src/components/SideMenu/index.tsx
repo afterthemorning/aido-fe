@@ -49,8 +49,8 @@ const SideMenu = (props: SideMenuProps) => {
     defaultLogos = {
       light_menu_big_logo_url: '/image/logo-light-l.png',
       light_menu_small_logo_url: '/image/logo-light.png',
-      menu_big_logo_url: '/image/logo-l.png',
-      menu_small_logo_url: '/image/logo.png',
+      menu_big_logo_url: '',
+      menu_small_logo_url: '',
     },
     getMenuList = getCurrentMenuList,
     onMenuClick,

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import _ from 'lodash';
 import { Modal, Button, Form, Input, Select, Space, message } from 'antd';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import { CommonStateContext } from '@/App';
 import { convertDashboardV2ToV3 } from './utils';
 
@@ -66,20 +66,20 @@ export default function MigrationModal(props: MigrationModalProps) {
       <Form form={form}>
         <div style={{ marginBottom: 10 }}>数据源变量设置</div>
         <div>
-          <InputGroupWithFormItem label='变量名称'>
+          <FieldGroupV2 label='变量名称'>
             <Form.Item name='name' rules={[{ required: true, message: '请填写变量名称' }]} initialValue='datasource'>
               <Input />
             </Form.Item>
-          </InputGroupWithFormItem>
+          </FieldGroupV2>
         </div>
         <div>
           <Space>
-            <InputGroupWithFormItem label='数据源类型'>
+            <FieldGroupV2 label='数据源类型'>
               <Form.Item>
                 <Input disabled value='Prometheus' />
               </Form.Item>
-            </InputGroupWithFormItem>
-            <InputGroupWithFormItem label='数据源默认值'>
+            </FieldGroupV2>
+            <FieldGroupV2 label='数据源默认值'>
               <Form.Item name='datasourceDefaultValue'>
                 <Select allowClear style={{ width: 168 }}>
                   {_.map(groupedDatasourceList.prometheus, (item) => {
@@ -91,7 +91,7 @@ export default function MigrationModal(props: MigrationModalProps) {
                   })}
                 </Select>
               </Form.Item>
-            </InputGroupWithFormItem>
+            </FieldGroupV2>
           </Space>
         </div>
       </Form>

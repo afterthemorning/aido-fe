@@ -3,7 +3,7 @@ import { Row, Col, Form, Tooltip, Select, Space } from 'antd';
 import { DownOutlined, RightOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import UnitPicker from '@/pages/dashboard/Components/UnitPicker';
 import { NAME_SPACE } from '../constants';
 
@@ -44,7 +44,7 @@ function AdvancedSettings(props: IProps) {
           {mode === 'graph' && (
             <>
               <Col span={span}>
-                <InputGroupWithFormItem
+                <FieldGroupV2
                   label={
                     <Space>
                       {t('query.advancedSettings.valueKey')}
@@ -76,10 +76,10 @@ function AdvancedSettings(props: IProps) {
                       options={options}
                     />
                   </Form.Item>
-                </InputGroupWithFormItem>
+                </FieldGroupV2>
               </Col>
               <Col span={span}>
-                <InputGroupWithFormItem
+                <FieldGroupV2
                   label={
                     <Space>
                       {t('query.advancedSettings.labelKey')}
@@ -101,15 +101,15 @@ function AdvancedSettings(props: IProps) {
                       options={options}
                     />
                   </Form.Item>
-                </InputGroupWithFormItem>
+                </FieldGroupV2>
               </Col>
               {showUnit && (
                 <Col span={span}>
-                  <InputGroupWithFormItem label={t('common:unit')}>
+                  <FieldGroupV2 label={t('common:unit')}>
                     <Form.Item {...prefixField} name={[prefixField.name, 'unit']} initialValue='none' noStyle>
                       <UnitPicker optionLabelProp='cleanLabel' style={{ width: '100%' }} popupMatchSelectWidth={false} />
                     </Form.Item>
-                  </InputGroupWithFormItem>
+                  </FieldGroupV2>
                 </Col>
               )}
             </>

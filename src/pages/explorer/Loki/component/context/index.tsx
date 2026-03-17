@@ -3,6 +3,7 @@ import moment from 'moment';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { Drawer, Table, Space, Input, Select, Spin, Modal, message } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import ModalHOC, { ModalWrapProps } from '@/components/ModalHOC';
 import './index.less';
 import HighlightText from '../logRow/highlight';
@@ -81,7 +82,7 @@ function LogContext(props: IProps & ModalWrapProps) {
     <Modal title={t('log.context')} centered width={960} onCancel={destroy} open={visible} footer={null}>
       <div style={{ marginBottom: 10 }}>
         <Space>
-          <Input.Group>
+          <InputGroupCompat>
             <span className='ant-input-group-addon'>结果数</span>
             <Select
               value={limit}
@@ -97,7 +98,7 @@ function LogContext(props: IProps & ModalWrapProps) {
               <Select.Option value={200}>上下200条日志</Select.Option>
               <Select.Option value={500}>上下500条日志</Select.Option>
             </Select>
-          </Input.Group>
+          </InputGroupCompat>
           <SelectSort onChange={(v) => setSortOrder(v)} />
         </Space>
       </div>

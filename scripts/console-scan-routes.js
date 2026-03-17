@@ -26,12 +26,12 @@ const routes = [...new Set(candidates)].sort();
 async function main() {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext();
-  const page = await context.newPage();
 
   const base = process.env.SCAN_BASE || 'http://127.0.0.1:8765/aido';
   const results = [];
 
   for (const routePath of routes) {
+    const page = await context.newPage();
     const url = `${base}${routePath.startsWith('/') ? routePath : `/${routePath}`}`;
     const errors = [];
     const pageErrors = [];
@@ -59,6 +59,7 @@ async function main() {
 
     page.off('console', onConsole);
     page.off('pageerror', onPageError);
+    await page.close().catch(() => {});
   }
 
   await browser.close();

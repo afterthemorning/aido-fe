@@ -16,6 +16,7 @@ interface Props {
 
 export default function Custom(props: Props) {
   const { prefixNamePath = [], field, customParams } = props;
+  const formListField = _.omit(field, 'key');
   const form = Form.useFormInstance();
   const channel_id = Form.useWatch([...prefixNamePath, field.name, 'channel_id']);
   const [paramsData, setParamsData] = React.useState<
@@ -51,7 +52,7 @@ export default function Custom(props: Props) {
       {_.map(customParams, (item) => {
         return (
           <div key={item.key}>
-            <Form.Item {...field} label={item.cname} name={[field.name, 'params', item.key]}>
+            <Form.Item {...formListField} label={item.cname} name={[field.name, 'params', item.key]}>
               <AutoComplete
                 options={_.map(paramsData, (paramsDataItem: { __id__: string; data: { name: string; cname: string; value: string }[] }) => {
                   return {

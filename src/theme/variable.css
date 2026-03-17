@@ -5,6 +5,10 @@
 
 /* 浅色模式 */
 :root {
+  color-scheme: light;
+  --fc-font-size-base: 12px;
+  --fc-line-height-base: 1.5715;
+
   /* 填充色 */
   --fc-fill-1-rgb: 248 250 252;
   --fc-fill-1: rgb(var(--fc-fill-1-rgb)); 
@@ -134,6 +138,8 @@
 /* 深色模式 */
 .theme-dark {
   color-scheme: dark;
+  --fc-font-size-base: 12px;
+  --fc-line-height-base: 1.5715;
   --fc-fill-1-rgb: 17 18 23;
   --fc-fill-1: rgb(var(--fc-fill-1-rgb));
 
@@ -255,6 +261,9 @@
 }
 
 .theme-light-gold {
+  color-scheme: light;
+  --fc-font-size-base: 12px;
+  --fc-line-height-base: 1.5715;
   --fc-fill-primary: #ffbc0d;
   --fc-primary-color: #ffbc0d;
   --fc-gold-text: #222;

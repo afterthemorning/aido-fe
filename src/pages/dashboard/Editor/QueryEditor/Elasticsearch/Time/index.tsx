@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col, Form, Input, InputNumber, Select } from 'antd';
+import InputGroupCompat from '@/components/InputGroupCompat';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
 import DateField from '../DateField';
@@ -28,7 +29,7 @@ export default function index({ prefixField = {}, prefixNameField = [], datasour
           </Col>
         )}
         <Col span={8}>
-          <Input.Group>
+          <InputGroupCompat>
             <span className='ant-input-group-addon'>{t('datasource:es.interval')}</span>
             <Form.Item {...prefixField} name={[...prefixNameField, 'query', 'interval']} noStyle>
               <InputNumber style={{ width: '100%' }} placeholder='auto' />
@@ -42,7 +43,7 @@ export default function index({ prefixField = {}, prefixNameField = [], datasour
                 </Select>
               </Form.Item>
             </span>
-          </Input.Group>
+          </InputGroupCompat>
         </Col>
       </Row>
     </>

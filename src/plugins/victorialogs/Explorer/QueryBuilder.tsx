@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, Space, Row, Col, InputNumber } from 'antd';
 
 import { SIZE } from '@/utils/constant';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 
 import { NAME_SPACE } from '../constants';
 import QueryInput from './components/QueryInput';
@@ -21,7 +21,7 @@ export default function QueryBuilder(props: Props) {
     <div>
       <Row gutter={SIZE}>
         <Col flex='auto'>
-          <InputGroupWithFormItem label={<Space>{t('explorer.query')}</Space>}>
+          <FieldGroupV2 label={<Space>{t('explorer.query')}</Space>}>
             <Form.Item
               name={['query', 'query']}
               rules={[
@@ -34,14 +34,14 @@ export default function QueryBuilder(props: Props) {
             >
               <QueryInput onChange={executeQuery} />
             </Form.Item>
-          </InputGroupWithFormItem>
+          </FieldGroupV2>
         </Col>
         <Col flex='none'>
-          <InputGroupWithFormItem label={<Space>{t('explorer.limit')}</Space>}>
+          <FieldGroupV2 label={<Space>{t('explorer.limit')}</Space>}>
             <Form.Item name={['query', 'limit']} initialValue={500}>
               <InputNumber min={0} controls={false} />
             </Form.Item>
-          </InputGroupWithFormItem>
+          </FieldGroupV2>
         </Col>
       </Row>
     </div>

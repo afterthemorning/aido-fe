@@ -5,7 +5,7 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import moment from 'moment';
 
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import TimeRangePicker, { isMathString } from '@/components/TimeRangePicker';
 
 interface Props {
@@ -16,7 +16,7 @@ export default function QueryOptions({ panelWidth }: Props) {
   const { t } = useTranslation('dashboard');
   const content = (
     <div>
-      <InputGroupWithFormItem
+      <FieldGroupV2
         label={
           <Space>
             {t('query.options_max_data_points')}
@@ -39,8 +39,8 @@ export default function QueryOptions({ panelWidth }: Props) {
         >
           <InputNumber className='w-full' placeholder={_.toString(panelWidth ?? 240)} min={1} />
         </Form.Item>
-      </InputGroupWithFormItem>
-      <InputGroupWithFormItem
+      </FieldGroupV2>
+      <FieldGroupV2
         label={
           <Space>
             {t('query.options_time')}
@@ -62,7 +62,7 @@ export default function QueryOptions({ panelWidth }: Props) {
         >
           <TimeRangePicker style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }} dateFormat='YYYY-MM-DD HH:mm:ss' allowClear />
         </Form.Item>
-      </InputGroupWithFormItem>
+      </FieldGroupV2>
     </div>
   );
 

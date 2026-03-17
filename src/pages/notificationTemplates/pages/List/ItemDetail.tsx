@@ -33,18 +33,25 @@ export default forwardRef(function ItemDetail(props: Props, ref) {
   });
   const fetchData = () => {
     if (id) {
-      getItem(id).then((itemData) => {
-        setData(itemData);
-        // 将 content: {[key:string]: string} 转换为 content: {key: string, value: string}[]
-        const content = _.map(itemData.content, (value, key) => {
-          return {
-            key,
-            value,
-          };
+      getItem(id)
+        .then((itemData) => {
+          setData(itemData);
+          // 将 content: {[key:string]: string} 转换为 content: {key: string, value: string}[]
+          const content = _.map(itemData.content, (value, key) => {
+            return {
+              key,
+              value,
+            };
+          });
+          contentRef.current = content;
+          form.setFieldsValue({ content });
+        })
+        .catch(() => {
+          setData(undefined);
+          contentRef.current = [];
+          form.resetFields();
+          message.error(t('common:no_permission'));
         });
-        contentRef.current = content;
-        form.setFieldsValue({ content });
-      });
     }
   };
 

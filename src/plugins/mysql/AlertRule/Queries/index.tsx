@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { CommonStateContext } from '@/App';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import QueryName, { generateQueryName } from '@/components/QueryName';
 import LogQL from '@/components/LogQL';
 import { DatasourceCateEnum, IS_PLUS } from '@/utils/constant';
@@ -70,7 +70,7 @@ export default function index({ form, prefixField = {}, fullPrefixName = [], pre
                     </Col>
                     <Col flex='auto'>
                       <div className='tdengine-discover-query'>
-                        <InputGroupWithFormItem
+                        <FieldGroupV2
                           label={
                             <Space>
                               {t('query.query')}
@@ -97,7 +97,7 @@ export default function index({ form, prefixField = {}, fullPrefixName = [], pre
                               placeholder={t('query.query_placeholder2')}
                             />
                           </Form.Item>
-                        </InputGroupWithFormItem>
+                        </FieldGroupV2>
                       </div>
                     </Col>
                   </Row>

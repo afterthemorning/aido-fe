@@ -17,6 +17,7 @@ interface Props {
 export default function PagerDuty(props: Props) {
   const { t } = useTranslation(NS);
   const { field, channelItem } = props;
+  const formListField = _.omit(field, 'key');
   const [channelOptions, setChannelOptions] = useState<any[]>();
   const form = Form.useFormInstance();
   const integrationKeysCacheMap = useRef<Record<string, string>>({});
@@ -139,11 +140,11 @@ export default function PagerDuty(props: Props) {
 
   return (
     <div>
-      <Form.Item {...field} label={t('notification_configuration.pagerduty.services')} name={[field.name, 'params', 'pagerduty_integration_ids']}>
+      <Form.Item {...formListField} label={t('notification_configuration.pagerduty.services')} name={[field.name, 'params', 'pagerduty_integration_ids']}>
         <Select options={channelOptions} showSearch optionFilterProp='label' mode='multiple' onChange={handleSelectChange} />
       </Form.Item>
       {/* 不显示组件，受控 */}
-      <Form.Item {...field} label={t('notification_configuration.pagerduty.services')} name={[field.name, 'params', 'pagerduty_integration_keys']} style={{ display: 'none' }}>
+      <Form.Item {...formListField} label={t('notification_configuration.pagerduty.services')} name={[field.name, 'params', 'pagerduty_integration_keys']} style={{ display: 'none' }}>
         <Select options={Object.entries(integrationKeysCacheMap.current).map(([k, v]) => ({ label: v, value: v }))} mode='multiple' value={integrationKeys} />
       </Form.Item>
     </div>

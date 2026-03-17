@@ -5,6 +5,7 @@ export interface IMenuItem {
   label: string;
   icon?: React.ReactNode;
   path?: string;
+  useSavedPath?: boolean;
   role?: string[];
   children?: IMenuItem[];
   type?: string; // 'tabs'
@@ -17,6 +18,7 @@ export interface IMenuItem {
 export interface BaseMenuItem {
   key: string;
   label: string;
+  useSavedPath?: boolean;
   type?: string; // 'tabs'
   pathType?: string; // 'absolute'
   path?: string; // URL for absolute paths

@@ -97,6 +97,7 @@ export default function FormCpt(props: Props) {
             <>
               {fields.map((field) => (
                 <RuleConfig
+                  key={field.key}
                   disabled={disabled}
                   fields={fields}
                   field={field}

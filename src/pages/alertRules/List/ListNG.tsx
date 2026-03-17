@@ -13,6 +13,7 @@ import { priorityColor } from '@/utils/constant';
 import { updateAlertRules, deleteStrategy } from '@/services/warning';
 import { allCates } from '@/components/AdvancedWrap/utils';
 import RefreshIcon from '@/components/RefreshIcon';
+import DatasourceIcon from '@/components/DatasourceIcon';
 import DatasourceSelect from '@/components/DatasourceSelect/DatasourceSelect';
 import OrganizeColumns, { getDefaultColumnsConfigs, setDefaultColumnsConfigs, ajustColumns } from '@/components/OrganizeColumns';
 import usePagination from '@/components/usePagination';
@@ -126,11 +127,11 @@ export default function AlertRules(props: Props) {
         title: t('table.cate'),
         dataIndex: 'cate',
         render: (val) => {
-          let logoSrc = _.find(allCates, { value: val })?.logo;
           if (val === 'host') {
-            logoSrc = '/image/logos/host.png';
+            return <img alt={val} src='/image/logos/host.png' height={20} />;
           }
-          return <img alt={val} src={logoSrc} height={20} />;
+          const currentDatasourceCate = _.find(allCates, { value: val });
+          return <DatasourceIcon logo={currentDatasourceCate?.logo} label={currentDatasourceCate?.label} ident={val} size={20} />;
         },
       },
       {

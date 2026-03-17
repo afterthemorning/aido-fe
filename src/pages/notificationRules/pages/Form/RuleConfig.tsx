@@ -32,6 +32,7 @@ interface Props {
 export default function NotifyConfig(props: Props) {
   const { t } = useTranslation(NS);
   const { disabled, fields, field, activeIndex, setActiveIndex, add, remove, move, eventKeys } = props;
+  const formListField = _.omit(field, 'key');
   const [channelItem, setChannelItem] = useState<ChannelItem>();
   const ruleConfig = Form.useWatch(['notify_configs', field.name]);
 
@@ -92,7 +93,7 @@ export default function NotifyConfig(props: Props) {
       </div>
       <div className='p-4 mb-4 rounded bg-fc-100 fc-border'>
         <div className='p-4 pb-0 mb-2 rounded bg-fc-150 flex'>
-          <Form.Item {...field} label={t('notification_configuration.severities')} tooltip={t('notification_configuration.severities_tip')} name={[field.name, 'severities']}>
+          <Form.Item {...formListField} label={t('notification_configuration.severities')} tooltip={t('notification_configuration.severities_tip')} name={[field.name, 'severities']}>
             <Checkbox.Group disabled={disabled}>
               <Checkbox value={1}>{t('common:severity.1')}</Checkbox>
               <Checkbox value={2}>{t('common:severity.2')}</Checkbox>

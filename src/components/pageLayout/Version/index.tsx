@@ -13,31 +13,32 @@ export interface Versions {
 export default function Version() {
   const isPlus = useIsPlus();
   const { versions } = useContext(CommonStateContext);
+  const safeVersions = versions || { version: '', github_verison: '', newVersion: false };
 
   if (!isPlus) {
     return (
       <div style={{ marginRight: 16 }}>
         <Tooltip
           title={
-            versions.newVersion ? (
+            safeVersions.newVersion ? (
               <Trans
                 ns='headerVersion'
                 i18nKey='newVersion'
                 values={{
-                  version: versions?.github_verison,
+                  version: safeVersions.github_verison,
                 }}
                 components={{ a: <a style={{ color: '#b7a6e5' }} href='https://github.com/ccfos/nightingale/releases' target='_blank' /> }}
               />
             ) : undefined
           }
         >
-          <Badge dot={versions.newVersion}>
+          <Badge dot={safeVersions.newVersion}>
             <span
               style={{
-                cursor: versions.newVersion ? 'pointer' : 'default',
+                cursor: safeVersions.newVersion ? 'pointer' : 'default',
               }}
             >
-              {versions?.version}
+              {safeVersions.version}
             </span>
           </Badge>
         </Tooltip>

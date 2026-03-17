@@ -11,6 +11,179 @@
   }
 }
 
+.es-querybar {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+
+  .es-querybar-item {
+    min-width: 0;
+  }
+
+  .es-querybar-item-index {
+    flex: 0 0 300px;
+  }
+
+  .es-querybar-item-filter {
+    flex: 1 1 420px;
+  }
+
+  .es-querybar-item-date {
+    flex: 0 0 240px;
+  }
+
+  .es-querybar-item-range {
+    flex: 0 0 auto;
+  }
+
+  .es-querybar-item-history {
+    flex: 0 0 auto;
+  }
+
+  .es-querybar-item-submit {
+    flex: 0 0 auto;
+  }
+
+  .input-group-with-form-item {
+    width: 100%;
+  }
+
+  .es-field {
+    display: flex;
+    align-items: stretch;
+    min-height: 32px;
+    width: 100%;
+  }
+
+  .es-field-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    width: 110px;
+    min-width: 110px;
+    height: 32px;
+    line-height: 30px;
+    padding: 0 8px;
+    border: 1px solid var(--fc-border-color);
+    border-right: 0;
+    border-radius: 6px 0 0 6px;
+    background: var(--fc-fill-2);
+    color: var(--fc-text-2);
+    white-space: nowrap;
+  }
+
+  .es-field-content {
+    flex: 1;
+    min-width: 0;
+
+    .ant-form-item {
+      margin-bottom: 0;
+    }
+
+    .ant-form-item-control,
+    .ant-form-item-control-input,
+    .ant-form-item-control-input-content,
+    .ant-select,
+    .ant-select-selector,
+    .ant-input,
+    .ant-input-affix-wrapper,
+    .ant-input-affix-wrapper input {
+      height: 32px;
+      min-height: 32px;
+    }
+
+    .ant-select-selector,
+    .ant-input,
+    .ant-input-affix-wrapper {
+      border-radius: 0;
+    }
+
+    .ant-input::placeholder,
+    input::placeholder,
+    .cm-placeholder {
+      color: var(--fc-text-3) !important;
+      opacity: 1;
+    }
+
+    .kql-input {
+      border: 1px solid var(--fc-border-color);
+      border-left: 0;
+      border-right: 0;
+      border-radius: 0;
+      background: var(--fc-fill-2);
+    }
+
+    .ant-select-selection-search-input {
+      height: 30px;
+    }
+  }
+
+  .es-field-with-addon {
+    .es-field-content {
+      .ant-select-selector,
+      .ant-input,
+      .ant-input-affix-wrapper {
+        border-right: 0;
+      }
+    }
+  }
+
+  .es-field-addon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    height: 32px;
+    border: 1px solid var(--fc-border-color);
+    border-left: 0;
+    border-radius: 0 6px 6px 0;
+    background: var(--fc-fill-2);
+    padding: 0 6px;
+
+    .ant-form-item {
+      margin-bottom: 0;
+    }
+
+    .ant-select,
+    .ant-select-selector {
+      height: 30px;
+    }
+
+    .ant-select-selector {
+      border: 0 none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      padding: 0 4px;
+    }
+  }
+
+  .ant-form-item {
+    margin-bottom: 0;
+  }
+
+  .ant-form-item-explain-error {
+    white-space: nowrap;
+    line-height: 18px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .es-querybar {
+    .es-querybar-item-index,
+    .es-querybar-item-filter,
+    .es-querybar-item-date {
+      flex: 1 1 100%;
+    }
+
+    .es-field-label {
+      width: 96px;
+      min-width: 96px;
+    }
+  }
+}
+
 .es-discover-content {
   display: flex;
   gap: 16px;

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { RadialGraph } from '@ant-design/graphs';
 import PageLayout from '@/components/pageLayout';
 import { CommonStateContext } from '@/App';
-import InputGroupWithFormItem from '@/components/InputGroupWithFormItem';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import { getTraceDependencies } from '../services';
 import { getRadialData } from './utils';
 
@@ -103,7 +103,7 @@ export default function index() {
       <div>
         <div className='fc-border p-4'>
           <Space>
-            <InputGroupWithFormItem label={t('common:datasource.type')}>
+            <FieldGroupV2 label={t('common:datasource.type')}>
               <Select popupMatchSelectWidth={false} style={{ width: 90 }} value='jaeger'>
                 {_.map(
                   [
@@ -119,8 +119,8 @@ export default function index() {
                   ),
                 )}
               </Select>
-            </InputGroupWithFormItem>
-            <InputGroupWithFormItem label={t('common:datasource.id')}>
+            </FieldGroupV2>
+            <FieldGroupV2 label={t('common:datasource.id')}>
               <Select
                 style={{ width: 100 }}
                 value={datasourceValue}
@@ -132,7 +132,7 @@ export default function index() {
                   return <Select.Option value={item.id}>{item.name}</Select.Option>;
                 })}
               </Select>
-            </InputGroupWithFormItem>
+            </FieldGroupV2>
           </Space>
           {!_.isEmpty(data) ? <RadialGraph key={redrawKey} {...config} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
         </div>

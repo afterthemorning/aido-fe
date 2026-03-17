@@ -8,6 +8,31 @@ mark {
   color: marktext !important;
 }
 
+// Keep visual density consistent across light/dark themes after AntD 6 migration.
+.theme-light,
+.theme-dark,
+.theme-light-gold {
+  font-size: var(--fc-font-size-base);
+  line-height: var(--fc-line-height-base);
+
+  .ant-app,
+  .ant-typography,
+  .ant-menu,
+  .ant-dropdown-menu,
+  .ant-btn,
+  .ant-form,
+  .ant-input,
+  .ant-select,
+  .ant-table,
+  .ant-tabs,
+  .ant-breadcrumb,
+  .ant-pagination,
+  .ant-descriptions,
+  .ant-statistic {
+    font-size: var(--fc-font-size-base);
+  }
+}
+
 // 当 table 作为 flex item 时，设置高度为 100%，以便在父容器中填满空间
 .n9e-antd-table-height-full {
 

@@ -1,6 +1,6 @@
 import React, { CSSProperties } from 'react';
-import { Input } from 'antd';
 import classNames from 'classnames';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import './style.less';
 
 interface IProps {
@@ -13,31 +13,25 @@ interface IProps {
   addonAfter?: React.ReactNode;
   addonAfterWithContainer?: React.ReactNode;
   size?: 'small' | 'middle';
+  className?: string;
 }
 
-export default function index(props: IProps) {
-  const { children, label, labelWidth = 'max-content', labelMinWidth, noStyle = false, customStyle, addonAfter, addonAfterWithContainer, size = 'middle' } = props;
+export default function InputGroupWithFormItem(props: IProps) {
+  const { children, label, labelWidth = 'max-content', labelMinWidth, noStyle = false, customStyle, addonAfter, addonAfterWithContainer, size = 'middle', className } = props;
 
   return (
-    <Input.Group compact className='input-group-with-form-item'>
-      <span
-        className={classNames({
-          'ant-input-group-addon': !noStyle,
-          'input-group-with-form-item-label': true,
-          'input-group-with-form-item-label-small': size === 'small',
-        })}
-        style={{
-          minWidth: labelMinWidth,
-          width: labelWidth,
-          maxWidth: 'unset',
-          ...customStyle,
-        }}
-      >
-        {label}
-      </span>
-      <div className={classNames('input-group-with-form-item-content', { 'input-group-with-form-item-content-small': size === 'small' })}>{children}</div>
-      {addonAfter && <span className='ant-input-group-addon'>{addonAfter}</span>}
-      {addonAfterWithContainer}
-    </Input.Group>
+    <FieldGroupV2
+      className={classNames('input-group-with-form-item', className)}
+      label={label}
+      labelWidth={labelWidth}
+      labelMinWidth={labelMinWidth}
+      noStyle={noStyle}
+      customStyle={customStyle}
+      addonAfter={addonAfter}
+      addonAfterWithContainer={addonAfterWithContainer}
+      size={size}
+    >
+      {children}
+    </FieldGroupV2>
   );
 }

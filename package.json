@@ -9,7 +9,18 @@
     "build:prefix": "node comb_feats ${npm_config_custom_options} && tsc && cross-env NODE_OPTIONS=--max-old-space-size=6096 VITE_PREFIX=/flashcat vite build --mode advanced",
     "build:prefix_advanced": "node comb_feats ${npm_config_custom_options} && tsc && cross-env NODE_OPTIONS=--max-old-space-size=6096 VITE_PREFIX=/flashcat vite build --mode advanced",
     "serve": "vite preview",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky",
+    "lint": "eslint --cache --cache-location .cache/eslint --ext .js,.jsx,.ts,.tsx src plugins scripts playwright.config.ts",
+    "lint:fix": "npm run lint -- --fix",
+    "stylelint": "stylelint \"src/**/*.{css,less}\" \"plugins/**/*.{css,less}\"",
+    "stylelint:fix": "npm run stylelint -- --fix",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:ct": "playwright test --config playwright.config.ts --project=chromium-ct",
+    "ui-check": "npm run lint && npm run stylelint",
+    "qa": "npm run ui-check && npm run test:e2e"
   },
   "dependencies": {
     "@ag-grid-community/locale": "^34.1.1",
@@ -115,6 +126,9 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.1",
+    "@playwright/experimental-ct-react": "^1.58.2",
+    "@playwright/test": "^1.58.2",
     "@rollup/pluginutils": "^4.1.1",
     "@tailwindcss/postcss": "^4.2.1",
     "@types/echarts": "^4.9.7",
@@ -123,16 +137,36 @@
     "@types/node": "^18.19.100",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^8.57.0",
+    "@typescript-eslint/parser": "^8.57.0",
     "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "^10.4.16",
+    "axe-core": "^4.11.1",
     "cross-env": "^7.0.3",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-playwright": "^2.10.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "husky": "^9.1.7",
     "jest": "^30.3.0",
     "jscodeshift": "^0.11.0",
     "less": "^4.1.1",
+    "lint-staged": "^16.4.0",
     "postcss": "^8.4.31",
+    "postcss-less": "^6.0.0",
     "postcss-nested": "^5.0.5",
-    "prettier": "^2.2.1",
+    "prettier": "^2.8.8",
     "rollup-plugin-visualizer": "^5.5.2",
+    "stylelint": "^17.4.0",
+    "stylelint-config-recess-order": "^7.6.1",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-config-standard-less": "^4.0.1",
+    "stylelint-less": "^4.0.0",
+    "stylelint-order": "^8.1.1",
     "tailwindcss": "^4.2.1",
     "tailwindcss-animate": "^1.0.7",
     "ts-jest": "^29.4.6",
@@ -145,5 +179,16 @@
   "overrides": {
     "@types/react": "^18",
     "@types/d3-dispatch": "3.0.6"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix --max-warnings=0"
+    ],
+    "*.{css,less}": [
+      "stylelint --fix --allow-empty-input"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
   }
 }

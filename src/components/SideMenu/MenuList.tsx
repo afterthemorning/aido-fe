@@ -105,7 +105,7 @@ export function MenuItem(props: { item: IMenuItem; isSub?: boolean; isBgBlack?: 
   const { item, isSub = false, isCustomBg, collapsed, selectedKeys, isBgBlack, onClick, isGoldTheme } = props;
   const isActive = item.type === 'tabs' ? selectedKeys?.some((k) => item.children?.some((c) => c.key === k)) : selectedKeys?.includes(item.key);
   const path = item.type === 'tabs' ? item.children?.[0]?.key || item.key : item.key;
-  const savedPath = item.children ? getSavedPath(path) : item.key;
+  const savedPath = item.children && item.useSavedPath !== false ? getSavedPath(path) : undefined;
 
   return (
     <Link

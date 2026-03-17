@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Form, Select, Button, Input, InputNumber } from 'antd';
 import { VerticalRightOutlined, VerticalLeftOutlined } from '@ant-design/icons';
+import FieldGroupV2 from '@/components/FieldGroupV2';
 import { groupByCates } from './configs';
 
 export default function Terms({ prefixField }) {
@@ -28,20 +29,18 @@ export default function Terms({ prefixField }) {
           {expanded && (
             <>
               <Col span={6}>
-                <Input.Group>
-                  <span className='ant-input-group-addon'>步长</span>
+                <FieldGroupV2 label='步长'>
                   <Form.Item {...prefixField} name={[prefixField.name, 'size']} noStyle>
                     <InputNumber style={{ width: '100%' }} />
                   </Form.Item>
-                </Input.Group>
+                </FieldGroupV2>
               </Col>
               <Col span={6}>
-                <Input.Group>
-                  <span className='ant-input-group-addon'>文档最小值</span>
+                <FieldGroupV2 label='文档最小值'>
                   <Form.Item {...prefixField} name={[prefixField.name, 'min_doc_count']} noStyle>
                     <InputNumber style={{ width: '100%' }} />
                   </Form.Item>
-                </Input.Group>
+                </FieldGroupV2>
               </Col>
             </>
           )}

@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { CommonStateContext } from '@/App';
 import { Popover } from 'antd';
-import { TooltipPlacement } from 'antd/lib/tooltip';
+import type { TooltipProps } from 'antd';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { IS_ENT } from '@/utils/constant';
+
+type TooltipPlacement = NonNullable<TooltipProps['placement']>;
 
 interface IProps {
   datasourceCate?: string;

@@ -18,8 +18,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import _ from 'lodash';
 import { Space, InputNumber, Radio, Button, Popover, Tooltip } from 'antd';
+import type { TooltipProps } from 'antd';
 import { LineChartOutlined, AreaChartOutlined, SettingOutlined, ShareAltOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-import { TooltipPlacement } from 'antd/lib/tooltip';
 import { useTranslation } from 'react-i18next';
 
 import { CommonStateContext, basePrefix } from '@/App';
@@ -32,6 +32,8 @@ import { DASHBOARD_VERSION } from '@/pages/dashboard/config';
 import { getPromData, setTmpChartData } from './services';
 import { QueryStats } from './components/QueryStatsView';
 import LineGraphStandardOptions from './components/GraphStandardOptions';
+
+type TooltipPlacement = NonNullable<TooltipProps['placement']>;
 
 interface IProps {
   url: string;
@@ -290,6 +292,7 @@ export default function Graph(props: IProps) {
                 icon={
                   <ShareAltOutlined
                     onClick={() => {
+                      const datasource = _.find(datasourceList, { id: datasourceValue });
                       const dataProps = {
                         type: 'timeseries',
                         version: DASHBOARD_VERSION,
@@ -302,8 +305,8 @@ export default function Graph(props: IProps) {
                             expr: promql,
                           },
                         ],
-                        datasourceCate: 'prometheus',
-                        datasourceName: _.find(datasourceList, { id: datasourceValue })?.name,
+                        datasourceCate: datasource?.plugin_type || 'prometheus',
+                        datasourceName: datasource?.name,
                         datasourceValue,
                       };
                       setTmpChartData([

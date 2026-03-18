@@ -24,7 +24,7 @@ import PageLayout, { HelpLink } from '@/components/pageLayout';
 import { IRawTimeRange } from '@/components/TimeRangePicker';
 import { CommonStateContext } from '@/App';
 import { getDefaultDatasourceValue, setDefaultDatasourceValue } from '@/utils';
-import { IS_ENT } from '@/utils/constant';
+import { DatasourceCateEnum, IS_ENT } from '@/utils/constant';
 import { IMatch } from './types';
 import List from './metricViews/List';
 import LabelsValues from './metricViews/LabelsValues';
@@ -40,8 +40,18 @@ export default function index() {
     end: 'now',
   });
   const { groupedDatasourceList, profile } = useContext(CommonStateContext);
-  const datasources = groupedDatasourceList.prometheus;
-  const [datasourceValue, setDatasourceValue] = useState<number>(getDefaultDatasourceValue('prometheus', groupedDatasourceList));
+  const metricDatasourceCates = [DatasourceCateEnum.prometheus, DatasourceCateEnum.aidoUptimeKuma];
+  const datasources = _.flatMap(metricDatasourceCates, (cate) => groupedDatasourceList[cate] || []);
+  const getInitialDatasourceValue = () => {
+    for (const cate of metricDatasourceCates) {
+      const value = getDefaultDatasourceValue(cate, groupedDatasourceList);
+      if (_.find(datasources, { id: value })) {
+        return value;
+      }
+    }
+    return _.get(datasources, '[0].id');
+  };
+  const [datasourceValue, setDatasourceValue] = useState<number | undefined>(getInitialDatasourceValue());
   const isAdmin = _.includes(profile?.roles, 'Admin');
   const datasourceConfigUrl = IS_ENT ? '/settings/datasource/add/prometheus' : '/datasources/add/prometheus';
 
@@ -88,7 +98,10 @@ export default function index() {
             value={datasourceValue}
             onChange={(val) => {
               setDatasourceValue(val);
-              setDefaultDatasourceValue('prometheus', _.toString(val));
+              const datasource = _.find(datasources, { id: val });
+              if (datasource?.plugin_type) {
+                setDefaultDatasourceValue(datasource.plugin_type, _.toString(val));
+              }
               setMatch(undefined);
             }}
           >

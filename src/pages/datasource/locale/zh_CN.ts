@@ -70,6 +70,13 @@ const zh_CN = {
       prom_installation_title: '安装手册',
       prom_installation: '到夜莺部署的机器上，执行如下命令，安装 Prometheus 时序库，生产环境，建议部署集群版的 VictoriaMetrics，可参考 <a>官方文档</a>',
       tsdb_type: '时序库类型',
+      scrape_settings_title: 'Uptime Kuma 抓取配置（用于 Categraf）',
+      scrape_settings_tip: '这些字段用于在后台维护 Uptime Kuma 抓取参数（metrics 地址、basic_auth、labels），便于统一管理与区分数据。',
+      scrape_metrics_url: 'Uptime Kuma Metrics URL',
+      scrape_basic_auth_user: 'Uptime Kuma Basic Auth 用户名',
+      scrape_basic_auth_password: 'Uptime Kuma Basic Auth 密码',
+      scrape_labels: '抓取附加标签',
+      scrape_labels_tip: '格式示例：source=uptime_kuma,job=uptime_kuma',
     },
     es: {
       write_config: '写配置',
@@ -103,6 +110,8 @@ const zh_CN = {
   },
   test_and_save_btn: '测试连通性并保存',
   save_btn: '不测试连通性直接保存',
+  test_connectivity_success: '连通性测试通过，保存成功',
+  test_connectivity_failed: '连通性测试失败：{{message}}',
   auth_enable: '开启授权',
   skip_tls_verify: '跳过 TLS 检查',
   label_mapping: {

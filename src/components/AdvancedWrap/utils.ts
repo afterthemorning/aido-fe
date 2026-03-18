@@ -147,6 +147,16 @@ export const baseCates: Cate[] = [
     graphPro: false,
     alertPro: false,
   },
+  {
+    value: 'aido-uptime-kuma',
+    label: 'AIDO Uptime Kuma',
+    type: ['metric'],
+    alertRule: true,
+    dashboard: true,
+    dashboardVariable: true,
+    graphPro: false,
+    alertPro: false,
+  },
 ];
 
 export const allCates = [...baseCates, ...advancedCates];

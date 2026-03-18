@@ -20,7 +20,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Tabs, Button, Alert, Checkbox } from 'antd';
-import { TooltipPlacement } from 'antd/lib/tooltip';
+import type { TooltipProps } from 'antd';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { IRawTimeRange } from '@/components/TimeRangePicker';
@@ -34,6 +34,8 @@ import PromQLInputNGWithTooltipWrapper from './components/PromQLInputNGWithToolt
 import Panel from './components/Panel';
 import './locale';
 import './style.less';
+
+type TooltipPlacement = NonNullable<TooltipProps['placement']>;
 
 interface IProps {
   url?: string;

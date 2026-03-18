@@ -35,3 +35,14 @@ src/
 - 修改代码时尽量最小改动，不重写无关模块。
 - React 组件 Props 必须用 interface 显式定义，禁止使用 any。
 - 测试文件命名规范：_.test.ts 或 _.spec.ts。
+
+## 联调与运行模式约定
+
+- 前端本地启动统一使用脚本：`./dev-start-fe.sh`（不要省略 `./`）。
+- AIDO 子路径联调时，建议使用：`VITE_PREFIX=/aido PROXY=http://127.0.0.1:17000 ./dev-start-fe.sh`。
+- 出现接口 404/ECONNREFUSED 或数据源缺失时，先检查代理目标和后端运行模式是否一致，再判断代码问题。
+
+## 数据源接入策略（低侵入）
+
+- 新数据源能力优先复用既有查询流（explorer/index-pattern/现有 datasource 分支），避免新建独立页面。
+- 如果后端数据是 Prometheus exposition 文本（如 `/metrics`），前端不应直接按 Prometheus Query API 假设处理，应先确认后端查询面是否已兼容。

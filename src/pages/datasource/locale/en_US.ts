@@ -75,6 +75,14 @@ const en_US = {
       prom_installation:
         'On the machine where n9e is deployed, run the following command to install the Prometheus time series database. For production environments, it is recommended to deploy the cluster version of VictoriaMetrics. Refer to the <a>official documentation</a> for details',
       tsdb_type: 'Time series database type',
+      scrape_settings_title: 'Uptime Kuma scrape settings (for Categraf)',
+      scrape_settings_tip:
+        'These fields are used to manage Uptime Kuma scrape parameters (metrics URL, basic auth, labels) in the backend UI for clear ownership and data separation.',
+      scrape_metrics_url: 'Uptime Kuma metrics URL',
+      scrape_basic_auth_user: 'Uptime Kuma basic auth username',
+      scrape_basic_auth_password: 'Uptime Kuma basic auth password',
+      scrape_labels: 'Scrape labels',
+      scrape_labels_tip: 'Example: source=uptime_kuma,job=uptime_kuma',
     },
     es: {
       enable_write: 'Enable Write',
@@ -107,6 +115,8 @@ const en_US = {
   },
   test_and_save_btn: 'Save & test',
   save_btn: 'Save',
+  test_connectivity_success: 'Connectivity test passed and saved successfully',
+  test_connectivity_failed: 'Connectivity test failed: {{message}}',
   auth_enable: 'Enable Auth',
   skip_tls_verify: 'Skip TLS verification',
   label_mapping: {

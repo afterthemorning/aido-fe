@@ -76,6 +76,7 @@ export enum BaseDatasourceCateEnum {
   victorialogs = 'victorialogs',
   aidoExcel = 'aido-excel',
   aidoSharepoint = 'aido-sharepoint',
+  aidoUptimeKuma = 'aido-uptime-kuma',
 }
 
 export const DatasourceCateEnum = { ...BaseDatasourceCateEnum, ...AdvancedDatasourceCateEnum };

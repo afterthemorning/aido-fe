@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, Space, Affix, Card } from 'antd';
+import { Button, Space, Affix, Card, Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { flushSync } from 'react-dom';
 
 import { useGlobalState } from '../../Form';
 
@@ -14,8 +15,9 @@ interface IProps {
 export default function Footer(props: IProps) {
   const { t } = useTranslation('datasourceManage');
   const navigate = useNavigate();
+  const form = Form.useFormInstance();
   const { id, submitLoading, extra } = props;
-  const [saveMode, setSaveMode] = useGlobalState('saveMode');
+  const [, setSaveMode] = useGlobalState('saveMode');
 
   return (
     <Affix offsetBottom={0}>
@@ -33,19 +35,23 @@ export default function Footer(props: IProps) {
 
           <Button
             type='primary'
-            htmlType='submit'
             loading={submitLoading}
             onClick={() => {
-              setSaveMode('saveAndTest');
+              flushSync(() => {
+                setSaveMode('saveAndTest');
+              });
+              form.submit();
             }}
           >
             {t('test_and_save_btn')}
           </Button>
           <Button
-            htmlType='submit'
             loading={submitLoading}
             onClick={() => {
-              setSaveMode('save');
+              flushSync(() => {
+                setSaveMode('save');
+              });
+              form.submit();
             }}
           >
             {t('save_btn')}

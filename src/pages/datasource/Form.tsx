@@ -34,6 +34,25 @@ export default function FormCpt() {
   const [data, setData] = useState<any>();
   const [submitLoading, setSubmitLoading] = useState(false);
   const [saveMode] = useGlobalState('saveMode');
+
+  const getErrorMessage = (error: any) => {
+    if (_.isString(error)) {
+      return error;
+    }
+
+    const messageFromData = _.get(error, 'data.error.message') || _.get(error, 'data.error') || _.get(error, 'data.err') || _.get(error, 'data.message');
+    if (messageFromData) {
+      return _.isString(messageFromData) ? messageFromData : JSON.stringify(messageFromData);
+    }
+
+    const messageFromError = _.get(error, 'message') || _.get(error, 'name');
+    if (messageFromError) {
+      return _.isString(messageFromError) ? messageFromError : JSON.stringify(messageFromError);
+    }
+
+    return t('common:request_fail_msg');
+  };
+
   const onFinish = async (values: any, extra?: { uploadFile?: File }) => {
     setSubmitLoading(true);
     // 转换 headers 格式
@@ -84,10 +103,18 @@ export default function FormCpt() {
         await triggerImport(Number(data.id));
       }
 
-      message.success(action === 'add' ? t('common:success.add') : t('common:success.modify'));
+      if (saveMode === 'saveAndTest') {
+        message.success(t('test_connectivity_success'));
+      } else {
+        message.success(action === 'add' ? t('common:success.add') : t('common:success.modify'));
+      }
       navigate({
         pathname: '/datasources',
       });
+    } catch (error: any) {
+      if (saveMode === 'saveAndTest') {
+        message.error(t('test_connectivity_failed', { message: getErrorMessage(error) }));
+      }
     } finally {
       setSubmitLoading(false);
     }

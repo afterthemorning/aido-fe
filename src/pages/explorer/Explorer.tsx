@@ -33,6 +33,7 @@ import { CommonStateContext } from '@/App';
 import { Explorer as TDengine } from '@/plugins/TDengine';
 import { Explorer as CK } from '@/plugins/clickHouse';
 import AidoExcelExplorer from '@/aido-extension/expiry/Explorer';
+import UptimeKumaExplorer from '@/aido-extension/uptimeKuma/Explorer';
 import { allCates } from '@/components/AdvancedWrap/utils';
 // import ViewSelect from '@/components/ViewSelect';
 
@@ -47,6 +48,8 @@ import './index.less';
 import PlusExplorer from 'plus:/parcels/Explorer';
 
 type Type = 'logging' | 'metric';
+
+const PROMQL_CATES = [DatasourceCateEnum.prometheus, DatasourceCateEnum.aidoUptimeKuma];
 
 interface IProps {
   tabKey: string;
@@ -107,7 +110,7 @@ const Panel = (props: IProps) => {
 
   const handleDatasourceChange = (val: number, nextDatasourceCate: string) => {
     setDefaultDatasourceValue(nextDatasourceCate, val);
-    if (nextDatasourceCate !== DatasourceCateEnum.prometheus) {
+    if (!_.includes(PROMQL_CATES, nextDatasourceCate)) {
       // Clear query first to avoid stale fields from previous datasource type.
       form.setFieldsValue({
         datasourceCate: nextDatasourceCate,
@@ -257,7 +260,10 @@ const Panel = (props: IProps) => {
                 const datasourceValue = getFieldValue('datasourceValue');
                 if (datasourceCate === DatasourceCateEnum.elasticsearch) {
                   return <Elasticsearch headerExtra={headerExtraRef.current} datasourceValue={datasourceValue} form={form} defaultFormValuesControl={defaultFormValuesControl} />;
-                } else if (datasourceCate === DatasourceCateEnum.prometheus) {
+                } else if (_.includes(PROMQL_CATES, datasourceCate)) {
+                  if (datasourceCate === DatasourceCateEnum.aidoUptimeKuma) {
+                    return <UptimeKumaExplorer headerExtra={headerExtraRef.current} datasourceValue={datasourceValue} form={form} panelIdx={panelIdx} />;
+                  }
                   return (
                     <Prometheus
                       promQL={promql}

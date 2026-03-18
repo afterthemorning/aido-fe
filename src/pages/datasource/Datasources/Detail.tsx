@@ -9,6 +9,7 @@ import Doris from '@/plugins/doris/Datasource/Detail';
 import Victorialogs from '@/plugins/victorialogs/Datasource/Detail';
 import AidoExcel from '@/plugins/aidoExcel/Datasource/Detail';
 import AidoSharepoint from '@/plugins/aidoSharepoint/Datasource/Detail';
+import AidoUptimeKuma from '@/plugins/aidoUptimeKuma/Datasource/Detail';
 
 import Prometheus from './Prometheus/Detail';
 import ElasticSearch from './ElasticSearch/Detail';
@@ -58,6 +59,9 @@ export default function Form(props) {
   }
   if (props.data.plugin_type === DatasourceCateEnum.aidoSharepoint) {
     return <AidoSharepoint {...props} />;
+  }
+  if (props.data.plugin_type === DatasourceCateEnum.aidoUptimeKuma) {
+    return <AidoUptimeKuma {...props} />;
   }
   return <Plus type={props.data.plugin_type} {...props} />;
 }

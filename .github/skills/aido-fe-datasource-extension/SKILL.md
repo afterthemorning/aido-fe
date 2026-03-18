@@ -24,6 +24,16 @@ Use this skill when implementing datasource-related frontend changes with minima
 4. Add types and request-level error handling.
 5. Validate with build/tests.
 
+## Protocol Compatibility Check (Required)
+- Before adding UI branches, verify backend query protocol for the datasource:
+	- Prometheus Query API (`/api/v1/query`, `/api/v1/query_range`) vs exposition text (`/metrics`).
+- If protocol does not match existing frontend assumptions, do not force-fit in UI; first align backend/query path strategy.
+
+## Dev Startup Consistency
+- Use project script for local FE startup (`./dev-start-fe.sh`).
+- In `/aido` subpath mode, keep `VITE_PREFIX` and `PROXY` aligned with active backend stack.
+- If datasource list is incomplete, verify backend runtime mode and API response before touching UI rendering code.
+
 Detailed checklist: [datasource-workflow.md](./references/datasource-workflow.md)
 
 ## Expected Deliverable

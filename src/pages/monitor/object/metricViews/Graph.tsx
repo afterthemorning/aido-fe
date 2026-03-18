@@ -217,6 +217,7 @@ export default function Graph(props: IProps) {
                   fromUnix: start,
                   toUnix: end,
                 });
+                const datasource = _.find(datasourceList, { id: datasourceValue });
                 const dataProps = {
                   type: 'timeseries',
                   version: '3.0.0',
@@ -245,8 +246,8 @@ export default function Graph(props: IProps) {
                       };
                     },
                   ),
-                  datasourceCate: 'prometheus',
-                  datasourceName: _.find(datasourceList, { id: datasourceValue })?.name,
+                  datasourceCate: datasource?.plugin_type || 'prometheus',
+                  datasourceName: datasource?.name,
                   datasourceValue,
                 };
                 setTmpChartData([

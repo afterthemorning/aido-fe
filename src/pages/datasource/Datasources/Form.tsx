@@ -10,6 +10,7 @@ import Doris from '@/plugins/doris/Datasource/Form';
 import Victorialogs from '@/plugins/victorialogs/Datasource/Form';
 import AidoExcel from '@/plugins/aidoExcel/Datasource/Form';
 import AidoSharepoint from '@/plugins/aidoSharepoint/Datasource/Form';
+import AidoUptimeKuma from '@/plugins/aidoUptimeKuma/Datasource/Form';
 
 import Prometheus from './Prometheus/Form';
 import ElasticSearch from './ElasticSearch/Form';
@@ -59,6 +60,9 @@ export default function Form(props) {
   }
   if (params.type === DatasourceCateEnum.aidoSharepoint) {
     return <AidoSharepoint {...props} />;
+  }
+  if (params.type === DatasourceCateEnum.aidoUptimeKuma) {
+    return <AidoUptimeKuma {...props} />;
   }
   return <Plus type={params.type} {...props} />;
 }

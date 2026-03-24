@@ -90,12 +90,13 @@ const lazyPagesRoutes = _.reduce(
 );
 
 function renderRouteWithSubRoutes(route: Entry['routes'][number], key: string | number) {
-  const Component = route.component;
+  const Component = route.component as unknown as React.ComponentType<{ routes?: unknown }>;
+  const childRoutes = (route as Entry['routes'][number] & { routes?: unknown }).routes;
   return (
     <Route
       key={key}
       path={route.path}
-      element={<Component routes={route.routes} />}
+      element={<Component routes={childRoutes} />}
     />
   );
 }

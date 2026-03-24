@@ -20,6 +20,13 @@ import _ from 'lodash';
 import { withTolgee, Tolgee, I18nextPlugin, DevTools } from '@tolgee/i18next';
 import { InContextTools } from '@tolgee/web/tools';
 
+const toObjectRecord = (value: unknown): Record<string, unknown> => {
+  if (typeof value === 'object' && value !== null) {
+    return value as Record<string, unknown>;
+  }
+  return {};
+};
+
 const languages = ['zh_CN', 'en_US', 'zh_HK', 'ru_RU', 'ja_JP'];
 const localStorageLanguage = localStorage.getItem('language');
 let language = 'zh_CN';
@@ -28,17 +35,18 @@ if (localStorageLanguage && _.includes(languages, localStorageLanguage)) {
 }
 
 function getTranslations() {
-  type LocaleNamespaceMap = Record<string, Record<string, unknown>>;
+  type LocaleNamespaceMap = Record<string, unknown>;
   type LocaleModule = { default?: LocaleNamespaceMap };
   // Use paths relative to this file so Vite can statically include locale modules.
   const translations = import.meta.glob('./**/{locale,locales}/index.(ts|js)', { eager: true }) as Record<string, LocaleModule>;
   const result: Record<string, unknown> = {};
 
   for (const path in translations) {
-    const module = translations[path]?.default;
+    const module = toObjectRecord(translations[path]?.default);
     for (const namespace in module) {
-      for (const lang in module[namespace]) {
-        result[`${lang}:${namespace}`] = module[namespace][lang];
+      const namespacePayload = toObjectRecord(module[namespace]);
+      for (const lang in namespacePayload) {
+        result[`${lang}:${namespace}`] = namespacePayload[lang];
       }
     }
   }
@@ -46,7 +54,7 @@ function getTranslations() {
 }
 
 function getI18nextTranslations() {
-  type LocaleNamespaceMap = Record<string, Record<string, unknown>>;
+  type LocaleNamespaceMap = Record<string, unknown>;
   type LocaleModule = { default?: LocaleNamespaceMap };
   // Keep the same glob as getTranslations() to avoid missing namespaces in production builds.
   const translations = import.meta.glob('./**/{locale,locales}/index.(ts|js)', { eager: true }) as Record<string, LocaleModule>;
@@ -57,17 +65,18 @@ function getI18nextTranslations() {
   });
 
   for (const path in translations) {
-    const module = translations[path]?.default;
+    const module = toObjectRecord(translations[path]?.default);
 
     for (const namespace in module) {
+      const namespacePayload = toObjectRecord(module[namespace]);
       languages.forEach((lang) => {
         if (result[lang][namespace]) {
           result[lang][namespace] = {
-            ...result[lang][namespace],
-            ...module[namespace][lang],
+            ...toObjectRecord(result[lang][namespace]),
+            ...toObjectRecord(namespacePayload[lang]),
           };
         } else {
-          result[lang][namespace] = module[namespace][lang];
+          result[lang][namespace] = toObjectRecord(namespacePayload[lang]);
         }
       });
     }
@@ -89,7 +98,7 @@ if (API_URL && API_KEY) {
         apiUrl: API_URL,
         apiKey: API_KEY,
         language,
-        staticData,
+        staticData: staticData as never,
         defaultNs: 'translation',
         ns: ['translation', 'common', 'datasource'],
       });
@@ -101,7 +110,7 @@ if (API_URL && API_KEY) {
         apiUrl: API_URL,
         apiKey: API_KEY,
         language,
-        staticData,
+        staticData: staticData as never,
         defaultNs: 'translation',
         ns: ['translation', 'common', 'datasource'],
       });

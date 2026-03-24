@@ -67,6 +67,9 @@ export default function Rule({ form }: RuleProps) {
               label: 'Host',
               type: ['host'],
               alertRule: true,
+              dashboard: false,
+              dashboardVariable: false,
+              graphPro: false,
               alertPro: false,
               logo: '/image/logos/host.png',
             });

@@ -27,11 +27,21 @@ interface Props {
   allOptionTooltip?: string;
 }
 
-export function getDefaultGids(localeKey: string, businessGroup: any) {
+interface BusinessGroupLike {
+  ids?: string;
+}
+
+type DashboardQueryParams = Record<string, unknown>;
+
+const isActivateKey = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  return event.key === 'Enter' || event.key === ' ';
+};
+
+export function getDefaultGids(localeKey: string, businessGroup: BusinessGroupLike) {
   return localStorage.getItem(localeKey) || businessGroup.ids || '-2';
 }
 
-export function getDefaultGidsInDashboard(queryParams: any, localeKey: string, businessGroup: any) {
+export function getDefaultGidsInDashboard(queryParams: DashboardQueryParams, localeKey: string, businessGroup: BusinessGroupLike) {
   if (queryParams['preset-filter'] === 'public') {
     return '-1';
   }
@@ -57,10 +67,24 @@ export default function BusinessGroupSideBarWithAll(props: Props) {
                   'n9e-biz-group-item': true,
                   active: gids === '-1',
                 })}
+                role='button'
+                tabIndex={0}
                 onClick={() => {
                   setGids('-1');
                   localStorage.setItem(localeKey, '-1');
                   // TODO: 选择预置条件时清理掉业务组的 ids 和 isLeaf 参数
+                  navigate({
+                    pathname: location.pathname,
+                    search: queryString.stringify({
+                      ..._.omit(query, ['ids', 'isLeaf']),
+                    }),
+                  });
+                }}
+                onKeyDown={(event) => {
+                  if (!isActivateKey(event)) return;
+                  event.preventDefault();
+                  setGids('-1');
+                  localStorage.setItem(localeKey, '-1');
                   navigate({
                     pathname: location.pathname,
                     search: queryString.stringify({
@@ -77,10 +101,24 @@ export default function BusinessGroupSideBarWithAll(props: Props) {
                 'n9e-biz-group-item': true,
                 active: gids === '-2',
               })}
+              role='button'
+              tabIndex={0}
               onClick={() => {
                 setGids('-2');
                 localStorage.setItem(localeKey, '-2');
                 // TODO: 选择预置条件时清理掉业务组的 ids 和 isLeaf 参数
+                navigate({
+                  pathname: location.pathname,
+                  search: queryString.stringify({
+                    ..._.omit(query, ['ids', 'isLeaf']),
+                  }),
+                });
+              }}
+              onKeyDown={(event) => {
+                if (!isActivateKey(event)) return;
+                event.preventDefault();
+                setGids('-2');
+                localStorage.setItem(localeKey, '-2');
                 navigate({
                   pathname: location.pathname,
                   search: queryString.stringify({

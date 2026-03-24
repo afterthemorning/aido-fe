@@ -6,7 +6,7 @@ interface RuleConfig {
   template_id: number;
   template?: string;
   params: {
-    [index: string]: any;
+    [index: string]: unknown;
   }[];
   severities: number[];
   time_ranges: {
@@ -32,7 +32,15 @@ export interface RuleItem {
   user_group_ids: number[];
   notify_configs: RuleConfig[];
   extra_config?: {
-    escalations: EscalationItem[];
+    escalations?: EscalationItem[];
+    regular_report_delivery?: {
+      send_delay_seconds?: number;
+      allow_cancel_during_delay?: boolean;
+      require_reapprove_after_edit?: boolean;
+    };
+    send_delay_seconds?: number;
+    allow_cancel_during_delay?: boolean;
+    require_reapprove_after_edit?: boolean;
   };
 }
 

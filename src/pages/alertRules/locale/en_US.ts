@@ -66,6 +66,22 @@ const en_US = {
   extra_config: {
     default_tpl: 'Default template',
   },
+  report_mode: {
+    title: 'Report mode',
+    enable_tip: 'Enable report-mode configuration and hide regular alert-condition editing',
+    enabled_notice: 'Report mode is enabled. Regular alert-condition editing is hidden and existing configuration is preserved.',
+    report_type: 'Report type',
+    window_minutes: 'Window (minutes)',
+    topn: 'TopN',
+    include_recovered: 'Include recovered events',
+    summary_template: 'Summary template',
+    summary_template_placeholder: 'Optional custom summary content for report output',
+    report_types: {
+      daily: 'Daily',
+      weekly: 'Weekly',
+      monthly: 'Monthly',
+    },
+  },
   invalid_datasource_tip_1: 'Datasources',
   invalid_datasource_tip_2: 'are not configured with cluster of alert engine',
   invalid_datasource_reload: 'Reload',

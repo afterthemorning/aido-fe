@@ -86,6 +86,16 @@ export const defaultValues = {
   prod: 'metric',
   cate: 'prometheus',
   enable_status: true,
+  extra_config: {
+    regular_report_mode: {
+      enabled: false,
+      report_type: 'daily',
+      window_minutes: 60,
+      topn: 20,
+      include_recovered: false,
+      summary_template: '',
+    },
+  },
 };
 
 export const ruleTypeOptions = [

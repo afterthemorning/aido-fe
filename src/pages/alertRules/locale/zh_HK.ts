@@ -64,6 +64,22 @@ const zh_HK = {
   extra_config: {
     default_tpl: '默認模板',
   },
+  report_mode: {
+    title: '報告模式',
+    enable_tip: '開啟後使用報告模式配置，不觸發普通告警條件配置編輯',
+    enabled_notice: '報告模式已開啟，普通告警條件配置區域已隱藏，原配置將保留。',
+    report_type: '報告類型',
+    window_minutes: '統計視窗（分鐘）',
+    topn: 'TopN',
+    include_recovered: '包含恢復事件',
+    summary_template: '摘要模板',
+    summary_template_placeholder: '可選，用於自定義報告摘要內容',
+    report_types: {
+      daily: '日報',
+      weekly: '週報',
+      monthly: '月報',
+    },
+  },
   invalid_datasource_tip_1: '數據源',
   invalid_datasource_tip_2: '未配置關聯告警引擎集群',
   invalid_datasource_reload: '刷新數據源',

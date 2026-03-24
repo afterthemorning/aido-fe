@@ -18,6 +18,7 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, Form, Space } from 'antd';
+import type { FormInstance } from 'antd/es/form';
 import _ from 'lodash';
 
 import { CommonStateContext } from '@/App';
@@ -28,13 +29,19 @@ import DatasourceValueSelectV2 from '@/pages/alertRules/Form/components/Datasour
 import { panelBaseProps } from '../../constants';
 import Host from './Rule/Host';
 import AlertRule from './Rule';
+import ReportMode from './ReportMode';
 import { getDefaultValuesByCate } from '../utils';
 
-export default function Rule({ form }) {
+interface RuleProps {
+  form: FormInstance;
+}
+
+export default function Rule({ form }: RuleProps) {
   const { t } = useTranslation('alertRules');
   const { isPlus, groupedDatasourceList, reloadGroupedDatasourceList } = useContext(CommonStateContext);
   const prod = Form.useWatch('prod');
   const cate = Form.useWatch('cate');
+  const reportModeEnabled = Form.useWatch(['extra_config', 'regular_report_mode', 'enabled'], form);
 
   return (
     <Card
@@ -62,7 +69,7 @@ export default function Rule({ form }) {
               alertRule: true,
               alertPro: false,
               logo: '/image/logos/host.png',
-            } as any);
+            });
           }}
           onChange={(val, record) => {
             const { type } = record;
@@ -76,7 +83,8 @@ export default function Rule({ form }) {
         <div />
       </Form.Item>
       {prod === 'host' && <Host />}
-      {prod !== 'host' && <AlertRule />}
+      {prod !== 'host' && <ReportMode />}
+      {prod !== 'host' && !reportModeEnabled && <AlertRule />}
     </Card>
   );
 }

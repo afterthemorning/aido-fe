@@ -64,6 +64,22 @@ const zh_CN = {
   extra_config: {
     default_tpl: '默认模板',
   },
+  report_mode: {
+    title: '报告模式',
+    enable_tip: '开启后使用报告模式配置，不触发普通告警条件配置编辑',
+    enabled_notice: '报告模式已开启，普通告警条件配置区域已隐藏，原配置将保留。',
+    report_type: '报告类型',
+    window_minutes: '统计窗口（分钟）',
+    topn: 'TopN',
+    include_recovered: '包含恢复事件',
+    summary_template: '摘要模板',
+    summary_template_placeholder: '可选，用于自定义报告摘要内容',
+    report_types: {
+      daily: '日报',
+      weekly: '周报',
+      monthly: '月报',
+    },
+  },
   invalid_datasource_tip_1: '数据源',
   invalid_datasource_tip_2: '未配置关联告警引擎集群',
   invalid_datasource_reload: '刷新数据源',

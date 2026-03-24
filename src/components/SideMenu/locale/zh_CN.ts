@@ -34,6 +34,7 @@ const zh_CN = {
     global_muting: '全局屏蔽',
     notification: '通知',
     notification_rules: '通知规则',
+    regular_report: '常规报告',
     notification_channels: '通知媒介',
     notification_templates: '消息模板',
     event_pipeline: '工作流',

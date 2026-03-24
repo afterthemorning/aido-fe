@@ -34,6 +34,7 @@ const en_US = {
     global_muting: 'Global muting',
     notification: 'Notification',
     notification_rules: 'Rules',
+    regular_report: 'Regular Report',
     notification_channels: 'Media types',
     notification_templates: 'Message templates',
     event_pipeline: 'Workflow',

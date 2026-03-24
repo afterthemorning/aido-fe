@@ -67,6 +67,22 @@ const ru_RU = {
   extra_config: {
     default_tpl: 'Шаблон по умолчанию',
   },
+  report_mode: {
+    title: 'Режим отчета',
+    enable_tip: 'Включить режим отчета и скрыть редактирование обычных условий оповещений',
+    enabled_notice: 'Режим отчета включен. Раздел обычных условий оповещений скрыт, существующие настройки сохранены.',
+    report_type: 'Тип отчета',
+    window_minutes: 'Окно агрегации (минуты)',
+    topn: 'TopN',
+    include_recovered: 'Включать восстановленные события',
+    summary_template: 'Шаблон сводки',
+    summary_template_placeholder: 'Необязательно. Пользовательское содержимое сводки для отчета',
+    report_types: {
+      daily: 'Ежедневный',
+      weekly: 'Еженедельный',
+      monthly: 'Ежемесячный',
+    },
+  },
   invalid_datasource_tip_1: 'Источник данных',
   invalid_datasource_tip_2: 'Не настроен связанный кластер движка оповещений',
   invalid_datasource_reload: 'Обновить источник данных',

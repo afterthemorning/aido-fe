@@ -34,6 +34,7 @@ const ru_RU = {
     global_muting: 'Глобальная фильтрация',
     notification: 'Уведомления',
     notification_rules: 'Правила уведомлений',
+    regular_report: 'Регулярный отчёт',
     notification_channels: 'Каналы уведомлений',
     notification_templates: 'Шаблоны уведомлений',
     event_pipeline: 'Рабочий процесс',

@@ -16,10 +16,7 @@
  */
 import React, { useEffect, useContext } from 'react';
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import querystring from 'query-string';
 import _ from 'lodash';
-import { getMenuPerm } from '@/services/common';
-import { IS_ENT } from '@/utils/constant';
 import { CommonStateContext } from '@/App';
 import Page403 from '@/pages/notFound/Page403';
 import OutOfService from '@/pages/notFound/OutOfService';
@@ -35,7 +32,6 @@ import LoginCallbackFeishu from '@/pages/loginCallback/Feishu';
 import AlertRules, { Add as AlertRuleAdd, Edit as AlertRuleEdit } from '@/pages/alertRules';
 import Profile from '@/pages/account/profile';
 import { List as Dashboard, Detail as DashboardDetail, Share as DashboardShare } from '@/pages/dashboard';
-import { getDefaultThemeMode } from '@/pages/dashboard/Detail/utils';
 import Chart from '@/pages/chart';
 import Groups from '@/pages/user/groups';
 import Users from '@/pages/user/users';
@@ -45,7 +41,6 @@ import IndexPatterns from '@/pages/log/IndexPatterns';
 import ObjectExplore from '@/pages/monitor/object';
 import Shield, { Add as AddShield, Edit as ShieldEdit } from '@/pages/warning/shield';
 import Subscribe, { Add as SubscribeAdd, Edit as SubscribeEdit } from '@/pages/warning/subscribe';
-import Event from '@/pages/event';
 import EventDetail from '@/pages/event/detail';
 import HistoryEvents from '@/pages/historyEvents';
 import Targets from '@/pages/targets';
@@ -72,6 +67,7 @@ import MigrateDashboards from '@/pages/help/migrate';
 import VariableConfigs from '@/pages/variableConfigs';
 import SiteSettings from '@/pages/siteSettings';
 import SourceRegistry from '@/aido-extension/sourceregistry';
+import RegularReport from '@/aido-extension/regularReport';
 import { dynamicPackages, Entry, dynamicPages } from '@/utils';
 // @ts-ignore
 import { Jobs as StrategyBrain } from 'plus:/datasource/anomaly';
@@ -81,19 +77,19 @@ import plusLoader from 'plus:/utils/loader';
 import useIsPlus from 'plus:/components/useIsPlus';
 
 const Packages = dynamicPackages();
-let lazyRoutes = Packages.reduce((result: any, module: Entry) => {
+const lazyRoutes = Packages.reduce((result: Entry['routes'], module: Entry) => {
   return (result = result.concat(module.routes));
-}, []);
+}, [] as Entry['routes']);
 
 const lazyPagesRoutes = _.reduce(
   dynamicPages(),
-  (result: any, module: Entry) => {
+  (result: Entry['routes'], module: Entry) => {
     return (result = result.concat(module.routes));
   },
-  [],
+  [] as Entry['routes'],
 );
 
-function renderRouteWithSubRoutes(route, key) {
+function renderRouteWithSubRoutes(route: Entry['routes'][number], key: string | number) {
   const Component = route.component;
   return (
     <Route
@@ -134,7 +130,7 @@ export default function Content() {
         }
       }
     }
-  }, []);
+  }, [location.pathname, navigate, perms, profile?.roles]);
 
   return (
     <div className='content'>
@@ -199,6 +195,7 @@ export default function Content() {
         <Route path='/system/version' element={<Version />} />
         <Route path='/system/alerting-engines' element={<Servers />} />
         <Route path='/source-registry' element={<SourceRegistry />} />
+        <Route path='/regular-report' element={<RegularReport />} />
         <Route path='/datasources/:action/:type/:id' element={<DatasourceAdd />} />
         <Route path='/datasources/:action/:type' element={<DatasourceAdd />} />
         <Route path='/datasources' element={<Datasource />} />

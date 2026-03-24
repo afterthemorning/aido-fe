@@ -65,6 +65,22 @@ const ja_JP = {
   extra_config: {
     default_tpl: 'デフォルトテンプレート',
   },
+  report_mode: {
+    title: 'レポートモード',
+    enable_tip: '有効化するとレポートモード設定を使用し、通常のアラート条件編集を非表示にします',
+    enabled_notice: 'レポートモードが有効です。通常のアラート条件編集は非表示で、既存設定は保持されます。',
+    report_type: 'レポート種別',
+    window_minutes: '集計ウィンドウ（分）',
+    topn: 'TopN',
+    include_recovered: '復旧イベントを含める',
+    summary_template: 'サマリーテンプレート',
+    summary_template_placeholder: '任意。レポート要約のカスタム内容を設定します',
+    report_types: {
+      daily: '日次',
+      weekly: '週次',
+      monthly: '月次',
+    },
+  },
   invalid_datasource_tip_1: 'データソース',
   invalid_datasource_tip_2: '関連するアラートエンジンクラスタが設定されていません',
   invalid_datasource_reload: 'データソースをリロード',

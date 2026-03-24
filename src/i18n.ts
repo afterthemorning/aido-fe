@@ -28,8 +28,11 @@ if (localStorageLanguage && _.includes(languages, localStorageLanguage)) {
 }
 
 function getTranslations() {
-  const translations: any = import.meta.glob('../src/**/{locale,locales}/index.(ts|js)', { eager: true });
-  const result = {};
+  type LocaleNamespaceMap = Record<string, Record<string, unknown>>;
+  type LocaleModule = { default?: LocaleNamespaceMap };
+  // Use paths relative to this file so Vite can statically include locale modules.
+  const translations = import.meta.glob('./**/{locale,locales}/index.(ts|js)', { eager: true }) as Record<string, LocaleModule>;
+  const result: Record<string, unknown> = {};
 
   for (const path in translations) {
     const module = translations[path]?.default;
@@ -43,8 +46,11 @@ function getTranslations() {
 }
 
 function getI18nextTranslations() {
-  const translations: any = import.meta.glob('../src/**/{locale,locales}/index.(ts|js)', { eager: true });
-  const result = {};
+  type LocaleNamespaceMap = Record<string, Record<string, unknown>>;
+  type LocaleModule = { default?: LocaleNamespaceMap };
+  // Keep the same glob as getTranslations() to avoid missing namespaces in production builds.
+  const translations = import.meta.glob('./**/{locale,locales}/index.(ts|js)', { eager: true }) as Record<string, LocaleModule>;
+  const result: Record<string, Record<string, unknown>> = {};
 
   languages.forEach((lang) => {
     result[lang] = {};
@@ -55,7 +61,7 @@ function getI18nextTranslations() {
 
     for (const namespace in module) {
       languages.forEach((lang) => {
-        if (!!result[lang][namespace]) {
+        if (result[lang][namespace]) {
           result[lang][namespace] = {
             ...result[lang][namespace],
             ...module[namespace][lang],
@@ -74,8 +80,8 @@ const API_KEY = import.meta.env.VITE_TOLGEE_API_KEY;
 const staticData = getTranslations();
 
 let tolgee, i18nInit;
-if (!!API_URL && !!API_KEY) {
-  if (!!import.meta.env.DEV) {
+if (API_URL && API_KEY) {
+  if (import.meta.env.DEV) {
     tolgee = Tolgee()
       .use(DevTools())
       .use(I18nextPlugin())

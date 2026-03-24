@@ -34,6 +34,7 @@ const ja_JP = {
     global_muting: 'グローバルミュート',
     notification: '通知',
     notification_rules: '通知ルール',
+    regular_report: '定期レポート',
     notification_channels: '通知チャネル',
     notification_templates: '通知テンプレート',
     event_pipeline: 'ワークフロー',

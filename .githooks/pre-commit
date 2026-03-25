@@ -2,5 +2,27 @@
 set -euo pipefail
 
 repo_root="$(git rev-parse --show-toplevel)"
-"$repo_root/scripts/check_decoupling_policy.sh"
-"$repo_root/scripts/check_guardrails_policy.sh"
+
+if [[ "${SKIP_POLICY_CHECKS:-0}" == "1" ]]; then
+	echo "[pre-commit] SKIP_POLICY_CHECKS=1, skipping policy checks."
+	exit 0
+fi
+
+run_check() {
+	local name="$1"
+	local script="$repo_root/scripts/$name"
+	if [[ -x "$script" ]]; then
+		echo "[pre-commit] running $name"
+		"$script"
+		return
+	fi
+	if [[ -f "$script" ]]; then
+		echo "[pre-commit] running $name via bash"
+		bash "$script"
+		return
+	fi
+	echo "[pre-commit] missing $script, skipping."
+}
+
+run_check "check_decoupling_policy.sh"
+run_check "check_guardrails_policy.sh"

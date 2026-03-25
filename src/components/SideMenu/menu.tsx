@@ -63,8 +63,11 @@ export const getMenuList = (embeddedProductMenu: MenuItem[] = [], hideDeprecated
             { key: '/alert-rules', label: 'menu.alert_rules' },
             { key: '/alert-mutes', label: 'menu.alert_mutes' },
             { key: '/alert-subscribes', label: 'menu.alert_subscribes' },
-            { key: '/regular-report', label: 'menu.regular_report' },
           ],
+        },
+        {
+          key: '/regular-report',
+          label: 'menu.regular_report',
         },
         {
           key: 'job',

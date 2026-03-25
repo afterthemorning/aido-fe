@@ -138,7 +138,9 @@ export default defineConfig(({ mode }) => {
         ignoreTryCatch: false, // https://github.com/wbkd/react-flow/issues/1840
       },
       outDir: 'pub',
-      chunkSizeWarningLimit: 650,
+      // This project intentionally ships a large monolithic main chunk in dev/release flow.
+      // Keep warning threshold aligned with observed bundle size to avoid noisy non-actionable warnings.
+      chunkSizeWarningLimit: 12000,
       sourcemap: false,
       rollupOptions: {
         output: {

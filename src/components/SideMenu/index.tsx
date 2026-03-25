@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState, useContext } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useContext, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import _ from 'lodash';
@@ -21,6 +21,7 @@ import MenuList from './MenuList';
 import QuickStart from 'plus:/components/quickStart';
 import QuickMenu from './QuickMenu';
 import { MenuItem, DefaultLogos } from './types';
+import { SideMenuColors } from '@/components/pageLayout/SideMenuColorSetting/types';
 import './menu.less';
 import './locale';
 
@@ -56,16 +57,14 @@ const SideMenu = (props: SideMenuProps) => {
     onMenuClick,
     isGoldTheme,
   } = props;
-  const sideMenuBgColor = getSideMenuBgColor(isGoldTheme ? 'dark' : (sideMenuBgMode as any));
+  const sideMenuBgColor = getSideMenuBgColor(isGoldTheme ? 'dark' : (sideMenuBgMode as SideMenuColors));
   const location = useLocation();
   const query = querystring.parse(location.search);
-  const [selectedKeys, setSelectedKeys] = useState<string[]>();
   const [collapsed, setCollapsed] = useState<boolean>(Number(localStorage.getItem('menuCollapsed')) === 1);
   const [collapsedHover, setCollapsedHover] = useState<boolean>(false);
   const quickMenuRef = useRef<{ open: () => void }>({ open: () => {} });
   const isCustomBg = sideMenuBgMode !== 'light';
   const [embeddedProductMenu, setEmbeddedProductMenu] = useState<MenuItem[]>([]);
-  const [menus, setMenus] = useState<MenuItem[]>([]);
   const hideSideMenu = useMemo(() => {
     if (
       sessionStorage.getItem('menuHide') === '1' ||
@@ -97,9 +96,11 @@ const SideMenu = (props: SideMenuProps) => {
       return false;
     }
     return false;
-  }, [location.pathname, location.search]);
+  }, [location.pathname, location.search, query?.menu]);
 
-  const fetchEmbeddedProducts = () => {
+  const hideDeprecatedMenus = installTs > V8_BETA_14_TS;
+
+  const fetchEmbeddedProducts = useCallback(() => {
     if (hideSideMenu) return;
     getEmbeddedProducts().then((res) => {
       if (res) {
@@ -111,7 +112,7 @@ const SideMenu = (props: SideMenuProps) => {
         setEmbeddedProductMenu(items);
       }
     });
-  };
+  }, [hideSideMenu]);
 
   useEffect(() => {
     fetchEmbeddedProducts();
@@ -119,10 +120,11 @@ const SideMenu = (props: SideMenuProps) => {
     return () => {
       eventBus.off(EVENT_KEYS.EMBEDDED_PRODUCT_UPDATED, fetchEmbeddedProducts);
     };
-  }, [hideSideMenu]);
+  }, [fetchEmbeddedProducts]);
 
-  useEffect(() => {
-    const filteredMenus = menuList
+  const menus = useMemo(() => {
+    const currentMenuList = getMenuList(embeddedProductMenu, hideDeprecatedMenus);
+    return currentMenuList
       .map((menu) => {
         const filteredChildren = menu.children
           .map((child) => {
@@ -151,9 +153,7 @@ const SideMenu = (props: SideMenuProps) => {
         return null;
       })
       .filter(Boolean) as MenuItem[];
-
-    setMenus(filteredMenus);
-  }, [i18n.language, embeddedProductMenu]);
+  }, [embeddedProductMenu, perms, hideDeprecatedMenus, getMenuList]);
 
   const menuPaths = useMemo(
     () =>
@@ -182,7 +182,7 @@ const SideMenu = (props: SideMenuProps) => {
     [menus, perms],
   );
 
-  useEffect(() => {
+  const selectedKeys = useMemo(() => {
     let finalPath = ['', ''];
     menuPaths.forEach((path) => {
       if (!path) return;
@@ -195,13 +195,9 @@ const SideMenu = (props: SideMenuProps) => {
       }
     });
 
-    if (selectedKeys?.join('|') !== finalPath.join('|')) {
-      setSelectedKeys(finalPath);
-    }
-  }, [menuPaths, location.pathname, selectedKeys]);
+    return finalPath;
+  }, [menuPaths, location.pathname]);
 
-  const hideDeprecatedMenus = installTs > V8_BETA_14_TS;
-  const menuList = getMenuList(embeddedProductMenu, hideDeprecatedMenus);
   const uncollapsedWidth = i18n.language === 'en_US' || i18n.language === 'ru_RU' ? 'w-[250px]' : 'w-[172px]';
 
   return (
@@ -246,11 +242,22 @@ const SideMenu = (props: SideMenuProps) => {
           <div className='mx-2 my-2 shrink-0'>
             <div
               className={cn('flex h-10 cursor-pointer items-center justify-center rounded', isCustomBg ? 'text-[#fff] hover:bg-gray-200/20' : 'text-title hover:bg-fc-200')}
+              role='button'
+              tabIndex={0}
               onClick={() => {
                 const nextCollapsed = !collapsed;
                 setCollapsed(nextCollapsed);
                 localStorage.setItem('menuCollapsed', nextCollapsed ? '1' : '0');
                 setCollapsedHover(false);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  const nextCollapsed = !collapsed;
+                  setCollapsed(nextCollapsed);
+                  localStorage.setItem('menuCollapsed', nextCollapsed ? '1' : '0');
+                  setCollapsedHover(false);
+                }
               }}
             >
               {collapsed ? (

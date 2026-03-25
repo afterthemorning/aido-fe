@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# post-commit: auto-push after every commit.
-# Tries remotes in order: publish, origin. Uses the first one that succeeds.
+# post-commit: optional auto-push helper.
+# Disabled by default. Enable with GITHOOK_AUTO_PUSH=1.
 set -euo pipefail
 
 BRANCH="$(git symbolic-ref --short HEAD 2>/dev/null || true)"
@@ -9,11 +9,31 @@ if [ -z "$BRANCH" ]; then
   exit 0
 fi
 
+if [[ "${GITHOOK_AUTO_PUSH:-0}" != "1" ]]; then
+  echo "[post-commit] GITHOOK_AUTO_PUSH is disabled; commit kept local."
+  exit 0
+fi
+
+if [[ "$BRANCH" == "main" || "$BRANCH" == "master" ]]; then
+  if [[ "${ALLOW_MAIN_AUTO_PUSH:-0}" != "1" ]]; then
+    echo "[post-commit] protected branch '$BRANCH'; skipping auto-push."
+    exit 0
+  fi
+fi
+
+if git rev-parse --abbrev-ref --symbolic-full-name '@{u}' >/dev/null 2>&1; then
+  echo "[post-commit] pushing to configured upstream for $BRANCH..."
+  if git push 2>&1; then
+    echo "[post-commit] push OK (upstream)."
+    exit 0
+  fi
+fi
+
 for REMOTE in publish origin; do
   if git remote | grep -qx "$REMOTE"; then
-    echo "[post-commit] pushing $BRANCH to $REMOTE main..."
-    if git push "$REMOTE" "$BRANCH":main 2>&1; then
-      echo "[post-commit] push OK ($REMOTE -> main)."
+    echo "[post-commit] pushing $BRANCH to $REMOTE/$BRANCH..."
+    if git push "$REMOTE" "$BRANCH":"$BRANCH" 2>&1; then
+      echo "[post-commit] push OK ($REMOTE/$BRANCH)."
       exit 0
     else
       echo "[post-commit] push failed on $REMOTE, trying next..."

@@ -38,8 +38,8 @@ src/
 
 ## 联调与运行模式约定
 
-- 前端本地启动统一使用脚本：`./dev-start-fe.sh`（不要省略 `./`）。
-- AIDO 子路径联调时，建议使用：`VITE_PREFIX=/aido PROXY=http://127.0.0.1:17000 ./dev-start-fe.sh`。
+- 前端本地启动统一使用脚本：`../aido/workflow.sh fe dev`。
+- AIDO 子路径联调时，建议使用：`VITE_PREFIX=/aido PROXY=http://127.0.0.1:17000 ../aido/workflow.sh fe dev`。
 - 出现接口 404/ECONNREFUSED 或数据源缺失时，先检查代理目标和后端运行模式是否一致，再判断代码问题。
 
 ## 数据源接入策略（低侵入）

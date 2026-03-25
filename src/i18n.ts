@@ -38,7 +38,7 @@ function getTranslations() {
   type LocaleNamespaceMap = Record<string, unknown>;
   type LocaleModule = { default?: LocaleNamespaceMap };
   // Use paths relative to this file so Vite can statically include locale modules.
-  const translations = import.meta.glob('./**/{locale,locales}/index.(ts|js)', { eager: true }) as Record<string, LocaleModule>;
+  const translations = import.meta.glob('./**/{locale,locales}/index.{ts,js}', { eager: true }) as Record<string, LocaleModule>;
   const result: Record<string, unknown> = {};
 
   for (const path in translations) {
@@ -57,7 +57,7 @@ function getI18nextTranslations() {
   type LocaleNamespaceMap = Record<string, unknown>;
   type LocaleModule = { default?: LocaleNamespaceMap };
   // Keep the same glob as getTranslations() to avoid missing namespaces in production builds.
-  const translations = import.meta.glob('./**/{locale,locales}/index.(ts|js)', { eager: true }) as Record<string, LocaleModule>;
+  const translations = import.meta.glob('./**/{locale,locales}/index.{ts,js}', { eager: true }) as Record<string, LocaleModule>;
   const result: Record<string, Record<string, unknown>> = {};
 
   languages.forEach((lang) => {
@@ -87,6 +87,33 @@ function getI18nextTranslations() {
 const API_URL = import.meta.env.VITE_TOLGEE_API_URL;
 const API_KEY = import.meta.env.VITE_TOLGEE_API_KEY;
 const staticData = getTranslations();
+const i18nextResources = getI18nextTranslations();
+const namespaces = Array.from(new Set(Object.keys(staticData).map((key) => key.split(':')[1]).filter(Boolean)));
+
+const flattenTranslations = (obj: Record<string, unknown>, prefix = ''): Record<string, unknown> => {
+  const result: Record<string, unknown> = {};
+  for (const key of Object.keys(obj)) {
+    const value = obj[key];
+    const nextKey = prefix ? `${prefix}.${key}` : key;
+    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+      Object.assign(result, flattenTranslations(value as Record<string, unknown>, nextKey));
+    } else {
+      result[nextKey] = value;
+    }
+  }
+  return result;
+};
+
+const applyLocalFallbackBundles = () => {
+  for (const lang of Object.keys(i18nextResources)) {
+    const namespaceMap = i18nextResources[lang];
+    for (const ns of Object.keys(namespaceMap)) {
+      const nsResources = toObjectRecord(namespaceMap[ns]);
+      i18n.addResourceBundle(lang, ns, nsResources, true, false);
+      i18n.addResourceBundle(lang, ns, flattenTranslations(nsResources), true, false);
+    }
+  }
+};
 
 let tolgee, i18nInit;
 if (API_URL && API_KEY) {
@@ -100,7 +127,7 @@ if (API_URL && API_KEY) {
         language,
         staticData: staticData as never,
         defaultNs: 'translation',
-        ns: ['translation', 'common', 'datasource'],
+        ns: namespaces,
       });
   } else {
     tolgee = Tolgee()
@@ -112,13 +139,19 @@ if (API_URL && API_KEY) {
         language,
         staticData: staticData as never,
         defaultNs: 'translation',
-        ns: ['translation', 'common', 'datasource'],
+        ns: namespaces,
       });
   }
 
   i18nInit = withTolgee(i18n, tolgee).use(initReactI18next);
   i18nInit.init({
     lng: language,
+    defaultNS: 'translation',
+    ns: namespaces,
+    resources: i18nextResources,
+    keySeparator: '.',
+    nsSeparator: ':',
+    returnNull: false,
     interpolation: {
       escapeValue: false,
     },
@@ -127,11 +160,15 @@ if (API_URL && API_KEY) {
       useSuspense: false,
     },
   });
+  applyLocalFallbackBundles();
 } else {
   i18nInit = i18n.use(initReactI18next);
   i18nInit.init({
     lng: language,
-    resources: getI18nextTranslations(),
+    resources: i18nextResources,
+    keySeparator: '.',
+    nsSeparator: ':',
+    returnNull: false,
     interpolation: {
       escapeValue: false,
     },
@@ -140,6 +177,7 @@ if (API_URL && API_KEY) {
       useSuspense: false,
     },
   });
+  applyLocalFallbackBundles();
 }
 
 export { i18nInit, tolgee };

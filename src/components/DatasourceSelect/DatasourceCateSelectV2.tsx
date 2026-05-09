@@ -26,12 +26,15 @@ export default function DatasourceCateSelectV2(props: IProps) {
             key={item.value}
             className={classNames('aido-db-cate-grid-item', {
               'aido-db-cate-grid-item-selected': value === item.value,
+              'aido-db-cate-grid-item-disabled': disabled,
             })}
             onClick={() => {
+              if (disabled) return;
               if (item.value !== value) {
                 onChange && onChange(item.value, item);
               }
             }}
+            style={disabled ? { cursor: 'not-allowed', opacity: 0.5 } : undefined}
           >
             <DatasourceIcon logo={item.logo} label={item.label} ident={item.value} size={42} />
             <div>{item.label}</div>

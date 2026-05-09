@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import {
   Alert,
   Badge,
@@ -426,15 +426,20 @@ function AuditTab() {
     }
   }, []);
 
-  useEffect(() => { load({ ...filters, ...query }); }, [query, filters, load]);
+  useEffect(() => { if (query.p) load({ ...filters, ...query }); }, [query, filters, load]);
+
+  const handleSearch = () => { setQuery((prev) => ({ ...prev, p: 1 })); };
 
   const handleFilterChange = (key: keyof typeof filters, value: string) => {
-    const newFilters = { ...filters, [key]: value || undefined };
-    setFilters(newFilters);
-    setQuery((prev) => ({ ...prev, p: 1 }));
+    setFilters((prev) => ({ ...prev, [key]: value || undefined }));
   };
 
   const resultColor: Record<string, string> = { success: 'green', deny: 'orange', error: 'red' };
+
+  // Generate unique source_id options from current event list for Select autocomplete
+  const sourceIdOptions = useMemo(() => {
+    return _.chain(events).map('source_id').filter(Boolean).uniq().map((id) => ({ value: id, label: id })).value();
+  }, [events]);
 
   const columns: ColumnsType<SourceAuditEvent> = [
     { title: t('audit.created_at'), dataIndex: 'created_at', width: 165, render: (v) => unixToStr(v) },
@@ -449,8 +454,14 @@ function AuditTab() {
   return (
     <>
       <Space style={{ marginBottom: 12 }}>
-        <Input allowClear placeholder={t('audit.source_id')} style={{ width: 180 }} onChange={(e) => handleFilterChange('source_id', e.target.value)} />
-        <Input allowClear placeholder={t('audit.action')} style={{ width: 160 }} onChange={(e) => handleFilterChange('action', e.target.value)} />
+        <Select allowClear showSearch placeholder={t('audit.source_id')} style={{ width: 180 }}
+          options={sourceIdOptions}
+          onChange={(v) => handleFilterChange('source_id', v)}
+        />
+        <Select allowClear showSearch placeholder={t('audit.action')} style={{ width: 160 }}
+          options={_.chain(events).map('action').filter(Boolean).uniq().map((v) => ({ value: v, label: v })).value()}
+          onChange={(v) => handleFilterChange('action', v)}
+        />
         <Select allowClear placeholder={t('audit.result')} style={{ width: 120 }}
           options={[
             { value: 'success', label: t('audit.result_success') },
@@ -459,6 +470,7 @@ function AuditTab() {
           ]}
           onChange={(v) => handleFilterChange('result', v || '')}
         />
+        <Button type="primary" onClick={handleSearch}>{t('btn.search') || 'Search'}</Button>
       </Space>
       <Table rowKey='id' dataSource={events} columns={columns} loading={loading} size='small'
         pagination={{ total, current: query.p, pageSize: query.limit, onChange: (p, limit) => setQuery({ p, limit }), showSizeChanger: true }}

@@ -68,6 +68,7 @@ import VariableConfigs from '@/pages/variableConfigs';
 import SiteSettings from '@/pages/siteSettings';
 import SourceRegistry from '@/aido-extension/sourceregistry';
 import RegularReport from '@/aido-extension/regularReport';
+import RUMOverview from '@/aido-extension/rum/Overview';
 import { dynamicPackages, Entry, dynamicPages } from '@/utils';
 // @ts-ignore
 import { Jobs as StrategyBrain } from 'plus:/datasource/anomaly';
@@ -191,6 +192,7 @@ export default function Content() {
         <Route path='/system/alerting-engines' element={<Servers />} />
         <Route path='/source-registry' element={<SourceRegistry />} />
         <Route path='/regular-report' element={<RegularReport />} />
+        <Route path='/rum' element={<RUMOverview />} />
         <Route path='/datasources/:action/:type/:id' element={<DatasourceAdd />} />
         <Route path='/datasources/:action/:type' element={<DatasourceAdd />} />
         <Route path='/datasources' element={<Datasource />} />

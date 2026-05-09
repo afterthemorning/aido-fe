@@ -271,7 +271,7 @@ function Raw(props: Props) {
   return (
     <>
       <Table
-        className='n9e-event-logs-table n9e-log-explorer-raw-table'
+        className='aido-event-logs-table aido-log-explorer-raw-table'
         rowKey='___id___'
         size='small'
         pagination={false}

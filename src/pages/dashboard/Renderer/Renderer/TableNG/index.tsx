@@ -121,7 +121,7 @@ function index(props: Props) {
   }, [JSON.stringify(_.map(series, 'id'))]);
 
   return (
-    <div className={`n9e-dashboard-panel-table-ng ${showHeader ? '' : 'n9e-dashboard-panel-table-ng-hide-header'} p-2 h-full w-full flex flex-col gap-2`}>
+    <div className={`aido-dashboard-panel-table-ng ${showHeader ? '' : 'aido-dashboard-panel-table-ng-hide-header'} p-2 h-full w-full flex flex-col gap-2`}>
       <AgGridReact
         headerHeight={showHeader ? headerHeight : 0}
         enableCellTextSelection
@@ -145,8 +145,8 @@ function index(props: Props) {
               padding: 0,
             },
             cellClassRules: {
-              'n9e-dashboard-panel-table-ng-cell-link': () => (options.links ? options.links.length === 1 : showUnderline),
-              'n9e-dashboard-panel-table-ng-cell-links': () => (options.links ? options.links.length > 1 : false),
+              'aido-dashboard-panel-table-ng-cell-link': () => (options.links ? options.links.length === 1 : showUnderline),
+              'aido-dashboard-panel-table-ng-cell-links': () => (options.links ? options.links.length > 1 : false),
             },
             comparator: (value1, value2, node1, node2) => {
               // 手动获取字段值，解决字段名包含"点"时无法正确获取的问题

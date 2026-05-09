@@ -124,9 +124,9 @@ function Graph(props: Props) {
       if (i === 0) return s;
       return {
         ...s,
-        n9e_internal: {
+        aido_internal: {
           // @ts-ignore
-          ...s.n9e_internal,
+          ...s.aido_internal,
           values: frames[i], // 只用于堆叠图下保存原始数据
         },
       };
@@ -220,7 +220,7 @@ export default function GraphContainer(props: {
           <Popover
             title={t('explorer.graph_settings.title')}
             content={
-              <Space direction='vertical'>
+              <Space orientation='vertical'>
                 <Space>
                   <Switch
                     size='small'

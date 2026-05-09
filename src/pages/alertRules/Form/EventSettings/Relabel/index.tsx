@@ -16,7 +16,7 @@ export default function PrometheusV2() {
     <>
       <Form.List name={name}>
         {(fields, { add, remove, move }) => (
-          <div className='n9e-alert-relabel-list'>
+          <div className='aido-alert-relabel-list'>
             {fields.map((field, idx) => (
               <RelabelItem key={field.key} prefixName={name} field={field} remove={remove} move={move} add={add} fields={fields} idx={idx} />
             ))}

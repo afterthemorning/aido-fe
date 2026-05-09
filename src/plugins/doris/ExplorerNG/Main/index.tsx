@@ -42,8 +42,8 @@ export default function index(props: Props) {
   const { logsDefaultRange, darkMode } = useContext(CommonStateContext);
 
   const { tabKey, indexData, organizeFields, setOrganizeFields, executeQuery, handleValueFilter, stackByField, setStackByField, defaultSearchField, setDefaultSearchField } = props;
-  const logsAntdTableSelector = `.explorer-container-${tabKey} .n9e-event-logs-table .ant-table-body`;
-  const logsRgdTableSelector = `.explorer-container-${tabKey} .n9e-event-logs-table`;
+  const logsAntdTableSelector = `.explorer-container-${tabKey} .aido-event-logs-table .ant-table-body`;
+  const logsRgdTableSelector = `.explorer-container-${tabKey} .aido-event-logs-table`;
 
   const form = Form.useFormInstance();
   const navMode = Form.useWatch(['query', 'navMode']);

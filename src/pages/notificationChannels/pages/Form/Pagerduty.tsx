@@ -20,7 +20,7 @@ export default function Pagerduty() {
                 label={
                     <Space size={4}>
                         {t('pagerduty_request_config.api_key')}
-                        <Tooltip className='n9e-ant-from-item-tooltip' overlayClassName='ant-tooltip-max-width-600' title={t('pagerduty_request_config.api_key_tip')}>
+                        <Tooltip className='aido-ant-from-item-tooltip' overlayClassName='ant-tooltip-max-width-600' title={t('pagerduty_request_config.api_key_tip')}>
                             <QuestionCircleOutlined />
                         </Tooltip>
                     </Space>

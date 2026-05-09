@@ -222,7 +222,7 @@ export default function TimeseriesCpt(props: Props) {
 
   const seriesData = useMemo(() => {
     return _.map(data.baseSeries, (subItem) => {
-      const id = subItem.n9e_internal.id;
+      const id = subItem.aido_internal.id;
       return {
         ...subItem,
         show: activeLegend ? activeLegend === id : true,
@@ -337,7 +337,7 @@ export default function TimeseriesCpt(props: Props) {
         {!_.isEmpty(data.frames) ? (
           <div className='best-looking-scroll'>
             <div ref={eleRef} className='min-h-[480px] relative'>
-              <div className='n9e-antd-table-height-full'>
+              <div className='aido-antd-table-height-full'>
                 <Spin spinning={loading}>
                   {eleSize?.width && eleSize?.height && (
                     <Graph

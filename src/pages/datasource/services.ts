@@ -37,7 +37,7 @@ export const getDataSourceDetailById = (id: string | number) => {
 export const submitRequest = (body) => {
   let url = `${apiPrefix}/upsert`;
   if (import.meta.env['VITE_IS_PRO']) {
-    url = ' /api/n9e-plus/datasource/upsert';
+    url = ' /api/aido-plus/datasource/upsert';
   }
   return request(url, {
     method: RequestMethod.Post,
@@ -66,14 +66,14 @@ export const getServerClusters = () => {
 };
 
 export const getDatasourceLabelMapping = (ds_id) => {
-  return request('/api/n9e-plus/datasource-label-mapping', {
+  return request('/api/aido-plus/datasource-label-mapping', {
     method: RequestMethod.Get,
     params: { ds_id },
   }).then((res) => res.dat);
 };
 
 export const postDatasourceLabelMapping = (data) => {
-  return request('/api/n9e-plus/datasource-label-mapping', {
+  return request('/api/aido-plus/datasource-label-mapping', {
     method: RequestMethod.Post,
     data,
   }).then((res) => res.dat);

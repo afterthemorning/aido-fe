@@ -10,7 +10,7 @@ export function getEvents(params) {
 }
 
 export function getEventsByIds(ids: string) {
-  return request(`/api/n9e-plus/alert-his-events/${ids}`, {
+  return request(`/api/aido-plus/alert-his-events/${ids}`, {
     method: RequestMethod.Get,
   });
 }

@@ -16,11 +16,11 @@
  */
 import request from '@/utils/request';
 import { RequestMethod } from '@/store/common';
-import { N9E_PATHNAME } from '@/utils/constant';
+import { AIDO_PATHNAME } from '@/utils/constant';
 import { FieldConfig, FieldConfigVersion2, convertToVersion2 } from './types';
 
 export const getESIndexPatterns = function (datasource_id?: number) {
-  return request(`/api/${N9E_PATHNAME}/es-index-pattern-list`, {
+  return request(`/api/${AIDO_PATHNAME}/es-index-pattern-list`, {
     method: RequestMethod.Get,
     params: {
       datasource_id,
@@ -29,7 +29,7 @@ export const getESIndexPatterns = function (datasource_id?: number) {
 };
 
 export const getESIndexPatternsWithParmas = function (params?: { datasource_id?: number; __token?: string; source_type?: string; eid?: number }) {
-  return request(`/api/${N9E_PATHNAME}/es-index-pattern-list`, {
+  return request(`/api/${AIDO_PATHNAME}/es-index-pattern-list`, {
     method: RequestMethod.Get,
     params,
   }).then((res) => res.dat);

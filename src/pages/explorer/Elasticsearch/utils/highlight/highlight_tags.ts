@@ -1,4 +1,4 @@
 export const highlightTags = {
-  pre: '@n9e-highlighted-field@',
-  post: '@/n9e-highlighted-field@',
+  pre: '@aido-highlighted-field@',
+  post: '@/aido-highlighted-field@',
 };

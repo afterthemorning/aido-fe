@@ -5,7 +5,7 @@ import { DatasourceCateEnum } from '@/utils/constant';
 import { getDsQuery } from '@/plugins/TDengine/services';
 import replaceExpressionBracket from '@/pages/dashboard/Renderer/utils/replaceExpressionBracket';
 import { getSerieName } from '../utils';
-import { N9E_PATHNAME } from '@/utils/constant';
+import { AIDO_PATHNAME } from '@/utils/constant';
 interface IOptions {
   id?: string; // panelId
   datasourceValue: number;
@@ -78,7 +78,7 @@ export default async function prometheusQuery(options: IOptions): Promise<Result
         resolveData.query.push({
           type: 'Query Range',
           request: {
-            url: `/api/${N9E_PATHNAME}/query-range-batch`,
+            url: `/api/${AIDO_PATHNAME}/query-range-batch`,
             method: 'POST',
             data: queryParmas,
           },

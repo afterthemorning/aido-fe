@@ -1,64 +1,39 @@
-/*
- * Copyright 2022 Nightingale Team
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
-import React, { ReactNode, useContext, useState, useEffect, useLayoutEffect } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import querystring from 'query-string';
-import { useTranslation } from 'react-i18next';
-import { Menu, Dropdown, Space, Drawer, Button, Tooltip } from 'antd';
+import { Avatar, Button, Space, Tooltip } from 'antd';
 import { DownOutlined, RollbackOutlined, HistoryOutlined } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
+import querystring from 'query-string';
+import _ from 'lodash';
 
 import { Logout } from '@/services/login';
 import AdvancedWrap, { License } from '@/components/AdvancedWrap';
 import { CommonStateContext } from '@/App';
 import { AccessTokenKey, IS_ENT, IS_PLUS } from '@/utils/constant';
 import DarkModeSelect from '@/components/DarkModeSelect';
-import { findMenuByPath, getCurrentMenuList } from '@/components/SideMenu/utils';
-import { MenuMatchResult } from '@/components/SideMenu/types';
-import DocLink from './DocLink';
-import { TabMenu } from './TabMenu';
-import LanguageIcon from '../icons/LanguageIcon';
-import DocIcon from '../icons/DocIcon';
+import DropdownCompat from '@/components/AntdDropdownCompat';
 import Version from '../Version';
-import SideMenuColorSetting from '../SideMenuColorSetting';
 import HelpLink from '../HelpLink';
-import '../index.less';
+import DocLink from './DocLink';
 import '../locale';
 
-// @ts-ignore
-import FeatureNotification from 'plus:/pages/FeatureNotification';
-
-import DropdownCompat from '@/components/AntdDropdownCompat';
+import LanguageIcon from '../icons/LanguageIcon';
+import DocIcon from '../icons/DocIcon';
 
 export { HelpLink };
 
 interface IPageLayoutProps {
-  icon?: ReactNode;
-  title?: String | JSX.Element;
-  children?: ReactNode;
-  introIcon?: ReactNode;
-  rightArea?: ReactNode;
-  customArea?: ReactNode;
-  showBack?: Boolean;
+  icon?: React.ReactNode;
+  title?: string | JSX.Element;
+  children?: React.ReactNode;
+  rightArea?: React.ReactNode;
+  customArea?: React.ReactNode;
+  showBack?: boolean;
   backPath?: string;
   doc?: string;
-  tabGroup?: string;
 }
 
-const i18nMap = {
+const i18nMap: Record<string, string> = {
   zh_CN: '简体',
   zh_HK: '繁體',
   en_US: 'En',
@@ -66,213 +41,84 @@ const i18nMap = {
   ru_RU: 'Русский',
 };
 
-const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introIcon, children, customArea, showBack, backPath, doc, tabGroup }) => {
+const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, children, customArea, showBack, backPath, doc }) => {
   const { t, i18n } = useTranslation('pageLayout');
   const navigate = useNavigate();
   const location = useLocation();
   const query = querystring.parse(location.search);
-  const { profile, siteInfo, i18nList } = useContext(CommonStateContext);
+  const { profile, i18nList, siteInfo } = useContext(CommonStateContext);
   const embed = localStorage.getItem('embed') === '1' && window.self !== window.top;
-  const [themeVisible, setThemeVisible] = useState(false);
-  const [currentMenu, setCurrentMenu] = useState<MenuMatchResult | null>(null);
-  const menuList = getCurrentMenuList();
 
-  useEffect(() => {
-    const result = findMenuByPath(location.pathname, menuList);
-    if (result) {
-      setCurrentMenu(result);
-    }
-  }, [location.pathname]);
+  const userMenuItems = [
+    { key: 'profile', label: t('profile'), onClick: () => navigate('/account/profile/info') },
+    ...(!IS_ENT ? [] as any : []),
+    { type: 'divider' as const },
+    { key: 'logout', label: t('logout'), danger: true, onClick: async () => { await Logout(); localStorage.removeItem(AccessTokenKey); localStorage.removeItem('refresh_token'); localStorage.removeItem('curBusiId'); navigate('/login'); } },
+  ];
 
-  useLayoutEffect(() => {
-    if (!IS_ENT && !IS_PLUS) {
-      // 如果 Headway 不存在，则每隔 1 秒尝试初始化一次
-      const timer = setInterval(() => {
-        if ((window as any).Headway) {
-          clearInterval(timer);
-          (window as any).Headway?.init({
-            selector: '.product-changelog',
-            account: i18n.language !== 'zh_CN' ? 'yB4rM7' : '7XMr1J',
-          });
-        }
-      }, 1000);
-    }
-  }, [i18n.language]);
-
-  const menu = (
-    <Menu>
-      <Menu.Item
-        onClick={() => {
-          navigate('/account/profile/info');
-        }}
-      >
-        {t('profile')}
-      </Menu.Item>
-      {!IS_ENT && (
-        <Menu.Item
-          onClick={() => {
-            setThemeVisible(true);
-          }}
-        >
-          {t('themeSetting')}
-        </Menu.Item>
-      )}
-      <Menu.Item
-        onClick={() => {
-          Logout().then((res) => {
-            localStorage.removeItem(AccessTokenKey);
-            localStorage.removeItem('refresh_token');
-            localStorage.removeItem('curBusiId');
-            // 如果 res.dat 是一个字符串，表示重定向 URL，则直接跳转到该 URL
-            if (res.dat && typeof res.dat === 'string') {
-              window.location.href = res.dat;
-            } else {
-              navigate('/login');
-            }
-          });
-        }}
-      >
-        {t('logout')}
-      </Menu.Item>
-    </Menu>
-  );
+  const langMenuItems = Object.keys(i18nMap)
+    .filter((el) => (i18nList ? i18nList.includes(el) : true))
+    .map((el) => ({ key: el, label: i18nMap[el], onClick: () => { i18n.changeLanguage(el); localStorage.setItem('language', el); } }));
 
   return (
-    <div className={'page-wrapper'}>
-      {!embed && (
-        <>
-          {customArea ? (
-            <div className={'page-top-header'}>{customArea}</div>
-          ) : (
-            <div className={'page-top-header'}>
-              <div
-                className={`page-header-content relative n9e-page-header-content`}
-                style={{
-                  // 2024-07-10 用途集成仪表盘全屏模式，未来其他页面的全屏模式皆是 viewMode=fullscreen
-                  display: query.viewMode === 'fullscreen' ? 'none' : 'flex',
-                }}
-              >
-                <div className='flex items-center min-w-0 flex-1'>
-                  {!currentMenu?.parentItem?.label && (
-                    <div className='page-header-title min-w-0'>
-                      {showBack && window.history.state && (
-                        <RollbackOutlined
-                          onClick={() => {
-                            if (backPath) {
-                              navigate(backPath);
-                            } else {
-                              navigate(-1);
-                            }
-                          }}
-                          style={{
-                            marginRight: '5px',
-                          }}
-                        />
-                      )}
-                      {title}
-                    </div>
-                  )}
-                  <TabMenu currentMenu={currentMenu} />
-                  {IS_ENT && doc && <DocLink link={doc} />}
-                </div>
-
-                <div className={'page-header-right-area flex-shrink-0'} style={{ display: sessionStorage.getItem('menuHide') === '1' ? 'none' : undefined }}>
-                  <span className='page-layout-intro-container'>{introIcon}</span>
-                  <Version />
-
-                  <Space className='mr-2'>{rightArea}</Space>
-
-                  <AdvancedWrap var='VITE_IS_PRO,VITE_IS_ENT'>
-                    <License />
-                  </AdvancedWrap>
-                  <Space>
-                    {/* 整合版本关闭文档链接 */}
-                    {!IS_ENT && IS_PLUS && (
-                      <Button
-                        target='_blank'
-                        href={siteInfo?.document_url || 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/introduction/'}
-                        size='small'
-                        type='text'
-                      >
-                        <Tooltip title={t('docs')}>
-                          <DocIcon className='text-[12px]' />
-                        </Tooltip>
-                      </Button>
-                    )}
-                  </Space>
-                  <AdvancedWrap var='VITE_IS_PRO,VITE_IS_ENT'>
-                    <FeatureNotification />
-                  </AdvancedWrap>
-
-                  {!IS_ENT && !IS_PLUS && (
-                    <Button size='small' type='text' icon={<HistoryOutlined />} className='relative'>
-                      <div className='product-changelog absolute bottom-[2px] left-[7px]'></div>
-                    </Button>
-                  )}
-
-                  <DropdownCompat
-                    overlay={
-                      <Menu
-                        onSelect={({ key }) => {
-                          i18n.changeLanguage(key);
-                          localStorage.setItem('language', key);
-                        }}
-                        selectable
-                      >
-                        {Object.keys(i18nMap)
-                          .filter((el) => {
-                            return i18nList ? i18nList.includes(el) : true;
-                          })
-                          .map((el) => {
-                            return <Menu.Item key={el}>{i18nMap[el]}</Menu.Item>;
-                          })}
-                      </Menu>
-                    }
-                  >
-                    <Button size='small' type='text' style={{ marginLeft: 12 }} id='i18n-btn'>
-                      <LanguageIcon className='text-[12px]' />
-                    </Button>
-                  </DropdownCompat>
-
-                  <div style={{ marginRight: 12 }}>
-                    <DarkModeSelect />
-                  </div>
-                  <DropdownCompat overlay={menu} trigger={['click']}>
-                    <span className='avator' style={{ cursor: 'pointer' }}>
-                      <img src={profile?.portrait || '/image/avatar1.png'} />
-                      <span className='display-name'>{profile?.nickname || profile?.username}</span>
-                      <DownOutlined />
-                    </span>
-                  </DropdownCompat>
-                </div>
-                {sessionStorage.getItem('menuHide') === '1' && <Space className='mr-2'>{rightArea}</Space>}
-              </div>
-            </div>
-          )}
-        </>
-      )}
-
-      {children && children}
-      <Drawer
-        closable={false}
-        open={themeVisible}
-        onClose={() => {
-          setThemeVisible(false);
-        }}
-      >
-        <div>
-          <div>
-            <div className='text-lg font-semibold dark:text-slate-50 text-l1'>{t('theme.title')}</div>
-            <div className='text-sm text-hint mt-1'>{t('theme.title_help')}</div>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      {!embed && !customArea && (
+        <div
+          style={{
+            display: query.viewMode === 'fullscreen' ? 'none' : 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: 48,
+            padding: '0 16px',
+            borderBottom: '1px solid var(--fc-border-color, #f0f0f0)',
+            background: 'var(--fc-fill-2, #fafafa)',
+            flexShrink: 0,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0, flex: 1 }}>
+            {showBack && window.history.state && (
+              <RollbackOutlined style={{ cursor: 'pointer', fontSize: 14, flexShrink: 0 }} onClick={() => (backPath ? navigate(backPath) : navigate(-1))} />
+            )}
+            {icon}
+            {title && <span style={{ fontWeight: 600, fontSize: 15, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</span>}
+            {IS_ENT && doc && <DocLink link={doc} />}
           </div>
-          <div className='mt-6'>
-            <span className='font-semibold'>{t('theme.sideMenu')}</span> <span className='ml-2 text-hint'>{t('theme.sideMenu_help')}</span>
-          </div>
-          <div className='m-2'>
-            <SideMenuColorSetting />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+            <Version />
+            <span style={{ fontSize: 12 }}>{rightArea}</span>
+            <AdvancedWrap var="VITE_IS_PRO,VITE_IS_ENT">
+              <License />
+            </AdvancedWrap>
+            {!IS_ENT && IS_PLUS && (
+              <Button type="text" size="small" href={siteInfo?.document_url || 'https://flashcat.cloud/docs'} target="_blank">
+                <Tooltip title={t('docs')}>
+                  <DocIcon style={{ fontSize: 12 }} />
+                </Tooltip>
+              </Button>
+            )}
+            {!IS_ENT && (
+              <Tooltip title="Changelog">
+                <Button size="small" type="text" icon={<HistoryOutlined />} className="product-changelog" />
+              </Tooltip>
+            )}
+            <DropdownCompat menu={{ items: langMenuItems }} trigger={['click']}>
+              <Button size="small" type="text"><LanguageIcon /></Button>
+            </DropdownCompat>
+            <DarkModeSelect />
+            <DropdownCompat menu={{ items: userMenuItems }} trigger={['click']}>
+              <Space style={{ cursor: 'pointer', gap: 6 }}>
+                <Avatar size={24} src={profile?.portrait || '/image/avatar1.png'} />
+                <span style={{ fontSize: 13 }}>{profile?.nickname || profile?.username}</span>
+                <DownOutlined style={{ fontSize: 10 }} />
+              </Space>
+            </DropdownCompat>
           </div>
         </div>
-      </Drawer>
+      )}
+      {customArea}
+      <div style={{ flex: 1, overflow: 'auto', padding: '12px 16px' }}>
+        {children}
+      </div>
     </div>
   );
 };

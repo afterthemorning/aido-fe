@@ -29,7 +29,7 @@ export const getHistogram = function (
 ): Promise<{
   hits: HitResult[];
 }> {
-  return request(`/api/n9e-plus/proxy/${datasourceValue}/select/logsql/hits`, {
+  return request(`/api/aido-plus/proxy/${datasourceValue}/select/logsql/hits`, {
     method: RequestMethod.Get,
     params,
   }).then(
@@ -53,7 +53,7 @@ export const getLogsQuery = function (
     [index: string]: string;
   }[]
 > {
-  return fetch(`/api/n9e-plus/proxy/${datasourceValue}/select/logsql/query?${queryString.stringify(params)}`, {
+  return fetch(`/api/aido-plus/proxy/${datasourceValue}/select/logsql/query?${queryString.stringify(params)}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem(AccessTokenKey) || ''}`,
     },

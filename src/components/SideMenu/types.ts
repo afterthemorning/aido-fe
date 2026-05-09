@@ -7,35 +7,22 @@ export interface IMenuItem {
   path?: string;
   useSavedPath?: boolean;
   role?: string[];
-  children?: IMenuItem[];
-  type?: string; // 'tabs'
-  pathType?: string; // 'absolute'
-  target?: string; // '_blank'
+  children?: any[];
+  type?: string;
+  pathType?: string;
+  target?: string;
   beta?: boolean;
   deprecated?: boolean;
 }
 
-export interface BaseMenuItem {
-  key: string;
-  label: string;
-  useSavedPath?: boolean;
-  type?: string; // 'tabs'
-  pathType?: string; // 'absolute'
-  path?: string; // URL for absolute paths
-  target?: string; // '_blank'
-  role?: string[];
-  deprecated?: boolean;
-  children?: Array<BaseMenuItem>;
-}
-
-export interface MenuItem extends BaseMenuItem {
+export interface MenuItem extends IMenuItem {
   icon?: ReactNode;
-  children: Array<BaseMenuItem>;
+  children: IMenuItem[];
 }
 
 export interface MenuMatchResult {
-  currentItem: BaseMenuItem;
-  parentItem?: BaseMenuItem;
+  currentItem: IMenuItem;
+  parentItem?: IMenuItem;
   showTabs: boolean;
   icon?: ReactNode;
 }

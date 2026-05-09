@@ -31,9 +31,9 @@ export default function FieldWithEditor(props: IProps) {
   const { label, titleExtra, value, onChange, extensions, previewResult, scrolling = true } = props;
 
   return (
-    <div className='n9e-notification-template-content'>
-      <div className='n9e-notification-template-content-editor'>
-        <div className='n9e-notification-template-content-editor-header'>
+    <div className='aido-notification-template-content'>
+      <div className='aido-notification-template-content-editor'>
+        <div className='aido-notification-template-content-editor-header'>
           <div>{label}</div>
           <div>{titleExtra}</div>
         </div>

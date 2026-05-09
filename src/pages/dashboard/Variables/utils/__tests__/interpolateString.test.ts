@@ -8,12 +8,12 @@ describe('formatString', () => {
     server: 'localhost',
     user_name: 'john_doe',
     var: '1',
-    '__field.labels.ident': 'dev-n9e-02',
+    '__field.labels.ident': 'dev-aido-02',
   };
 
   test('should handle ${__field.labels.ident} and ${var} format', () => {
     const result = formatString('http://example.com?ident=${__field.labels.ident}&var=${var}', testData);
-    expect(result).toBe('http://example.com?ident=dev-n9e-02&var=1');
+    expect(result).toBe('http://example.com?ident=dev-aido-02&var=1');
   });
 
   test('should handle $variableName format', () => {

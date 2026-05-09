@@ -60,7 +60,7 @@ export default function GraphStandardOptions(props: IProps) {
                 onChange={(e) => {
                   setHighLevelConfig({ ...highLevelConfig, legend: e.target.checked });
                 }}
-                className='n9e-checkbox-padding-right-0'
+                className='aido-checkbox-padding-right-0'
               >
                 Show Legend
               </Checkbox>
@@ -73,7 +73,7 @@ export default function GraphStandardOptions(props: IProps) {
               onChange={(e) => {
                 setHighLevelConfig({ ...highLevelConfig, shared: e.target.checked });
               }}
-              className='n9e-checkbox-padding-right-0'
+              className='aido-checkbox-padding-right-0'
             >
               Multi Tooltip, order value
             </Checkbox>

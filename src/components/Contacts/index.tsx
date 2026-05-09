@@ -27,7 +27,7 @@ export default function ContactDrawer(props: Props) {
 
   return (
     <Drawer size={960} closable={false} title={t('title')} destroyOnHidden extra={<CloseOutlined onClick={onCloseDrawer} />} onClose={onCloseDrawer} open={open}>
-      <div className='n9e'>
+      <div className='aido'>
         <div className={CN}>
           <div className='mb-4 flex justify-between'>
             <div />

@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export const NS = 'notification-rules';
-export const CN = 'n9e-notification-rules';
+export const CN = 'aido-notification-rules';
 export const PERM = `/${NS}`;
 export const DEFAULT_VALUES = {
   enable: true,

@@ -70,7 +70,7 @@ export default function ChannelSelect(props: Props) {
       label={
         <Space size={4}>
           {t('notification_configuration.channel')}
-          <Tooltip className='n9e-ant-from-item-tooltip' title={t('notification_configuration.channel_tip')}>
+          <Tooltip className='aido-ant-from-item-tooltip' title={t('notification_configuration.channel_tip')}>
             <QuestionCircleOutlined />
           </Tooltip>
           {isAuthorized && (

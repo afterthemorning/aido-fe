@@ -4,7 +4,7 @@ import i18next from 'i18next';
 
 import { IRawTimeRange, parseRange } from '@/components/TimeRangePicker';
 import { fetchHistoryRangeBatch, fetchHistoryInstantBatch, fetchHistoryRangeBatch2 } from '@/services/dashboardV2';
-import { alphabet, N9E_PATHNAME, IS_PLUS } from '@/utils/constant';
+import { alphabet, AIDO_PATHNAME, IS_PLUS } from '@/utils/constant';
 import replaceTemplateVariables from '@/pages/dashboard/Variables/utils/replaceTemplateVariables';
 
 import { ITarget } from '../../types';
@@ -232,7 +232,7 @@ export default async function prometheusQuery(options: IOptions): Promise<Result
           resolveData.query.push({
             type: 'Query Range',
             request: {
-              url: `/api/${N9E_PATHNAME}/query-range-batch`,
+              url: `/api/${AIDO_PATHNAME}/query-range-batch`,
               method: 'POST',
               data: { queries: batchQueryParams, datasource_id: datasourceValue },
             },
@@ -243,7 +243,7 @@ export default async function prometheusQuery(options: IOptions): Promise<Result
           resolveData.query.push({
             type: 'Query',
             request: {
-              url: `/api/${N9E_PATHNAME}/query-instant-batch`,
+              url: `/api/${AIDO_PATHNAME}/query-instant-batch`,
               method: 'POST',
               data: { queries: batchInstantParams, datasource_id: datasourceValue },
             },

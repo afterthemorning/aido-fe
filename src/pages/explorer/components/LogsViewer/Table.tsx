@@ -80,7 +80,7 @@ function Table(props: Props) {
 
   return (
     <RDGTable
-      className='n9e-event-logs-table'
+      className='aido-event-logs-table'
       rowKeyGetter={(row) => {
         return row.___id___;
       }}
@@ -105,7 +105,7 @@ function Table(props: Props) {
                 {_.map(_.omit(record, ['___raw___', '___id___']), (val: any, key) => {
                   return (
                     <dl key={key} className='mb-[4px]'>
-                      <dt className='inline-block n9e-fill-color-4 px-[4px] py-[2px] mr-[4px] whitespace-nowrap'>{key}: </dt>
+                      <dt className='inline-block aido-fill-color-4 px-[4px] py-[2px] mr-[4px] whitespace-nowrap'>{key}: </dt>
                       <dd className='inline'>
                         {onValueFilter ? <FieldValueWithFilter name={key} value={toString(val)} onValueFilter={onValueFilter} rawValue={record} /> : toString(val)}
                       </dd>

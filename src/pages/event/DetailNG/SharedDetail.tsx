@@ -29,7 +29,7 @@ const EventDetailPage = () => {
   }, [eventId]);
 
   return (
-    <div className='n9e-shared-event h-screen'>
+    <div className='aido-shared-event h-screen'>
       <div className='h-full p-2 lg:p-10'>
         <Card
           className='h-full'

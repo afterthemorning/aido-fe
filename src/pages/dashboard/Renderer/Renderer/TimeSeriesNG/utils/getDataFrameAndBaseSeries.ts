@@ -79,7 +79,7 @@ export function getDataFrameAndBaseSeriesByResult(result: ResultItem[]): {
 export interface BaseSeriesItem {
   show: boolean;
   label: string;
-  n9e_internal: {
+  aido_internal: {
     [index: string]: any;
   };
 }
@@ -104,8 +104,8 @@ export default function getDataFrameAndBaseSeries(oldSeries: OldSeriesItem[]): {
     baseSeries.push({
       show: true,
       label,
-      // n9e 内部使用
-      n9e_internal: {
+      // aido 内部使用
+      aido_internal: {
         id: item.id,
         refId: item.refId,
         offset: item.offset,

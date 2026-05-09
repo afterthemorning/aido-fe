@@ -12,7 +12,7 @@ import { getHistoryEventsById } from '@/services/warning';
 import { queryStringOptions } from '../constants';
 import HistoricalRecords, { setLocalQueryHistory } from './HistoricalRecords';
 
-const LOCAL_KEY = 'n9e-query-promql-history';
+const LOCAL_KEY = 'aido-query-promql-history';
 
 type IMode = 'table' | 'graph';
 interface IProps {

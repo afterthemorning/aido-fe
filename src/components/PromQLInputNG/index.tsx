@@ -7,7 +7,7 @@ import { useGetState } from 'ahooks';
 import { useTranslation } from 'react-i18next';
 
 import { CommonStateContext } from '@/App';
-import { N9E_PATHNAME } from '@/utils/constant';
+import { AIDO_PATHNAME } from '@/utils/constant';
 import BuiltinMetrics from '@/components/PromQLInput/BuiltinMetrics';
 import MetricsExplorer from '@/components/PromGraphCpt/components/MetricsExplorer';
 
@@ -39,7 +39,7 @@ interface MonacoEditorPromQLProps {
   onMetricUnitChange?: (unit: string) => void; // 用于内置指标启用时选择指标获取对应的 unit
 }
 
-const URL_PREFIX = `/api/${N9E_PATHNAME}/proxy`;
+const URL_PREFIX = `/api/${AIDO_PATHNAME}/proxy`;
 
 export default function index(props: MonacoEditorPromQLProps) {
   const { t } = useTranslation();

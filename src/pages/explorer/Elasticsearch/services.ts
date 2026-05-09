@@ -19,7 +19,7 @@ import request from '@/utils/request';
 import { RequestMethod } from '@/store/common';
 import _ from 'lodash';
 import { mappingsToFields, mappingsToFullFields, flattenHits, Field, typeMap, Filter } from './utils';
-import { N9E_PATHNAME } from '@/utils/constant';
+import { AIDO_PATHNAME } from '@/utils/constant';
 export type { Field, Filter };
 export { typeMap };
 
@@ -31,7 +31,7 @@ export function getIndices(datasourceValue: number, allow_hide_system_indices = 
   if (allow_hide_system_indices) {
     params.expand_wildcards = 'all';
   }
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/_cat/indices`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/_cat/indices`, {
     method: RequestMethod.Get,
     params,
     silence: true,
@@ -50,7 +50,7 @@ export function getFullIndices(datasourceValue: number, target = '*', allow_hide
     s: 'index',
   };
   if (crossClusterEnabled) {
-    return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/_field_caps`, {
+    return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/_field_caps`, {
       method: RequestMethod.Get,
       params: {
         fields: '*',
@@ -69,7 +69,7 @@ export function getFullIndices(datasourceValue: number, target = '*', allow_hide
     if (allow_hide_system_indices) {
       params.expand_wildcards = 'all';
     }
-    return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/_cat/indices/${target}`, {
+    return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/_cat/indices/${target}`, {
       method: RequestMethod.Get,
       params,
       silence: true,
@@ -81,7 +81,7 @@ export function getFullIndices(datasourceValue: number, target = '*', allow_hide
 
 export function getFields(datasourceValue: number, index?: string, type?: string, allow_hide_system_indices = false) {
   const url = index ? `/${index}/_mapping` : '/_mapping';
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}${url}`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}${url}`, {
     method: RequestMethod.Get,
     params: _.omit(
       {
@@ -114,7 +114,7 @@ export function getFullFields(
   },
 ) {
   if (options.crossClusterEnabled) {
-    return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/_field_caps`, {
+    return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/_field_caps`, {
       method: RequestMethod.Get,
       params: {
         fields: '*',
@@ -137,7 +137,7 @@ export function getFullFields(
   } else {
     const url = index ? `/${index}/_mapping` : '/_mapping';
 
-    return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}${url}`, {
+    return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}${url}`, {
       method: RequestMethod.Get,
       params: _.omit(
         {
@@ -183,7 +183,7 @@ export function getLogsQuery(datasourceValue: number, requestBody: any, requestI
 
   const controller = new AbortController();
   queryControllerMap.set(requestId, controller);
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/_msearch`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/_msearch`, {
     method: RequestMethod.Post,
     data: requestBody,
     headers: {
@@ -207,7 +207,7 @@ export function getLogsQuery(datasourceValue: number, requestBody: any, requestI
 }
 
 export function getDsQuery(datasourceValue: number, requestBody) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/_msearch`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/_msearch`, {
     method: RequestMethod.Post,
     data: requestBody,
     headers: {
@@ -220,7 +220,7 @@ export function getDsQuery(datasourceValue: number, requestBody) {
 }
 
 export function getESVersion(datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/`, {
     method: RequestMethod.Get,
   }).then((res) => {
     const dat = _.get(res, 'version.number');
@@ -229,7 +229,7 @@ export function getESVersion(datasourceValue: number) {
 }
 
 export function getFieldValues(datasourceValue, requestBody, field, n = 5) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/_msearch`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/_msearch`, {
     method: RequestMethod.Post,
     data: requestBody,
     headers: {
@@ -264,21 +264,21 @@ export function getFieldValues(datasourceValue, requestBody, field, n = 5) {
 }
 
 export function addLogsDownloadTask(requestBody) {
-  return request(`/api/${N9E_PATHNAME}/logs/download/task`, {
+  return request(`/api/${AIDO_PATHNAME}/logs/download/task`, {
     method: RequestMethod.Post,
     data: requestBody,
   }).then((res) => res.dat);
 }
 
 export function getLogsDownloadTasks(params) {
-  return request(`/api/${N9E_PATHNAME}/logs/download/tasks`, {
+  return request(`/api/${AIDO_PATHNAME}/logs/download/tasks`, {
     method: RequestMethod.Get,
     params,
   }).then((res) => res.dat);
 }
 
 export function delDownloadTask(data: { ids: number[] }) {
-  return request(`/api/${N9E_PATHNAME}/logs/download/task`, {
+  return request(`/api/${AIDO_PATHNAME}/logs/download/task`, {
     method: RequestMethod.Delete,
     data,
   }).then((res) => res.dat);

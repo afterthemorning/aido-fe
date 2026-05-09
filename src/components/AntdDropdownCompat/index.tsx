@@ -8,7 +8,7 @@
  * Usage: import Dropdown from '@/components/AntdDropdownCompat';
  * Drop-in replacement — all other DropdownProps are forwarded as-is.
  */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Dropdown, type DropdownProps } from 'antd';
 import cx from 'classnames';
 
@@ -36,15 +36,21 @@ const DropdownCompat: React.FC<DropdownCompatProps> = ({
     rest.onOpenChange?.(nextOpen, info);
   };
 
-  const mergedOverlayClassName = cx(overlayClassName);
-  const mergedOverlayStyle = {
-    ...(overlayStyle || {}),
-  };
-
   const popupRender = overlay ? () => overlay as React.ReactElement : undefined;
 
+  const mergedClassNames = useMemo(() => {
+    const cls = cx(overlayClassName);
+    if (!cls) return rest.classNames;
+    return { ...rest.classNames, root: cls };
+  }, [overlayClassName, rest.classNames]);
+
+  const mergedStyles = useMemo(() => {
+    if (!overlayStyle) return rest.styles;
+    return { ...rest.styles, root: overlayStyle };
+  }, [overlayStyle, rest.styles]);
+
   return (
-    <Dropdown {...rest} open={open} onOpenChange={onOpenChange} overlayClassName={mergedOverlayClassName} overlayStyle={mergedOverlayStyle} popupRender={popupRender}>
+    <Dropdown {...rest} open={open} onOpenChange={onOpenChange} classNames={mergedClassNames} styles={mergedStyles} popupRender={popupRender}>
       {children}
     </Dropdown>
   );

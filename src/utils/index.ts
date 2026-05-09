@@ -182,7 +182,7 @@ export const generateID = (): string => {
   return `_${Math.random().toString(36).substr(2, 9)}`;
 };
 
-// https://github.com/n9e/fe-v5/issues/72 修改 withByte 默认为 false
+// https://github.com/aido/fe/issues/72 修改 withByte 默认为 false
 export const sizeFormatter = (
   val,
   fixedCount = 2,

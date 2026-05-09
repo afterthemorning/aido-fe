@@ -21,7 +21,7 @@ export default function Flashduty() {
         label={
           <Space size={4}>
             {t('flashduty_request_config.integration_url')}
-            <Tooltip className='n9e-ant-from-item-tooltip' overlayClassName='ant-tooltip-max-width-600' title={t('flashduty_request_config.integration_url_tip')}>
+            <Tooltip className='aido-ant-from-item-tooltip' overlayClassName='ant-tooltip-max-width-600' title={t('flashduty_request_config.integration_url_tip')}>
               <QuestionCircleOutlined />
             </Tooltip>
           </Space>

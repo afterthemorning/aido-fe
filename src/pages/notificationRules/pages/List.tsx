@@ -79,7 +79,7 @@ export default function List() {
       icon={<NotificationOutlined />}
       doc='https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v8/quickstart/notify-rules/'
     >
-      <div className={`n9e ${CN}`}>
+      <div className={`aido ${CN}`}>
         <div className='pb-4 flex justify-between'>
           <Space>
             <Input

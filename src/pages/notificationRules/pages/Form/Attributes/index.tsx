@@ -78,7 +78,7 @@ export default function index(props: Props) {
                   <Space align='baseline' size={4}>
                     {keyLabel}
                     {keyLabelTootip && (
-                      <Tooltip className='n9e-ant-from-item-tooltip' title={keyLabelTootip} overlayClassName='ant-tooltip-auto-width' placement={keyLabelTootipPlacement}>
+                      <Tooltip className='aido-ant-from-item-tooltip' title={keyLabelTootip} overlayClassName='ant-tooltip-auto-width' placement={keyLabelTootipPlacement}>
                         <QuestionCircleOutlined />
                       </Tooltip>
                     )}
@@ -99,7 +99,7 @@ export default function index(props: Props) {
                     <Space align='baseline' size={4}>
                       {t('tag.func.label')}
                       <Tooltip
-                        className='n9e-ant-from-item-tooltip'
+                        className='aido-ant-from-item-tooltip'
                         title={
                           <div className='pt-2 px-1'>
                             <Markdown content={t('tag.func.label_tip')} darkMode />

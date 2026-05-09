@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Nightingale Team
+ * Copyright 2026 AIDO Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -92,13 +92,7 @@ const lazyPagesRoutes = _.reduce(
 function renderRouteWithSubRoutes(route: Entry['routes'][number], key: string | number) {
   const Component = route.component as unknown as React.ComponentType<{ routes?: unknown }>;
   const childRoutes = (route as Entry['routes'][number] & { routes?: unknown }).routes;
-  return (
-    <Route
-      key={key}
-      path={route.path}
-      element={<Component routes={childRoutes} />}
-    />
-  );
+  return <Route key={key} path={route.path} element={<Component routes={childRoutes} />} />;
 }
 
 export default function Content() {

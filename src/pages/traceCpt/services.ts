@@ -17,11 +17,11 @@
 import _ from 'lodash';
 import request from '@/utils/request';
 import { RequestMethod } from '@/store/common';
-import { N9E_PATHNAME } from '@/utils/constant';
+import { AIDO_PATHNAME } from '@/utils/constant';
 import { SearchTraceType, SearchTraceIDType } from './type';
 
 export const getTraceServices = (data_source_id) => {
-  return request(`/api/${N9E_PATHNAME}/proxy/${data_source_id}/api/services`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${data_source_id}/api/services`, {
     method: RequestMethod.Get,
   }).then((res) => {
     return res.data;
@@ -29,26 +29,26 @@ export const getTraceServices = (data_source_id) => {
 };
 
 export const getTraceOperation = (data_source_id, service) => {
-  return request(`/api/${N9E_PATHNAME}/proxy/${data_source_id}/api/services/${service}/operations`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${data_source_id}/api/services/${service}/operations`, {
     method: RequestMethod.Get,
   }).then((res) => res.data);
 };
 
 export const getTraceSearch = (data: SearchTraceType) => {
-  return request(`/api/${N9E_PATHNAME}/proxy/${data.data_source_id}/api/traces`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${data.data_source_id}/api/traces`, {
     method: RequestMethod.Get,
     params: _.omit(data, 'data_source_id'),
   }).then((res) => res.data);
 };
 
 export const getTraceByID = (data: SearchTraceIDType) => {
-  return request(`/api/${N9E_PATHNAME}/proxy/${data.data_source_id}/api/traces/${data.traceID}`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${data.data_source_id}/api/traces/${data.traceID}`, {
     method: RequestMethod.Get,
   }).then((res) => res.data);
 };
 
 export const getTraceDependencies = (id) => {
-  return request(`/api/${N9E_PATHNAME}/proxy/${id}/api/dependencies`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${id}/api/dependencies`, {
     method: RequestMethod.Get,
     params: {
       endTs: Date.now(),

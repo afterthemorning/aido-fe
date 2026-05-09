@@ -72,7 +72,7 @@ export default function TimeseriesCpt(props: Props) {
     <>
       <AdvancedSettings prefixName={['query']} expanded expandTriggerVisible={false} />
       {!_.isEmpty(series) ? (
-        <div className='n9e-antd-table-height-full'>
+        <div className='aido-antd-table-height-full'>
           <Spin spinning={loading}>
             <Timeseries
               series={series}

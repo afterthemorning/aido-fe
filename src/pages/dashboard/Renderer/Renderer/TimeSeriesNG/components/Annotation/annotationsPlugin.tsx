@@ -121,7 +121,7 @@ export function Markers(props: MarkersProps) {
             if (x0 < uplot.rect.width && x1 > 0) {
               content = (
                 <div
-                  className='n9e-dashboard-annotation-range-marker'
+                  className='aido-dashboard-annotation-range-marker'
                   style={{
                     left: x0,
                     width: x1 - x0,
@@ -134,7 +134,7 @@ export function Markers(props: MarkersProps) {
             if (x0 >= 0 && x0 <= uplot.rect.width) {
               content = (
                 <div
-                  className='n9e-dashboard-annotation-single-marker'
+                  className='aido-dashboard-annotation-single-marker'
                   style={{
                     left: x0,
                     borderBottomColor: DEFAULT_ANNOTATION_COLOR,

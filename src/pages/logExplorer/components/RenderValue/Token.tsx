@@ -64,7 +64,7 @@ export default function Token(props: Props) {
         setPopoverVisible(visible);
       }}
       trigger={['click']}
-      overlayClassName='n9e-log-field-val-popover'
+      overlayClassName='aido-log-field-val-popover'
       content={
         <ul className='ant-dropdown-menu ant-dropdown-menu-root ant-dropdown-menu-vertical ant-dropdown-menu-light'>
           {!tokenHide && (
@@ -148,7 +148,7 @@ export default function Token(props: Props) {
           }}
         />
       ) : (
-        <div className='n9e-log-field-val-token'>{toString(valueNode)}</div>
+        <div className='aido-log-field-val-token'>{toString(valueNode)}</div>
       )}
     </Popover>
   );

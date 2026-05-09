@@ -85,7 +85,7 @@ function Links(props: Props, ref) {
 
   return (
     <div
-      className='n9e-dashboard-panel-table-ng-links-popover bg-fc-200 pb-2 min-w-[120px] max-w-[400px] rounded n9e-base-shadow'
+      className='aido-dashboard-panel-table-ng-links-popover bg-fc-200 pb-2 min-w-[120px] max-w-[400px] rounded aido-base-shadow'
       ref={linksPopverRef}
       style={{ display: visible ? 'block' : 'none' }}
     >
@@ -96,7 +96,7 @@ function Links(props: Props, ref) {
             scopedVars: rowDataItem,
           });
           return (
-            <div key={index} className='py-1.5 px-2 n9e-dashboard-panel-table-ng-links-item'>
+            <div key={index} className='py-1.5 px-2 aido-dashboard-panel-table-ng-links-item'>
               <a href={interpolatedUrl} target={link.targetBlank ? '_blank' : '_self'} rel='noopener noreferrer'>
                 <Space>
                   <LinkOutlined />

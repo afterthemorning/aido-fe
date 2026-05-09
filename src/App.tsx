@@ -1,23 +1,6 @@
-/*
- * Copyright 2022 Nightingale Team
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
 import React, { useEffect, useState, createContext, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// Modal 会被注入的代码所使用，请不要删除
-import { ConfigProvider, Empty, Modal, Spin } from 'antd';
+import { ConfigProvider, Empty, Modal, Spin, Layout, theme } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
 import ruRU from 'antd/lib/locale/ru_RU';
@@ -45,11 +28,10 @@ import Content from './routers';
 
 // @ts-ignore
 import useIsPlus from 'plus:/components/useIsPlus';
-// @ts-ignore
-import CustomerServiceFloatButton from 'plus:/components/CustomerServiceFloatButton';
 
 import './App.less';
-import './global.variable.less';
+
+const { Content: AntContent } = Layout;
 
 interface IProfile {
   admin?: boolean;
@@ -85,27 +67,16 @@ function normalizeDatasourceList(datasourceList: Datasource[]) {
 
 export interface ICommonState {
   datasourceCateOptions: Cate[];
-  groupedDatasourceList: {
-    [index: string]: Datasource[];
-  };
+  groupedDatasourceList: { [index: string]: Datasource[] };
   reloadGroupedDatasourceList: () => void;
   datasourceList: Datasource[];
   setDatasourceList: (list: Datasource[]) => void;
   reloadDatasourceList: () => void;
-  busiGroups: {
-    name: string;
-    id: number;
-    label_value?: string;
-  }[];
+  busiGroups: { name: string; id: number; label_value?: string }[];
   setBusiGroups: (groups: { name: string; id: number }[]) => void;
   curBusiId: number;
   setCurBusiId: (id: number) => void;
-  businessGroup: {
-    key?: string; // 业务组组件本身的key
-    ids?: string; // 逗号分割 'id1,id2,id3'
-    id?: number; // 叶子节点的id 用于兼容旧的代码
-    isLeaf?: boolean;
-  };
+  businessGroup: { key?: string; ids?: string; id?: number; isLeaf?: boolean };
   setBusiGroup: (group: { key?: string; ids?: string; id?: number; isLeaf?: boolean }) => void;
   getVaildBusinessGroup: (busiGroups: any[], businessGroupKey: { key?: string; ids?: string; id?: number; isLeaf?: boolean }) => void;
   businessGroupOnChange: (key: string) => void;
@@ -114,15 +85,8 @@ export interface ICommonState {
   licenseRulesRemaining?: number;
   licenseExpireDays?: number;
   licenseExpired: boolean;
-  versions: {
-    version: string;
-    github_verison: string;
-    newVersion: boolean;
-  };
-  feats?: {
-    fcBrain: boolean;
-    plugins: any[];
-  };
+  versions: { version: string; github_verison: string; newVersion: boolean };
+  feats?: { fcBrain: boolean; plugins: any[] };
   isPlus: boolean;
   siteInfo?: { [index: string]: string };
   sideMenuBgMode: string;
@@ -134,20 +98,22 @@ export interface ICommonState {
   dashboardSaveMode: 'auto' | 'manual';
   perms?: string[];
   screenTemplates?: string[];
-  tablePaginationPosition?: string; // 表格分页位置
-  installTs: number; // 安装时间戳
+  tablePaginationPosition?: string;
+  installTs: number;
   i18nList?: string[];
-  rangePickerShowSecond?: boolean; // 时间范围选择器是否显示秒选择
-  logsDefaultRange: IRawTimeRange; // 日志默认时间范围
+  rangePickerShowSecond?: boolean;
+  logsDefaultRange: IRawTimeRange;
 }
 
 export const basePrefix = import.meta.env.VITE_PREFIX || '';
 
-// 可以匿名访问的路由 TODO: job-task output 应该也可以匿名访问
-const anonymousRoutes = [`${basePrefix}/login`, `${basePrefix}/callback`, `${basePrefix}/chart`, `${basePrefix}/dashboards/share/`, `${basePrefix}/share/alert-his-events/`];
-// 判断是否是匿名访问的路由
+const anonymousRoutes = [
+  `${basePrefix}/login`, `${basePrefix}/callback`,
+  `${basePrefix}/chart`, `${basePrefix}/dashboards/share/`,
+  `${basePrefix}/share/alert-his-events/`,
+];
+
 const anonymous = _.some(anonymousRoutes, (route) => location.pathname.startsWith(route));
-// 初始化数据 context
 export const CommonStateContext = createContext({} as ICommonState);
 
 function App() {
@@ -176,44 +142,26 @@ function App() {
       setCommonState((state) => ({ ...state, datasourceList, groupedDatasourceList: _.groupBy(datasourceList, 'plugin_type'), datasourceCateOptions }));
     },
     busiGroups: [],
-    setBusiGroups: (busiGroups) => {
-      setCommonState((state) => ({ ...state, busiGroups }));
-    },
+    setBusiGroups: (busiGroups) => setCommonState((state) => ({ ...state, busiGroups })),
     curBusiId: window.localStorage.getItem('curBusiId') ? Number(window.localStorage.getItem('curBusiId')) : 0,
     setCurBusiId: (id: number) => {
       window.localStorage.setItem('curBusiId', String(id));
       setCommonState((state) => ({ ...state, curBusiId: id }));
     },
     businessGroup: {},
-    setBusiGroup: (businessGroup) => {
-      setCommonState((state) => ({ ...state, businessGroup }));
-    },
+    setBusiGroup: (businessGroup) => setCommonState((state) => ({ ...state, businessGroup })),
     getVaildBusinessGroup,
     businessGroupOnChange: (key: string) => {
       window.localStorage.setItem('businessGroupKey', key);
       const ids = getCleanBusinessGroupIds(key);
-      setCommonState((state) => ({
-        ...state,
-        businessGroup: {
-          key,
-          ids,
-          id: _.map(_.split(ids, ','), _.toNumber)?.[0],
-          isLeaf: !_.startsWith(key, 'group,'),
-        },
-      }));
+      setCommonState((state) => ({ ...state, businessGroup: { key, ids, id: _.map(_.split(ids, ','), _.toNumber)?.[0], isLeaf: !_.startsWith(key, 'group,') } }));
     },
     profile: {} as IProfile,
-    setProfile: (profile: IProfile) => {
-      setCommonState((state) => ({ ...state, profile }));
-    },
+    setProfile: (profile: IProfile) => setCommonState((state) => ({ ...state, profile })),
     licenseExpired: false,
-    versions: {
-      version: '',
-      github_verison: '',
-      newVersion: false,
-    },
+    versions: { version: '', github_verison: '', newVersion: false },
     isPlus,
-    sideMenuBgMode: localStorage.getItem('sideMenuBgMode') || 'theme',
+    sideMenuBgMode: localStorage.getItem('sideMenuBgMode') || 'light',
     setSideMenuBgMode: (mode: string) => {
       window.localStorage.setItem('sideMenuBgMode', mode);
       setCommonState((state) => ({ ...state, sideMenuBgMode: mode }));
@@ -232,159 +180,116 @@ function App() {
 
   const removePreloader = () => {
     const preloader = document.querySelector('.preloader');
-    if (preloader) {
-      preloader.remove();
-    }
+    if (preloader) preloader.remove();
   };
 
   useEffect(() => {
     if (location.pathname === '/out-of-service') {
       initialized.current = true;
       removePreloader();
-      setCommonState({ ...commonState }); // 为了触发重新渲染
       return;
     }
-
-    // Avoid firing protected bootstrap requests when user is not authenticated.
     if (!anonymous && !localStorage.getItem(AccessTokenKey) && !localStorage.getItem('refresh_token')) {
       const redirect = `${basePrefix}/login${location.pathname !== `${basePrefix}/` ? `?redirect=${encodeURIComponent(location.pathname + location.search)}` : ''}`;
       location.href = redirect;
       return;
     }
-
-    try {
-      (async () => {
-        const iconLink = document.querySelector("link[rel~='icon']") as any;
-        let siteInfo;
-        const siteInfoStr = await getN9eConfig('site_info');
-        if (siteInfoStr) {
-          try {
-            siteInfo = JSON.parse(siteInfoStr);
-          } catch (e) {
-            console.error(e);
-          }
-        }
-        document.title = siteInfo?.page_title || 'Nightingale';
-        if (iconLink) {
-          const favicon = siteInfo?.favicon_url || '/image/favicon.ico';
-          if (/^(https?:)?\/\//.test(favicon) || favicon.startsWith('data:')) {
-            iconLink.href = favicon;
-          } else if (basePrefix && favicon.startsWith('/') && !favicon.startsWith(`${basePrefix}/`)) {
-            iconLink.href = `${basePrefix}${favicon}`;
-          } else {
-            iconLink.href = favicon;
-          }
-        }
-        if (siteInfo?.font_family) {
-          document.body.style.fontFamily = siteInfo.font_family;
-        }
-        // 非匿名访问，需要初始化一些公共数据
-        if (!anonymous) {
-          const installTs = await getInstallDate();
-          const { dat: profile } = (await GetProfile()) || {};
-          const { dat: busiGroups } = (await getBusiGroups()) || {};
-          const { dat: perms } = (await getMenuPerm()) || {};
-          const datasourceList = normalizeDatasourceList(await getDatasourceBriefList());
-          const { licenseRulesRemaining, licenseExpireDays, feats } = await getLicense(t);
-          let versions = { version: '', github_verison: '', newVersion: false };
-          if (!isPlus) {
-            versions = (await getVersions()) || versions;
-          }
-          /* 兼容旧的业务组组件 */
-          const defaultBusiId = commonState.curBusiId || busiGroups?.[0]?.id;
-          window.localStorage.setItem('curBusiId', String(defaultBusiId));
-          /* 兼容旧的业务组组件 */
-          initialized.current = true;
-          removePreloader();
-
-          setCommonState((state) => {
-            return {
-              ...state,
-              installTs,
-              profile,
-              busiGroups,
-              businessGroup: getDefaultBusiness(busiGroups),
-              datasourceCateOptions: getAuthorizedDatasourceCates(feats, isPlus, (cate) => {
-                const groupedDatasourceList = _.groupBy(datasourceList, 'plugin_type');
-                return !_.isEmpty(groupedDatasourceList[cate.value]);
-              }),
-              groupedDatasourceList: _.groupBy(datasourceList, 'plugin_type'),
-              datasourceList: datasourceList,
-              curBusiId: defaultBusiId,
-              licenseRulesRemaining,
-              licenseExpireDays,
-              licenseExpired: licenseExpireDays !== undefined && licenseExpireDays <= 0,
-              versions,
-              feats,
-              siteInfo,
-              perms,
-            };
-          });
+    (async () => {
+      const iconLink = document.querySelector("link[rel~='icon']") as any;
+      let siteInfo;
+      const siteInfoStr = await getN9eConfig('site_info');
+      if (siteInfoStr) {
+        try { siteInfo = JSON.parse(siteInfoStr); } catch (e) { console.error(e); }
+      }
+      document.title = siteInfo?.page_title || 'AIDO';
+      if (iconLink) {
+        const favicon = siteInfo?.favicon_url || '/image/favicon.ico';
+        if (/^(https?:)?\/\//.test(favicon) || favicon.startsWith('data:')) {
+          iconLink.href = favicon;
+        } else if (basePrefix && favicon.startsWith('/') && !favicon.startsWith(`${basePrefix}/`)) {
+          iconLink.href = `${basePrefix}${favicon}`;
         } else {
-          const datasourceList = !_.some([`${basePrefix}/login`, `${basePrefix}/callback`, `${basePrefix}/share/alert-his-events/`], (route) => location.pathname.startsWith(route))
-            ? normalizeDatasourceList(await getDatasourceBriefList())
-            : [];
-          removePreloader();
-          initialized.current = true;
-          setCommonState((state) => {
-            return {
-              ...state,
-              groupedDatasourceList: _.groupBy(datasourceList, 'plugin_type'),
-              datasourceList: datasourceList,
-              siteInfo,
-            };
-          });
+          iconLink.href = favicon;
         }
-      })();
-    } catch (error) {
-      console.error(error);
-      location.href = basePrefix + '/out-of-service';
-    }
+      }
+      if (siteInfo?.font_family) document.body.style.fontFamily = siteInfo.font_family;
+      if (!anonymous) {
+        const installTs = await getInstallDate();
+        const { dat: profile } = (await GetProfile()) || {};
+        const { dat: busiGroups } = (await getBusiGroups()) || {};
+        const { dat: perms } = (await getMenuPerm()) || {};
+        const datasourceList = normalizeDatasourceList(await getDatasourceBriefList());
+        const { licenseRulesRemaining, licenseExpireDays, feats } = await getLicense(t);
+        let versions = { version: '', github_verison: '', newVersion: false };
+        if (!isPlus) versions = (await getVersions()) || versions;
+        const defaultBusiId = busiGroups?.[0]?.id;
+        window.localStorage.setItem('curBusiId', String(defaultBusiId));
+        initialized.current = true;
+        removePreloader();
+        setCommonState((state) => ({
+          ...state, installTs, profile, busiGroups,
+          businessGroup: getDefaultBusiness(busiGroups),
+          datasourceCateOptions: getAuthorizedDatasourceCates(feats, isPlus, (cate) => {
+            const groupedDatasourceList = _.groupBy(datasourceList, 'plugin_type');
+            return !_.isEmpty(groupedDatasourceList[cate.value]);
+          }),
+          groupedDatasourceList: _.groupBy(datasourceList, 'plugin_type'),
+          datasourceList, curBusiId: defaultBusiId,
+          licenseRulesRemaining, licenseExpireDays,
+          licenseExpired: licenseExpireDays !== undefined && licenseExpireDays <= 0,
+          versions, feats, siteInfo, perms,
+        }));
+      } else {
+        const datasourceList = !_.some(
+          [`${basePrefix}/login`, `${basePrefix}/callback`, `${basePrefix}/share/alert-his-events/`],
+          (route) => location.pathname.startsWith(route),
+        ) ? normalizeDatasourceList(await getDatasourceBriefList()) : [];
+        removePreloader();
+        initialized.current = true;
+        setCommonState((state) => ({ ...state, groupedDatasourceList: _.groupBy(datasourceList, 'plugin_type'), datasourceList, siteInfo }));
+      }
+    })();
   }, []);
 
   useEffect(() => {
     if (!location.pathname.startsWith('/login')) {
       document.body.className = commonState.darkMode ? 'theme-dark' : 'theme-light';
-      // TODO: 临时兼容 Class 组件的写法
-      localStorage.setItem('n9e-dark-mode', _.toString(commonState.darkMode));
-      window.dispatchEvent(new Event('n9e-dark-mode-update'));
+      localStorage.setItem('aido-dark-mode', _.toString(commonState.darkMode));
+      window.dispatchEvent(new Event('aido-dark-mode-update'));
     }
   }, [commonState.darkMode]);
 
-  // 初始化中不渲染任何内容
-  if (!initialized.current) {
-    return null;
-  }
+  if (!initialized.current) return null;
 
   return (
-    <div className='App'>
+    <ConfigProvider
+      locale={i18n.language == 'en_US' ? enUS : i18n.language == 'ru_RU' ? ruRU : zhCN}
+      empty={{ image: Empty.PRESENTED_IMAGE_DEFAULT }}
+      warning={{ strict: false }}
+      theme={{ algorithm: commonState.darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm }}
+    >
       <CommonStateContext.Provider value={commonState}>
-        <ConfigProvider
-          locale={i18n.language == 'en_US' ? enUS : i18n.language == 'ru_RU' ? ruRU : zhCN}
-          empty={{ image: Empty.PRESENTED_IMAGE_DEFAULT }}
-          warning={{ strict: false }}
-        >
-          <Router
-            basename={basePrefix}
-          >
+        <Router basename={basePrefix}>
+          <Layout style={{ minHeight: '100vh' }}>
             <Routes>
               <Route path='/job-task/:busiId/output/:taskId/:outputType' element={<TaskOutput />} />
               <Route path='/job-task/:busiId/output/:taskId/:host/:outputType' element={<TaskHostOutput />} />
               <Route path='/share/alert-his-events/:eventId' element={<SharedDetail />} />
               <Route path='*' element={
-                <>
-                  {location.pathname !== `${basePrefix}/out-of-service` && <HeaderMenu />}
-                  <Content />
-                  <HocRenderer></HocRenderer>
-                </>
+                <Layout style={{ minHeight: '100vh' }}>
+                  <HeaderMenu />
+                  <AntContent style={{ display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
+                    <Content />
+                    <HocRenderer />
+                  </AntContent>
+                </Layout>
               } />
             </Routes>
             <Feedback />
-          </Router>
-        </ConfigProvider>
+          </Layout>
+        </Router>
       </CommonStateContext.Provider>
-      {/* {import.meta.env.VITE_IS_ENT !== 'true' && import.meta.env.VITE_IS_PRO === 'true' && <CustomerServiceFloatButton />} */}
-    </div>
+    </ConfigProvider>
   );
 }
 

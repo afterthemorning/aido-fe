@@ -48,8 +48,8 @@ import './style.less';
 
 import DropdownCompat from '@/components/AntdDropdownCompat';
 
-const N9E_GIDS_LOCALKEY = 'N9E_BOARD_NODE_ID';
-const SEARCH_LOCAL_STORAGE_KEY = 'n9e_dashboard_search';
+const AIDO_GIDS_LOCALKEY = 'N9E_BOARD_NODE_ID';
+const SEARCH_LOCAL_STORAGE_KEY = 'aido_dashboard_search';
 const PUBLIC_SELECT_GIDS_LOCALKEY = 'N9E_PUBLIC_SELECT_GIDS';
 const getDefaultPublicSelectGids = (localKey: string) => {
   const valueStr = localStorage.getItem(localKey);
@@ -61,7 +61,7 @@ export default function index() {
   const { t } = useTranslation('dashboard');
   const { businessGroup, perms } = useContext(CommonStateContext);
   const queryParams = queryString.parse(useLocation().search);
-  const [gids, setGids] = useState<string | undefined>(getDefaultGidsInDashboard(queryParams, N9E_GIDS_LOCALKEY, businessGroup));
+  const [gids, setGids] = useState<string | undefined>(getDefaultGidsInDashboard(queryParams, AIDO_GIDS_LOCALKEY, businessGroup));
   const [list, setList] = useState<any[]>([]);
   const [selectRowKeys, setSelectRowKeys] = useState<number[]>([]);
   const [refreshKey, setRefreshKey] = useState(_.uniqueId('refreshKey_'));
@@ -115,7 +115,7 @@ export default function index() {
         <BusinessGroupSideBarWithAll
           gids={gids}
           setGids={setGids}
-          localeKey={N9E_GIDS_LOCALKEY}
+          localeKey={AIDO_GIDS_LOCALKEY}
           showPublicOption={_.includes(perms, '/public-dashboards')}
           publicOptionLabel={t('default_filter.public')}
           allOptionLabel={t('default_filter.all')}

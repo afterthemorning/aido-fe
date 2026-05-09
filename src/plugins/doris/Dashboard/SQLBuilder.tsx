@@ -32,7 +32,7 @@ export default function SQLBuilder(props: Props) {
   return (
     <>
       <Form.Item
-        className='n9e-doris-dashboard-querybuilder-query-item'
+        className='aido-doris-dashboard-querybuilder-query-item'
         label={
           <div className='w-full flex justify-between'>
             <Space>

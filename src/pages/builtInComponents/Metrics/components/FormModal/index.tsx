@@ -180,7 +180,7 @@ export default function index(props: Props) {
               ]}
             >
               {(fields, { add, remove }, { errors }) => (
-                <Space direction='vertical' size={SIZE * 2} className='w-full'>
+                <Space orientation='vertical' size={SIZE * 2} className='w-full'>
                   <div>
                     <Space size={0}>
                       {t('translation')}

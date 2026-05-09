@@ -141,7 +141,7 @@ export default function index<FilterValues>(props: Props<FilterValues>) {
             allowClear
             disabled={disabled}
             placeholder={placeholder ?? t('placeholder')}
-            className='w-full n9e-view-select'
+            className='w-full aido-view-select'
             popupMatchSelectWidth={false}
             dropdownRender={(originNode) => {
               return (

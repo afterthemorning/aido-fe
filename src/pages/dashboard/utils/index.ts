@@ -269,7 +269,7 @@ function convertOptionsGrafanaToN9E(panel: any) {
     s: 'seconds',
     ms: 'milliseconds',
   };
-  // 这里有 default 和 overrides 区别，目前 n9e 暂不支持 overrides
+  // 这里有 default 和 overrides 区别，目前 aido 暂不支持 overrides
   return {
     valueMappings: config?.mappings,
     thresholds: convertThresholdsGrafanaToN9E(config),

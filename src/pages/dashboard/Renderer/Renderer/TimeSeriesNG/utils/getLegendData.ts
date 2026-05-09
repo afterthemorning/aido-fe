@@ -47,7 +47,7 @@ export default function getLegendData(props: Props): DataItem[] {
   let unit = getUnit(standardOptions);
   const data = _.map(_.slice(frames, 1), (item, idx) => {
     const seriesItem = baseSeries[idx];
-    const override = _.find(overrides, (item) => item.matcher?.value === seriesItem.n9e_internal.refId);
+    const override = _.find(overrides, (item) => item.matcher?.value === seriesItem.aido_internal.refId);
     if (override) {
       unit = override?.properties?.standardOptions?.unit;
       decimals = override?.properties?.standardOptions?.decimals;
@@ -63,17 +63,17 @@ export default function getLegendData(props: Props): DataItem[] {
       stdDev: calculateStdDev(item as number[]),
     };
     return {
-      id: seriesItem.n9e_internal.id,
+      id: seriesItem.aido_internal.id,
       name: getMappedTextObj(seriesItem.label, valueMappings)?.text,
       metric: _.reduce(
-        seriesItem.n9e_internal.metric,
+        seriesItem.aido_internal.metric,
         (pre, curVal, curKey) => {
           pre[curKey] = getMappedTextObj(curVal, valueMappings)?.text;
           return pre;
         },
         {},
       ),
-      offset: seriesItem.n9e_internal.offset,
+      offset: seriesItem.aido_internal.offset,
       color: hexPalette[idx % hexPalette.length],
       show: seriesItem.show,
       max: valueFormatter({ unit, decimals, dateFormat }, statValues.max),

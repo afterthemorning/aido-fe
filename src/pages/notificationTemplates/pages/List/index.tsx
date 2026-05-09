@@ -67,7 +67,7 @@ export default function ListCpt() {
 
   return (
     <PageLayout title={<Space>{t('title')}</Space>} icon={<NotificationOutlined />}>
-      <div className='n9e'>
+      <div className='aido'>
         <div className={CN}>
           <div className={`${CN}-sidebar`}>
             <div className={`${CN}-sidebar-header`}>

@@ -26,7 +26,7 @@ export default function RichTextEditor({ value, onChange, placeholder, readOnly 
   });
 
   return (
-    <div className='n9e-rich-text-editor' style={{ minHeight }}>
+    <div className='aido-rich-text-editor' style={{ minHeight }}>
       <EditorContent editor={editor} />
     </div>
   );

@@ -52,7 +52,7 @@ export default function Script() {
       )}
       {script_type === 'path' && (
         <Form.Item label={t('script_request_config.path.label')} name={[...names, 'path']} rules={[{ required: isRequired }]}>
-          <Input placeholder='/opt/n9e/etc/scripts/notify.py' />
+          <Input placeholder='/opt/aido/etc/scripts/notify.py' />
         </Form.Item>
       )}
     </div>

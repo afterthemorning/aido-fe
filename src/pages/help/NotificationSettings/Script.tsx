@@ -76,7 +76,7 @@ export default function Script() {
               return (
                 <>
                   <Form.Item label={t('script.path')} name='content1'>
-                    <Input placeholder='/opt/n9e/etc/scripts/notify.py' />
+                    <Input placeholder='/opt/aido/etc/scripts/notify.py' />
                   </Form.Item>
                 </>
               );

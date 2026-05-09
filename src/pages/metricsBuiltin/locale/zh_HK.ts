@@ -30,7 +30,7 @@ const zh_HK = {
   filter: {
     title: '過濾條件',
     title_tip:
-      '過濾條件 的作用是，在點擊右側指標，查看指標的監控數據時，縮小查詢監控數據的範圍。如果配置並選擇了過濾條件 {ident="n9e01"}，則在查詢 cpu_usage_idle 時，發起的查詢是 cpu_usage_idle{ident="n9e01"}，會極大降低查詢曲線的數量',
+      '過濾條件 的作用是，在點擊右側指標，查看指標的監控數據時，縮小查詢監控數據的範圍。如果配置並選擇了過濾條件 {ident="aido01"}，則在查詢 cpu_usage_idle 時，發起的查詢是 cpu_usage_idle{ident="aido01"}，會極大降低查詢曲線的數量',
     add_title: '新增過濾條件',
     edit_title: '編輯過濾條件',
     import_title: '導入過濾條件',

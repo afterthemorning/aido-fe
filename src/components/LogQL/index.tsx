@@ -50,7 +50,7 @@ export default function index(props: Props) {
     datasourceValue,
     query,
     historicalRecords,
-    url = '/api/n9e-plus',
+    url = '/api/aido-plus',
     headers,
     value,
     onChange,

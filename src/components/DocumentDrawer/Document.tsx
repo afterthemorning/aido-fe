@@ -55,7 +55,7 @@ export default function index(props: Props) {
         </div>
       )}
       {type === 'iframe' && (
-        <Spin spinning={loading} wrapperClassName='n9e-document-drawer-iframe-loading'>
+        <Spin spinning={loading} wrapperClassName='aido-document-drawer-iframe-loading'>
           <iframe
             src={`${realDocumentPath}${filenameMap[i18n.language]}/?onlyContent&theme=${darkMode ? 'dark' : 'light'}`}
             style={{ width: '100%', height: '100%', border: '0 none', visibility: loading ? 'hidden' : 'visible' }}

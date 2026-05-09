@@ -719,9 +719,9 @@ export default function UptimeKumaExplorer(props: IProps) {
       }
       styles={{ body: { paddingTop: 12, paddingBottom: 12 } }}
     >
-      <Space direction='vertical' style={{ width: '100%' }} size={12}>
+      <Space orientation='vertical' style={{ width: '100%' }} size={12}>
         <Card size='small' styles={{ body: { padding: 12, background: 'var(--fill-1)', borderRadius: 8 } }}>
-          <Space direction='vertical' style={{ width: '100%' }} size={10}>
+          <Space orientation='vertical' style={{ width: '100%' }} size={10}>
             <Space align='center' style={{ width: '100%', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
               <Typography.Text strong>{tU('quick_presets')}</Typography.Text>
               <Typography.Text type='secondary'>{tU('datasource', { id: datasourceValue || '-' })}</Typography.Text>
@@ -789,7 +789,7 @@ export default function UptimeKumaExplorer(props: IProps) {
               label: tU('tabs.semantics', { count: metadataRows.length }),
               children: (
                 <Card size='small' title={tU('metric_semantics', { metrics: metadataRows.length, groups: _.uniqBy(metadataRows, 'groupKey').length })}>
-                  <Space direction='vertical' style={{ width: '100%' }} size={8}>
+                  <Space orientation='vertical' style={{ width: '100%' }} size={8}>
                     <Typography.Text type='secondary'>{tU('metric_semantics_desc')}</Typography.Text>
                     {metricMetadataError ? <Typography.Text type='warning'>{tU('help_type_fetch_failed', { message: metricMetadataError })}</Typography.Text> : null}
                     <Table<MetadataRow> size='small' columns={metadataColumns} dataSource={metadataRows} pagination={false} scroll={{ x: 'max-content' }} bordered />

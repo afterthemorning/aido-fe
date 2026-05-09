@@ -41,13 +41,13 @@ export { default as Add } from './add';
 export { default as Edit } from './edit';
 
 const { confirm } = Modal;
-const N9E_GIDS_LOCALKEY = 'n9e_mutes_gids';
+const AIDO_GIDS_LOCALKEY = 'aido_mutes_gids';
 
 const Shield: React.FC = () => {
   const { t } = useTranslation('alertMutes');
   const navigate = useNavigate();
   const { datasourceList, groupedDatasourceList, businessGroup, busiGroups } = useContext(CommonStateContext);
-  const [gids, setGids] = useState<string | undefined>(getDefaultGids(N9E_GIDS_LOCALKEY, businessGroup));
+  const [gids, setGids] = useState<string | undefined>(getDefaultGids(AIDO_GIDS_LOCALKEY, businessGroup));
   const [query, setQuery] = useState<string>('');
   const [currentShieldDataAll, setCurrentShieldDataAll] = useState<Array<shieldItem>>([]);
   const [currentShieldData, setCurrentShieldData] = useState<Array<shieldItem>>([]);
@@ -361,7 +361,7 @@ const Shield: React.FC = () => {
   return (
     <PageLayout title={t('title')} icon={<CloseCircleOutlined />} doc='https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/alert/alert-mute/'>
       <div className='shield-content'>
-        <BusinessGroupSideBarWithAll gids={gids} setGids={setGids} localeKey={N9E_GIDS_LOCALKEY} />
+        <BusinessGroupSideBarWithAll gids={gids} setGids={setGids} localeKey={AIDO_GIDS_LOCALKEY} />
         <div className='shield-index fc-border' style={{ height: '100%', overflowY: 'auto' }}>
           <div className='header'>
             <Space>

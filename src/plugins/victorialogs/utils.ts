@@ -34,7 +34,7 @@ export const getDataFrameAndBaseSeries = (hits: HitResult[]) => {
     baseSeries.push({
       show: true,
       label: item.fields?._stream,
-      n9e_internal: {},
+      aido_internal: {},
     });
     total += item.total;
     for (const date of item.timestamps) {

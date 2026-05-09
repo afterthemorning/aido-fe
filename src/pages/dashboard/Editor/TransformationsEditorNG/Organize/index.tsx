@@ -93,7 +93,7 @@ export default function OrganizeFields(props: IProps) {
         ) : (
           <SortableBody
             useDragHandle
-            helperClass='n9e-dashboard-editor-transformationNG-organizeFields-row-dragging'
+            helperClass='aido-dashboard-editor-transformationNG-organizeFields-row-dragging'
             onSortEnd={({ oldIndex, newIndex }) => {
               if (value?.fields) {
                 const newFields = arrayMoveImmutable(value?.fields, oldIndex, newIndex);

@@ -314,7 +314,7 @@ export default function AlertTable(props: IProps) {
   const pagination = usePagination({ PAGESIZE_KEY: EVENTS_TABLE_PAGESIZE_CACHE_KEY });
 
   return (
-    <div className='n9e-antd-table-height-full'>
+    <div className='aido-antd-table-height-full'>
       <Table
         size='small'
         tableLayout='auto'

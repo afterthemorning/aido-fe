@@ -38,7 +38,7 @@ const RenderTree = (props: {
   const isBusiDelAuthorized = useIsAuthorized(['/busi-groups/del']);
 
   return (
-    <ul className='n9e-tree-nodes'>
+    <ul className='aido-tree-nodes'>
       {_.map(treeData, (item, nodeIdx) => {
         const hasChildren = item.children && item.children.length > 0;
         const isExpanded = _.includes(expandedKeys, item.key);
@@ -50,7 +50,7 @@ const RenderTree = (props: {
             key={item.key}
             trigger='hover'
             placement='right'
-            overlayClassName='n9e-buis-group-item-popover'
+            overlayClassName='aido-buis-group-item-popover'
             content={
               (isBusiPutAuthorized || isBusiDelAuthorized) && !item.children && onEdit ? (
                 <Space size={2}>
@@ -90,10 +90,10 @@ const RenderTree = (props: {
               ) : undefined
             }
           >
-            <li className='n9e-tree-node'>
+            <li className='aido-tree-node'>
               <div
-                className={classNames('n9e-tree-node-title group', {
-                  'n9e-tree-node-title-selected': isSelected,
+                className={classNames('aido-tree-node-title group', {
+                  'aido-tree-node-title-selected': isSelected,
                 })}
                 onClick={() => {
                   onSelect && onSelect([item.key], { node: item });
@@ -102,20 +102,20 @@ const RenderTree = (props: {
                 {_.map(Array.from({ length: level }), (_, index) => {
                   const realIndex = index + 1;
                   return (
-                    <div key={realIndex} className={classNames('n9e-tree-node-indent')}>
+                    <div key={realIndex} className={classNames('aido-tree-node-indent')}>
                       {index !== 0 && (
                         <>
                           {realIndex === level ? (
                             <>
                               <div
-                                className={classNames('n9e-tree-node-indent-current-branch', {
-                                  'n9e-tree-node-indent-current-branch-active': isSelected,
+                                className={classNames('aido-tree-node-indent-current-branch', {
+                                  'aido-tree-node-indent-current-branch-active': isSelected,
                                 })}
                               />
                               {treeData.length - 1 !== nodeIdx && (
                                 <div
-                                  className={classNames('n9e-tree-node-indent-next-branch', {
-                                    'n9e-tree-node-indent-next-branch-active': isSelected,
+                                  className={classNames('aido-tree-node-indent-next-branch', {
+                                    'aido-tree-node-indent-next-branch-active': isSelected,
                                   })}
                                 />
                               )}
@@ -123,8 +123,8 @@ const RenderTree = (props: {
                           ) : (
                             !eachLevelIsLast[realIndex] && (
                               <div
-                                className={classNames('n9e-tree-node-indent-next-branch', {
-                                  'n9e-tree-node-indent-next-branch-active': isSelected,
+                                className={classNames('aido-tree-node-indent-next-branch', {
+                                  'aido-tree-node-indent-next-branch-active': isSelected,
                                 })}
                               />
                             )
@@ -134,11 +134,11 @@ const RenderTree = (props: {
                     </div>
                   );
                 })}
-                <div className='n9e-tree-node-title-content'>
+                <div className='aido-tree-node-title-content'>
                   <span className='break-all'>{item.title}</span>
                   {hasChildren && (
                     <span
-                      className='n9e-tree-node-icon'
+                      className='aido-tree-node-icon'
                       onClick={(event) => {
                         event.stopPropagation();
                         // 如果 item.key 在 defaultExpandedKeys 中，就从 defaultExpandedKeys 中移除，否则添加
@@ -181,7 +181,7 @@ function index(props: Props) {
   }, [defaultExpandedKeys]);
 
   return (
-    <div className='n9e-tree-container'>
+    <div className='aido-tree-container'>
       <RenderTree
         treeData={treeData}
         eachLevelIsLast={[false]}

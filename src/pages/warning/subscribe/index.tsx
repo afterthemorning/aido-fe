@@ -18,13 +18,13 @@ export { default as Add } from './add';
 export { default as Edit } from './edit';
 import ListNG from './ListNG';
 
-const N9E_GIDS_LOCALKEY = 'n9e_subscribes_gids';
+const AIDO_GIDS_LOCALKEY = 'aido_subscribes_gids';
 
 export default function List() {
   const { t } = useTranslation('alertSubscribes');
   const navigate = useNavigate();
   const { businessGroup } = useContext(CommonStateContext);
-  const [gids, setGids] = useState<string | undefined>(getDefaultGids(N9E_GIDS_LOCALKEY, businessGroup)); // -2: 所有告警策略
+  const [gids, setGids] = useState<string | undefined>(getDefaultGids(AIDO_GIDS_LOCALKEY, businessGroup)); // -2: 所有告警策略
   const [refreshFlag, setRefreshFlag] = useState<string>(_.uniqueId('refresh_'));
   const [data, setData] = useState<Array<subscribeItem>>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -47,7 +47,7 @@ export default function List() {
   return (
     <PageLayout title={t('title')} icon={<CopyOutlined />} doc='https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v8/usecase/subscribe/'>
       <div className='shield-content'>
-        <BusinessGroupSideBarWithAll gids={gids} setGids={setGids} localeKey={N9E_GIDS_LOCALKEY} />
+        <BusinessGroupSideBarWithAll gids={gids} setGids={setGids} localeKey={AIDO_GIDS_LOCALKEY} />
         <div
           className='fc-border p-4'
           style={{

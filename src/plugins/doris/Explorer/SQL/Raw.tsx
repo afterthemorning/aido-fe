@@ -28,8 +28,8 @@ interface IProps {
 function Raw(props: IProps) {
   const { t } = useTranslation(NAME_SPACE);
   const [tabKey] = useGlobalState('tabKey');
-  const logsAntdTableSelector = `.explorer-container-${tabKey} .n9e-event-logs-table .ant-table-body`;
-  const logsRgdTableSelector = `.explorer-container-${tabKey} .n9e-event-logs-table`;
+  const logsAntdTableSelector = `.explorer-container-${tabKey} .aido-event-logs-table .ant-table-body`;
+  const logsRgdTableSelector = `.explorer-container-${tabKey} .aido-event-logs-table`;
   const form = Form.useFormInstance();
   const refreshFlag = Form.useWatch('refreshFlag');
   const datasourceValue = Form.useWatch(['datasourceValue']);

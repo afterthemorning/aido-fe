@@ -21,7 +21,7 @@ export default function ElasticsearchDetail(
       render(val) {
         const queries = _.get(val, 'queries', []);
         return (
-          <Space direction='vertical'>
+          <Space orientation='vertical'>
             {_.map(queries, (item) => {
               return (
                 <div key={item.ref} className='bg-fc-200 p-2 rounded-[2px]'>

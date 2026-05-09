@@ -24,7 +24,7 @@ export default function kvMapModal(props: Props) {
   const { open, visible, onClose, selectOption, form, rawData } = props;
   const modalOpen = open ?? visible ?? false;
   const { t } = useTranslation('es-index-patterns');
-  const isMcDonalds = localStorage.getItem('n9e-dark-mode') === '2';
+  const isMcDonalds = localStorage.getItem('aido-dark-mode') === '2';
 
   const validateAndClose = () => {
     const fields = form.getFieldValue('regExtractArr');

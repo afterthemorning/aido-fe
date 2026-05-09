@@ -352,10 +352,10 @@ const Targets: React.FC = () => {
           renderHeadExtra={() => {
             return (
               <div>
-                <div className='n9e-biz-group-container-group-title'>{t('default_filter')}</div>
+                <div className='aido-biz-group-container-group-title'>{t('default_filter')}</div>
                 <div
                   className={classNames({
-                    'n9e-biz-group-item': true,
+                    'aido-biz-group-item': true,
                     active: gids === '0',
                   })}
                   onClick={() => {
@@ -366,7 +366,7 @@ const Targets: React.FC = () => {
                 </div>
                 <div
                   className={classNames({
-                    'n9e-biz-group-item': true,
+                    'aido-biz-group-item': true,
                     active: gids === undefined,
                   })}
                   onClick={() => {

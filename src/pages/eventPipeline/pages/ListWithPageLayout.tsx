@@ -10,7 +10,7 @@ export default function ListWithPageLayout() {
   const { t } = useTranslation(NS);
   return (
     <PageLayout title={t('title')}>
-      <div className='n9e'>
+      <div className='aido'>
         <List />
       </div>
     </PageLayout>

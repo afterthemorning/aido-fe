@@ -64,7 +64,7 @@ const zh_CN = {
     prom: {
       write_addr_tip: '记录规则产生的数据的回写地址，常见时序数据库配置示例',
       read_addr: '时序库内网地址',
-      read_addr_tip: '通常用于边缘机房下沉部署告警引擎的场景，如果该字段不为空，n9e-edge 会使用该地址访问时序库，如果该字段为空，n9e-edge 会使用上面的 URL 访问时序库',
+      read_addr_tip: '通常用于边缘机房下沉部署告警引擎的场景，如果该字段不为空，aido-edge 会使用该地址访问时序库，如果该字段为空，aido-edge 会使用上面的 URL 访问时序库',
       url_tip: '常见时序数据库配置示例（兼容 Prometheus 查询 API）：',
       help_content: '没有部署时序库？可参考 <a>安装手册</a> 安装部署',
       prom_installation_title: '安装手册',

@@ -121,7 +121,7 @@ const AlertCurEvent: React.FC = () => {
 
   return (
     <PageLayout icon={<AlertOutlined />} title={t('title')}>
-      <div className={`n9e ${NS}`}>
+      <div className={`aido ${NS}`}>
         <div className='bg-fc-100 fc-border h-full'>
           <div className='p-4 h-full'>
             <div className='flex flex-col h-full'>
@@ -186,76 +186,106 @@ const AlertCurEvent: React.FC = () => {
               </div>
               <div className='h-full min-h-0 flex'>
                 {/* 左侧筛选区 */}
-                <div className='w-[190px] mr-[8px] overflow-hidden h-full shrink-0 flex flex-col gap-2 n9e-antd-collapse-height-full'>
+                <div className='w-[190px] mr-[8px] overflow-hidden h-full shrink-0 flex flex-col gap-2 aido-antd-collapse-height-full'>
                   <div className='flex-shrink-0'>
-                    <Collapse className='w-full' bordered={false} defaultActiveKey={['prod']} expandIconPosition='start'>
-                      <Collapse.Panel header={t('prod')} key='prod'>
-                        <Checkbox.Group
-                          value={filter.rule_prods}
-                          onChange={(val) => {
-                            setFilter({
-                              ...filter,
-                              rule_prods: val,
-                            });
-                          }}
-                        >
-                          {_.map(getProdOptions(feats), (item) => (
-                            <div key={item.value}>
-                              <Checkbox className='py-1' value={item.value}>
-                                {item.label}
-                                <br />
-                              </Checkbox>
-                            </div>
-                          ))}
-                        </Checkbox.Group>
-                      </Collapse.Panel>
-                    </Collapse>
+                    <Collapse
+                      className='w-full'
+                      bordered={false}
+                      defaultActiveKey={['prod']}
+                      expandIconPosition='start'
+                      items={[
+                        {
+                          key: 'prod',
+                          label: t('prod'),
+                          children: (
+                            <Checkbox.Group
+                              value={filter.rule_prods}
+                              onChange={(val) => {
+                                setFilter({
+                                  ...filter,
+                                  rule_prods: val,
+                                });
+                              }}
+                            >
+                              {_.map(getProdOptions(feats), (item) => (
+                                <div key={item.value}>
+                                  <Checkbox className='py-1' value={item.value}>
+                                    {item.label}
+                                    <br />
+                                  </Checkbox>
+                                </div>
+                              ))}
+                            </Checkbox.Group>
+                          ),
+                        },
+                      ]}
+                    />
                   </div>
                   <div className='flex-shrink-0'>
-                    <Collapse className='w-full' bordered={false} defaultActiveKey={['severity']} expandIconPosition='start'>
-                      <Collapse.Panel header={t('severity')} key='severity'>
-                        <Checkbox.Group
-                          value={filter.severity}
-                          onChange={(val) => {
-                            setFilter({
-                              ...filter,
-                              severity: val,
-                            });
-                          }}
-                        >
-                          <Checkbox className='py-1' value={1}>
-                            <div className='inline-block mr-2 w-[4px] h-[12px] rounded-lg event-card-circle red' />
-                            S1（Critical）
-                          </Checkbox>
-                          <br />
-                          <Checkbox className='py-1' value={2}>
-                            <div className='inline-block mr-2 w-[4px] h-[12px] rounded-lg event-card-circle orange' />
-                            S2（Warning）
-                          </Checkbox>
-                          <br />
-                          <Checkbox className='py-1' value={3}>
-                            <div className='inline-block mr-2 w-[4px] h-[12px] rounded-lg event-card-circle yellow' />
-                            S3（Info）
-                          </Checkbox>
-                          <br />
-                        </Checkbox.Group>
-                      </Collapse.Panel>
-                    </Collapse>
+                    <Collapse
+                      className='w-full'
+                      bordered={false}
+                      defaultActiveKey={['severity']}
+                      expandIconPosition='start'
+                      items={[
+                        {
+                          key: 'severity',
+                          label: t('severity'),
+                          children: (
+                            <Checkbox.Group
+                              value={filter.severity}
+                              onChange={(val) => {
+                                setFilter({
+                                  ...filter,
+                                  severity: val,
+                                });
+                              }}
+                            >
+                              <Checkbox className='py-1' value={1}>
+                                <div className='inline-block mr-2 w-[4px] h-[12px] rounded-lg event-card-circle red' />
+                                S1（Critical）
+                              </Checkbox>
+                              <br />
+                              <Checkbox className='py-1' value={2}>
+                                <div className='inline-block mr-2 w-[4px] h-[12px] rounded-lg event-card-circle orange' />
+                                S2（Warning）
+                              </Checkbox>
+                              <br />
+                              <Checkbox className='py-1' value={3}>
+                                <div className='inline-block mr-2 w-[4px] h-[12px] rounded-lg event-card-circle yellow' />
+                                S3（Info）
+                              </Checkbox>
+                              <br />
+                            </Checkbox.Group>
+                          ),
+                        },
+                      ]}
+                    />
                   </div>
                   <div className='flex-1 h-full min-h-0'>
-                    <Collapse className='w-full' bordered={false} defaultActiveKey={['datasource']} expandIconPosition='start'>
-                      <Collapse.Panel header={t('datasources')} key='datasource'>
-                        <DatasourceCheckbox
-                          value={filter.datasource_ids}
-                          onChange={(val: number[]) => {
-                            setFilter({
-                              ...filter,
-                              datasource_ids: val,
-                            });
-                          }}
-                        />
-                      </Collapse.Panel>
-                    </Collapse>
+                    <Collapse
+                      className='w-full'
+                      bordered={false}
+                      defaultActiveKey={['datasource']}
+                      expandIconPosition='start'
+                      items={[
+                        {
+                          key: 'datasource',
+                          label: t('datasources'),
+                          children: (
+                            <DatasourceCheckbox
+                              value={filter.datasource_ids}
+                              onChange={(val: number[]) => {
+                                setFilter({
+                                  ...filter,
+                                  datasource_ids: val,
+                                });
+                              }}
+                            />
+                          ),
+                        },
+                      ]}
+                    />
                   </div>
                 </div>
                 {/* 右侧内容区 */}

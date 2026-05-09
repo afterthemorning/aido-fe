@@ -29,17 +29,17 @@ import './style.less';
 
 export { Add, Edit };
 
-const N9E_GIDS_LOCALKEY = 'N9E_ALERT_NODE_ID';
+const AIDO_GIDS_LOCALKEY = 'N9E_ALERT_NODE_ID';
 
 export default function index() {
   const { businessGroup } = useContext(CommonStateContext);
   const { t } = useTranslation('alertRules');
-  const [gids, setGids] = useState<string | undefined>(getDefaultGids(N9E_GIDS_LOCALKEY, businessGroup));
+  const [gids, setGids] = useState<string | undefined>(getDefaultGids(AIDO_GIDS_LOCALKEY, businessGroup));
 
   return (
     <PageLayout title={t('title')} icon={<SettingOutlined />}>
       <div className='alert-rules-container'>
-        <BusinessGroupSideBarWithAll gids={gids} setGids={setGids} localeKey={N9E_GIDS_LOCALKEY} />
+        <BusinessGroupSideBarWithAll gids={gids} setGids={setGids} localeKey={AIDO_GIDS_LOCALKEY} />
         {businessGroup.ids ? <List gids={gids} /> : <BlankBusinessPlaceholder text={t('title')} />}
       </div>
     </PageLayout>

@@ -68,7 +68,7 @@ export default function TemplateSelect(props: Props) {
       label={
         <Space size={4}>
           {t('notification_configuration.template')}
-          <Tooltip className='n9e-ant-from-item-tooltip' title={t('notification_configuration.template_tip')}>
+          <Tooltip className='aido-ant-from-item-tooltip' title={t('notification_configuration.template_tip')}>
             <QuestionCircleOutlined />
           </Tooltip>
           {isAuthorized && (

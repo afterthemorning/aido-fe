@@ -31,7 +31,7 @@ export default function index(props: SelectProps & Props) {
 
   return (
     <Select
-      className='n9e-datasource-select-v3'
+      className='aido-datasource-select-v3'
       popupMatchSelectWidth={false}
       {..._.omit(props, ['datasourceCateList', 'ajustDatasourceList'])}
       showSearch

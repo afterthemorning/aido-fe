@@ -91,7 +91,7 @@ const operateForm: React.FC<Props> = ({ type, detail = {} }) => {
             datasource_ids: detail.datasource_ids || [DATASOURCE_ALL],
           }}
         >
-          <Space direction='vertical' style={{ width: '100%' }}>
+          <Space orientation='vertical' style={{ width: '100%' }}>
             <Form.Item
               required
               label={t('name')}

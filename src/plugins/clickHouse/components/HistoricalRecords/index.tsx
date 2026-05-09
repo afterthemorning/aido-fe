@@ -89,14 +89,14 @@ export default function index({ localKey, datasourceValue, onSelect }: Props) {
         setVisible(newVisible);
       }}
       content={
-        <div className='n9e-historical-records-popover-content'>
+        <div className='aido-historical-records-popover-content'>
           <Input placeholder={t('query.historicalRecords.searchPlaceholder')} value={search} onChange={(e) => setSearch(e.target.value)} />
-          <div className='n9e-historical-records-popover-content-records-content'>
+          <div className='aido-historical-records-popover-content-records-content'>
             {_.map(historicalRecords, (item) => {
               if (!search || item[0].includes(search)) {
                 return (
                   <div
-                    className='n9e-historical-records-popover-content-records-item'
+                    className='aido-historical-records-popover-content-records-item'
                     key={item[0]}
                     onClick={() => {
                       onSelect(item[0]);

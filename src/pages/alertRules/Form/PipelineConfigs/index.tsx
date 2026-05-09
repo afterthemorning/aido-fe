@@ -108,7 +108,7 @@ export default function index() {
                   });
                 }}
               >
-                <Space direction='vertical' size={0} className='w-full mb-2'>
+                <Space orientation='vertical' size={0} className='w-full mb-2'>
                   {fields.map(({ key, name, ...restField }, index) => {
                     const selectedPipelineIds = _.compact(_.map(pipelineConfigs, 'pipeline_id'));
                     const pipelineId = form.getFieldValue(['pipeline_configs', name, 'pipeline_id']);

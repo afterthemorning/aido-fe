@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-// @ts-ignore
+// @ts-ignoreˇ
 import { advancedCates } from 'plus:/constants';
 
 export interface Cate {
@@ -141,6 +141,16 @@ export const baseCates: Cate[] = [
     value: 'aido-excel',
     label: 'AIDO Excel',
     type: ['metric', 'logging'],
+    alertRule: true,
+    dashboard: false,
+    dashboardVariable: false,
+    graphPro: false,
+    alertPro: false,
+  },
+  {
+    value: 'aido-email',
+    label: 'AIDO Email',
+    type: ['logging'],
     alertRule: true,
     dashboard: false,
     dashboardVariable: false,

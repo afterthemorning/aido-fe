@@ -75,6 +75,7 @@ export enum BaseDatasourceCateEnum {
   doris = 'doris',
   victorialogs = 'victorialogs',
   aidoExcel = 'aido-excel',
+  aidoEmail = 'aido-email',
   aidoSharepoint = 'aido-sharepoint',
   aidoUptimeKuma = 'aido-uptime-kuma',
 }
@@ -82,7 +83,7 @@ export enum BaseDatasourceCateEnum {
 export const DatasourceCateEnum = { ...BaseDatasourceCateEnum, ...AdvancedDatasourceCateEnum };
 export type DatasourceCateEnum = BaseDatasourceCateEnum | AdvancedDatasourceCateEnum;
 export const IS_PLUS = import.meta.env.VITE_IS_ENT === 'true' || import.meta.env.VITE_IS_PRO === 'true';
-export const N9E_PATHNAME = IS_PLUS ? 'n9e-plus' : 'n9e';
+export const AIDO_PATHNAME = IS_PLUS ? 'aido-plus' : 'n9e';
 export const IS_ENT = import.meta.env.VITE_IS_ENT === 'true';
 export const AccessTokenKey = 'access_token';
 export const PRIMARY_COLOR = '#6C53B1';

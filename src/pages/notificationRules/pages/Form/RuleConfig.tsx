@@ -109,7 +109,7 @@ export default function NotifyConfig(props: Props) {
                   <div style={{ width: 450 }}>
                     <Space align='baseline' size={4}>
                       {t('notification_configuration.time_ranges')}
-                      <Tooltip className='n9e-ant-from-item-tooltip' title={t('notification_configuration.time_ranges_tip')}>
+                      <Tooltip className='aido-ant-from-item-tooltip' title={t('notification_configuration.time_ranges_tip')}>
                         <QuestionCircleOutlined />
                       </Tooltip>
                       {!disabled && <PlusCircleOutlined onClick={() => add(DEFAULT_VALUES_TIME_RANGE)} />}

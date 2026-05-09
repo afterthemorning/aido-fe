@@ -60,11 +60,11 @@ export default function BusinessGroupSideBarWithAll(props: Props) {
       renderHeadExtra={() => {
         return (
           <div>
-            <div className='n9e-biz-group-container-group-title'>{t('default_filter.title')}</div>
+            <div className='aido-biz-group-container-group-title'>{t('default_filter.title')}</div>
             {showPublicOption && publicOptionLabel && (
               <div
                 className={classNames({
-                  'n9e-biz-group-item': true,
+                  'aido-biz-group-item': true,
                   active: gids === '-1',
                 })}
                 role='button'
@@ -98,7 +98,7 @@ export default function BusinessGroupSideBarWithAll(props: Props) {
             )}
             <div
               className={classNames({
-                'n9e-biz-group-item': true,
+                'aido-biz-group-item': true,
                 active: gids === '-2',
               })}
               role='button'

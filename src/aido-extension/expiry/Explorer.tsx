@@ -310,7 +310,7 @@ export default function AidoExcelExplorer({ datasourceValue }: Props) {
           />
         </Col>
         <Col flex='auto'>
-          <Space direction='vertical' size={0} className='second-color'>
+          <Space orientation='vertical' size={0} className='second-color'>
             <span>{t('aido_excel.total_tip', { total })}</span>
             <span>{t('aido_excel.keyword_fields_tip', { fields: searchFieldsLabel })}</span>
             {loadedAt && <span>{t('aido_excel.last_loaded_at', { time: loadedAt.toLocaleString() })}</span>}

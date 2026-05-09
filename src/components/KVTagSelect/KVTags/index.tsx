@@ -106,7 +106,7 @@ export default function index(props: Props) {
                   <Space align='baseline' size={4}>
                     {keyLabel}
                     {keyLabelTootip && (
-                      <Tooltip className='n9e-ant-from-item-tooltip' title={keyLabelTootip} overlayClassName='ant-tooltip-max-width-400'>
+                      <Tooltip className='aido-ant-from-item-tooltip' title={keyLabelTootip} overlayClassName='ant-tooltip-max-width-400'>
                         <QuestionCircleOutlined />
                       </Tooltip>
                     )}
@@ -128,12 +128,12 @@ export default function index(props: Props) {
                     <Space align='baseline' size={4}>
                       {funcLabel}
                       {funcLabelTootip ? (
-                        <Tooltip className='n9e-ant-from-item-tooltip' title={funcLabelTootip} overlayClassName='ant-tooltip-max-width-400'>
+                        <Tooltip className='aido-ant-from-item-tooltip' title={funcLabelTootip} overlayClassName='ant-tooltip-max-width-400'>
                           <QuestionCircleOutlined />
                         </Tooltip>
                       ) : (
                         <Tooltip
-                          className='n9e-ant-from-item-tooltip'
+                          className='aido-ant-from-item-tooltip'
                           title={
                             <div className='pt-2 px-1'>
                               <Markdown content={t('tag.func.label_tip')} darkMode />

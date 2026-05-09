@@ -215,7 +215,7 @@ export default function Metrics(props: Props) {
         style={{
           flexShrink: 1,
         }}
-        className='n9e-hosts-explorer-metrics-list-table'
+        className='aido-hosts-explorer-metrics-list-table'
         tableLayout='auto'
         size='small'
         rowKey='id'

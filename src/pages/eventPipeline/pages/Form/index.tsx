@@ -111,7 +111,7 @@ export default function index(props: Props) {
       </Card>
       <Form.List name='processors'>
         {(fields, { add, remove, move }) => (
-          <Space direction='vertical' size={SIZE * 2} className='w-full'>
+          <Space orientation='vertical' size={SIZE * 2} className='w-full'>
             {fields.map((field) => (
               <Processor disabled={disabled} fields={fields} field={field} add={add} remove={remove} move={move} />
             ))}

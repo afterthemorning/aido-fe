@@ -38,7 +38,7 @@ import UnBindTags from './unBindTags';
 
 import DropdownCompat from '@/components/AntdDropdownCompat';
 
-const N9E_GIDS_LOCALKEY = 'N9E_TASK_TPL_NODE_ID';
+const AIDO_GIDS_LOCALKEY = 'N9E_TASK_TPL_NODE_ID';
 
 function getTableData(options: any, gids: string | undefined, query: string) {
   if (gids) {
@@ -63,7 +63,7 @@ const index = (_props: any) => {
   const [query, setQuery] = useState('');
   const { busiGroups, businessGroup } = useContext(CommonStateContext);
   const [selectedIds, setSelectedIds] = useState([] as any[]);
-  const [gids, setGids] = useState<string | undefined>(getDefaultGids(N9E_GIDS_LOCALKEY, businessGroup));
+  const [gids, setGids] = useState<string | undefined>(getDefaultGids(AIDO_GIDS_LOCALKEY, businessGroup));
   const { tableProps, refresh } = useAntdTable<any, any>((options) => getTableData(options, gids, query), {
     refreshDeps: [gids, query],
     debounceWait: 300,
@@ -196,7 +196,7 @@ const index = (_props: any) => {
       doc='https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/self-healing/self-healing-script/'
     >
       <div style={{ display: 'flex' }}>
-        <BusinessGroupSideBarWithAll gids={gids} setGids={setGids} localeKey={N9E_GIDS_LOCALKEY} allOptionLabel={t('common:tpl.allOptionLabel')} />
+        <BusinessGroupSideBarWithAll gids={gids} setGids={setGids} localeKey={AIDO_GIDS_LOCALKEY} allOptionLabel={t('common:tpl.allOptionLabel')} />
         {gids ? (
           <div className='fc-border p-4' style={{ flex: 1 }}>
             <Row>

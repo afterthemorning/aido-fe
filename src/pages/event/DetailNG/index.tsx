@@ -176,7 +176,7 @@ export default function DetailNG(props: Props) {
           <Space wrap size={[0, 8]}>
             {_.map(tags, (tag) => {
               return (
-                <Tag className='n9e-event-detail-tag' key={tag}>
+                <Tag className='aido-event-detail-tag' key={tag}>
                   {tag}
                 </Tag>
               );

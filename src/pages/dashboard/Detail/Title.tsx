@@ -148,7 +148,7 @@ export default function Title(props: IProps) {
 
   return (
     <div
-      className={`dashboard-detail-header n9e-page-header-content`}
+      className={`dashboard-detail-header aido-page-header-content`}
       style={{
         display: query.viewMode === 'fullscreen' ? 'none' : 'flex',
       }}
@@ -193,7 +193,7 @@ export default function Title(props: IProps) {
               setDashboardListDropdownVisible(visible);
             }}
             overlay={
-              <div className='collects-payloads-dropdown-overlay p-4 bg-fc-100 fc-border rounded-[2px] n9e-base-shadow'>
+              <div className='collects-payloads-dropdown-overlay p-4 bg-fc-100 fc-border rounded-[2px] aido-base-shadow'>
                 <Input
                   className='mb-2'
                   placeholder={t('common:search_placeholder')}

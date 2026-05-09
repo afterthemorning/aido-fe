@@ -41,7 +41,7 @@ export default function GroupItem(props: Props) {
   return (
     <div className='group-view-item'>
       <div
-        className='group-view-item-header flex justify-between n9e-align-items-center pt-2 pb-2'
+        className='group-view-item-header flex justify-between aido-align-items-center pt-2 pb-2'
         onClick={() => {
           setExpand(!expand);
         }}

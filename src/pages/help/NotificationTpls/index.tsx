@@ -40,8 +40,8 @@ export default function index() {
       doc='https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/system-configuration/notification-template/'
     >
       <div>
-        <div className='n9e-notification-tpls user-manage-content'>
-          <div className='n9e-notification-tpls-sidebar left-tree-area'>
+        <div className='aido-notification-tpls user-manage-content'>
+          <div className='aido-notification-tpls-sidebar left-tree-area'>
             <div className='sub-title'>
               {t('list')}
               <Button
@@ -97,7 +97,7 @@ export default function index() {
               )}
             />
           </div>
-          <div className='n9e-notification-tpls-main resource-table-content'>
+          <div className='aido-notification-tpls-main resource-table-content'>
             <div className='team-info'>
               <Space
                 style={{

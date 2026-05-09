@@ -91,7 +91,7 @@ function index(_props: any, ref: any) {
           setSearch(e.target.value);
         }}
       />
-      <div className='n9e-metric-views-list-content'>
+      <div className='aido-metric-views-list-content'>
         {_.isEmpty(list) ? (
           <>
             <Alert message={t('filter.title_tip')} type='info' />
@@ -116,7 +116,7 @@ function index(_props: any, ref: any) {
               return (
                 <div
                   className={classNames({
-                    'n9e-metric-views-list-content-item': true,
+                    'aido-metric-views-list-content-item': true,
                     active: item.id === active,
                   })}
                   key={item.id}
@@ -132,7 +132,7 @@ function index(_props: any, ref: any) {
                 >
                   <span className='name'>{item.name}</span>
                   <span>
-                    <div className='n9e-metric-views-list-content-item-opes'>
+                    <div className='aido-metric-views-list-content-item-opes'>
                       <EditOutlined
                         onClick={(e) => {
                           e.stopPropagation();

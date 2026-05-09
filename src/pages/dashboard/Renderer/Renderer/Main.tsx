@@ -181,7 +181,7 @@ function index(
                 }}
                 getPopupContainer={() => containerEleRef.current!}
                 title={
-                  <Space direction='vertical'>
+                  <Space orientation='vertical'>
                     {description ? <Markdown content={description} /> : null}
                     {_.map(values.links, (link, i) => {
                       return (

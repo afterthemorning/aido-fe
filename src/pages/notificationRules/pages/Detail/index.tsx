@@ -63,7 +63,7 @@ export default function Detail() {
 
   return (
     <PageLayout title={t('title')} showBack backPath={`/${NS}`}>
-      <div className={`n9e ${CN} overflow-hidden`}>
+      <div className={`aido ${CN} overflow-hidden`}>
         <div className='h-full flex flex-col gap-4'>
           <div className='flex-shrink-0 flex justify-between'>
             <Space>
@@ -206,7 +206,7 @@ export default function Detail() {
           )}
           <Card
             size='small'
-            className='fc-border n9e-notification-rule-detail-list w-full min-h-0'
+            className='fc-border aido-notification-rule-detail-list w-full min-h-0'
             styles={{ body: { height: 'calc(100% - 36px)' } }}
             tabList={[
               {

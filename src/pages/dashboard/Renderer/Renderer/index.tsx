@@ -129,7 +129,7 @@ function index(props: IProps) {
         forceRender
         destroyOnHidden
         width='100%'
-        className='n9e-dashboard-editor-modal'
+        className='aido-dashboard-editor-modal'
         style={{ top: 0, padding: 0 }}
         styles={{
           body: {

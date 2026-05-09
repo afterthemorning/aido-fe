@@ -112,7 +112,7 @@ export default function NotificationRuleSelect(props: Props) {
         }}
         open={drawerVisible}
       >
-        <div className={`n9e ${notificationRulesCN}`}>
+        <div className={`aido ${notificationRulesCN}`}>
           {drawerData ? (
             <NotificationRuleForm
               initialValues={drawerData}

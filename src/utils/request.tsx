@@ -4,7 +4,7 @@ import Request, { ResponseError, extend } from 'umi-request';
 import { notification } from 'antd';
 import _ from 'lodash';
 import { UpdateAccessToken } from '@/services/login';
-import { N9E_PATHNAME, AccessTokenKey } from '@/utils/constant';
+import { AIDO_PATHNAME, AccessTokenKey } from '@/utils/constant';
 import i18next from 'i18next';
 import { basePrefix } from '@/App';
 import ErrorWithDetail from '@/components/ErrorWithDetail';
@@ -141,18 +141,18 @@ request.interceptors.response.use(
         .then((data) => {
           const { url } = response;
           // TODO: 糟糕的逻辑，后端返回的数据结构不统一，需要兼容
-          // /n9e/datasource/ 返回的数据结构是 { error: '', data: [] }
+          // /aido/datasource/ 返回的数据结构是 { error: '', data: [] }
           // proxy/prometheus 返回的数据结构是 { status: 'success', data: {} }
           // proxy/elasticsearch 返回的数据结构是 { ...data }
           // proxy/jeager 返回的数据结构是 { data: [], errors: [] }
           if (
-            _.some([`/api/${N9E_PATHNAME}/proxy`, '/probe/v1'], (item) => {
+            _.some([`/api/${AIDO_PATHNAME}/proxy`, '/probe/v1'], (item) => {
               return url.includes(item);
             })
           ) {
             return data;
           } else if (
-            _.some(['/api/v1', '/api/v2', '/api/fc-model', '/api/n9e/datasource'], (item) => {
+            _.some(['/api/v1', '/api/v2', '/api/fc-model', '/api/aido/datasource'], (item) => {
               return url.includes(item);
             })
           ) {
@@ -168,7 +168,7 @@ request.interceptors.response.use(
               };
             }
           } else {
-            // n9e 和 n9e-plus 大部分接口返回的数据结构是 { err: '', dat: {} }
+            // aido 和 aido-plus 大部分接口返回的数据结构是 { err: '', dat: {} }
             if (data.err === '' || data.status === 'success' || data.error === '') {
               return { ...data, success: true };
             } else {
@@ -182,7 +182,7 @@ request.interceptors.response.use(
             }
           }
         });
-    } else if (status === 401 && !_.includes(response.url, '/api/n9e-plus/proxy') && !_.includes(response.url, '/api/n9e/proxy')) {
+    } else if (status === 401 && !_.includes(response.url, '/api/aido-plus/proxy') && !_.includes(response.url, '/api/n9e/proxy')) {
       if (response.url.indexOf('/api/n9e/auth/refresh') > 0) {
         navigateOnce(combineLoginURL());
       } else {
@@ -197,7 +197,7 @@ request.interceptors.response.use(
       status === 403 &&
       (response.url.includes('/api/v1') || response.url.includes('/api/v2')) &&
       // 排除掉 proxy 的接口
-      !_.includes(response.url, '/api/n9e-plus/proxy') &&
+      !_.includes(response.url, '/api/aido-plus/proxy') &&
       !_.includes(response.url, '/api/n9e/proxy')
     ) {
       return response

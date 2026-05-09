@@ -78,7 +78,7 @@ const TimeSeriesBarChartExample: React.FC = () => {
 
   return (
     <div className='w-[800px]'>
-      <Space direction='vertical' size='large' className='w-full'>
+      <Space orientation='vertical' size='large' className='w-full'>
         <Card
           title='时序柱状图示例'
           extra={

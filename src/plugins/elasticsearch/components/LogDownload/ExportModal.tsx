@@ -7,7 +7,7 @@ import moment from 'moment';
 import { ITaskItem } from './type';
 import { CheckCircleFilled, FieldTimeOutlined } from '@ant-design/icons';
 import { CommonStateContext } from '@/App';
-import { N9E_PATHNAME } from '@/utils/constant';
+import { AIDO_PATHNAME } from '@/utils/constant';
 
 interface IProps {
   datasourceValue?: number;
@@ -137,7 +137,7 @@ export default function ExportModal(props: IProps) {
   const handleDownload = (record: ITaskItem) => {
     const base64Str = btoa(profile.username);
     var downloadLink = document.createElement('a');
-    downloadLink.href = `/api/${N9E_PATHNAME}/logs/download/${record.id}?u=${base64Str}`;
+    downloadLink.href = `/api/${AIDO_PATHNAME}/logs/download/${record.id}?u=${base64Str}`;
     downloadLink.download = record.config.file_name;
     document.body.appendChild(downloadLink);
     downloadLink.click();

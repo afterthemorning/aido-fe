@@ -38,7 +38,7 @@ interface DataItem {
   title: string;
 }
 
-const N9E_GIDS_LOCALKEY = 'N9E_TASK_NODE_ID';
+const AIDO_GIDS_LOCALKEY = 'N9E_TASK_NODE_ID';
 
 function getTableData(options: any, gids: string | undefined, query: string, mine: boolean, days: number) {
   if (gids) {
@@ -67,7 +67,7 @@ const index = (_props: any) => {
   const [mine, setMine] = useState(true);
   const [days, setDays] = useState(7);
   const { businessGroup, busiGroups } = useContext(CommonStateContext);
-  const [gids, setGids] = useState<string | undefined>(getDefaultGids(N9E_GIDS_LOCALKEY, businessGroup));
+  const [gids, setGids] = useState<string | undefined>(getDefaultGids(AIDO_GIDS_LOCALKEY, businessGroup));
   const [refreshFlag, setRefreshFlag] = useState(_.uniqueId('task-refresh-'));
   const pagination = usePagination({ PAGESIZE_KEY: 'job-tasks-pagesize' });
   const { tableProps } = useAntdTable((options) => getTableData(options, gids, query, mine, days), {
@@ -137,7 +137,7 @@ const index = (_props: any) => {
       doc='https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/self-healing/create-temporary-task/'
     >
       <div style={{ display: 'flex' }}>
-        <BusinessGroupSideBarWithAll gids={gids} setGids={setGids} localeKey={N9E_GIDS_LOCALKEY} allOptionLabel={t('common:task.allOptionLabel')} />
+        <BusinessGroupSideBarWithAll gids={gids} setGids={setGids} localeKey={AIDO_GIDS_LOCALKEY} allOptionLabel={t('common:task.allOptionLabel')} />
         {gids ? (
           <div className='fc-border p-4' style={{ flex: 1 }}>
             <Row>

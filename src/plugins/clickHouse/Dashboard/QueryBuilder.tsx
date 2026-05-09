@@ -63,7 +63,7 @@ export default function MySQLQueryBuilder({ datasourceValue }) {
                       <div />
                     </Form.Item>
                     <Form.Item
-                      className='n9e-mysql-dashboard-querybuilder-query-item'
+                      className='aido-mysql-dashboard-querybuilder-query-item'
                       label={
                         <div
                           style={{

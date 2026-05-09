@@ -123,7 +123,7 @@ export const getDsQuery2 = function (data: {
     values: [number, number][];
   }[]
 > {
-  return request('/api/n9e-plus/query-batch', {
+  return request('/api/aido-plus/query-batch', {
     method: RequestMethod.Post,
     data,
     silence: true,

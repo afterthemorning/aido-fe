@@ -113,25 +113,25 @@ export default function index() {
                         }}
                       >
                         {item === 'joinByField' && (
-                          <div className='n9e-dashboard-editor-transformationNG-item'>
+                          <div className='aido-dashboard-editor-transformationNG-item'>
                             <h3>{t('transformations.joinByField.title')}</h3>
                             <p>{t('transformations.joinByField.desc')}</p>
                           </div>
                         )}
                         {item === 'organize' && (
-                          <div className='n9e-dashboard-editor-transformationNG-item'>
+                          <div className='aido-dashboard-editor-transformationNG-item'>
                             <h3>{t('transformations.organize.title')}</h3>
                             <p>{t('transformations.organize.desc')}</p>
                           </div>
                         )}
                         {item === 'merge' && (
-                          <div className='n9e-dashboard-editor-transformationNG-item'>
+                          <div className='aido-dashboard-editor-transformationNG-item'>
                             <h3>{t('transformations.merge.title')}</h3>
                             <p>{t('transformations.merge.desc')}</p>
                           </div>
                         )}
                         {item === 'groupedAggregateTable' && (
-                          <div className='n9e-dashboard-editor-transformationNG-item'>
+                          <div className='aido-dashboard-editor-transformationNG-item'>
                             <h3>{t('transformations.groupedAggregateTable.title')}</h3>
                             <p>{t('transformations.groupedAggregateTable.desc')}</p>
                           </div>

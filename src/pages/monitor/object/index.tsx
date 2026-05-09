@@ -62,7 +62,7 @@ export default function index() {
           title={t('common:datasource.empty_modal.title')}
           subTitle={t('empty.subtitle')}
           extra={
-            <Space direction='vertical' size={8}>
+            <Space orientation='vertical' size={8}>
               {isAdmin ? (
                 <Link to={datasourceConfigUrl}>
                   <Button type='primary'>{t('common:datasource.empty_modal.btn1')}</Button>
@@ -116,7 +116,7 @@ export default function index() {
         </div>
       }
     >
-      <div className='n9e-metric-views'>
+      <div className='aido-metric-views'>
         <List
           datasourceValue={datasourceValue}
           onSelect={(record: IMatch) => {

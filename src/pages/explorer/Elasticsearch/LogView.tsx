@@ -79,7 +79,7 @@ export default function LogView(props: Props) {
       children: (
         <>
           <Table
-          className='n9e-es-explorer-log-view-table'
+          className='aido-es-explorer-log-view-table'
           dataSource={dataSource}
           columns={[
             {
@@ -90,7 +90,7 @@ export default function LogView(props: Props) {
                 const finded = _.find(fields, { name: text });
                 return (
                   <Space>
-                    <span className='n9e-es-discover-fields-item-icon'>{finded ? typeIconMap[typeMap[finded.type]] || <QuestionOutlined /> : <QuestionOutlined />}</span>
+                    <span className='aido-es-discover-fields-item-icon'>{finded ? typeIconMap[typeMap[finded.type]] || <QuestionOutlined /> : <QuestionOutlined />}</span>
                     {getFieldLabel(text, fieldConfig)}
                   </Space>
                 );
@@ -100,7 +100,7 @@ export default function LogView(props: Props) {
               title: 'Value',
               dataIndex: 'value',
               key: 'value',
-              className: 'n9e-es-explorer-log-view-table-value',
+              className: 'aido-es-explorer-log-view-table-value',
               render: (val: any, record: { field: string }) => {
                 const field = record.field;
                 return (

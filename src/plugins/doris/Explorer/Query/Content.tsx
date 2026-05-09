@@ -45,8 +45,8 @@ interface Props {
 function index(props: Props) {
   const { t } = useTranslation(NAME_SPACE);
   const [tabKey] = useGlobalState('tabKey');
-  const logsAntdTableSelector = `.explorer-container-${tabKey} .n9e-event-logs-table .ant-table-body`;
-  const logsRgdTableSelector = `.explorer-container-${tabKey} .n9e-event-logs-table`;
+  const logsAntdTableSelector = `.explorer-container-${tabKey} .aido-event-logs-table .ant-table-body`;
+  const logsRgdTableSelector = `.explorer-container-${tabKey} .aido-event-logs-table`;
   const { refreshFlag, datasourceValue, queryValues, rangeRef, indexData, indexDataLoading, executeQuery, defaultSearchIndex, setDefaultSearchIndex } = props;
   const form = Form.useFormInstance();
 
@@ -449,7 +449,7 @@ function index(props: Props) {
           range={queryValues?.range}
         />
         <div
-          className='h-[58px] w-[10px] cursor-pointer absolute top-1/2 left-[-14px] mt-[-29px] flex items-center justify-center rounded n9e-fill-color-4'
+          className='h-[58px] w-[10px] cursor-pointer absolute top-1/2 left-[-14px] mt-[-29px] flex items-center justify-center rounded aido-fill-color-4'
           onClick={() => {
             setCollapsed(!collapsed);
           }}

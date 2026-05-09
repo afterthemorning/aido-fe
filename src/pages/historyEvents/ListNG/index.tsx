@@ -477,7 +477,7 @@ const Event = (props: Props) => {
         </div>
       )}
       <Table
-        className='mt-4 n9e-antd-table-with-border-collapse'
+        className='mt-4 aido-antd-table-with-border-collapse'
         size='small'
         tableLayout='auto'
         scroll={!_.isEmpty(tableProps.dataSource) ? { x: 'max-content' } : undefined}

@@ -17,7 +17,7 @@ export default function ColorBackground(props: Props) {
       }}
       className={classNames('px-2', {
         'text-white': data.color,
-        'n9e-dashboard-panel-table-ng-cell-background': data.color,
+        'aido-dashboard-panel-table-ng-cell-background': data.color,
       })}
     >
       {data.text}

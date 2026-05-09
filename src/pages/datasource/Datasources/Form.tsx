@@ -9,6 +9,7 @@ import PgSQL from '@/plugins/pgsql/Datasource/Form';
 import Doris from '@/plugins/doris/Datasource/Form';
 import Victorialogs from '@/plugins/victorialogs/Datasource/Form';
 import AidoExcel from '@/plugins/aidoExcel/Datasource/Form';
+import AidoEmail from '@/plugins/aidoEmail/Datasource/Form';
 import AidoSharepoint from '@/plugins/aidoSharepoint/Datasource/Form';
 import AidoUptimeKuma from '@/plugins/aidoUptimeKuma/Datasource/Form';
 
@@ -57,6 +58,9 @@ export default function Form(props) {
   }
   if (params.type === DatasourceCateEnum.aidoExcel) {
     return <AidoExcel {...props} />;
+  }
+  if (params.type === DatasourceCateEnum.aidoEmail) {
+    return <AidoEmail {...props} />;
   }
   if (params.type === DatasourceCateEnum.aidoSharepoint) {
     return <AidoSharepoint {...props} />;

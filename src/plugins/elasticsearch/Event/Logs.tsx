@@ -117,7 +117,7 @@ function index(props: IProps & ModalWrapProps) {
       </div>
       <Table
         size='small'
-        className='n9e-event-logs-table'
+        className='aido-event-logs-table'
         tableLayout='fixed'
         rowKey='id'
         columns={

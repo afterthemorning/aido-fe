@@ -160,7 +160,7 @@ export default function EventsTable(props: Props) {
         </Space>
       </div>
       <Table
-        className='mt-2 n9e-antd-table-with-border-collapse'
+        className='mt-2 aido-antd-table-with-border-collapse'
         rowKey={(record) => record.id}
         size='small'
         columns={[

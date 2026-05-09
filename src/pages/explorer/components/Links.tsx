@@ -192,7 +192,7 @@ interface IProps {
 }
 
 export default function Links({ rawValue, range, text, paramsArr, regExtractArr, mappingParamsArr, inTable }: IProps) {
-  const isGold = localStorage.getItem('n9e-dark-mode') === '2';
+  const isGold = localStorage.getItem('aido-dark-mode') === '2';
   const parsedRange = range ? parseRange(range) : null;
   let start = parsedRange ? moment(parsedRange.start).unix() : 0;
   let end = parsedRange ? moment(parsedRange.end).unix() : 0;
@@ -234,7 +234,7 @@ export function Link({
   linkContext?: LinkContext;
   inTable?: boolean;
 }) {
-  const isGold = localStorage.getItem('n9e-dark-mode') === '2';
+  const isGold = localStorage.getItem('aido-dark-mode') === '2';
   const iconTips = !!linkContext;
   const { rawValue, name, fieldConfig, range, parentKey } = linkContext || {};
   const relatedLinks = iconTips && fieldConfig ? fieldConfig?.linkArr?.filter((item) => (parentKey ? item.field === parentKey : item.field === name)) : [];

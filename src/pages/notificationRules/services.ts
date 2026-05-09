@@ -89,7 +89,7 @@ export function getCustomParamsValues(notify_channel_id: number) {
 }
 
 export function getNotifyStatistics(id: number, days: number): Promise<NotifyStatistics> {
-  return request(`/api/n9e-plus/notify/${id}/statistics`, {
+  return request(`/api/aido-plus/notify/${id}/statistics`, {
     method: RequestMethod.Get,
     params: { days },
   }).then((res) => {
@@ -106,7 +106,7 @@ export function getNotifyEvents(
     p: number;
   },
 ) {
-  return request(`/api/n9e-plus/notify/${id}/alert-cur-events`, {
+  return request(`/api/aido-plus/notify/${id}/alert-cur-events`, {
     method: RequestMethod.Get,
     params,
   }).then((res) => {
@@ -115,7 +115,7 @@ export function getNotifyEvents(
 }
 
 export function getNotifyAlertRules(id: number) {
-  return request(`/api/n9e-plus/notify/${id}/alert-rules`, {
+  return request(`/api/aido-plus/notify/${id}/alert-rules`, {
     method: RequestMethod.Get,
   }).then((res) => {
     return res.dat;
@@ -123,7 +123,7 @@ export function getNotifyAlertRules(id: number) {
 }
 
 export function getNotifySubAlertRules(id: number) {
-  return request(`/api/n9e-plus/notify/${id}/sub-alert-rules`, {
+  return request(`/api/aido-plus/notify/${id}/sub-alert-rules`, {
     method: RequestMethod.Get,
   }).then((res) => {
     return res.dat;

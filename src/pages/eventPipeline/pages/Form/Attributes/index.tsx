@@ -26,7 +26,7 @@ export default function index(props: Props) {
               <Space align='baseline' size={4}>
                 {t(`${NS}:attribute_filters`)}
                 <Tooltip
-                  className='n9e-ant-from-item-tooltip'
+                  className='aido-ant-from-item-tooltip'
                   overlayClassName='ant-tooltip-auto-width'
                   title={<Trans ns={NS} i18nKey={`${NS}:attribute_filters_tip`} components={{ br: <br /> }} />}
                 >

@@ -186,7 +186,7 @@ export default function Import(props: IProps) {
         >
           <div style={{ marginBottom: 10 }}>
             <Alert
-              message={<Trans ns='dashboard' i18nKey='batch.import_grafana_tip' components={{ a: <a href='https://github.com/n9e/fe/issues/48' target='_blank' /> }} />}
+              message={<Trans ns='dashboard' i18nKey='batch.import_grafana_tip' components={{ a: <a href='https://github.com/aido/fe/issues' target='_blank' /> }} />}
               type='info'
             />
           </div>

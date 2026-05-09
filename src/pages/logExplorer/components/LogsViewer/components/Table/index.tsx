@@ -168,7 +168,7 @@ export default function Table<Row>(props: Props<Row>) {
 
         return ROW_HEIGHT;
       }}
-      className={classNames(`n9e-logs-viewer-rdg w-full h-full ${className ? ` ${className}` : ''}`, {
+      className={classNames(`aido-logs-viewer-rdg w-full h-full ${className ? ` ${className}` : ''}`, {
         'rdg-light': theme === 'light',
         'rdg-dark': theme === 'dark',
       })}

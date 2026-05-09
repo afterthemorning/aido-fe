@@ -16,7 +16,7 @@ export default function Add() {
 
   return (
     <PageLayout title={t('title')} showBack backPath={`/${NS}`} doc='https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v8/usecase/media/'>
-      <div className='n9e'>
+      <div className='aido'>
         <Form
           onOk={(values) => {
             postItems([normalizeFormValues(values)]).then(() => {

@@ -6,7 +6,7 @@ import { IRawTimeRange, parseRange } from '@/components/TimeRangePicker';
 import { getDsQuery, getESVersion } from '@/services/warning';
 import { fetchHistoryRangeBatch2 } from '@/services/dashboardV2';
 import { flattenHits } from '@/pages/explorer/Elasticsearch/utils';
-import { N9E_PATHNAME, IS_PLUS } from '@/utils/constant';
+import { AIDO_PATHNAME, IS_PLUS } from '@/utils/constant';
 import { getESIndexPatterns } from '@/pages/log/IndexPatterns/services';
 import replaceTemplateVariables from '@/pages/dashboard/Variables/utils/replaceTemplateVariables';
 
@@ -252,7 +252,7 @@ export default async function elasticSearchQuery(options: IOptions): Promise<Res
         resolveData.query.push({
           type: 'TimeSeries',
           request: {
-            url: `/api/${N9E_PATHNAME}/proxy/${datasourceValue}/_msearch`,
+            url: `/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/_msearch`,
             method: 'POST',
             data: dsPlayload,
           },
@@ -263,7 +263,7 @@ export default async function elasticSearchQuery(options: IOptions): Promise<Res
         resolveData.query.push({
           type: 'Logs',
           request: {
-            url: `/api/${N9E_PATHNAME}/proxy/${datasourceValue}/_msearch`,
+            url: `/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/_msearch`,
             method: 'POST',
             data: logPlayload,
           },

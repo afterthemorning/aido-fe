@@ -75,7 +75,7 @@ export default function index(props: Props) {
       } else {
         return (
           <EditOutlined
-            className='n9e-dashboard-variable-edit-icon'
+            className='aido-dashboard-variable-edit-icon'
             onClick={() => {
               setEditing(true);
             }}
@@ -87,7 +87,7 @@ export default function index(props: Props) {
   };
 
   return (
-    <div className='n9e-dashboard-variables-container'>
+    <div className='aido-dashboard-variables-container'>
       <Main variableValueFixed={queryParams.__variable_value_fixed} loading={false} renderBtns={renderBtns} />
       <EditModal visible={editing} setVisible={setEditing} onChange={onChange} />
     </div>

@@ -76,7 +76,7 @@ export default function index(props: IProps) {
         localStorage.setItem('leftwidth', curWidth.toString());
       }}
     >
-      <div className={collapse ? 'n9e-biz-group-container collapse' : 'n9e-biz-group-container'}>
+      <div className={collapse ? 'aido-biz-group-container collapse' : 'aido-biz-group-container'}>
         <div
           className='collapse-btn'
           onClick={() => {
@@ -86,9 +86,9 @@ export default function index(props: IProps) {
         >
           {!collapse ? <LeftOutlined /> : <RightOutlined />}
         </div>
-        <div className='n9e-biz-group-container-group group-shrink'>
+        <div className='aido-biz-group-container-group group-shrink'>
           {renderHeadExtra && renderHeadExtra()}
-          <div className='n9e-biz-group-container-group-title'>
+          <div className='aido-biz-group-container-group-title'>
             {title}
             {title === t('common:business_group') && (
               <Link to='/busi-groups' target='_blank'>
@@ -97,7 +97,7 @@ export default function index(props: IProps) {
             )}
           </div>
           <Input
-            className='n9e-biz-group-container-group-search'
+            className='aido-biz-group-container-group-search'
             prefix={<SearchOutlined />}
             onPressEnter={(e) => {
               e.preventDefault();

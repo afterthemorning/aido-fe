@@ -32,7 +32,7 @@ export default function TestButton(props: Props) {
       >
         <Space size={4}>
           {t('notification_configuration.run_test_btn')}
-          <Tooltip className='n9e-ant-from-item-tooltip' title={t('notification_configuration.run_test_btn_tip')}>
+          <Tooltip className='aido-ant-from-item-tooltip' title={t('notification_configuration.run_test_btn_tip')}>
             <QuestionCircleOutlined />
           </Tooltip>
         </Space>

@@ -30,7 +30,7 @@ interface IProps {
 }
 
 export default function index(props: IProps) {
-  return <div className='n9e-collapse'>{props.children}</div>;
+  return <div className='aido-collapse'>{props.children}</div>;
 }
 
 export const Panel = CollapsePanel;

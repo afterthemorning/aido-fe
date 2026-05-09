@@ -19,13 +19,13 @@ export default function DatasourceCateSelectV2(props: IProps) {
   const cates = filterCates ? filterCates(datasourceCateOptions) : datasourceCateOptions;
 
   return (
-    <div className='n9e-db-cate-grid'>
+    <div className='aido-db-cate-grid'>
       {_.map(cates, (item) => {
         return (
           <div
             key={item.value}
-            className={classNames('n9e-db-cate-grid-item', {
-              'n9e-db-cate-grid-item-selected': value === item.value,
+            className={classNames('aido-db-cate-grid-item', {
+              'aido-db-cate-grid-item-selected': value === item.value,
             })}
             onClick={() => {
               if (item.value !== value) {

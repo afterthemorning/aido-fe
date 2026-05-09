@@ -24,7 +24,7 @@ export default function Shard(props: IProps) {
   const [advancedVisible, setAdvancedVisible] = React.useState(false);
 
   return (
-    <div key={key} className='n9e-datasource-form-mysql-shard'>
+    <div key={key} className='aido-datasource-form-mysql-shard'>
       <div>
         <Form.Item
           label={t('datasource.shards.addr')}
@@ -229,7 +229,7 @@ export default function Shard(props: IProps) {
         </div>
       </div>
       {fields.length > 1 && (
-        <div className='n9e-datasource-form-mysql-shard-close'>
+        <div className='aido-datasource-form-mysql-shard-close'>
           <CloseOutlined
             onClick={() => {
               remove(name);

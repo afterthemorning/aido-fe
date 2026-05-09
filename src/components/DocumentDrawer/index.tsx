@@ -108,7 +108,7 @@ function index(props: Props & ModalWrapProps) {
         </div>
       )}
       {type === 'iframe' && (
-        <Spin spinning={loading} wrapperClassName='n9e-document-drawer-iframe-loading'>
+        <Spin spinning={loading} wrapperClassName='aido-document-drawer-iframe-loading'>
           <iframe
             src={`${realDocumentPath}${filenameMap[language]}/?onlyContent&theme=${darkMode ? 'dark' : 'light'}${anchor || ''}`}
             style={{ width: '100%', height: '100%', border: '0 none', visibility: loading ? 'hidden' : 'visible' }}

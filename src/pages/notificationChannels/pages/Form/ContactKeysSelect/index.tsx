@@ -52,7 +52,7 @@ export default function ContactKeysSelect(props: SelectProps) {
         label={
           <Space size={4}>
             {t('variable_configuration.contact_key')}
-            <Tooltip className='n9e-ant-from-item-tooltip' title={t('variable_configuration.contact_key_tip')}>
+            <Tooltip className='aido-ant-from-item-tooltip' title={t('variable_configuration.contact_key_tip')}>
               <QuestionCircleOutlined />
             </Tooltip>
             {profile.roles?.includes('Admin') && <SettingOutlined onClick={() => setContactDrawerVisible(true)} />}

@@ -24,7 +24,7 @@ import type { TooltipProps } from 'antd';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { IRawTimeRange } from '@/components/TimeRangePicker';
-import { N9E_PATHNAME } from '@/utils/constant';
+import { AIDO_PATHNAME } from '@/utils/constant';
 import PromQLInputNG, { interpolateString, instantInterpolateString, includesVariables } from '@/components/PromQLInputNG';
 
 import Table from './Table';
@@ -72,7 +72,7 @@ interface IProps {
 export default function index(props: IProps) {
   const { t } = useTranslation('promGraphCpt');
   const {
-    url = `/api/${N9E_PATHNAME}/proxy`,
+    url = `/api/${AIDO_PATHNAME}/proxy`,
     datasourceValue,
     promQL,
     contentMaxHeight = 300,

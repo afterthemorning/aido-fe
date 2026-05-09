@@ -78,13 +78,13 @@ function FormCpt(props: IProps, ref) {
           }}
         >
           <Col flex={1} style={{ minWidth: 100 }}>
-            <div className='n9e-dashboard-editor-modal-left-wrapper gap-4'>
-              <div className='n9e-dashboard-editor-modal-left-vars-wrapper gap-4'>
+            <div className='aido-dashboard-editor-modal-left-wrapper gap-4'>
+              <div className='aido-dashboard-editor-modal-left-vars-wrapper gap-4'>
                 <span>{t('var.vars')}</span>
                 {/* 直接渲染变量选择器，避免依赖 portal 对 ref 变化不触发重渲染的问题 */}
                 <VariablesMain variableValueFixed={queryParams.__variable_value_fixed as any} loading={false} />
               </div>
-              <div className='fc-border n9e-dashboard-editor-modal-left-chart-wrapper'>
+              <div className='fc-border aido-dashboard-editor-modal-left-chart-wrapper'>
                 {values && (
                   <Renderer
                     id={`${id}__editor__`}
@@ -99,7 +99,7 @@ function FormCpt(props: IProps, ref) {
                 )}
               </div>
               {!_.includes(['text', 'iframe'], type) && (
-                <div className='n9e-dashboard-editor-modal-left-query-wrapper'>
+                <div className='aido-dashboard-editor-modal-left-query-wrapper'>
                   <QueryEditor panelWidth={panelWidth} type={type} variablesWithOptions={variablesWithOptions} range={range} />
                 </div>
               )}
@@ -232,38 +232,47 @@ function FormCpt(props: IProps, ref) {
                       </Mentions>
                     </Form.Item>
                   </Form.Item>
-                  <AntdCollapse ghost defaultActiveKey={[]}>
-                    <AntdCollapse.Panel header={t('panel.base.repeatOptions.title')} key='1' forceRender>
-                      <Row gutter={10}>
-                        <Col span={12}>
-                          <Form.Item label={t('panel.base.repeatOptions.byVariable')} name='repeat' tooltip={t('panel.base.repeatOptions.byVariableTip')}>
-                            <Select allowClear>
-                              {_.map(variablesWithOptions, (item) => {
-                                return (
-                                  <Select.Option key={item.name} value={item.name}>
-                                    {item.name}
-                                  </Select.Option>
-                                );
-                              })}
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                          <Form.Item label={t('panel.base.repeatOptions.maxPerRow')} name='maxPerRow' initialValue={4}>
-                            <Select allowClear>
-                              {_.map([2, 3, 4, 6, 8, 12], (item) => {
-                                return (
-                                  <Select.Option key={item} value={item}>
-                                    {item}
-                                  </Select.Option>
-                                );
-                              })}
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                    </AntdCollapse.Panel>
-                  </AntdCollapse>
+                  <AntdCollapse
+                    ghost
+                    defaultActiveKey={[]}
+                    items={[
+                      {
+                        key: '1',
+                        label: t('panel.base.repeatOptions.title'),
+                        forceRender: true,
+                        children: (
+                          <Row gutter={10}>
+                            <Col span={12}>
+                              <Form.Item label={t('panel.base.repeatOptions.byVariable')} name='repeat' tooltip={t('panel.base.repeatOptions.byVariableTip')}>
+                                <Select allowClear>
+                                  {_.map(variablesWithOptions, (item) => {
+                                    return (
+                                      <Select.Option key={item.name} value={item.name}>
+                                        {item.name}
+                                      </Select.Option>
+                                    );
+                                  })}
+                                </Select>
+                              </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                              <Form.Item label={t('panel.base.repeatOptions.maxPerRow')} name='maxPerRow' initialValue={4}>
+                                <Select allowClear>
+                                  {_.map([2, 3, 4, 6, 8, 12], (item) => {
+                                    return (
+                                      <Select.Option key={item} value={item}>
+                                        {item}
+                                      </Select.Option>
+                                    );
+                                  })}
+                                </Select>
+                              </Form.Item>
+                            </Col>
+                          </Row>
+                        ),
+                      },
+                    ]}
+                  />
                 </>
               </Panel>
               <Form.Item shouldUpdate={(prevValues, curValues) => !_.isEqual(prevValues.targets, curValues.targets)}>

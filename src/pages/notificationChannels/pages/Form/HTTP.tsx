@@ -61,7 +61,7 @@ export default function HTTP() {
             <div className='mb-2'>
               <Space size={4}>
                 {t('http_request_config.header')}
-                <Tooltip className='n9e-ant-from-item-tooltip' title={t('http_request_config.header_tip')}>
+                <Tooltip className='aido-ant-from-item-tooltip' title={t('http_request_config.header_tip')}>
                   <QuestionCircleOutlined />
                 </Tooltip>
                 <PlusCircleOutlined onClick={() => add()} />

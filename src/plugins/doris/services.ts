@@ -88,14 +88,14 @@ export function getLogsQuery(data: {
 }
 
 export function getDorisFields(data: BaseParams & { database: string; table: string }): Promise<string[]> {
-  return request('/api/n9e-plus/doris-fields', {
+  return request('/api/aido-plus/doris-fields', {
     method: RequestMethod.Post,
     data,
   }).then((res) => res.dat || []);
 }
 
 export function getDorisIndex(data: BaseParams & { database: string; table: string }): Promise<Field[]> {
-  return request('/api/n9e-plus/doris-index', {
+  return request('/api/aido-plus/doris-index', {
     method: RequestMethod.Post,
     data,
   }).then((res) => res.dat || []);
@@ -117,7 +117,7 @@ export function getDorisHistogram(data: {
     },
   ];
 }): Promise<any[]> {
-  return request('/api/n9e-plus/doris-histogram', {
+  return request('/api/aido-plus/doris-histogram', {
     method: RequestMethod.Post,
     data,
   }).then((res) => res.dat || []);
@@ -142,7 +142,7 @@ export function getDorisHistogramV2(data: {
   list: any[];
   total: number;
 }> {
-  return request('/api/n9e-plus/v2/doris-histogram', {
+  return request('/api/aido-plus/v2/doris-histogram', {
     method: RequestMethod.Post,
     data,
   }).then((res) => res.dat || { list: [], total: 0 });
@@ -169,7 +169,7 @@ export function getDorisLogsQuery(data: {
   list: { [index: string]: string }[];
   total: number;
 }> {
-  return request('/api/n9e-plus/doris-logs-query', {
+  return request('/api/aido-plus/doris-logs-query', {
     method: RequestMethod.Post,
     data,
   }).then((res) => res.dat || { list: [], total: 0 });
@@ -193,7 +193,7 @@ export function getDorisLogsQueryV2(data: {
     },
   ];
 }): Promise<{ [index: string]: string }[]> {
-  return request('/api/n9e-plus/v2/doris-logs-query', {
+  return request('/api/aido-plus/v2/doris-logs-query', {
     method: RequestMethod.Post,
     data,
   }).then((res) => res.dat || []);
@@ -224,7 +224,7 @@ export const getDsQuery2 = function (data: {
     values: [number, number][];
   }[]
 > {
-  return request('/api/n9e-plus/query-batch', {
+  return request('/api/aido-plus/query-batch', {
     method: RequestMethod.Post,
     data,
     silence: true,
@@ -249,7 +249,7 @@ export function getDorisSQLFormat(data: {
     },
   ];
 }): Promise<string> {
-  return request('/api/n9e-plus/doris-sql-format', {
+  return request('/api/aido-plus/doris-sql-format', {
     method: RequestMethod.Post,
     data,
   }).then((res) => res.dat);
@@ -287,7 +287,7 @@ export function getDorisSQLsPreview(data: {
     };
   };
 }> {
-  return request('/api/n9e-plus/doris-sqls-preview', {
+  return request('/api/aido-plus/doris-sqls-preview', {
     method: RequestMethod.Post,
     data,
   }).then((res) => res.dat);

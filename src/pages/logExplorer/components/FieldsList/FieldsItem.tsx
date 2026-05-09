@@ -115,7 +115,7 @@ export default function FieldsItem(props: Props) {
                       >
                         <Col span={12} key={statName}>
                           <Statistic
-                            className='n9e-logexplorer-field-statistic text-center hover:bg-fc-100 cursor-pointer'
+                            className='aido-logexplorer-field-statistic text-center hover:bg-fc-100 cursor-pointer'
                             title={t(`stats.${statName}`)}
                             value={statValue}
                             suffix={statName === 'exist_ratio' ? '%' : undefined}
@@ -140,7 +140,7 @@ export default function FieldsItem(props: Props) {
                       setTopNVisible={setTopNVisible}
                     >
                       <Col span={8} key={statName}>
-                        <Statistic className='n9e-logexplorer-field-statistic text-center hover:bg-fc-100 cursor-pointer' title={t(`stats.${statName}`)} value={statValue} />
+                        <Statistic className='aido-logexplorer-field-statistic text-center hover:bg-fc-100 cursor-pointer' title={t(`stats.${statName}`)} value={statValue} />
                       </Col>
                     </QuickViewPopover>
                   );

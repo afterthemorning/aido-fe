@@ -36,12 +36,12 @@ const FieldBooleanIcon = (props: Partial<CustomIconComponentProps>) => <Icon com
 
 export const typeIconMap = {
   string: (
-    <span className='n9e-es-discover-fields-item-field' style={{ color: '#4a7194' }}>
+    <span className='aido-es-discover-fields-item-field' style={{ color: '#4a7194' }}>
       t
     </span>
   ),
   number: (
-    <span className='n9e-es-discover-fields-item-field' style={{ color: '#387765' }}>
+    <span className='aido-es-discover-fields-item-field' style={{ color: '#387765' }}>
       #
     </span>
   ),
@@ -71,25 +71,25 @@ export default function Field(props: Props) {
       open={topnVisible}
       title={fieldLabel}
       content={
-        <div className='n9e-es-discover-field-values-topn'>
+        <div className='aido-es-discover-field-values-topn'>
           <strong>
             {t('log.field_values_topn.title', {
               n: topn,
             })}
           </strong>
           <Spin spinning={topnLoading}>
-            <div className='n9e-es-discover-field-values-topn-list'>
+            <div className='aido-es-discover-field-values-topn-list'>
               {_.isEmpty(topnData) && t('log.fieldValues_topnNoData')}
               {_.map(topnData, (item) => {
                 const percent = _.floor(item.value * 100, 2);
                 return (
-                  <div key={item.label} className='n9e-es-discover-field-values-topn-item'>
+                  <div key={item.label} className='aido-es-discover-field-values-topn-item'>
                     <div style={{ width: 'calc(100% - 40px)' }}>
-                      <div className='n9e-es-discover-field-values-topn-item-content'>
-                        <div className='n9e-es-discover-field-values-topn-item-label'>
+                      <div className='aido-es-discover-field-values-topn-item-content'>
+                        <div className='aido-es-discover-field-values-topn-item-label'>
                           {_.isEmpty(item.label) && !_.isNumber(item.label) ? '(empty)' : <Tooltip title={item.label}>{item.label}</Tooltip>}
                         </div>
-                        <div className='n9e-es-discover-field-values-topn-item-percent'>{percent}%</div>
+                        <div className='aido-es-discover-field-values-topn-item-percent'>{percent}%</div>
                       </div>
                       <Progress percent={percent} size='small' showInfo={false} strokeColor='#6c53b1' />
                     </div>
@@ -169,11 +169,11 @@ export default function Field(props: Props) {
         }
       }}
     >
-      <div className='n9e-es-discover-fields-item' key={item}>
-        <span className='n9e-es-discover-fields-item-icon'>{typeIconMap[typeMap[record.type]] || <QuestionOutlined />}</span>
-        <span className='n9e-es-discover-fields-item-content'>{fieldLabel}</span>
+      <div className='aido-es-discover-fields-item' key={item}>
+        <span className='aido-es-discover-fields-item-icon'>{typeIconMap[typeMap[record.type]] || <QuestionOutlined />}</span>
+        <span className='aido-es-discover-fields-item-content'>{fieldLabel}</span>
         <span
-          className='n9e-es-discover-fields-item-oper'
+          className='aido-es-discover-fields-item-oper'
           onClick={() => {
             if (type === 'selected' && onRemove) {
               onRemove(item);

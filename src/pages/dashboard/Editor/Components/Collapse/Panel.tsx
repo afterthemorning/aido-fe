@@ -35,13 +35,13 @@ export default function Panel(props: IProps) {
   return (
     <div
       className={classnames({
-        'n9e-collapse-item': true,
-        'n9e-collapse-item-active': isActive,
-        'n9e-collapse-item-inner': props.isInner,
+        'aido-collapse-item': true,
+        'aido-collapse-item-active': isActive,
+        'aido-collapse-item-inner': props.isInner,
       })}
     >
       <div
-        className='n9e-collapse-header'
+        className='aido-collapse-header'
         onClick={() => {
           collapsible === 'header' && setIsActive(!isActive);
         }}
@@ -52,12 +52,12 @@ export default function Panel(props: IProps) {
               collapsible === 'icon' && setIsActive(!isActive);
             }}
           >
-            {isActive ? <DownOutlined className='n9e-collapse-arrow' /> : <RightOutlined className='n9e-collapse-arrow' />}
+            {isActive ? <DownOutlined className='aido-collapse-arrow' /> : <RightOutlined className='aido-collapse-arrow' />}
           </span>
         ) : null}
         {props.header}
         <div
-          className='n9e-collapse-extra'
+          className='aido-collapse-extra'
           onClick={(e) => {
             e.stopPropagation();
             e.nativeEvent.stopImmediatePropagation();
@@ -69,11 +69,11 @@ export default function Panel(props: IProps) {
       {props.children && (
         <div
           className={classnames({
-            'n9e-collapse-content': true,
-            'n9e-collapse-content-hidden': !isActive,
+            'aido-collapse-content': true,
+            'aido-collapse-content-hidden': !isActive,
           })}
         >
-          <div className='n9e-collapse-content-box'>{props.children}</div>
+          <div className='aido-collapse-content-box'>{props.children}</div>
         </div>
       )}
     </div>

@@ -18,7 +18,7 @@ import _ from 'lodash';
 import semver from 'semver';
 import request from '@/utils/request';
 import { RequestMethod } from '@/store/common';
-import { N9E_PATHNAME } from '@/utils/constant';
+import { AIDO_PATHNAME } from '@/utils/constant';
 
 // 仪表盘列表
 export const getDashboards = function (id: number | string) {
@@ -173,7 +173,7 @@ export const fetchHistoryRangeBatch = (data, signalKey) => {
     signals[signalKey].abort();
   }
   signals[signalKey] = controller;
-  return request(`/api/${N9E_PATHNAME}/query-range-batch`, {
+  return request(`/api/${AIDO_PATHNAME}/query-range-batch`, {
     method: RequestMethod.Post,
     data,
     signal,
@@ -190,7 +190,7 @@ export const fetchHistoryRangeBatch2 = (data, signalKey) => {
     signals[signalKey].abort();
   }
   signals[signalKey] = controller;
-  return request('/api/n9e-plus/query-batch', {
+  return request('/api/aido-plus/query-batch', {
     method: RequestMethod.Post,
     data,
     signal,
@@ -207,7 +207,7 @@ export const fetchHistoryInstantBatch = (data, signalKey) => {
     signals[signalKey].abort();
   }
   signals[signalKey] = controller;
-  return request(`/api/${N9E_PATHNAME}/query-instant-batch`, {
+  return request(`/api/${AIDO_PATHNAME}/query-instant-batch`, {
     method: RequestMethod.Post,
     data,
     signal,
@@ -218,7 +218,7 @@ export const fetchHistoryInstantBatch = (data, signalKey) => {
 };
 
 export const getLabelNames = function (data, datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/labels`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/api/v1/labels`, {
     method: RequestMethod.Get,
     params: { ...data },
     silence: true,
@@ -226,7 +226,7 @@ export const getLabelNames = function (data, datasourceValue: number) {
 };
 
 export const getLabelValues = function (label, data, datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/label/${label}/values`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/api/v1/label/${label}/values`, {
     method: RequestMethod.Get,
     params: { ...data },
     silence: true,
@@ -234,7 +234,7 @@ export const getLabelValues = function (label, data, datasourceValue: number) {
 };
 
 export const getMetricSeries = function (data, datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/series`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/api/v1/series`, {
     method: RequestMethod.Get,
     params: { ...data },
     silence: true,
@@ -242,14 +242,14 @@ export const getMetricSeries = function (data, datasourceValue: number) {
 };
 
 export const getStatusBuildinfo = (datasourceValue: number) => {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/status/buildinfo`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/api/v1/status/buildinfo`, {
     method: RequestMethod.Get,
     silence: true,
   });
 };
 
 export const getMetricSeriesV2 = function (data, datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/query`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/api/v1/query`, {
     method: RequestMethod.Get,
     params: {
       query: `last_over_time(${data.metric}[${data.end - data.start}s])`,
@@ -266,7 +266,7 @@ export const getMetricSeriesV2 = function (data, datasourceValue: number) {
 };
 
 export const getMetric = function (data = {}, datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/label/__name__/values`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/api/v1/label/__name__/values`, {
     method: RequestMethod.Get,
     params: { ...data },
     silence: true,
@@ -274,7 +274,7 @@ export const getMetric = function (data = {}, datasourceValue: number) {
 };
 
 export const getQueryResult = function (data, datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/query`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/api/v1/query`, {
     method: RequestMethod.Get,
     params: { ...data },
     silence: true,
@@ -282,7 +282,7 @@ export const getQueryResult = function (data, datasourceValue: number) {
 };
 
 export function getESVariableResult(datasourceValue: number, index, requestBody) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/${index}/_search`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/${index}/_search`, {
     method: RequestMethod.Post,
     data: JSON.stringify(requestBody),
     headers: {

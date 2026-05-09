@@ -39,7 +39,7 @@ export default function index(props: Props) {
         localStorage.setItem(widthLocalStorageKey, curWidth.toString());
       }}
     >
-      <div className={collapse ? 'n9e-sidebar-collapse' : ''} style={{ height: '100%' }}>
+      <div className={collapse ? 'aido-sidebar-collapse' : ''} style={{ height: '100%' }}>
         <Tooltip
           title={tooltip}
           open={tooltipVisible}
@@ -48,7 +48,7 @@ export default function index(props: Props) {
           }}
         >
           <div
-            className='n9e-sidebar-collapse-btn'
+            className='aido-sidebar-collapse-btn'
             onClick={() => {
               localStorage.setItem(collapseLocalStorageKey, !collapse ? '1' : '0');
               setCollapse(!collapse);
@@ -58,7 +58,7 @@ export default function index(props: Props) {
             {!collapse ? <LeftOutlined /> : <RightOutlined />}
           </div>
         </Tooltip>
-        <div className='n9e-sidebar-collapse-content' style={{ height: '100%' }}>
+        <div className='aido-sidebar-collapse-content' style={{ height: '100%' }}>
           {children}
         </div>
       </div>

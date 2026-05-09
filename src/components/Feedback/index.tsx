@@ -8,7 +8,7 @@ import { useGetState } from 'ahooks';
 import './style.less';
 import './locale';
 
-const cacheKey = 'n9e-feedback-position-bottom';
+const cacheKey = 'aido-feedback-position-bottom';
 const getCacheBottom = () => {
   const bottom = localStorage.getItem(cacheKey);
   return bottom ? parseInt(bottom, 10) : 24;
@@ -92,7 +92,7 @@ export default function Index() {
                 </div>
               </div>
             </a>
-            <a target='_blank' rel='noopener noreferrer' href={i18n.language === 'zh_CN' ? 'https://n9e.github.io/zh/' : 'https://n9e.github.io/'}>
+            <a target='_blank' rel='noopener noreferrer' href={i18n.language === 'zh_CN' ? 'https://aido.github.io/zh/' : 'https://aido.github.io/'}>
               <div
                 className='px-8 py-4 mb-2 rounded-[8px] text-[14px] hover:bg-[var(--fc-fill-3)]'
                 style={{
@@ -156,7 +156,7 @@ export default function Index() {
         }
         placement='leftBottom'
       >
-        <div draggable={false} className='n9e-feedback-container' style={{ right: position.right, bottom: position.bottom }} onMouseDown={handleMouseDown}>
+        <div draggable={false} className='aido-feedback-container' style={{ right: position.right, bottom: position.bottom }} onMouseDown={handleMouseDown}>
           <QuestionCircleOutlined />
         </div>
       </Popover>

@@ -55,11 +55,11 @@ export default function seriesBuider(props: Props) {
   }
   const rightYAxisDisplay = _.get(overrides, [0, 'properties', 'rightYAxisDisplay']);
   const matchRefId = _.get(overrides, [0, 'matcher', 'value']);
-  const refIds = _.union(_.map(baseSeries, (item) => _.get(item, 'n9e_internal.refId')));
+  const refIds = _.union(_.map(baseSeries, (item) => _.get(item, 'aido_internal.refId')));
   const series: Series[] = _.concat(
     [{}] as Series[],
     _.map(baseSeries, (item, idx) => {
-      const refId = _.get(item, 'n9e_internal.refId');
+      const refId = _.get(item, 'aido_internal.refId');
       const curOverride = _.find(overrides, (override) => {
         // TODO 删除的时候可能会出现 matcher 不存在的情况，一个 bug 需要修复，像是删除的时候出现一个临时的状态（没有被彻底删除前）
         if (override.matcher?.id === 'byFrameRefID') {

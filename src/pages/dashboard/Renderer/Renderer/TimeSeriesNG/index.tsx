@@ -87,7 +87,7 @@ export default function index(props: Props) {
   const seriesData = useMemo(() => {
     if (legendSelectMode === 'multiple') {
       return _.map(baseSeries, (subItem) => {
-        const id = subItem.n9e_internal.id;
+        const id = subItem.aido_internal.id;
         return {
           ...subItem,
           show: activeLegends.length ? (legendBehaviour === 'hideItem' ? !activeLegends.includes(id) : activeLegends.includes(id)) : true,
@@ -95,7 +95,7 @@ export default function index(props: Props) {
       });
     }
     return _.map(baseSeries, (subItem) => {
-      const id = subItem.n9e_internal.id;
+      const id = subItem.aido_internal.id;
       return {
         ...subItem,
         show: activeLegend ? (legendBehaviour === 'hideItem' ? activeLegend !== id : activeLegend === id) : true,

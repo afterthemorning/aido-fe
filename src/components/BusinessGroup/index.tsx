@@ -140,7 +140,7 @@ export default function index(props: IProps) {
         localStorage.setItem('leftwidth', curWidth.toString());
       }}
     >
-      <div className={collapse ? 'n9e-biz-group-container collapse' : 'n9e-biz-group-container'}>
+      <div className={collapse ? 'aido-biz-group-container collapse' : 'aido-biz-group-container'}>
         <div
           className='collapse-btn'
           onClick={() => {
@@ -152,7 +152,7 @@ export default function index(props: IProps) {
         </div>
         <div className='flex flex-col h-full overflow-hidden'>
           {renderHeadExtra && renderHeadExtra()}
-          <div className='n9e-biz-group-container-group-title'>
+          <div className='aido-biz-group-container-group-title'>
             {title}
             <Button
               style={{
@@ -167,7 +167,7 @@ export default function index(props: IProps) {
             />
           </div>
           <Input
-            className='n9e-biz-group-container-group-search'
+            className='aido-biz-group-container-group-search'
             prefix={<SearchOutlined />}
             value={searchValue}
             onChange={(e) => {
@@ -188,7 +188,7 @@ export default function index(props: IProps) {
                     key={itemKey}
                     trigger='hover'
                     placement='right'
-                    overlayClassName='n9e-buis-group-item-popover'
+                    overlayClassName='aido-buis-group-item-popover'
                     content={
                       isBusiPutAuthorized || isBusiDelAuthorized ? (
                         <Space size={2}>
@@ -230,7 +230,7 @@ export default function index(props: IProps) {
                     }
                   >
                     <div
-                      className={classNames('n9e-list-item px-[8px] py-[6px] cursor-pointer break-all', {
+                      className={classNames('aido-list-item px-[8px] py-[6px] cursor-pointer break-all', {
                         active: showSelected ? itemKey === businessGroup.key : false,
                       })}
                       onClick={() => {

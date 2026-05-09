@@ -21,7 +21,7 @@ import type { MetricListRes, strategyGroup, strategyStatus, TagKeysRes, TagValue
 import { PAGE_SIZE } from '@/utils/constant';
 import React from 'react';
 import queryString from 'query-string';
-import { N9E_PATHNAME, IS_ENT } from '@/utils/constant';
+import { AIDO_PATHNAME, IS_ENT } from '@/utils/constant';
 
 // 获得策略分组列表
 export const getStrategyGroupList = function (query?: string, p = 1) {
@@ -189,7 +189,7 @@ export const batchDeleteStrategy = function (ruleId, ids: Array<number>) {
 };
 
 export const prometheusQuery = function (data, datasourceValue): Promise<any> {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/query`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/api/v1/query`, {
     method: RequestMethod.Get,
     params: data,
   });
@@ -226,7 +226,7 @@ export const updateServiceCal = function (
   },
   busiId: number,
 ) {
-  return request(`/api/n9e-plus/busi-group/${busiId}/alert-rules/service-cal`, {
+  return request(`/api/aido-plus/busi-group/${busiId}/alert-rules/service-cal`, {
     method: RequestMethod.Put,
     data: data,
   });
@@ -240,7 +240,7 @@ export const updateNotifyChannels = function (
   },
   busiId: number,
 ) {
-  return request(`/api/n9e-plus/busi-group/${busiId}/alert-rules/notify_channels`, {
+  return request(`/api/aido-plus/busi-group/${busiId}/alert-rules/notify_channels`, {
     method: RequestMethod.Put,
     data: data,
   });
@@ -275,7 +275,7 @@ export const getHistoryEvents = function (data) {
 export function getAlertEventsById(eventId) {
   let url = '/api/n9e/alert-cur-event';
   if (IS_ENT) {
-    url = '/api/n9e-plus/alert-cur-event';
+    url = '/api/aido-plus/alert-cur-event';
   }
   return request(`${url}/${eventId}`, {
     method: RequestMethod.Get,
@@ -290,7 +290,7 @@ export function getHistoryEventsById(
 ) {
   let url = '/api/n9e/alert-his-event';
   if (IS_ENT) {
-    url = '/api/n9e-plus/alert-his-event';
+    url = '/api/aido-plus/alert-his-event';
   }
   return request(`${url}/${eventId}`, {
     method: RequestMethod.Get,
@@ -421,7 +421,7 @@ export const getAlertCards = function (params) {
 export const getCardDetail = function (ids) {
   let url = '/api/n9e/alert-cur-events/card/details';
   if (import.meta.env.VITE_IS_PRO === 'true') {
-    url = '/api/n9e-plus/alert-cur-events/card/details';
+    url = '/api/aido-plus/alert-cur-events/card/details';
   }
   return request(url, {
     method: RequestMethod.Post,
@@ -466,7 +466,7 @@ export const getBrainJobs = function (id) {
 };
 
 export function getDsQuery(datasourceValue: number, requestBody) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/_msearch`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/_msearch`, {
     method: RequestMethod.Post,
     data: requestBody,
     headers: {
@@ -480,7 +480,7 @@ export function getDsQuery(datasourceValue: number, requestBody) {
 }
 
 export function getLogQuery(params) {
-  return request('/api/n9e-plus/log-query', {
+  return request('/api/aido-plus/log-query', {
     method: RequestMethod.Post,
     data: params,
     headers: {
@@ -491,7 +491,7 @@ export function getLogQuery(params) {
 }
 
 export function getIndices(datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/_cat/indices`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/_cat/indices`, {
     method: RequestMethod.Get,
     params: {
       format: 'json',
@@ -507,7 +507,7 @@ export function getIndices(datasourceValue: number) {
 }
 
 export function getESVersion(datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/`, {
+  return request(`/api/${AIDO_PATHNAME}/proxy/${datasourceValue}/`, {
     method: RequestMethod.Get,
   }).then((res) => {
     const dat = _.get(res, 'version.number');
@@ -516,21 +516,21 @@ export function getESVersion(datasourceValue: number) {
 }
 
 export function getEventTSQuery(params, token?: string) {
-  return request(`/api/n9e-plus/event-ts-query${token ? `?__token=${token}` : ''}`, {
+  return request(`/api/aido-plus/event-ts-query${token ? `?__token=${token}` : ''}`, {
     method: RequestMethod.Post,
     data: params,
   });
 }
 
 export function getEventLogQuery(params, token?: string) {
-  return request(`/api/n9e-plus/event-log-query${token ? `?__token=${token}` : ''}`, {
+  return request(`/api/aido-plus/event-log-query${token ? `?__token=${token}` : ''}`, {
     method: RequestMethod.Post,
     data: params,
   });
 }
 
 export function getLogsQuery(params) {
-  return request('/api/n9e-plus/logs-query', {
+  return request('/api/aido-plus/logs-query', {
     method: RequestMethod.Post,
     data: params,
   });

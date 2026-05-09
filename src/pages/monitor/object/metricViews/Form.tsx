@@ -66,7 +66,7 @@ function FormCpt(props: ModalWrapProps & IProps) {
 
   return (
     <Modal
-      className='n9e-metric-views-modal'
+      className='aido-metric-views-modal'
       title={
         <Tabs
           className='custom-import-title'

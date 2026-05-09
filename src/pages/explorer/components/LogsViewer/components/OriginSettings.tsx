@@ -192,11 +192,11 @@ export default forwardRef(function OriginSettings(
                   borderBottom: '0 none',
                   padding: '8px 16px',
                 }}
-                className='n9e-border-color'
+                className='aido-border-color'
               >
                 <h3 style={{ margin: 0 }}>{t('logs.settings.organizeFields.allFields')}</h3>
               </div>
-              <div style={{ borderStyle: 'solid', borderWidth: '1px', padding: 16, overflowY: 'auto', height: 450 }} className='n9e-border-color'>
+              <div style={{ borderStyle: 'solid', borderWidth: '1px', padding: 16, overflowY: 'auto', height: 450 }} className='aido-border-color'>
                 {_.map(_.xor(fields, organizeFields), (field: string) => {
                   return (
                     <div
@@ -225,11 +225,11 @@ export default forwardRef(function OriginSettings(
                   borderBottom: '0 none',
                   padding: '8px 16px',
                 }}
-                className='n9e-border-color'
+                className='aido-border-color'
               >
                 <h3 style={{ margin: 0 }}>{t('logs.settings.organizeFields.showFields')}</h3>
               </div>
-              <div style={{ borderStyle: 'solid', borderWidth: '1px', padding: 16, overflowY: 'auto', height: 450 }} className='n9e-border-color'>
+              <div style={{ borderStyle: 'solid', borderWidth: '1px', padding: 16, overflowY: 'auto', height: 450 }} className='aido-border-color'>
                 {_.isEmpty(organizeFields) && <div style={{ color: '#999' }}>{t('logs.settings.organizeFields.showFields_empty')}</div>}
                 {_.map(organizeFields, (field) => {
                   return (

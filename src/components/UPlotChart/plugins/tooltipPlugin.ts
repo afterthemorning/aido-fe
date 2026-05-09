@@ -14,14 +14,14 @@ function renderTooltipItem(seriesItem, value, options) {
   const point = {
     color,
     label,
-    n9e_internal: seriesItem.n9e_internal,
+    aido_internal: seriesItem.aido_internal,
   };
   const liNode = document.createElement('li');
-  liNode.className = 'n9e-uplot-tooltip-item';
+  liNode.className = 'aido-uplot-tooltip-item';
 
   if (color) {
     const symbolNode = document.createElement('span');
-    symbolNode.className = 'n9e-uplot-tooltip-item-symbol';
+    symbolNode.className = 'aido-uplot-tooltip-item-symbol';
     symbolNode.style.background = color;
     liNode.appendChild(symbolNode);
   }
@@ -32,7 +32,7 @@ function renderTooltipItem(seriesItem, value, options) {
   }
   if (formatName) {
     const nameNode = document.createElement('span');
-    nameNode.className = 'n9e-uplot-tooltip-item-name';
+    nameNode.className = 'aido-uplot-tooltip-item-name';
     const nameTextNode = document.createTextNode(formatName);
 
     nameNode.appendChild(nameTextNode);
@@ -41,7 +41,7 @@ function renderTooltipItem(seriesItem, value, options) {
 
   if (value !== undefined && value !== null) {
     const valueNode = document.createElement('span');
-    valueNode.className = 'n9e-uplot-tooltip-item-value';
+    valueNode.className = 'aido-uplot-tooltip-item-value';
 
     let formatedValue = _.toString(value);
 
@@ -81,7 +81,7 @@ export default function tooltipPlugin(options: {
     isPinned = false;
     overlay.style.display = 'none';
     overlay.style.pointerEvents = 'none';
-    overlay.className = 'n9e-uplot-tooltip-container';
+    overlay.className = 'aido-uplot-tooltip-container';
     uplot.cursor._lock = false;
     // uplot.setCursor({ left: -10, top: -10 });
   }
@@ -91,7 +91,7 @@ export default function tooltipPlugin(options: {
   if (!overlay) {
     overlay = document.createElement('div');
     overlay.id = tooltipID;
-    overlay.className = 'n9e-uplot-tooltip-container';
+    overlay.className = 'aido-uplot-tooltip-container';
     overlay.style.zIndex = _.toString(zIndex);
     overlay.style.display = 'none';
     overlay.style.position = 'absolute';
@@ -119,10 +119,10 @@ export default function tooltipPlugin(options: {
         over = u.over;
         overlay.style.display = 'none';
         overlay.innerHTML = `
-          <div class="n9e-uplot-tooltip">
-            <div class="n9e-uplot-tooltip-header"></div>
-            <div class="n9e-uplot-tooltip-main"></div>
-            <div class="n9e-uplot-tooltip-footer"></div>
+          <div class="aido-uplot-tooltip">
+            <div class="aido-uplot-tooltip-header"></div>
+            <div class="aido-uplot-tooltip-main"></div>
+            <div class="aido-uplot-tooltip-footer"></div>
           </div>
         `;
         over.onmouseenter = () => {
@@ -178,18 +178,18 @@ export default function tooltipPlugin(options: {
                 // @ts-ignore
                 u.cursor._lock = true;
                 overlay.style.pointerEvents = 'unset';
-                overlay.className = 'n9e-uplot-tooltip-container n9e-uplot-tooltip-container-pinned';
+                overlay.className = 'aido-uplot-tooltip-container aido-uplot-tooltip-container-pinned';
               } else {
                 // @ts-ignore
                 u.cursor._lock = false;
                 overlay.style.pointerEvents = 'none';
-                overlay.className = 'n9e-uplot-tooltip-container';
+                overlay.className = 'aido-uplot-tooltip-container';
               }
             }
             mouseDownX = 0;
           };
           if (renderFooter) {
-            const footerNode = overlay.querySelector('.n9e-uplot-tooltip-footer') as HTMLDivElement;
+            const footerNode = overlay.querySelector('.aido-uplot-tooltip-footer') as HTMLDivElement;
             if (footerNode) {
               renderFooter(footerNode, closeOverlay);
             }
@@ -294,7 +294,7 @@ export default function tooltipPlugin(options: {
           overflow = true;
         }
 
-        const headerNode = overlay!.querySelector('.n9e-uplot-tooltip-header');
+        const headerNode = overlay!.querySelector('.aido-uplot-tooltip-header');
         if (headerNode) {
           headerNode.innerHTML = '';
 
@@ -307,7 +307,7 @@ export default function tooltipPlugin(options: {
           headerNode.appendChild(headerTextNode);
           if (pinningEnabled) {
             const closeNode = document.createElement('div');
-            closeNode.className = 'n9e-uplot-tooltip-header-close';
+            closeNode.className = 'aido-uplot-tooltip-header-close';
             closeNode.innerHTML = `<span role="img" aria-label="close" class="anticon anticon-close"><svg fill-rule="evenodd" viewBox="64 64 896 896" focusable="false" data-icon="close" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010 .06c0 .03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7 57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7 287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0 010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0 010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512 454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z"></path></svg></span>`;
             closeNode.onclick = () => {
               closeOverlay();
@@ -316,7 +316,7 @@ export default function tooltipPlugin(options: {
           }
         }
 
-        const mainNode = overlay!.querySelector('.n9e-uplot-tooltip-main');
+        const mainNode = overlay!.querySelector('.aido-uplot-tooltip-main');
         if (mainNode) {
           mainNode.innerHTML = '';
           const frag = document.createDocumentFragment();
@@ -327,22 +327,22 @@ export default function tooltipPlugin(options: {
           if (options.mode === 'single') {
             const seriesItem = series[closestSeriesIdx];
             let value = originData[closestSeriesIdx]?.values?.[idx];
-            if (seriesItem.n9e_internal?.values) {
-              value = seriesItem.n9e_internal.values[idx];
+            if (seriesItem.aido_internal?.values) {
+              value = seriesItem.aido_internal.values[idx];
             }
             const liNode = renderTooltipItem(seriesItem, value, options);
-            liNode.className = 'n9e-uplot-tooltip-item n9e-uplot-tooltip-item-closest';
+            liNode.className = 'aido-uplot-tooltip-item aido-uplot-tooltip-item-closest';
             ulNode.appendChild(liNode);
           } else {
             _.forEach(valuesData, (item) => {
               const seriesItem = item.seriesItem;
               let value = item.values[idx];
-              if (seriesItem.n9e_internal?.values) {
-                value = seriesItem.n9e_internal.values[idx];
+              if (seriesItem.aido_internal?.values) {
+                value = seriesItem.aido_internal.values[idx];
               }
               const liNode = renderTooltipItem(seriesItem, value, options);
               if (item.seriesIndex === closestSeriesIdx) {
-                liNode.className = 'n9e-uplot-tooltip-item n9e-uplot-tooltip-item-closest';
+                liNode.className = 'aido-uplot-tooltip-item aido-uplot-tooltip-item-closest';
               }
               ulNode.appendChild(liNode);
             });

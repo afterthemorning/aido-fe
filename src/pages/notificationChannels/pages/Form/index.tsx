@@ -131,7 +131,7 @@ export default function FormCpt(props: Props) {
                     <div className='mb-2'>
                       <Space size={4}>
                         {t('variable_configuration.params.title')}
-                        <Tooltip className='n9e-ant-from-item-tooltip' title={t('variable_configuration.params.title_tip')}>
+                        <Tooltip className='aido-ant-from-item-tooltip' title={t('variable_configuration.params.title_tip')}>
                           <QuestionCircleOutlined />
                         </Tooltip>
                         <PlusCircleOutlined

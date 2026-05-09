@@ -86,7 +86,7 @@ function Table(props: Props) {
   return (
     <>
       <RDGTable
-        className='n9e-event-logs-table'
+        className='aido-event-logs-table'
         rowKeyGetter={(row) => {
           return row.___id___;
         }}

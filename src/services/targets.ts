@@ -21,7 +21,7 @@ import { RequestMethod } from '@/store/common';
 export function getMonObjectList(params) {
   let url = '/api/n9e/targets';
   if (import.meta.env.VITE_IS_PRO === 'true') {
-    url = '/api/n9e-plus/targets';
+    url = '/api/aido-plus/targets';
   }
   return request(url, {
     method: RequestMethod.Get,

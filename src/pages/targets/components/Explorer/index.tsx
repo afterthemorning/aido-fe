@@ -36,11 +36,11 @@ export default function index(props: Props) {
         }}
         destroyOnHidden
       >
-        <div className='n9e-hosts-explorer-metrics-container'>
-          <div className='n9e-hosts-explorer-metrics-list'>
+        <div className='aido-hosts-explorer-metrics-container'>
+          <div className='aido-hosts-explorer-metrics-list'>
             <Metrics setExplorerDrawerData={setExplorerDrawerData} selectedIdents={selectedIdents} />
           </div>
-          <div className='n9e-hosts-explorer-metrics-main'>
+          <div className='aido-hosts-explorer-metrics-main'>
             <ExplorerPanels data={explorerDrawerData} />
           </div>
         </div>

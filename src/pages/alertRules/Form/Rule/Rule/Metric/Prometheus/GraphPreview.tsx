@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { CommonStateContext } from '@/App';
 import FieldGroupV2 from '@/components/FieldGroupV2';
 import PromTable from '@/components/PromGraphCpt/Table';
-import { N9E_PATHNAME } from '@/utils/constant';
+import { AIDO_PATHNAME } from '@/utils/constant';
 
 export default function GraphPreview({ form, fieldName, promqlFieldName = 'prom_ql' }) {
   const { groupedDatasourceList } = useContext(CommonStateContext);
@@ -71,7 +71,7 @@ export default function GraphPreview({ form, fieldName, promqlFieldName = 'prom_
             {errorContent && <Alert className='mb-2' message={errorContent} type='error' />}
             {visible && datasourceId && (
               <PromTable
-                url={`/api/${N9E_PATHNAME}/proxy`}
+                url={`/api/${AIDO_PATHNAME}/proxy`}
                 datasourceValue={datasourceId}
                 promql={promql}
                 contentMaxHeight={400}

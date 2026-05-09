@@ -32,7 +32,7 @@ import { lintKeymap } from '@codemirror/lint';
 import { autocompletion, completionKeymap } from '@codemirror/autocomplete';
 import { PromQLExtension } from '@fc-components/codemirror-promql';
 import { baseTheme, lightTheme, darkTheme, promqlHighlighter } from './CMTheme';
-import { N9E_PATHNAME, AccessTokenKey } from '@/utils/constant';
+import { AIDO_PATHNAME, AccessTokenKey } from '@/utils/constant';
 import { CommonStateContext } from '@/App';
 import './style.less';
 
@@ -59,7 +59,7 @@ export interface CMExpressionInputProps {
 
 const ExpressionInput = (
   {
-    url = `/api/${N9E_PATHNAME}/proxy`,
+    url = `/api/${AIDO_PATHNAME}/proxy`,
     headers,
     value,
     onChange,

@@ -45,7 +45,7 @@ export default function SMTP() {
             label={
               <Space size={4}>
                 {t('smtp_request_config.from')}
-                <Tooltip className='n9e-ant-from-item-tooltip' overlayClassName='ant-tooltip-max-width-400' title={t('smtp_request_config.from_tip')}>
+                <Tooltip className='aido-ant-from-item-tooltip' overlayClassName='ant-tooltip-max-width-400' title={t('smtp_request_config.from_tip')}>
                   <QuestionCircleOutlined />
                 </Tooltip>
               </Space>

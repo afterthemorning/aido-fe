@@ -12,13 +12,26 @@ import {
   approveReport,
   bindPolicyNotifyRule,
   cancelScheduledSend,
+  DeliveryItem,
+  DigestInputPreview,
+  ExecutionItem,
+  getDeliveries,
+  getDigestInputPreview,
+  getExecutions,
+  getRegularReportAIConfig,
+  getO365Source,
   getReportHistory,
   getReportRevisions,
   getSendSchedule,
+  O365SourceConfig,
   RegularReportItem,
+  resendReport,
   RevisionItem,
   revokeReport,
+  runPolicyNow,
+  saveO365Source,
   SendScheduleItem,
+  testO365Source,
   undoRevokeReport,
   updateReportContent,
 } from './services';
@@ -66,6 +79,7 @@ export default function RegularReport() {
   const [form] = Form.useForm<{ notify_rule_id?: number; send_delay_seconds?: number }>();
   const [bindForm] = Form.useForm<{ notify_rule_id: number }>();
   const [editForm] = Form.useForm<{ brief_content?: string; markdown_content?: string; html_content?: string; change_comment: string }>();
+  const [sourceForm] = Form.useForm<O365SourceConfig>();
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState<RegularReportItem[]>([]);
   const [statusFilter, setStatusFilter] = useState<string | undefined>(undefined);
@@ -91,6 +105,27 @@ export default function RegularReport() {
   const [scheduleLoading, setScheduleLoading] = useState(false);
   const [schedule, setSchedule] = useState<SendScheduleItem | null>(null);
 
+  const [sourceOpen, setSourceOpen] = useState(false);
+  const [sourceLoading, setSourceLoading] = useState(false);
+  const [sourceSaving, setSourceSaving] = useState(false);
+  const [sourceTesting, setSourceTesting] = useState(false);
+
+  const [runLoadingPolicyId, setRunLoadingPolicyId] = useState<number | null>(null);
+  const [runNowAIEnabled, setRunNowAIEnabled] = useState(false);
+
+  const [executionsOpen, setExecutionsOpen] = useState(false);
+  const [executionsLoading, setExecutionsLoading] = useState(false);
+  const [executions, setExecutions] = useState<ExecutionItem[]>([]);
+
+  const [digestTarget, setDigestTarget] = useState<RegularReportItem | null>(null);
+  const [digestLoading, setDigestLoading] = useState(false);
+  const [digestPreview, setDigestPreview] = useState<DigestInputPreview | null>(null);
+
+  const [deliveryTarget, setDeliveryTarget] = useState<RegularReportItem | null>(null);
+  const [deliveriesLoading, setDeliveriesLoading] = useState(false);
+  const [deliveries, setDeliveries] = useState<DeliveryItem[]>([]);
+  const [resendLoadingReportId, setResendLoadingReportId] = useState<number | null>(null);
+
   const loadData = useCallback(async () => {
     setLoading(true);
     try {
@@ -110,6 +145,136 @@ export default function RegularReport() {
   useEffect(() => {
     loadData();
   }, [loadData]);
+
+  useEffect(() => {
+    const loadAIConfig = async () => {
+      try {
+        const cfg = await getRegularReportAIConfig();
+        setRunNowAIEnabled(Boolean(cfg?.endpoint));
+      } catch {
+        setRunNowAIEnabled(false);
+      }
+    };
+    loadAIConfig();
+  }, []);
+
+  const openSourceConfig = async () => {
+    setSourceOpen(true);
+    setSourceLoading(true);
+    try {
+      const data = await getO365Source();
+      sourceForm.setFieldsValue({
+        tenant_id: data?.tenant_id || '',
+        client_id: data?.client_id || '',
+        client_secret: '',
+        mailbox: data?.mailbox || '',
+        folder: data?.folder || 'Inbox',
+        timezone: data?.timezone || 'Asia/Shanghai',
+        graph_endpoint: data?.graph_endpoint || 'https://graph.microsoft.com/v1.0',
+      });
+    } catch (err: unknown) {
+      message.error(getErrorMessage(err, t('msg.load_source_failed')));
+    } finally {
+      setSourceLoading(false);
+    }
+  };
+
+  const submitSourceConfig = async () => {
+    const values = await sourceForm.validateFields();
+    setSourceSaving(true);
+    try {
+      await saveO365Source(values);
+      message.success(t('msg.save_source_ok'));
+      setSourceOpen(false);
+    } catch (err: unknown) {
+      message.error(getErrorMessage(err, t('msg.action_failed')));
+    } finally {
+      setSourceSaving(false);
+    }
+  };
+
+  const testSourceConfig = async () => {
+    const values = await sourceForm.validateFields();
+    setSourceTesting(true);
+    try {
+      await testO365Source(values);
+      message.success(t('msg.test_source_ok'));
+    } catch (err: unknown) {
+      message.error(getErrorMessage(err, t('msg.test_source_failed')));
+    } finally {
+      setSourceTesting(false);
+    }
+  };
+
+  const runNow = async (row: RegularReportItem) => {
+    setRunLoadingPolicyId(row.policy_id);
+    try {
+      await runPolicyNow(row.policy_id, { lookback_hours: 24, ai_enabled: runNowAIEnabled });
+      message.success(t('msg.run_now_ok'));
+      loadData();
+    } catch (err: unknown) {
+      message.error(getErrorMessage(err, t('msg.run_now_failed')));
+    } finally {
+      setRunLoadingPolicyId(null);
+    }
+  };
+
+  const loadExecutions = async () => {
+    setExecutionsLoading(true);
+    try {
+      const data = await getExecutions({ limit: 30 });
+      setExecutions(data?.list || []);
+    } catch (err: unknown) {
+      message.error(getErrorMessage(err, t('msg.load_executions_failed')));
+      setExecutions([]);
+    } finally {
+      setExecutionsLoading(false);
+    }
+  };
+
+  const openDigestPreview = async (row: RegularReportItem) => {
+    setDigestTarget(row);
+    setDigestLoading(true);
+    try {
+      const data = await getDigestInputPreview(row.id);
+      setDigestPreview(data || null);
+    } catch (err: unknown) {
+      message.error(getErrorMessage(err, t('msg.load_digest_failed')));
+      setDigestPreview(null);
+    } finally {
+      setDigestLoading(false);
+    }
+  };
+
+  const openDeliveries = async (row: RegularReportItem) => {
+    setDeliveryTarget(row);
+    setDeliveriesLoading(true);
+    try {
+      const data = await getDeliveries(row.id, { limit: 30 });
+      setDeliveries(data?.list || []);
+    } catch (err: unknown) {
+      message.error(getErrorMessage(err, t('msg.load_deliveries_failed')));
+      setDeliveries([]);
+    } finally {
+      setDeliveriesLoading(false);
+    }
+  };
+
+  const doResend = async (row: RegularReportItem) => {
+    setResendLoadingReportId(row.id);
+    try {
+      await resendReport(row.id);
+      message.success(t('msg.resend_ok'));
+      if (deliveryTarget?.id === row.id) {
+        const data = await getDeliveries(row.id, { limit: 30 });
+        setDeliveries(data?.list || []);
+      }
+    } catch (err: unknown) {
+      message.error(getErrorMessage(err, t('msg.resend_failed')));
+    } finally {
+      setResendLoadingReportId(null);
+    }
+  };
 
   const handleAction = async (fn: () => Promise<unknown>, okMsg: string) => {
     try {
@@ -266,6 +431,42 @@ export default function RegularReport() {
     { title: t('revision.change_comment'), dataIndex: 'change_comment' },
   ];
 
+  const executionColumns: ColumnsType<ExecutionItem> = [
+    { title: t('execution.id'), dataIndex: 'id', width: 90 },
+    { title: t('execution.policy_id'), dataIndex: 'policy_id', width: 100 },
+    { title: t('execution.report_id'), dataIndex: 'report_id', width: 100 },
+    { title: t('execution.status'), dataIndex: 'status', width: 100 },
+    { title: t('execution.mail_count'), dataIndex: 'mail_count', width: 100 },
+    {
+      title: t('execution.duration_ms'),
+      dataIndex: 'duration_ms',
+      width: 120,
+    },
+    {
+      title: t('execution.created_at'),
+      dataIndex: 'created_at',
+      width: 180,
+      render: (ts: number) => formatUnix(ts),
+    },
+    { title: t('execution.operator'), dataIndex: 'operator', width: 140, ellipsis: true },
+    { title: t('execution.error_message'), dataIndex: 'error_message' },
+  ];
+
+  const deliveryColumns: ColumnsType<DeliveryItem> = [
+    { title: t('delivery.id'), dataIndex: 'id', width: 90 },
+    { title: t('delivery.status'), dataIndex: 'status', width: 120 },
+    { title: t('delivery.notify_rule_id'), dataIndex: 'notify_rule_id', width: 120 },
+    { title: t('delivery.channel'), dataIndex: 'channel', width: 120 },
+    {
+      title: t('delivery.sent_at'),
+      dataIndex: 'sent_at',
+      width: 180,
+      render: (ts: number) => formatUnix(ts),
+    },
+    { title: t('delivery.operator'), dataIndex: 'operator', width: 140, ellipsis: true },
+    { title: t('delivery.result_message'), dataIndex: 'result_message' },
+  ];
+
   const columns: ColumnsType<RegularReportItem> = [
     {
       title: t('table.id'),
@@ -308,12 +509,27 @@ export default function RegularReport() {
       render: (ts: number) => formatUnix(ts),
     },
     {
+      title: t('table.summary_source'),
+      dataIndex: 'summary_source',
+      width: 130,
+      render: (v: string) => v || '-',
+    },
+    {
+      title: t('table.prompt_version'),
+      dataIndex: 'prompt_version',
+      width: 130,
+      render: (v: string) => v || '-',
+    },
+    {
       title: t('table.actions'),
       key: 'actions',
-      width: 460,
+      width: 620,
       fixed: 'right',
       render: (_, row) => (
         <Space size={4} wrap>
+          <Button size='small' loading={runLoadingPolicyId === row.policy_id} onClick={() => runNow(row)}>
+            {t('actions.run_now')}
+          </Button>
           <Button size='small' disabled={!canApproveStatus(row.status)} onClick={() => openApprove(row)}>
             {t('actions.approve')}
           </Button>
@@ -337,6 +553,15 @@ export default function RegularReport() {
           </Button>
           <Button size='small' onClick={() => openSchedule(row)}>
             {t('actions.schedule')}
+          </Button>
+          <Button size='small' onClick={() => openDigestPreview(row)}>
+            {t('actions.digest_preview')}
+          </Button>
+          <Button size='small' onClick={() => openDeliveries(row)}>
+            {t('actions.deliveries')}
+          </Button>
+          <Button size='small' loading={resendLoadingReportId === row.id} onClick={() => doResend(row)}>
+            {t('actions.resend')}
           </Button>
         </Space>
       ),
@@ -379,7 +604,18 @@ export default function RegularReport() {
               ]}
             />
           </Space>
-          <Button onClick={loadData}>{t('actions.refresh')}</Button>
+          <Space>
+            <Button onClick={openSourceConfig}>{t('actions.source_config')}</Button>
+            <Button
+              onClick={() => {
+                setExecutionsOpen(true);
+                loadExecutions();
+              }}
+            >
+              {t('actions.executions')}
+            </Button>
+            <Button onClick={loadData}>{t('actions.refresh')}</Button>
+          </Space>
         </div>
         <Table
           rowKey='id'
@@ -391,6 +627,108 @@ export default function RegularReport() {
           scroll={{ x: 1450 }}
         />
       </div>
+
+      <Modal
+        open={sourceOpen}
+        title={t('source.title')}
+        onCancel={() => setSourceOpen(false)}
+        onOk={submitSourceConfig}
+        confirmLoading={sourceSaving}
+        destroyOnHidden
+        okText={t('actions.save_source')}
+      >
+        <Spin spinning={sourceLoading}>
+          <Form layout='vertical' form={sourceForm}>
+            <Form.Item name='tenant_id' label={t('source.tenant_id')} rules={[{ required: true }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item name='client_id' label={t('source.client_id')} rules={[{ required: true }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item name='client_secret' label={t('source.client_secret')}>
+              <Input.Password placeholder={t('source.client_secret_placeholder')} />
+            </Form.Item>
+            <Form.Item name='mailbox' label={t('source.mailbox')} rules={[{ required: true }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item name='folder' label={t('source.folder')}>
+              <Input />
+            </Form.Item>
+            <Form.Item name='timezone' label={t('source.timezone')}>
+              <Input />
+            </Form.Item>
+            <Form.Item name='graph_endpoint' label={t('source.graph_endpoint')}>
+              <Input />
+            </Form.Item>
+          </Form>
+        </Spin>
+        <div className='mt-2'>
+          <Button loading={sourceTesting} onClick={testSourceConfig}>
+            {t('actions.test_source')}
+          </Button>
+        </div>
+      </Modal>
+
+      <Drawer
+        open={executionsOpen}
+        title={t('execution.title')}
+        width={980}
+        onClose={() => {
+          setExecutionsOpen(false);
+          setExecutions([]);
+        }}
+        extra={<Button onClick={loadExecutions}>{t('actions.refresh')}</Button>}
+        destroyOnClose
+      >
+        <Table rowKey='id' loading={executionsLoading} dataSource={executions} columns={executionColumns} pagination={{ pageSize: 10 }} scroll={{ x: 1200 }} />
+      </Drawer>
+
+      <Modal
+        open={!!digestTarget}
+        title={t('digest.title')}
+        onCancel={() => {
+          setDigestTarget(null);
+          setDigestPreview(null);
+        }}
+        footer={null}
+        destroyOnHidden
+      >
+        {digestLoading ? (
+          <div className='py-6 text-center'>
+            <Spin size='small' />
+          </div>
+        ) : (
+          <Space orientation='vertical' size={8}>
+            <div>
+              <Text type='secondary'>{t('digest.policy_id')}</Text>: {digestPreview?.metadata?.policy_id ?? '-'}
+            </div>
+            <div>
+              <Text type='secondary'>{t('digest.report_id')}</Text>: {digestPreview?.metadata?.report_id ?? '-'}
+            </div>
+            <div>
+              <Text type='secondary'>{t('digest.window_start')}</Text>: {formatUnix(digestPreview?.metadata?.window_start)}
+            </div>
+            <div>
+              <Text type='secondary'>{t('digest.window_end')}</Text>: {formatUnix(digestPreview?.metadata?.window_end)}
+            </div>
+            <div>
+              <Text type='secondary'>{t('digest.summary_source')}</Text>: {digestPreview?.metadata?.summary_source || '-'}
+            </div>
+            <div>
+              <Text type='secondary'>{t('digest.prompt_version')}</Text>: {digestPreview?.metadata?.prompt_version || '-'}
+            </div>
+            <div>
+              <Text type='secondary'>{t('digest.highlights')}</Text>:
+              <ul className='mb-0 mt-2 pl-4'>
+                {(digestPreview?.highlights || []).map((item, idx) => (
+                  <li key={`${idx}_${item}`}>{item}</li>
+                ))}
+                {(!digestPreview?.highlights || digestPreview.highlights.length === 0) && <li>-</li>}
+              </ul>
+            </div>
+          </Space>
+        )}
+      </Modal>
 
       <Modal
         open={!!approveTarget}
@@ -462,6 +800,19 @@ export default function RegularReport() {
         <Table rowKey='revision_id' loading={revisionLoading} dataSource={revisions} columns={revisionColumns} pagination={{ pageSize: 10 }} />
       </Drawer>
 
+      <Drawer
+        open={!!deliveryTarget}
+        title={t('delivery.title')}
+        width={980}
+        onClose={() => {
+          setDeliveryTarget(null);
+          setDeliveries([]);
+        }}
+        destroyOnClose
+      >
+        <Table rowKey='id' loading={deliveriesLoading} dataSource={deliveries} columns={deliveryColumns} pagination={{ pageSize: 10 }} scroll={{ x: 1100 }} />
+      </Drawer>
+
       <Modal
         open={!!scheduleTarget}
         title={t('schedule.title')}
@@ -477,7 +828,7 @@ export default function RegularReport() {
             <Spin size='small' />
           </div>
         ) : (
-          <Space direction='vertical' size={8}>
+          <Space orientation='vertical' size={8}>
             <div>
               <Text type='secondary'>{t('schedule.status')}</Text>: {t(`status.${schedule?.status || ''}`) || schedule?.status || '-'}
             </div>

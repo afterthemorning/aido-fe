@@ -125,14 +125,14 @@ export default function index(props: Props) {
             if (options?.standardOptions?.displayName) {
               name = options?.standardOptions?.displayName;
             }
-            const override = _.find(overrides, (item) => item.matcher.value === point?.n9e_internal?.refId);
+            const override = _.find(overrides, (item) => item.matcher.value === point?.aido_internal?.refId);
             if (override && override?.properties?.standardOptions?.displayName) {
               name = override?.properties?.standardOptions?.displayName;
             }
             return getMappedTextObj(name, options?.valueMappings)?.text;
           },
           pointValueformatter: (val, point) => {
-            const override = _.find(overrides, (item) => item.matcher.value === point?.n9e_internal?.refId);
+            const override = _.find(overrides, (item) => item.matcher.value === point?.aido_internal?.refId);
             if (override) {
               return valueFormatter(
                 {
@@ -308,9 +308,9 @@ export default function index(props: Props) {
       if (i === 0) return s;
       return {
         ...s,
-        n9e_internal: {
+        aido_internal: {
           // @ts-ignore
-          ...s.n9e_internal,
+          ...s.aido_internal,
           values: frames[i], // 只用于堆叠图下保存原始数据
         },
       };

@@ -95,7 +95,7 @@ function index(props: IProps) {
 
   return (
     <Modal
-      className='n9e-dashboard-editor-modal'
+      className='aido-dashboard-editor-modal'
       width='100%'
       title={
         <div style={{ display: 'flex', alignItems: 'center' }}>

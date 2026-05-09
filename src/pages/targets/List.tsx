@@ -149,7 +149,7 @@ export default function List(props: IProps) {
         </Space>
       ),
       dataIndex: 'ident',
-      className: 'n9e-hosts-table-column-ident',
+      className: 'aido-hosts-table-column-ident',
       render: (text) => {
         return (
           <div
@@ -184,7 +184,7 @@ export default function List(props: IProps) {
       columns.push({
         title: t('host_ip'),
         dataIndex: 'host_ip',
-        className: 'n9e-hosts-table-column-ip',
+        className: 'aido-hosts-table-column-ip',
       });
     }
     if (item.name === 'host_tags') {
@@ -198,7 +198,7 @@ export default function List(props: IProps) {
           </Space>
         ),
         dataIndex: 'host_tags',
-        className: 'n9e-hosts-table-column-tags',
+        className: 'aido-hosts-table-column-tags',
         ellipsis: {
           showTitle: false,
         },
@@ -242,7 +242,7 @@ export default function List(props: IProps) {
           </Space>
         ),
         dataIndex: 'tags',
-        className: 'n9e-hosts-table-column-tags',
+        className: 'aido-hosts-table-column-tags',
         ellipsis: {
           showTitle: false,
         },
@@ -279,7 +279,7 @@ export default function List(props: IProps) {
       columns.push({
         title: t('group_obj'),
         dataIndex: 'group_objs',
-        className: 'n9e-hosts-table-column-tags',
+        className: 'aido-hosts-table-column-tags',
         ellipsis: {
           showTitle: false,
         },
@@ -667,7 +667,7 @@ export default function List(props: IProps) {
         </Space>
       </div>
       <Table
-        className='mt-2 n9e-hosts-table'
+        className='mt-2 aido-hosts-table'
         rowKey='id'
         columns={columns}
         size='small'

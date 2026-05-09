@@ -57,6 +57,8 @@ const zh_CN = {
     audit_log: '审计日志',
     alert_servers: '告警引擎',
     about: '关于产品',
+    source_registry: '数据源注册',
+    rum: '真实用户监控 (RUM)',
     extensions: '扩展功能',
     expiry_reminder: '到期提醒',
   },

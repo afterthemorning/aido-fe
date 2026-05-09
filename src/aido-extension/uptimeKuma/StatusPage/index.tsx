@@ -3,6 +3,8 @@ import { Card, Row, Col, Tag, Typography, Spin, Alert, Space, Grid } from 'antd'
 import { CheckCircleFilled, CloseCircleFilled, QuestionCircleFilled, MinusCircleFilled } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import _ from 'lodash';
+import EmptyState from '@/components/EmptyState';
+import SkeletonWrap from '@/components/SkeletonWrap';
 
 const { Title, Text } = Typography;
 const { useBreakpoint } = Grid;
@@ -107,11 +109,7 @@ export default function UptimeKumaStatusPage({ datasourceValue, publicMode }: Pr
   const overallText = overallStatus === 'healthy' ? 'All Systems Operational' : overallStatus === 'degraded' ? 'Partial Outage' : overallStatus === 'down' ? 'Major Outage' : 'Unknown';
 
   if (!datasourceValue) {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300 }}>
-        <Text type="secondary">{publicMode ? 'No status data available' : 'Please select a Uptime Kuma datasource'}</Text>
-      </div>
-    );
+    return <EmptyState type="no-data" description={publicMode ? 'No status data available' : 'Please select a Uptime Kuma datasource'} />;
   }
 
   return (
@@ -137,7 +135,7 @@ export default function UptimeKumaStatusPage({ datasourceValue, publicMode }: Pr
       </div>
 
       {loading ? (
-        <div style={{ textAlign: 'center', padding: 60 }}><Spin /></div>
+        <SkeletonWrap type="card" rows={6} />
       ) : error ? (
         <Alert type="error" message={error} />
       ) : (

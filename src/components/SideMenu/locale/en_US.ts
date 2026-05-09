@@ -58,6 +58,8 @@ const en_US = {
     audit_log: 'Audit log',
     alert_servers: 'Alerting engines',
     about: 'About',
+    source_registry: 'Source Registry',
+    rum: 'RUM (Real User)',
     extensions: 'Extensions',
     expiry_reminder: 'Expiry Reminder',
   },

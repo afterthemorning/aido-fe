@@ -143,6 +143,14 @@ export const getMenuList = (embeddedProductMenu: MenuItem[] = [], hideDeprecated
           key: '/embedded-products',
           label: 'menu.embedded_products',
         },
+        {
+          key: '/source-registry',
+          label: 'menu.source_registry',
+        },
+        {
+          key: '/rum',
+          label: 'menu.rum',
+        },
         ...embeddedProductMenu,
       ],
     },

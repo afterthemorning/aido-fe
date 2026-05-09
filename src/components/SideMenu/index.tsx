@@ -16,6 +16,7 @@ import { getEmbeddedProducts } from '@/pages/embeddedProduct/services';
 import { eventBus, EVENT_KEYS } from '@/pages/embeddedProduct/eventBus';
 import { DETAIL_PATH as embeddedProductDetailPath } from '@/pages/embeddedProduct/constants';
 import { V8_BETA_14_TS } from '@/utils/constant';
+import { usePermissionsRefresh } from '@/utils/usePermissionsRefresh';
 
 import { cn, getCurrentMenuList, getSavedPath } from './utils';
 import SideMenuHeader from './Header';
@@ -65,6 +66,9 @@ const SideMenu = (props: SideMenuProps) => {
   }, [location.pathname, location.search, query?.menu]);
 
   const hideDeprecatedMenus = installTs > V8_BETA_14_TS;
+
+  // 启动权限自动刷新（事件驱动 + 30s 兜底轮询）
+  usePermissionsRefresh();
 
   const fetchEmbeddedProducts = useCallback(() => {
     if (hideSideMenu) return;

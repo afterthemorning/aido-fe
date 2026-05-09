@@ -5,6 +5,7 @@ import { Tree, Button, Modal, message, Space } from 'antd';
 
 import { getOperationsByRole, putOperationsByRole } from './services';
 import { OperationType } from './types';
+import { notifyPermsChanged } from '@/utils/usePermissionsRefresh';
 
 function transformOperations(operations: OperationType[]) {
   return _.map(operations, (item) => {
@@ -125,6 +126,7 @@ export default function Operations(props: IProps) {
                     }),
                   ).then(() => {
                     message.success(t('common:success.save'));
+                    notifyPermsChanged();
                   });
                 },
               });

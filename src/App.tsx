@@ -103,6 +103,7 @@ export interface ICommonState {
   i18nList?: string[];
   rangePickerShowSecond?: boolean;
   logsDefaultRange: IRawTimeRange;
+  reloadPerms: () => void;
 }
 
 export const basePrefix = import.meta.env.VITE_PREFIX || '';
@@ -158,6 +159,10 @@ function App() {
     },
     profile: {} as IProfile,
     setProfile: (profile: IProfile) => setCommonState((state) => ({ ...state, profile })),
+    reloadPerms: async () => {
+      const { dat: perms } = (await getMenuPerm()) || {};
+      setCommonState((state) => ({ ...state, perms }));
+    },
     licenseExpired: false,
     versions: { version: '', github_verison: '', newVersion: false },
     isPlus,

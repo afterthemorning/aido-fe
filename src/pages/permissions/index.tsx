@@ -8,6 +8,7 @@ import PageLayout, { HelpLink } from '@/components/pageLayout';
 
 import { RoleType, OperationType } from './types';
 import { getRoles, deleteRoles, getOperations } from './services';
+import { mergeOperations } from './utils';
 import RoleFormModal from './RoleFormModal';
 import Operations from './Operations';
 import './locale';
@@ -33,7 +34,7 @@ export default function index() {
   useEffect(() => {
     fetchRoles();
     getOperations().then((res) => {
-      setOperations(res);
+      setOperations(mergeOperations(res || []));
     });
   }, [i18n.language]);
 

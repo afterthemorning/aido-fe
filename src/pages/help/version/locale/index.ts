@@ -12,6 +12,7 @@ const resources = {
     ja_JP,
     ru_RU,
   },
+  backend_error: "版本获取失败：{{message}}",
 };
 
 export default resources;

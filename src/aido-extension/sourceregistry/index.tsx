@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import {
   Alert,
   Badge,
@@ -22,7 +22,11 @@ import {
 import type { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
+import _ from 'lodash';
 import PageLayout from '@/components/pageLayout';
+import { CommonStateContext } from '@/App';
+import BusinessGroupSelectWithAll from '@/components/BusinessGroup/BusinessGroupSelectWithAll';
+import DatasourceValueSelectV2 from '@/pages/alertRules/Form/components/DatasourceValueSelect/V2';
 import './locale';
 import {
   AuditQuery,
@@ -44,6 +48,7 @@ import {
 } from './services';
 
 const { Text } = Typography;
+const SOURCE_ID_REGEX = /^[a-z0-9][a-z0-9_.-]{1,63}$/;
 
 function unixToStr(ts: number) {
   if (!ts || ts <= 0) return '-';
@@ -75,6 +80,9 @@ function SourceFormModal({ visible, editRecord, onClose, onSaved }: SourceFormPr
   const { t } = useTranslation('sourceRegistry');
   const [form] = Form.useForm<UpsertSourceForm>();
   const [loading, setLoading] = useState(false);
+  const { groupedDatasourceList, reloadGroupedDatasourceList } = useContext(CommonStateContext);
+
+  const allDatasources = _.flatten(_.values(groupedDatasourceList));
 
   useEffect(() => {
     if (visible) {
@@ -85,7 +93,7 @@ function SourceFormModal({ visible, editRecord, onClose, onSaved }: SourceFormPr
           env: editRecord.env,
           agent_type: editRecord.agent_type,
           target_datasource_id: editRecord.target_datasource_id,
-          owner_team_name: editRecord.owner_team_name,
+          owner_team_id: editRecord.owner_team_id,
           description: editRecord.description,
         });
       }
@@ -117,12 +125,19 @@ function SourceFormModal({ visible, editRecord, onClose, onSaved }: SourceFormPr
       onCancel={onClose}
       onOk={handleOk}
       confirmLoading={loading}
-      width={520}
+      width={580}
       destroyOnHidden
     >
       <Form form={form} layout='vertical' requiredMark={false}>
         {!isEdit && (
-          <Form.Item name='source_id' label={t('source.source_id')} rules={[{ required: true }]}>
+          <Form.Item
+            name='source_id'
+            label={t('source.source_id')}
+            rules={[
+              { required: true },
+              { pattern: SOURCE_ID_REGEX, message: t('source.source_id_format') || 'Only lowercase letters, digits, _, -, . allowed (2-64 chars)' },
+            ]}
+          >
             <Input placeholder='e.g. prod-nginx-01' />
           </Form.Item>
         )}
@@ -149,10 +164,13 @@ function SourceFormModal({ visible, editRecord, onClose, onSaved }: SourceFormPr
           </Col>
         </Row>
         <Form.Item name='target_datasource_id' label={t('source.target_datasource')} rules={[{ required: true }]}>
-          <InputNumber style={{ width: '100%' }} min={1} placeholder='Datasource ID' />
+          <DatasourceValueSelectV2
+            datasourceList={allDatasources}
+            reloadGroupedDatasourceList={reloadGroupedDatasourceList}
+          />
         </Form.Item>
-        <Form.Item name='owner_team_name' label={t('source.owner_team')}>
-          <Input />
+        <Form.Item name='owner_team_id' label={t('source.owner_team')}>
+          <BusinessGroupSelectWithAll />
         </Form.Item>
         <Form.Item name='description' label={t('source.description')}>
           <Input.TextArea rows={2} />
@@ -210,88 +228,34 @@ function KeysDrawer({ sourceId, onClose }: KeysDrawerProps) {
 
   const columns: ColumnsType<SourceAPIKey> = [
     { title: t('key.key_id'), dataIndex: 'key_id', width: 220, ellipsis: true },
+    { title: t('key.status'), dataIndex: 'status', width: 80, render: (v) => <Tag color={keyStatusColor(v)}>{t(`key.${v}`) || v}</Tag> },
+    { title: t('key.expires_at'), dataIndex: 'expires_at', width: 160, render: (v) => v > 0 ? unixToStr(v) : t('key.never') },
+    { title: t('key.last_used_at'), dataIndex: 'last_used_at', width: 160, render: (v) => unixToStr(v) },
     {
-      title: t('key.status'),
-      dataIndex: 'status',
-      width: 80,
-      render: (v) => <Tag color={keyStatusColor(v)}>{t(`key.${v}`) || v}</Tag>,
-    },
-    {
-      title: t('key.expires_at'),
-      dataIndex: 'expires_at',
-      width: 160,
-      render: (v) => v > 0 ? unixToStr(v) : t('key.never'),
-    },
-    {
-      title: t('key.last_used_at'),
-      dataIndex: 'last_used_at',
-      width: 160,
-      render: (v) => unixToStr(v),
-    },
-    {
-      title: t('source.actions'),
-      width: 80,
-      render: (_, row) => (
-        row.status === 'active' ? (
-          <Popconfirm title={t('btn.confirm_revoke')} onConfirm={() => handleRevoke(row.key_id)}>
-            <Button type='link' danger size='small'>{t('key.revoke')}</Button>
-          </Popconfirm>
-        ) : null
-      ),
+      title: t('source.actions'), width: 80,
+      render: (_, row) => row.status === 'active' ? (
+        <Popconfirm title={t('btn.confirm_revoke')} onConfirm={() => handleRevoke(row.key_id)}>
+          <Button type='link' danger size='small'>{t('key.revoke')}</Button>
+        </Popconfirm>
+      ) : null,
     },
   ];
 
   return (
-    <Drawer
-      open={!!sourceId}
-      title={`${t('source.keys')}: ${sourceId}`}
-      width={640}
-      onClose={onClose}
-      extra={
-        <Button type='primary' size='small' onClick={() => { setExpiresDays(undefined); setCreateVisible(true); }}>
-          {t('key.create')}
-        </Button>
-      }
+    <Drawer open={!!sourceId} title={`${t('source.keys')}: ${sourceId}`} width={640} onClose={onClose}
+      extra={<Button type='primary' size='small' onClick={() => { setExpiresDays(undefined); setCreateVisible(true); }}>{t('key.create')}</Button>}
     >
-      <Table
-        rowKey='key_id'
-        dataSource={keys}
-        columns={columns}
-        loading={loading}
-        size='small'
-        pagination={false}
-      />
-
-      <Modal
-        open={createVisible}
-        title={t('key.create')}
-        onCancel={() => setCreateVisible(false)}
-        onOk={handleCreateKey}
-        width={400}
-        destroyOnHidden
-      >
+      <Table rowKey='key_id' dataSource={keys} columns={columns} loading={loading} size='small' pagination={false} />
+      <Modal open={createVisible} title={t('key.create')} onCancel={() => setCreateVisible(false)} onOk={handleCreateKey} width={400} destroyOnHidden>
         <Form layout='vertical'>
           <Form.Item label={t('key.expires_days')}>
-            <InputNumber
-              min={0}
-              style={{ width: '100%' }}
-              value={expiresDays}
-              onChange={(v) => setExpiresDays(v ?? undefined)}
-              placeholder='30'
-            />
+            <InputNumber min={0} style={{ width: '100%' }} value={expiresDays} onChange={(v) => setExpiresDays(v ?? undefined)} placeholder='30' />
           </Form.Item>
         </Form>
       </Modal>
-
       {createdKey && (
-        <Modal
-          open={!!createdKey}
-          title={t('key.created_api_key')}
-          onOk={() => setCreatedKey(null)}
-          onCancel={() => setCreatedKey(null)}
-          cancelButtonProps={{ style: { display: 'none' } }}
-          width={480}
-        >
+        <Modal open={!!createdKey} title={t('key.created_api_key')} onOk={() => setCreatedKey(null)} onCancel={() => setCreatedKey(null)}
+          cancelButtonProps={{ style: { display: 'none' } }} width={480}>
           <Alert type='warning' message={t('msg.created_key_note')} style={{ marginBottom: 12 }} />
           <Text copyable code style={{ wordBreak: 'break-all' }}>{createdKey.api_key}</Text>
         </Modal>
@@ -330,10 +294,7 @@ function PolicyDrawer({ sourceId, onClose }: PolicyDrawerProps) {
     }
   }, [sourceId, form]);
 
-  useEffect(() => {
-    if (sourceId) load();
-    else form.resetFields();
-  }, [sourceId, load, form]);
+  useEffect(() => { if (sourceId) load(); else form.resetFields(); }, [sourceId, load, form]);
 
   const handleSave = async () => {
     const values = await form.validateFields();
@@ -341,9 +302,7 @@ function PolicyDrawer({ sourceId, onClose }: PolicyDrawerProps) {
     try {
       await updatePolicy(sourceId!, values);
       message.success(t('msg.save_ok'));
-    } finally {
-      setSaving(false);
-    }
+    } finally { setSaving(false); }
   };
 
   const tagsField = (name: keyof PolicyForm, label: string) => (
@@ -353,34 +312,14 @@ function PolicyDrawer({ sourceId, onClose }: PolicyDrawerProps) {
   );
 
   return (
-    <Drawer
-      open={!!sourceId}
-      title={`${t('policy.title')}: ${sourceId}`}
-      width={480}
-      onClose={onClose}
-      extra={
-        <Button type='primary' size='small' loading={saving} onClick={handleSave}>
-          {t('btn.save')}
-        </Button>
-      }
+    <Drawer open={!!sourceId} title={`${t('policy.title')}: ${sourceId}`} width={480} onClose={onClose}
+      extra={<Button type='primary' size='small' loading={saving} onClick={handleSave}>{t('btn.save')}</Button>}
     >
       <Form form={form} layout='vertical' requiredMark={false}>
         <Row gutter={12}>
-          <Col span={8}>
-            <Form.Item name='qps_limit' label={t('policy.qps_limit')} rules={[{ required: true }]}>
-              <InputNumber min={0} style={{ width: '100%' }} />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item name='burst_limit' label={t('policy.burst_limit')} rules={[{ required: true }]}>
-              <InputNumber min={0} style={{ width: '100%' }} />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item name='cardinality_limit' label={t('policy.cardinality_limit')} rules={[{ required: true }]}>
-              <InputNumber min={0} style={{ width: '100%' }} />
-            </Form.Item>
-          </Col>
+          <Col span={8}><Form.Item name='qps_limit' label={t('policy.qps_limit')} rules={[{ required: true }]}><InputNumber min={0} style={{ width: '100%' }} /></Form.Item></Col>
+          <Col span={8}><Form.Item name='burst_limit' label={t('policy.burst_limit')} rules={[{ required: true }]}><InputNumber min={0} style={{ width: '100%' }} /></Form.Item></Col>
+          <Col span={8}><Form.Item name='cardinality_limit' label={t('policy.cardinality_limit')} rules={[{ required: true }]}><InputNumber min={0} style={{ width: '100%' }} /></Form.Item></Col>
         </Row>
         {tagsField('allowed_protocols', t('policy.allowed_protocols'))}
         {tagsField('ip_allowlist', t('policy.ip_allowlist'))}
@@ -396,28 +335,32 @@ function PolicyDrawer({ sourceId, onClose }: PolicyDrawerProps) {
 function SourcesTab() {
   const { t } = useTranslation('sourceRegistry');
   const [sources, setSources] = useState<SourceRegistry[]>([]);
+  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   const [formVisible, setFormVisible] = useState(false);
   const [editRecord, setEditRecord] = useState<SourceRegistry | undefined>();
   const [keysSourceId, setKeysSourceId] = useState<string | null>(null);
   const [policySourceId, setPolicySourceId] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (p: number, limit: number) => {
     setLoading(true);
     try {
-      const resp = await getSources({ limit: 200 });
+      const resp = await getSources({ p, limit });
       setSources(resp.list || []);
+      setTotal(resp.total || 0);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => { load(page, pageSize); }, [page, pageSize, load]);
 
   const handleToggleStatus = async (record: SourceRegistry) => {
     const next = record.status === 'enabled' ? 'disabled' : 'enabled';
     await updateSourceStatus(record.source_id, next as 'enabled' | 'disabled');
-    load();
+    load(page, pageSize);
   };
 
   const columns: ColumnsType<SourceRegistry> = [
@@ -427,33 +370,16 @@ function SourcesTab() {
     { title: t('source.agent_type'), dataIndex: 'agent_type', width: 100 },
     { title: t('source.target_datasource'), dataIndex: 'target_datasource_id', width: 90 },
     { title: t('source.owner_team'), dataIndex: 'owner_team_name', width: 120, ellipsis: true },
+    { title: t('source.status'), dataIndex: 'status', width: 80, render: (v) => <Badge color={statusColor(v)} text={t(`status.${v}`) || v} /> },
     {
-      title: t('source.status'),
-      dataIndex: 'status',
-      width: 80,
-      render: (v) => <Badge color={statusColor(v)} text={t(`status.${v}`) || v} />,
-    },
-    {
-      title: t('source.actions'),
-      width: 240,
+      title: t('source.actions'), width: 240,
       render: (_, record) => (
         <Space size={4}>
-          <Button type='link' size='small' onClick={() => { setEditRecord(record); setFormVisible(true); }}>
-            {t('btn.edit')}
-          </Button>
-          <Button type='link' size='small' onClick={() => setKeysSourceId(record.source_id)}>
-            {t('source.keys')}
-          </Button>
-          <Button type='link' size='small' onClick={() => setPolicySourceId(record.source_id)}>
-            {t('source.policy')}
-          </Button>
-          <Popconfirm
-            title={record.status === 'enabled' ? t('btn.confirm_disable') : t('btn.confirm_enable')}
-            onConfirm={() => handleToggleStatus(record)}
-          >
-            <Button type='link' size='small' danger={record.status === 'enabled'}>
-              {record.status === 'enabled' ? t('status.disabled') : t('status.enabled')}
-            </Button>
+          <Button type='link' size='small' onClick={() => { setEditRecord(record); setFormVisible(true); }}>{t('btn.edit')}</Button>
+          <Button type='link' size='small' onClick={() => setKeysSourceId(record.source_id)}>{t('source.keys')}</Button>
+          <Button type='link' size='small' onClick={() => setPolicySourceId(record.source_id)}>{t('source.policy')}</Button>
+          <Popconfirm title={record.status === 'enabled' ? t('btn.confirm_disable') : t('btn.confirm_enable')} onConfirm={() => handleToggleStatus(record)}>
+            <Button type='link' size='small' danger={record.status === 'enabled'}>{record.status === 'enabled' ? t('status.disabled') : t('status.enabled')}</Button>
           </Popconfirm>
         </Space>
       ),
@@ -463,12 +389,7 @@ function SourcesTab() {
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 12 }}>
-        <Button
-          type='primary'
-          onClick={() => { setEditRecord(undefined); setFormVisible(true); }}
-        >
-          {t('btn.add')}
-        </Button>
+        <Button type='primary' onClick={() => { setEditRecord(undefined); setFormVisible(true); }}>{t('btn.add')}</Button>
       </div>
       <Table
         rowKey='source_id'
@@ -476,14 +397,9 @@ function SourcesTab() {
         columns={columns}
         loading={loading}
         size='small'
-        pagination={{ pageSize: 20 }}
+        pagination={{ pageSize: 20, total, current: page, onChange: (p, ps) => { setPage(p); setPageSize(ps); }, showSizeChanger: true, showTotal: (total) => `${t('common:table.total', { total })}` }}
       />
-      <SourceFormModal
-        visible={formVisible}
-        editRecord={editRecord}
-        onClose={() => setFormVisible(false)}
-        onSaved={() => { setFormVisible(false); load(); }}
-      />
+      <SourceFormModal visible={formVisible} editRecord={editRecord} onClose={() => setFormVisible(false)} onSaved={() => { setFormVisible(false); load(page, pageSize); }} />
       <KeysDrawer sourceId={keysSourceId} onClose={() => setKeysSourceId(null)} />
       <PolicyDrawer sourceId={policySourceId} onClose={() => setPolicySourceId(null)} />
     </>
@@ -510,9 +426,7 @@ function AuditTab() {
     }
   }, []);
 
-  useEffect(() => {
-    load({ ...filters, ...query });
-  }, [query, filters, load]);
+  useEffect(() => { load({ ...filters, ...query }); }, [query, filters, load]);
 
   const handleFilterChange = (key: keyof typeof filters, value: string) => {
     const newFilters = { ...filters, [key]: value || undefined };
@@ -527,12 +441,7 @@ function AuditTab() {
     { title: t('audit.source_id'), dataIndex: 'source_id', width: 160, ellipsis: true },
     { title: t('audit.actor'), dataIndex: 'actor', width: 100, ellipsis: true },
     { title: t('audit.action'), dataIndex: 'action', width: 160 },
-    {
-      title: t('audit.result'),
-      dataIndex: 'result',
-      width: 80,
-      render: (v) => <Tag color={resultColor[v] || 'default'}>{v}</Tag>,
-    },
+    { title: t('audit.result'), dataIndex: 'result', width: 80, render: (v) => <Tag color={resultColor[v] || 'default'}>{v}</Tag> },
     { title: t('audit.reason'), dataIndex: 'reason', ellipsis: true },
     { title: t('audit.request_ip'), dataIndex: 'request_ip', width: 130 },
   ];
@@ -540,22 +449,9 @@ function AuditTab() {
   return (
     <>
       <Space style={{ marginBottom: 12 }}>
-        <Input
-          allowClear
-          placeholder={t('audit.source_id')}
-          style={{ width: 180 }}
-          onChange={(e) => handleFilterChange('source_id', e.target.value)}
-        />
-        <Input
-          allowClear
-          placeholder={t('audit.action')}
-          style={{ width: 160 }}
-          onChange={(e) => handleFilterChange('action', e.target.value)}
-        />
-        <Select
-          allowClear
-          placeholder={t('audit.result')}
-          style={{ width: 120 }}
+        <Input allowClear placeholder={t('audit.source_id')} style={{ width: 180 }} onChange={(e) => handleFilterChange('source_id', e.target.value)} />
+        <Input allowClear placeholder={t('audit.action')} style={{ width: 160 }} onChange={(e) => handleFilterChange('action', e.target.value)} />
+        <Select allowClear placeholder={t('audit.result')} style={{ width: 120 }}
           options={[
             { value: 'success', label: t('audit.result_success') },
             { value: 'deny', label: t('audit.result_deny') },
@@ -564,18 +460,8 @@ function AuditTab() {
           onChange={(v) => handleFilterChange('result', v || '')}
         />
       </Space>
-      <Table
-        rowKey='id'
-        dataSource={events}
-        columns={columns}
-        loading={loading}
-        size='small'
-        pagination={{
-          total,
-          current: query.p,
-          pageSize: query.limit,
-          onChange: (p, limit) => setQuery({ p, limit }),
-        }}
+      <Table rowKey='id' dataSource={events} columns={columns} loading={loading} size='small'
+        pagination={{ total, current: query.p, pageSize: query.limit, onChange: (p, limit) => setQuery({ p, limit }), showSizeChanger: true }}
       />
     </>
   );
@@ -584,29 +470,12 @@ function AuditTab() {
 // ---- Main Page ----
 export default function SourceRegistryPage() {
   const { t } = useTranslation('sourceRegistry');
-
   return (
     <PageLayout title={t('title')}>
       <div style={{ padding: 16 }}>
         <Tabs items={[
-          {
-          key: 'sources',
-          label: t('tabs.sources'),
-          children: (
-            <>
-              <SourcesTab />
-            </>
-          ),
-        },
-          {
-          key: 'audit',
-          label: t('tabs.audit'),
-          children: (
-            <>
-              <AuditTab />
-            </>
-          ),
-        }
+          { key: 'sources', label: t('tabs.sources'), children: <SourcesTab /> },
+          { key: 'audit', label: t('tabs.audit'), children: <AuditTab /> },
         ]} />
       </div>
     </PageLayout>

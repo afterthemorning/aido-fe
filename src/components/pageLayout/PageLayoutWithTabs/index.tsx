@@ -35,10 +35,7 @@ interface IPageLayoutProps {
 
 const i18nMap: Record<string, string> = {
   zh_CN: '简体',
-  zh_HK: '繁體',
   en_US: 'En',
-  ja_JP: '日本語',
-  ru_RU: 'Русский',
 };
 
 const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, children, customArea, showBack, backPath, doc }) => {
@@ -46,7 +43,7 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, childr
   const navigate = useNavigate();
   const location = useLocation();
   const query = querystring.parse(location.search);
-  const { profile, i18nList, siteInfo } = useContext(CommonStateContext);
+  const { profile, siteInfo } = useContext(CommonStateContext);
   const embed = localStorage.getItem('embed') === '1' && window.self !== window.top;
 
   const userMenuItems = [
@@ -56,9 +53,11 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, childr
     { key: 'logout', label: t('logout'), danger: true, onClick: async () => { await Logout(); localStorage.removeItem(AccessTokenKey); localStorage.removeItem('refresh_token'); localStorage.removeItem('curBusiId'); navigate('/login'); } },
   ];
 
-  const langMenuItems = Object.keys(i18nMap)
-    .filter((el) => (i18nList ? i18nList.includes(el) : true))
-    .map((el) => ({ key: el, label: i18nMap[el], onClick: () => { i18n.changeLanguage(el); localStorage.setItem('language', el); } }));
+  const langMenuItems = Object.keys(i18nMap).map((el) => ({
+    key: el,
+    label: i18nMap[el],
+    onClick: () => { i18n.changeLanguage(el); localStorage.setItem('language', el); },
+  }));
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>

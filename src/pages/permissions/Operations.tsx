@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { Tree, Button, Modal, message, Space } from 'antd';
@@ -24,6 +24,18 @@ function transformOperations(operations: OperationType[]) {
   });
 }
 
+/** 递归收集 treeData 中所有有效的 key */
+function collectAllKeys(items: any[]): string[] {
+  const keys: string[] = [];
+  items.forEach((item: any) => {
+    keys.push(item.key);
+    if (item.children) {
+      keys.push(...collectAllKeys(item.children));
+    }
+  });
+  return keys;
+}
+
 interface IProps {
   data: OperationType[];
   roleId?: number;
@@ -35,6 +47,15 @@ export default function Operations(props: IProps) {
   const { data, roleId, disabled } = props;
   const [operations, setOperations] = useState<string[]>([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+
+  const treeData = useMemo(() => transformOperations(data), [data]);
+
+  /** 仅在 treeData 构建完成后，过滤 checkedKeys 中不存在的 key */
+  const validKeys = useMemo(() => collectAllKeys(treeData), [treeData]);
+
+  const filteredCheckedKeys = useMemo(() => {
+    return _.intersection(operations, validKeys);
+  }, [operations, validKeys]);
 
   useEffect(() => {
     if (roleId) {
@@ -60,7 +81,7 @@ export default function Operations(props: IProps) {
             size='small'
             type='text'
             onClick={() => {
-              setExpandedKeys(_.map(data, 'name'));
+              setExpandedKeys(validKeys);
             }}
           >
             {t('expand_all')}
@@ -80,8 +101,8 @@ export default function Operations(props: IProps) {
         checkable
         disabled={disabled}
         expandedKeys={expandedKeys}
-        checkedKeys={operations}
-        treeData={transformOperations(data)}
+        checkedKeys={filteredCheckedKeys}
+        treeData={treeData}
         onExpand={(expandedKeys: string[]) => {
           setExpandedKeys(expandedKeys);
         }}

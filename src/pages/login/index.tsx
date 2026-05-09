@@ -49,10 +49,7 @@ import DropdownCompat from '@/components/AntdDropdownCompat';
 
 const i18nMap = {
   zh_CN: '简体',
-  zh_HK: '繁體',
   en_US: 'En',
-  ja_JP: '日本語',
-  ru_RU: 'Русский',
 };
 
 export interface DisplayName {

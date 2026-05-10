@@ -2,14 +2,7 @@
   ~ Copyright 2026 AIDO Team
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ ...
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~
@@ -23,59 +16,191 @@
     <link rel="apple-touch-icon" href="/favicon.svg?v=2" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #f5f5f5;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      }
       .preloader {
         position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        flex-direction: column;
+        inset: 0;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        background: #f5f5f5;
+        transition: opacity 0.4s ease;
+        z-index: 9999;
+      }
+      .preloader--hidden {
         opacity: 0;
-        animation: preloader-fade-in 0.6s ease-out 0.3s forwards;
+        pointer-events: none;
       }
-
       .preloader__logo {
-        width: 56px;
-        height: 56px;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-image: url('/image/logo-aido.svg');
-        margin-bottom: 16px;
+        width: 64px;
+        height: 64px;
+        background: url(/image/logo-aido.svg) no-repeat center/contain;
+        margin-bottom: 24px;
+        animation: preloader-pulse 1.8s ease-in-out infinite;
       }
-
-      .preloader__text {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        font-size: 14px;
+      @keyframes preloader-pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: scale(1.08);
+          opacity: 1;
+        }
+      }
+      .preloader__dots {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+      .preloader__dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #6c53b1;
+        animation: dot-bounce 1.4s ease-in-out both infinite;
+      }
+      .preloader__dot:nth-child(1) {
+        animation-delay: -0.32s;
+      }
+      .preloader__dot:nth-child(2) {
+        animation-delay: -0.16s;
+      }
+      .preloader__dot:nth-child(3) {
+        animation-delay: 0s;
+      }
+      @keyframes dot-bounce {
+        0%,
+        80%,
+        100% {
+          transform: scale(0.6);
+          opacity: 0.4;
+        }
+        40% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .preloader__brand {
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        color: #6c53b1;
+        margin-bottom: 32px;
+      }
+      .preloader__tip-wrap {
+        max-width: 420px;
+        text-align: center;
+        min-height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .preloader__tip {
+        font-size: 13px;
         color: #888;
-        letter-spacing: 0.3em;
+        line-height: 1.6;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        opacity: 0;
+        transform: translateY(8px);
       }
-
-      @keyframes preloader-fade-in {
-        0% { opacity: 0; }
-        100% { opacity: 1; }
+      .preloader__tip--visible {
+        opacity: 1;
+        transform: translateY(0);
       }
     </style>
     <script src="/js/node-sql-parser@4.10.0_umd_mysql.umd.js"></script>
     <script src="/js/placement.min.js"></script>
   </head>
-
   <body>
-    <div class="preloader" aria-live="polite" role="status" aria-label="Loading AIDO">
+    <div class="preloader" id="app-preloader" role="status" aria-label="Loading">
       <div class="preloader__logo"></div>
-      <div class="preloader__text">Welcome to use AIDO</div>
+      <div class="preloader__dots">
+        <div class="preloader__dot"></div>
+        <div class="preloader__dot"></div>
+        <div class="preloader__dot"></div>
+      </div>
+      <div class="preloader__tip-wrap"><div class="preloader__tip" id="preloader-tip"></div></div>
     </div>
+    <script>
+      (function () {
+        var tips = {
+          zh: [
+            '通过指标探索器实时查询所有数据源的指标数据。',
+            '配置告警规则，第一时间获知关键指标异常。',
+            '仪表盘支持多数据源混合展示，一站式可视化运维。',
+            '数据源注册中心统一管理所有数据接入来源。',
+            '定期报告自动生成运维摘要，定时发送至指定邮箱。',
+            '屏蔽规则在计划维护期间自动抑制告警通知。',
+            '真实用户监控（RUM）提供用户体验与性能洞察。',
+            '通知渠道支持邮件、钉钉、飞书、Webhook 等多种方式。',
+            '团队与角色管理实现精细化权限控制。',
+            '事件流水线自动化处理告警事件，提升响应效率。',
+            '记录规则将 PromQL 查询结果保存为新的时间序列。',
+            '集成中心支持 Prometheus、Elasticsearch、Jaeger 等数据源。',
+          ],
+          en: [
+            'Query real-time metrics across all data sources with the metric explorer.',
+            'Set up alert rules to be notified when key metrics cross thresholds.',
+            'Dashboards visualize data from multiple sources in one place.',
+            'Source Registry governs all data ingestion sources centrally.',
+            'Regular reports auto-generate summaries and deliver via email.',
+            'Mute rules suppress alerts during planned maintenance windows.',
+            'RUM provides real user experience and performance insights.',
+            'Notification channels support email, webhook, chat platforms.',
+            'Teams & roles enable fine-grained permission control.',
+            'Event pipeline automates alert processing workflows.',
+            'Recording rules save PromQL query results as new time series.',
+            'Integration center supports Prometheus, Elasticsearch, Jaeger.',
+          ],
+        };
+        var tipEl = document.getElementById('preloader-tip');
+        if (!tipEl) return;
+        var lang = navigator.language || '';
+        var langKey = lang.startsWith('zh') ? 'zh' : 'en';
+        var list = tips[langKey];
+        var idx = Math.floor(Math.random() * list.length);
+        var timer;
+        function show(i) {
+          tipEl.textContent = list[i % list.length];
+          tipEl.className = 'preloader__tip preloader__tip--visible';
+        }
+        function cycle() {
+          tipEl.className = 'preloader__tip';
+          setTimeout(function () {
+            idx = (idx + 1) % list.length;
+            show(idx);
+          }, 500);
+        }
+        show(idx);
+        timer = setInterval(cycle, 5000);
+        var obs = new MutationObserver(function () {
+          if (!document.getElementById('app-preloader')) {
+            clearInterval(timer);
+            obs.disconnect();
+          }
+        });
+        obs.observe(document.body, { childList: true });
+      })();
+    </script>
     <div id="root"></div>
     <div id="hoc-renderer-root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script type="module">
-      // 根据环境变量决定是否加载 Headway widget
       if (!import.meta.env.VITE_IS_PRO && !import.meta.env.VITE_IS_PRO) {
-        // 动态加载 Headway widget 脚本
-        const script = document.createElement('script');
-        script.src = '/js/widget.js';
-        document.head.appendChild(script);
+        var s = document.createElement('script');
+        s.src = '/js/widget.js';
+        document.head.appendChild(s);
       }
     </script>
   </body>

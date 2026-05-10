@@ -167,6 +167,28 @@ export const baseCates: Cate[] = [
     graphPro: false,
     alertPro: false,
   },
+  // RUM — OpenTelemetry RUM (Real User Monitoring) 数据源
+  {
+    value: 'rum',
+    label: 'RUM (OpenTelemetry)',
+    type: ['metric', 'logging', 'tracing'],
+    alertRule: true,
+    dashboard: true,
+    dashboardVariable: true,
+    graphPro: false,
+    alertPro: false,
+  },
+  // APM — OpenTelemetry APM (Application Performance Monitoring) 数据源
+  {
+    value: 'apm',
+    label: 'APM (OpenTelemetry)',
+    type: ['metric', 'tracing'],
+    alertRule: true,
+    dashboard: true,
+    dashboardVariable: true,
+    graphPro: false,
+    alertPro: false,
+  },
 ];
 
 export const allCates = [...baseCates, ...advancedCates];

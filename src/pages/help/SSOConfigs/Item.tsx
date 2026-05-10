@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Space, Form, message, Switch, Input, Row, Col, Select } from 'antd';
-import { DownOutlined, RightOutlined, CopyOutlined } from '@ant-design/icons';
+import { Button, Space, Form, App, Switch, Input, Row, Col, Select, Alert } from 'antd';
+import { DownOutlined, RightOutlined, CopyOutlined, CheckCircleOutlined, CloseCircleOutlined, LoadingOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { useTranslation, Trans } from 'react-i18next';
 import { EditorView } from '@codemirror/view';
@@ -12,7 +12,7 @@ import CodeMirror from '@/components/CodeMirror';
 import DocumentDrawer from '@/components/DocumentDrawer';
 
 import { SSOConfigType } from './types';
-import { putSSOConfig } from './services';
+import { putSSOConfig, testAzureSSOConnection } from './services';
 
 export const documentMap = {
   OAuth2: 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/system-configuration/sso/oauth2/',
@@ -21,6 +21,7 @@ export const documentMap = {
   OIDC: 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/system-configuration/sso/oidc/',
   dingtalk: 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/system-configuration/sso/dingtalk',
   feishu: 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/system-configuration/sso/feishu',
+  azure: 'https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow',
 };
 
 interface Props {
@@ -30,10 +31,13 @@ interface Props {
 
 export default function Item(props: Props) {
   const { t, i18n } = useTranslation('SSOConfigs');
+  const { message } = App.useApp();
   const { activeKey, item } = props;
   const [form] = Form.useForm<SSOConfigType>();
   const [advancedSettingsVisible, setAdvancedSettingsVisible] = useState(false);
   const [roles, setRoles] = useState<string[]>([]);
+  const [testLoading, setTestLoading] = useState(false);
+  const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null);
 
   useEffect(() => {
     getRoles()
@@ -260,6 +264,146 @@ export default function Item(props: Props) {
             </Row>
           </div>
         </>
+      ) : item.name === 'azure' ? (
+        <>
+          <Form.Item name={['setting', 'redirect_url']} label={t('callback_url')} initialValue={`${window.location.origin}/aido/callback/azure`}>
+            <Space size={'small'}>
+              {`${window.location.origin}/aido/callback/azure`} <CopyOutlined onClick={() => copy2ClipBoard(`${window.location.origin}/aido/callback/azure`)} />
+            </Space>
+          </Form.Item>
+          <Form.Item label={t('azure_setting.enable')} name={['setting', 'enable']} valuePropName='checked' initialValue={false}>
+            <Switch size='small' />
+          </Form.Item>
+          <Form.Item label={t('azure_setting.display_name')} name={['setting', 'display_name']} rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+          <Row gutter={SIZE}>
+            <Col span={12}>
+              <Form.Item
+                label='Tenant ID'
+                name={['setting', 'tenant_id']}
+                rules={[{ required: true }]}
+                tooltip='Azure AD Directory (Tenant) ID'
+              >
+                <Input placeholder='00000000-0000-0000-0000-000000000000' />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label='Client ID'
+                name={['setting', 'client_id']}
+                rules={[{ required: true }]}
+                tooltip='Azure Application (Client) ID'
+              >
+                <Input placeholder='00000000-0000-0000-0000-000000000000' />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Form.Item
+            label='Client Secret'
+            name={['setting', 'client_secret']}
+            rules={[{ required: true }]}
+            tooltip='Azure Application Client Secret (应用注册密钥)'
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item
+            label={t('azure_setting.cover_attributes')}
+            tooltip={t('azure_setting.cover_attributes_tip')}
+            name={['setting', 'cover_attributes']}
+            valuePropName='checked'
+            initialValue={true}
+          >
+            <Switch size='small' />
+          </Form.Item>
+          <Row gutter={SIZE}>
+            <Col span={12}>
+              <Form.Item label={t('azure_setting.username_field')} name={['setting', 'username_field']} rules={[{ required: true }]} initialValue='email'>
+                <Select
+                  options={[
+                    { label: 'email (preferred_username)', value: 'email' },
+                    { label: 'upn (userPrincipalName)', value: 'upn' },
+                    { label: 'oid (Object ID)', value: 'oid' },
+                    { label: 'name', value: 'name' },
+                  ]}
+                  optionFilterProp='label'
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label={t('azure_setting.default_roles')} name={['setting', 'default_roles']} rules={[{ required: true }]}>
+                <Select
+                  mode='multiple'
+                  options={_.map(roles, (item) => ({ label: item, value: item }))}
+                  optionFilterProp='label'
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <div className='mb-4'>
+            <Space className='cursor-pointer' onClick={() => setAdvancedSettingsVisible(!advancedSettingsVisible)}>
+              {t('common:advanced_settings')}
+              {advancedSettingsVisible ? <DownOutlined /> : <RightOutlined />}
+            </Space>
+          </div>
+          <div style={{ display: advancedSettingsVisible ? 'block' : 'none' }}>
+            <Form.Item label={t('azure_setting.authority')} name={['setting', 'authority']} initialValue='https://login.microsoftonline.com/common'>
+              <Input placeholder='https://login.microsoftonline.com/{tenant-id}' />
+            </Form.Item>
+            <Form.Item label={t('azure_setting.scopes')} name={['setting', 'scopes']} initialValue='openid,profile,email'>
+              <Input placeholder='openid,profile,email' />
+            </Form.Item>
+            <Form.Item label={t('azure_setting.proxy')} name={['setting', 'proxy']}>
+              <Input />
+            </Form.Item>
+          </div>
+
+          {/* 测试连接按钮 + 状态反馈 */}
+          {testResult && (
+            <div style={{ marginBottom: 16 }}>
+              <Alert
+                type={testResult.success ? 'success' : 'error'}
+                showIcon
+                icon={testResult.success ? <CheckCircleOutlined /> : <CloseCircleOutlined />}
+                message={testResult.success ? t('azure_test.success') : t('azure_test.failed')}
+                description={testResult.message}
+                closable
+                onClose={() => setTestResult(null)}
+              />
+            </div>
+          )}
+          <Button
+            type='default'
+            icon={testLoading ? <LoadingOutlined /> : <CheckCircleOutlined />}
+            disabled={testLoading}
+            onClick={() => {
+              form.validateFields().then((values) => {
+                setTestLoading(true);
+                setTestResult(null);
+                const setting = values.setting || {};
+                testAzureSSOConnection({
+                  tenant_id: setting.tenant_id,
+                  client_id: setting.client_id,
+                  client_secret: setting.client_secret,
+                  authority: setting.authority,
+                  scopes: setting.scopes,
+                  proxy: setting.proxy,
+                })
+                  .then((resp) => {
+                    setTestResult({ success: true, message: resp.message || t('azure_test.success_default') });
+                  })
+                  .catch((err) => {
+                    const errMsg = err.message || err.err || t('azure_test.failed_default');
+                    setTestResult({ success: false, message: errMsg });
+                  })
+                  .finally(() => setTestLoading(false));
+              });
+            }}
+          >
+            {testLoading ? t('azure_test.testing') : t('azure_test.test_connection')}
+          </Button>
+        </>
       ) : (
         <Form.Item name='content'>
           <CodeMirror
@@ -285,10 +429,10 @@ export default function Item(props: Props) {
           type='primary'
           onClick={() => {
             form.validateFields().then((values) => {
-              putSSOConfig({
-                ...item,
-                ...values,
-              }).then(() => {
+              // fallback 配置（id=0）保存时去掉 id，由后端自动创建
+              const { id, ...rest } = item;
+              const payload = id && id > 0 ? { ...item, ...values } : { ...rest, ...values };
+              putSSOConfig(payload).then(() => {
                 message.success(t('common:success.save'));
               });
             });

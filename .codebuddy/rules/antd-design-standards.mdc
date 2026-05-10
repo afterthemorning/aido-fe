@@ -1,0 +1,49 @@
+---
+description: 
+alwaysApply: true
+enabled: true
+updatedAt: 2026-05-10T05:09:33.400Z
+provider: 
+---
+
+# Ant Design 开发规范
+
+在进行任何前端代码修改或新增功能时，必须严格遵循以下规范：
+
+## 1. 组件使用优先
+
+- 所有 UI 元素须优先使用 Ant Design 官方组件，不得引入与之冲突的自定义样式或非标准组件。
+- 组件选择、props 命名、样式 Token 必须与 Ant Design 官方 API 文档保持一致。
+- 禁止自行封装 Ant Design 已有功能的重叠组件。
+
+## 2. 视觉风格一致性
+
+- 使用 Ant Design 的 ConfigProvider theme 机制控制全局主题，禁止硬编码颜色/圆角/阴影覆盖组件默认样式。
+- 自定义样式需通过 Ant Design 的 `token`（design token）或 `className` 追加方式实现，不得使用 `!important` 或内联样式覆盖组件内部样式。
+
+## 3. 交互逻辑与 API 调用
+
+- 组件事件回调（onChange、onClick、onSelect 等）的调用签名须与 Ant Design 官方文档一致。
+- 表单场景优先使用 `Form` + `Form.Item` + 校验规则，避免手动维护状态。
+- 对话框/抽屉使用 `Modal` / `Drawer` 组件，通过 `open` prop 控制显示。
+
+## 4. 布局与响应式
+
+- 布局优先使用 Ant Design 的 `Row` / `Col` / `Flex` / `Space` / `Layout` 组件。
+- 响应式断点使用 Ant Design 的 `Grid` 断点枚举值。
+- 列表/表格展示使用 `Table` / `List` 组件，启用内置的分页、排序、筛选功能。
+
+## 5. 国际化
+
+- 所有文案使用 `useTranslation` 或 `useIntl` 从 locale 文件读取，禁止硬编码。
+- Ant Design 组件的国际化通过 ConfigProvider `locale` prop 注入，与项目 i18n 联动。
+
+## 6. 主题与暗黑模式
+
+- 通过 ConfigProvider `theme.algorithm` 切换 `theme.darkAlgorithm` / `theme.defaultAlgorithm`，不得手动切换组件 dark class。
+- 自定义组件的暗黑适配使用 CSS 变量（`var(--fc-*)`），不得硬编码两套色值。
+
+## 7. 权限与菜单
+
+- 菜单结构由 `SideMenu/menu.tsx` 定义，路由注册在 `routers/index.tsx` 中完成。
+- 权限校验使用 `CommonStateContext.perms` 数组 + `hasPermission` 辅助函数，参照 regular-report 模块的简单路由 key 模式。

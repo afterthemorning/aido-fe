@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import _ from 'lodash';
 import { Input, Button, Modal } from 'antd';
 import { useDebounce } from 'ahooks';
@@ -24,15 +24,37 @@ export default function index() {
   const debouncedSearchValue = useDebounce(searchVal, { wait: 500 });
   const [chooseDataSourceTypeModalVisible, setChooseDataSourceTypeModalVisible] = useState(false);
 
+  /** 前端定义的补充数据源类型（后端尚未注册但前端已支持的） */
+  const frontendSourceTypes = useMemo(() => {
+    return [
+      {
+        plugin_type: 'rum',
+        plugin_type_name: 'RUM (OpenTelemetry)',
+        category: 'otel',
+      },
+      {
+        plugin_type: 'apm',
+        plugin_type_name: 'APM (OpenTelemetry)',
+        category: 'otel',
+      },
+    ];
+  }, []);
+
   useEffect(() => {
     getDataSourcePluginList().then((res) => {
+      const existingTypes = new Set(_.map(res, 'plugin_type'));
+      // 补充前端定义但后端未返回的类型
+      const supplemented = [
+        ...res,
+        ...frontendSourceTypes.filter((t) => !existingTypes.has(t.plugin_type)),
+      ];
       setPluginList(
-        _.map(res, (item) => {
+        _.map(supplemented, (item) => {
           const logoSrc = _.find(allCates, { value: item.plugin_type })?.logo;
           return {
             name: item.plugin_type_name,
-            category: item.category,
             type: item.plugin_type,
+            category: item.category,
             logo: logoSrc,
           };
         }),

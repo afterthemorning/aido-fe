@@ -1,5 +1,5 @@
 const en_US = {
-  quickJump: 'Quick jump',
+  quickJump: 'Quick Search..',
   quickOpenClose: 'Open/Close',
   quickSearchPlaceholder: 'Search...',
   quickMenus: 'Quick menus',

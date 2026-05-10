@@ -18,3 +18,17 @@ export const putSSOConfig = function (data: SSOConfigType) {
     return res.dat || [];
   });
 };
+
+export const testAzureSSOConnection = function (data: {
+  tenant_id: string;
+  client_id: string;
+  client_secret: string;
+  authority?: string;
+  scopes?: string;
+  proxy?: string;
+}): Promise<{ success: boolean; message: string }> {
+  return request('/api/n9e/sso/azure/test', {
+    method: RequestMethod.Post,
+    data,
+  });
+};

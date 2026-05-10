@@ -29,6 +29,8 @@ import LoginCallbackOAuth from '@/pages/loginCallback/oauth';
 import LoginCallbackCustom from '@/pages/loginCallback/Custom';
 import LoginCallbackDingTalk from '@/pages/loginCallback/DingTalk';
 import LoginCallbackFeishu from '@/pages/loginCallback/Feishu';
+import LoginCallbackAzure from '@/pages/loginCallback/Azure';
+import Home from '@/pages/home';
 import AlertRules, { Add as AlertRuleAdd, Edit as AlertRuleEdit } from '@/pages/alertRules';
 import Profile from '@/pages/account/profile';
 import { List as Dashboard, Detail as DashboardDetail, Share as DashboardShare } from '@/pages/dashboard';
@@ -69,6 +71,7 @@ import SiteSettings from '@/pages/siteSettings';
 import SourceRegistry from '@/aido-extension/sourceregistry';
 import RegularReport from '@/aido-extension/regularReport';
 import RUMOverview from '@/aido-extension/rum/Overview';
+import RUMErrors from '@/aido-extension/rum/Errors';
 import { dynamicPackages, Entry, dynamicPages } from '@/utils';
 // @ts-ignore
 import { Jobs as StrategyBrain } from 'plus:/datasource/anomaly';
@@ -110,7 +113,7 @@ export default function Content() {
      */
     if (
       profile?.roles?.length > 0 &&
-      !_.includes(['/', '/account/profile/info', '/account/profile/pwd', '/account/profile/token', '/alert-aggr-events'], location.pathname) &&
+      !_.includes(['/', '/home', '/account/profile/info', '/account/profile/pwd', '/account/profile/token', '/alert-aggr-events'], location.pathname) &&
       !location.pathname.includes('/settings/datasource/edit/') &&
       !location.pathname.includes('/settings/infrastructure/add') &&
       !location.pathname.includes('/settings/source/')
@@ -132,6 +135,7 @@ export default function Content() {
     <div className='content'>
       <Routes>
         <Route path='/demo/*' element={<Demo />} />
+        <Route path='/home' element={<Home />} />
         <Route path='/overview' element={<Overview />} />
         <Route path='/login' element={<Login />} />
         <Route path='/callback' element={<LoginCallback />} />
@@ -140,6 +144,7 @@ export default function Content() {
         <Route path='/callback/custom' element={<LoginCallbackCustom />} />
         <Route path='/callback/dingtalk' element={<LoginCallbackDingTalk />} />
         <Route path='/callback/feishu' element={<LoginCallbackFeishu />} />
+        <Route path='/callback/azure' element={<LoginCallbackAzure />} />
         <Route path='/metric/explorer' element={<MetricExplore />} />
         <Route path='/log/explorer' element={<LogExplore />} />
         <Route path='/log/index-patterns' element={<IndexPatterns />} />
@@ -193,6 +198,7 @@ export default function Content() {
         <Route path='/source-registry' element={<SourceRegistry />} />
         <Route path='/regular-report' element={<RegularReport />} />
         <Route path='/rum' element={<RUMOverview />} />
+        <Route path='/rum/errors' element={<RUMErrors />} />
         <Route path='/datasources/:action/:type/:id' element={<DatasourceAdd />} />
         <Route path='/datasources/:action/:type' element={<DatasourceAdd />} />
         <Route path='/datasources' element={<Datasource />} />
@@ -212,7 +218,7 @@ export default function Content() {
         {lazyRoutes.map((route, i) => renderRouteWithSubRoutes(route, i))}
         {_.map(lazyPagesRoutes, (route, i) => renderRouteWithSubRoutes(route, `lazy-page-${i}`))}
         {_.map(plusLoader.routes, (route, i) => renderRouteWithSubRoutes(route, `plus-${i}`))}
-        <Route path='/' element={<Navigate to={siteInfo?.home_page_url || '/metric/explorer'} replace />} />
+        <Route path='/' element={<Navigate to={siteInfo?.home_page_url || '/home'} replace />} />
         <Route path='/403' element={<Page403 />} />
         <Route path='/404' element={<NotFound />} />
         <Route path='/out-of-service' element={<OutOfService />} />

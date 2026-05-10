@@ -50,7 +50,7 @@ const en_US = {
   数据采集: 'Data collection',
   对象列表: 'Targets',
   Pingmesh配置: 'Pingmesh config',
-  quickJump: 'Quick jump',
+  quickJump: 'Quick Search..',
   quickOpenClose: 'Open/Close',
   quickSearchPlaceholder: 'Search...',
   quickMenus: 'Quick menus',

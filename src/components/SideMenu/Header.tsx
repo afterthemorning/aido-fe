@@ -1,12 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   collapsed: boolean;
 }
 
 export default function SideMenuHeader({ collapsed }: Props) {
+  const navigate = useNavigate();
+
   return (
     <div
+      onClick={() => navigate('/home')}
+      onKeyDown={(e) => { if (e.key === 'Enter') navigate('/home'); }}
+      role='button'
+      tabIndex={0}
       style={{
         height: 48,
         display: 'flex',
@@ -18,7 +25,12 @@ export default function SideMenuHeader({ collapsed }: Props) {
         letterSpacing: '0.06em',
         color: 'var(--fc-text-1)',
         userSelect: 'none',
+        cursor: 'pointer',
+        transition: 'opacity 0.2s',
       }}
+      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.opacity = '0.7'; }}
+      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.opacity = '1'; }}
+      title='Go to Home'
     >
       {collapsed ? (
         <span

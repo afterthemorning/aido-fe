@@ -153,6 +153,20 @@ export const authCallbackFeishu = function (params) {
   });
 };
 
+export const getRedirectURLAzure = function (redirect: string) {
+  return request('/api/n9e/auth/redirect/azure', {
+    method: RequestMethod.Get,
+    params: { redirect },
+  });
+};
+
+export const authCallbackAzure = function (params) {
+  return request('/api/n9e/auth/callback/azure', {
+    method: RequestMethod.Get,
+    params,
+  });
+};
+
 export const getSsoConfig = function () {
   return request('/api/n9e/auth/sso-config', {
     method: RequestMethod.Get,

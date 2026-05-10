@@ -6,6 +6,7 @@ const ja_JP = {
   OAuth2: 'OAuth2',
   dingtalk: 'DingTalk',
   feishu: 'Feishu',
+  azure: 'Azure AD',
   callback_url: 'コールバックURL',
   feishu_setting: {
     app_id_tip:
@@ -36,6 +37,25 @@ const ja_JP = {
       'アドレス帳から従業員情報を取得するには、「アドレス帳ユーザー詳細」権限を有効にする必要があります。DingTalkオープンプラットフォームで対応する権限を追加してください',
     dingtalk_api: 'DingTalk API',
     dingtalk_api_tip: 'アドレス帳の従業員情報を照会するAPIエンドポイントを設定',
+  },
+  azure_setting: {
+    enable: '有効',
+    display_name: '表示名',
+    cover_attributes: 'ユーザー情報の更新',
+    cover_attributes_tip: 'ログイン時にAzure ADのユーザー属性（メール、表示名）をローカルアカウントに自動同期します',
+    username_field: 'ユーザー名フィールド',
+    default_roles: 'デフォルトロール',
+    authority: 'Authority URL',
+    scopes: 'スコープ',
+    proxy: 'プロキシアドレス',
+  },
+  azure_test: {
+    test_connection: '接続テスト',
+    testing: 'テスト中...',
+    success: '接続テスト成功',
+    failed: '接続テスト失敗',
+    success_default: 'Azure AD構成の検証に成功しました。トークンを取得しました。',
+    failed_default: '接続テストに失敗しました。構成パラメータを確認してください。',
   },
 };
 

@@ -18,6 +18,8 @@ import ElasticSearch from './ElasticSearch/Form';
 import Jaeger from './Jaeger/Form';
 import TDengine from './TDengine/Form';
 import Loki from './Loki/Form';
+import RUM from './RUM/Form';
+import APM from './APM/Form';
 // @ts-ignore
 import Plus from 'plus:/parcels/Datasource/Form';
 
@@ -67,6 +69,12 @@ export default function Form(props) {
   }
   if (params.type === DatasourceCateEnum.aidoUptimeKuma) {
     return <AidoUptimeKuma {...props} />;
+  }
+  if (params.type === DatasourceCateEnum.rum) {
+    return <RUM {...props} />;
+  }
+  if (params.type === DatasourceCateEnum.apm) {
+    return <APM {...props} />;
   }
   return <Plus type={params.type} {...props} />;
 }

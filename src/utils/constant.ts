@@ -78,6 +78,8 @@ export enum BaseDatasourceCateEnum {
   aidoEmail = 'aido-email',
   aidoSharepoint = 'aido-sharepoint',
   aidoUptimeKuma = 'aido-uptime-kuma',
+  rum = 'rum',
+  apm = 'apm',
 }
 
 export const DatasourceCateEnum = { ...BaseDatasourceCateEnum, ...AdvancedDatasourceCateEnum };

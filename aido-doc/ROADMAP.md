@@ -105,17 +105,21 @@ Exit criteria:
 - release smoke checklist covers happy path and key failure path
 
 ## Execution Backlog (Ready for Tracking)
-1. FE-P0-01 RUM route group and nav entry.
-2. FE-P0-02 RUM overview MVP.
-3. FE-P0-03 RUM error list and filters.
+1. FE-P0-01 RUM route group and nav entry.                    [2026-05-10 ✅]
+2. FE-P0-02 RUM overview MVP.                                  [2026-05-10 ✅]
+3. FE-P0-03 RUM error list and filters.                        [2026-05-10 ✅]
 4. FE-P0-04 RUM sessions and detail placeholder.
 5. FE-P0-05 Alert-notify reuse playbook landing.
-6. FE-P1-01 Alert response workspace linking.
-7. FE-P1-02 Source governance views.
-8. FE-P1-03 Admin audit visibility.
-9. FE-P2-01 RUM trace/log correlation jumps.
-10. FE-P2-02 RUM policy management UX.
-11. FE-P2-03 Release readiness and regression pack.
+6. FE-P0-06 RUM (OpenTelemetry) datasource config.             [2026-05-10 ✅]
+7. FE-P0-07 APM (OpenTelemetry) datasource config.             [2026-05-10 ✅]
+8. FE-P1-01 Alert response workspace linking.
+9. FE-P1-02 Source governance views.
+10. FE-P1-03 Admin audit visibility.
+11. FE-P1-04 Datasource OTLP compliance — validation rules, test-connection endpoint.
+12. FE-P1-05 Datasource OTLP detail — health metrics, ingestion stats.
+13. FE-P2-01 RUM trace/log correlation jumps.
+14. FE-P2-02 RUM policy management UX.
+15. FE-P2-03 Release readiness and regression pack.
 
 ## Acceptance and Verification Rules
 1. Every async request must present loading/error/empty states.
@@ -135,6 +139,7 @@ Exit criteria:
 
 ## Change Log
 - 2026-03-16: consolidated from previous RUM roadmap and 12-week backlog docs; added Flashcat benchmark matrix and phased enhancement design.
+- 2026-05-10: added RUM & APM (OpenTelemetry) datasource types — baseCates, DatasourceCateEnum, Form/Detail components with OTLP protocol support, locale, dispatch routes; RUM error list page (FE-P0-03); updated execution backlog.
 
 ## Progress Record
 - Date: 2026-03-16
@@ -143,6 +148,15 @@ Exit criteria:
 	- reorganized documentation structure under aido-doc with clearer naming
 	- moved operational guides into aido-doc/playbooks
 	- removed duplicate legacy planning documents
+
+- Date: 2026-05-10
+- Completed:
+	- FE-P0-03 RUM error list page with filter, table, pagination, loading/empty/error states
+	- FE-P0-06 RUM (OpenTelemetry) datasource — Form/Detail with OTLP HTTP/gRPC protocol
+	- FE-P0-07 APM (OpenTelemetry) datasource — Form/Detail with OTLP HTTP/gRPC protocol
+	- registered `rum` and `apm` in baseCates, DatasourceCateEnum, dispatch routes
+	- zh_CN / en_US locale for both datasource types
+	- ROADMAP backlog updated with new items and completion markers
 
 ## Retrospective
 1. What worked:

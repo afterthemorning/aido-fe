@@ -1,4 +1,5 @@
 const en_US = {
+  // Overview（已有）
   rum_real_user_monitoring: 'Real User Monitoring',
   overview: 'Overview',
   sessions: 'Sessions',
@@ -9,5 +10,21 @@ const en_US = {
   top_pages: 'Top Pages',
   chart_placeholder: 'Chart area - coming soon',
   no_data: 'No data yet',
+  // Errors（新增）
+  rum_errors: 'Error List',
+  back_to_overview: 'Back to Overview',
+  error_message: 'Error Message',
+  error_type: 'Type',
+  error_count: 'Count',
+  affected_users: 'Affected Users',
+  first_seen: 'First Seen',
+  last_seen: 'Last Seen',
+  error_status: 'Status',
+  search_error_placeholder: 'Search error message...',
+  no_errors_found: 'No errors found',
+  unresolved: 'Unresolved',
+  resolved: 'Resolved',
+  ignored: 'Ignored',
+  load_error_failed: 'Failed to load errors',
 };
 export default en_US;

@@ -6,6 +6,7 @@ const en_US = {
   OAuth2: 'OAuth2',
   dingtalk: 'DingTalk',
   feishu: 'Feishu',
+  azure: 'Azure AD',
   callback_url: 'Callback URL',
   feishu_setting: {
     app_id_tip:
@@ -38,6 +39,25 @@ const en_US = {
       'This feature needs to be enabled when you need to access employee emails and phone numbers in your address book. Enabling this feature requires granting the "Address Book User Details" permission. Please add the corresponding permission on the DingTalk Open Platform',
     dingtalk_api: 'DingTalk API',
     dingtalk_api_tip: 'Set the API endpoint for querying employee information in the address book',
+  },
+  azure_setting: {
+    enable: 'Enable',
+    display_name: 'Display Name',
+    cover_attributes: 'Update User Information',
+    cover_attributes_tip: 'Synchronize Azure AD user attributes (email, display name) to local account on each login',
+    username_field: 'Username Field',
+    default_roles: 'Default Roles',
+    authority: 'Authority URL',
+    scopes: 'Scopes',
+    proxy: 'Proxy Address',
+  },
+  azure_test: {
+    test_connection: 'Test Connection',
+    testing: 'Testing...',
+    success: 'Connection Test Passed',
+    failed: 'Connection Test Failed',
+    success_default: 'Azure AD configuration verified successfully. Token obtained.',
+    failed_default: 'Connection test failed. Please verify your configuration parameters.',
   },
 };
 export default en_US;

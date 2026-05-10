@@ -7,31 +7,34 @@ import { getOperationsByRole, putOperationsByRole } from './services';
 import { OperationType } from './types';
 import { notifyPermsChanged } from '@/utils/usePermissionsRefresh';
 
-function transformOperations(operations: OperationType[]) {
+/**
+ * 将 OperationType[] 转为 antd Tree data（2 级树）：
+ *   Level 1: 父组（如 "基础设施"）—— 可勾选，级联子节点
+ *   Level 2: 路由（如 "/targets"）—— 可勾选
+ */
+function buildTreeData(operations: OperationType[]) {
   return _.map(operations, (item) => {
     return {
       title: item.cname,
       key: item.name,
-      children: _.map(item.ops, (item) => {
+      children: _.map(item.ops, (op) => {
         return {
-          title: item.cname,
-          key: item.name,
+          title: op.cname,
+          key: op.name,
         };
-      }) as {
-        title: string;
-        key: string;
-      }[],
+      }) as { title: string; key: string }[],
     };
   });
 }
 
-/** 递归收集 treeData 中所有有效的 key */
-function collectAllKeys(items: any[]): string[] {
+/** 递归收集 treeData 中所有叶子节点的 key（路由级别） */
+function collectLeafKeys(items: any[]): string[] {
   const keys: string[] = [];
   items.forEach((item: any) => {
-    keys.push(item.key);
-    if (item.children) {
-      keys.push(...collectAllKeys(item.children));
+    if (item.children && item.children.length > 0) {
+      keys.push(...collectLeafKeys(item.children));
+    } else {
+      keys.push(item.key);
     }
   });
   return keys;
@@ -46,25 +49,34 @@ interface IProps {
 export default function Operations(props: IProps) {
   const { t } = useTranslation('permissions');
   const { data, roleId, disabled } = props;
-  const [operations, setOperations] = useState<string[]>([]);
+  const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
 
-  const treeData = useMemo(() => transformOperations(data), [data]);
+  const treeData = useMemo(() => buildTreeData(data), [data]);
 
-  /** 仅在 treeData 构建完成后，过滤 checkedKeys 中不存在的 key */
-  const validKeys = useMemo(() => collectAllKeys(treeData), [treeData]);
+  /** 所有叶子 key（路由级别） */
+  const leafKeys = useMemo(() => collectLeafKeys(treeData), [treeData]);
 
+  /** 过滤 checkedKeys 中无效的 key */
   const filteredCheckedKeys = useMemo(() => {
-    return _.intersection(operations, validKeys);
-  }, [operations, validKeys]);
+    return _.intersection(checkedKeys, leafKeys);
+  }, [checkedKeys, leafKeys]);
+
+  /** 最终 checkedKeys：
+   *  - Admin (disabled) → 所有 leafKeys（全选，只读展示）
+   *  - 其他角色 → filteredCheckedKeys（后端加载的实际已选项） */
+  const resolvedCheckedKeys = useMemo(() => {
+    if (disabled) return leafKeys;
+    return filteredCheckedKeys;
+  }, [disabled, leafKeys, filteredCheckedKeys]);
 
   useEffect(() => {
-    if (roleId) {
+    if (roleId && !disabled) {
       getOperationsByRole(roleId).then((res) => {
-        setOperations(res);
+        setCheckedKeys(res || []);
       });
     }
-  }, [roleId]);
+  }, [roleId, disabled]);
 
   if (!roleId) return <div>{t('unselect_role')}</div>;
 
@@ -82,7 +94,7 @@ export default function Operations(props: IProps) {
             size='small'
             type='text'
             onClick={() => {
-              setExpandedKeys(validKeys);
+              setExpandedKeys(leafKeys);
             }}
           >
             {t('expand_all')}
@@ -102,13 +114,16 @@ export default function Operations(props: IProps) {
         checkable
         disabled={disabled}
         expandedKeys={expandedKeys}
-        checkedKeys={filteredCheckedKeys}
+        checkedKeys={resolvedCheckedKeys}
         treeData={treeData}
-        onExpand={(expandedKeys: string[]) => {
-          setExpandedKeys(expandedKeys);
+        onExpand={(keys: string[]) => {
+          setExpandedKeys(keys);
         }}
         onCheck={(selectedKeys: string[]) => {
-          setOperations(selectedKeys);
+          // antd Tree 级联勾选时会带入父组 key（如 "infrastructure"），
+          // 只保留以 '/' 开头的路由级别 key，去除父组的概念性 key。
+          const routeOnly = _.filter(selectedKeys, (key) => key.startsWith('/'));
+          setCheckedKeys(routeOnly);
         }}
       />
       {!disabled && (
@@ -119,12 +134,11 @@ export default function Operations(props: IProps) {
               Modal.confirm({
                 title: t('common:confirm.save'),
                 onOk: () => {
-                  putOperationsByRole(
-                    roleId,
-                    _.filter(operations, (item) => {
-                      return !_.includes(_.map(data, 'name'), item);
-                    }),
-                  ).then(() => {
+                  // 参照 regular-report 模块的权限模式：
+                  // 只保存路由级别的纯路径 key（如 "/targets"），
+                  // 与后端 /api/n9e/role/{id}/ops 接口以及页面级
+                  // _.includes(perms, '/targets') 校验完全对齐。
+                  putOperationsByRole(roleId, checkedKeys).then(() => {
                     message.success(t('common:success.save'));
                     notifyPermsChanged();
                   });

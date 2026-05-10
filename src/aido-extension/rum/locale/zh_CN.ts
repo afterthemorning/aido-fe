@@ -1,4 +1,5 @@
 const zh_CN = {
+  // Overview（已有）
   rum_real_user_monitoring: '真实用户监控',
   overview: '概览',
   sessions: '会话数',
@@ -9,5 +10,21 @@ const zh_CN = {
   top_pages: '热门页面',
   chart_placeholder: '图表区域 - 即将上线',
   no_data: '暂无数据',
+  // Errors（新增）
+  rum_errors: '错误列表',
+  back_to_overview: '返回概览',
+  error_message: '错误信息',
+  error_type: '错误类型',
+  error_count: '发生次数',
+  affected_users: '影响用户',
+  first_seen: '首次发生',
+  last_seen: '最近发生',
+  error_status: '状态',
+  search_error_placeholder: '搜索错误信息...',
+  no_errors_found: '暂无错误记录',
+  unresolved: '未解决',
+  resolved: '已解决',
+  ignored: '已忽略',
+  load_error_failed: '加载错误列表失败',
 };
 export default zh_CN;

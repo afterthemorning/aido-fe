@@ -6,6 +6,7 @@ const zh_HK = {
   OAuth2: 'OAuth2',
   dingtalk: '釘釘',
   feishu: '飛書',
+  azure: 'Azure AD',
   callback_url: '回調地址',
   feishu_setting: {
     app_id_tip: '飛書開放平台應用唯一識別碼, 在創建應用時，由系統自動生成，用戶不能自行修改。可以在<1>開發者後台</1>的憑證與基本信息頁面查看app_id',
@@ -34,6 +35,25 @@ const zh_HK = {
     use_member_info_tip: '當需要取得通訊錄中的員工信箱、手機號碼時需要開啟；開啟此功能需要開通「通訊錄使用者詳情」相關權限，請在釘釘開放平台新增對應權限',
     dingtalk_api: '釘釘 API',
     dingtalk_api_tip: '設置通訊錄員工信息查詢 API 接口',
+  },
+  azure_setting: {
+    enable: '啟用',
+    display_name: '顯示名稱',
+    cover_attributes: '更新用戶信息',
+    cover_attributes_tip: '每次登錄後自動同步 Azure AD 中的用戶信息（郵箱、顯示名稱）到本地賬戶',
+    username_field: '用戶名字段',
+    default_roles: '默認角色',
+    authority: '頒發機構 URL',
+    scopes: '權限範圍（Scopes）',
+    proxy: '代理地址',
+  },
+  azure_test: {
+    test_connection: '測試連接',
+    testing: '正在測試...',
+    success: '連接測試通過',
+    failed: '連接測試失敗',
+    success_default: 'Azure AD 配置驗證通過，令牌獲取正常。',
+    failed_default: '連接測試失敗，請檢查配置參數是否正確。',
   },
 };
 

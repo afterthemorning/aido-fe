@@ -6,6 +6,7 @@ const zh_CN = {
   OAuth2: 'OAuth2',
   dingtalk: '钉钉',
   feishu: '飞书',
+  azure: 'Azure AD',
   callback_url: '回调地址',
   feishu_setting: {
     app_id_tip: '飞书开放平台应用的唯一标识, 在创建应用时，由系统自动生成，用户不能自行修改。可以在<1>开发者后台</1>的凭证与基础信息页面查看app_id',
@@ -34,6 +35,25 @@ const zh_CN = {
     use_member_info_tip: '当需要获取通讯录中的员工邮箱、手机号时需要开启；开启此功能需要开通「通讯录用户详情」相关权限，请在钉钉开放平台添加对应权限',
     dingtalk_api: '钉钉 API',
     dingtalk_api_tip: '设置通讯录员工信息查询 API 接口',
+  },
+  azure_setting: {
+    enable: '启用',
+    display_name: '显示名称',
+    cover_attributes: '更新用户信息',
+    cover_attributes_tip: '每次登录后自动同步 Azure AD 中的用户信息（邮箱、显示名称）到本地账户',
+    username_field: '用户名字段',
+    default_roles: '默认角色',
+    authority: '颁发机构 URL',
+    scopes: '权限范围（Scopes）',
+    proxy: '代理地址',
+  },
+  azure_test: {
+    test_connection: '测试连接',
+    testing: '正在测试...',
+    success: '连接测试通过',
+    failed: '连接测试失败',
+    success_default: 'Azure AD 配置验证通过，令牌获取正常。',
+    failed_default: '连接测试失败，请检查配置参数是否正确。',
   },
 };
 export default zh_CN;

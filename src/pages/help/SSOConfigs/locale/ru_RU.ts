@@ -6,6 +6,7 @@ const ru_RU = {
   OAuth2: 'OAuth2',
   dingtalk: 'DingTalk',
   feishu: 'Feishu',
+  azure: 'Azure AD',
   callback_url: 'URL обратного вызова',
   feishu_setting: {
     app_id_tip:
@@ -38,6 +39,25 @@ const ru_RU = {
       'Чтобы получить информацию о сотрудниках из адресной книги, необходимо включить разрешение "Детали пользователя адресной книги". Пожалуйста, добавьте соответствующие разрешения в DingTalk Open Platform',
     dingtalk_api: 'DingTalk API',
     dingtalk_api_tip: 'Установить конечную точку API для запроса информации о сотрудниках в адресной книге',
+  },
+  azure_setting: {
+    enable: 'Включить',
+    display_name: 'Отображаемое имя',
+    cover_attributes: 'Обновить информацию пользователя',
+    cover_attributes_tip: 'Автоматически синхронизировать атрибуты пользователя Azure AD (email, отображаемое имя) с локальной учетной записью при каждом входе',
+    username_field: 'Поле имени пользователя',
+    default_roles: 'Роли по умолчанию',
+    authority: 'URL центра выдачи',
+    scopes: 'Области (Scopes)',
+    proxy: 'Адрес прокси',
+  },
+  azure_test: {
+    test_connection: 'Проверить подключение',
+    testing: 'Проверка...',
+    success: 'Проверка подключения пройдена',
+    failed: 'Проверка подключения не пройдена',
+    success_default: 'Конфигурация Azure AD успешно проверена. Токен получен.',
+    failed_default: 'Проверка подключения не удалась. Проверьте параметры конфигурации.',
   },
 };
 

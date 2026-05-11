@@ -200,7 +200,7 @@ export default function FormCpt(props: Props) {
               overflow: 'auto',
             }}
           >
-            {requestType && <Document documentPath={`/n9e-docs/notification-channel/${requestType}-request`} />}
+            {requestType && <Document documentPath={`/aido-docs/notification-channel/${requestType}-request`} />}
           </Card>
         </Col>
       </Row>

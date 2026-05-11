@@ -36,7 +36,7 @@ export default function index({ initialValues }) {
                   language: i18n.language,
                   darkMode,
                   title: t('relabel.help_btn'),
-                  documentPath: '/n9e-docs/alert-event-relabel',
+                  documentPath: '/aido-docs/alert-event-relabel',
                 });
               }}
             >

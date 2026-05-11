@@ -13,7 +13,7 @@ const en_US = {
       'Feishu Open Platform application unique identifier, generated automatically when the application is created, and users cannot modify it themselves. You can view the app_id in the Credentials and Basic Information page of the <1>Developer Backend</1>',
     app_secret_tip: 'Application secret. Generated automatically when the application is created',
     cover_attributes_tip:
-      'After each login, if user information has changed, the user information from Feishu will overwrite the user information in Nightingale (phone number, email)',
+      'After each login, if user information has changed, the user information from Feishu will overwrite the user information in AIDO (phone number, email)',
   },
   dingtalk_setting: {
     enable: 'Enable',
@@ -24,7 +24,7 @@ const en_US = {
     client_secret: 'Client Secret',
     cover_attributes: 'Update User Information',
     cover_attributes_tip:
-      'After each login, if user information has changed, the user information from DingTalk will overwrite the user information in Nightingale (phone number, email)',
+      'After each login, if user information has changed, the user information from DingTalk will overwrite the user information in AIDO (phone number, email)',
     username_field: 'Username Field',
     username_field_map: {
       phone: 'Phone Number',

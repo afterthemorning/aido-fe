@@ -23,7 +23,7 @@ export default function VariableQuerybuilder() {
                   language: i18n.language,
                   darkMode,
                   title: t('var.definition'),
-                  documentPath: '/n9e-docs/dashboards/variables/query/prometheus',
+                  documentPath: '/aido-docs/dashboards/variables/query/prometheus',
                 });
               }}
             />

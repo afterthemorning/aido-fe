@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Nightingale Team
+ * Copyright 2026 AIDO Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ const toObjectRecord = (value: unknown): Record<string, unknown> => {
   return {};
 };
 
-const languages = ['zh_CN', 'en_US', 'zh_HK', 'ru_RU', 'ja_JP'];
+const languages = ['zh_CN', 'en_US'];
 const localStorageLanguage = localStorage.getItem('language');
 let language = 'zh_CN';
 if (localStorageLanguage && _.includes(languages, localStorageLanguage)) {

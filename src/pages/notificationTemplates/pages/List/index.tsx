@@ -171,7 +171,7 @@ export default function ListCpt() {
             }}
           >
             <div className={`${CN}-right`}>
-              <Document documentPath='/n9e-docs/notification-template' />
+              <Document documentPath='/aido-docs/notification-template' />
             </div>
           </Resizable>
         </div>

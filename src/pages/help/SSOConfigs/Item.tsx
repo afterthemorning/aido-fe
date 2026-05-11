@@ -15,12 +15,12 @@ import { SSOConfigType } from './types';
 import { putSSOConfig, testAzureSSOConnection } from './services';
 
 export const documentMap = {
-  OAuth2: 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/system-configuration/sso/oauth2/',
-  LDAP: 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/system-configuration/sso/ldap/',
-  CAS: 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/system-configuration/sso/cas/',
-  OIDC: 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/system-configuration/sso/oidc/',
-  dingtalk: 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/system-configuration/sso/dingtalk',
-  feishu: 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/usage/system-configuration/sso/feishu',
+  OAuth2: 'https://aido-platform.github.io/docs/sso/oauth2/',
+  LDAP: 'https://aido-platform.github.io/docs/sso/ldap/',
+  CAS: 'https://aido-platform.github.io/docs/sso/cas/',
+  OIDC: 'https://aido-platform.github.io/docs/sso/oidc/',
+  dingtalk: 'https://aido-platform.github.io/docs/sso/dingtalk',
+  feishu: 'https://aido-platform.github.io/docs/sso/feishu',
   azure: 'https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow',
 };
 

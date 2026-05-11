@@ -2,7 +2,7 @@ import { i18nInit } from '@/i18n';
 import i18next from 'i18next';
 
 /*
- * Copyright 2022 Nightingale Team
+ * Copyright 2026 AIDO Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

@@ -28,7 +28,7 @@ export default function Version() {
                 ns='headerVersion'
                 i18nKey='newVersion'
                 values={{ version: safeVersions.github_verison }}
-                components={{ a: <a style={{ color: '#b7a6e5' }} href='https://github.com/ccfos/nightingale/releases' target='_blank' /> }}
+                components={{ a: <a style={{ color: '#b7a6e5' }} href='https://github.com/aido-platform/aido/releases' target='_blank' /> }}
               />
             ) : 'v' + pkgJson.version
           }

@@ -15,6 +15,7 @@ import { RsaEncry } from '@/utils/rsa';
 import { CommonStateContext, basePrefix } from '@/App';
 import { AccessTokenKey } from '@/utils/constant';
 
+// @ts-ignore
 import useSsoWay from 'plus:/parcels/SSOConfigs/useSsoWay';
 import { NAME_SPACE } from './constants';
 import './locale';

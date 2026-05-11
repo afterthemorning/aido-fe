@@ -254,7 +254,7 @@ const SideMenu = (props: SideMenuProps) => {
         collapsedWidth={64}
         width={200}
         theme={darkMode ? 'dark' : 'light'}
-        className="side-menu"
+        className="side-menu hide-scrollbar"
         trigger={null}
         style={{
           height: '100vh',

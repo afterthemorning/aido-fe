@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ConfigProvider, Empty, Modal, Spin, Layout, theme } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
-import ruRU from 'antd/lib/locale/ru_RU';
 import 'antd/dist/reset.css';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash';
@@ -268,7 +267,7 @@ function App() {
 
   return (
     <ConfigProvider
-      locale={i18n.language == 'en_US' ? enUS : i18n.language == 'ru_RU' ? ruRU : zhCN}
+      locale={i18n.language == 'en_US' ? enUS : zhCN}
       empty={{ image: Empty.PRESENTED_IMAGE_DEFAULT }}
       warning={{ strict: false }}
       theme={{ algorithm: commonState.darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm }}
@@ -283,7 +282,7 @@ function App() {
               <Route path='*' element={
                 <Layout style={{ minHeight: '100vh' }}>
                   <HeaderMenu />
-                  <AntContent style={{ display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
+                  <AntContent className="hide-scrollbar" style={{ display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
                     <Content />
                     <HocRenderer />
                   </AntContent>

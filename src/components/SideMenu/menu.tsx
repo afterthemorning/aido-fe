@@ -1,5 +1,5 @@
 import React from 'react';
-import { NotificationFilled } from '@ant-design/icons';
+import { NotificationFilled, RobotOutlined } from '@ant-design/icons';
 
 import IconFont from '@/components/IconFont';
 
@@ -90,6 +90,21 @@ export const getMenuList = (embeddedProductMenu: MenuItem[] = [], hideDeprecated
         {
           key: '/event-pipelines',
           label: 'menu.event_pipeline',
+        },
+      ],
+    },
+    {
+      key: 'ai',
+      label: 'menu.ai',
+      icon: <RobotOutlined />,
+      children: [
+        {
+          key: '/ai-chat',
+          label: 'menu.ai_chat',
+        },
+        {
+          key: '/e2e-monitoring',
+          label: 'menu.e2e_monitoring',
         },
       ],
     },

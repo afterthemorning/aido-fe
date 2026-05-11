@@ -50,4 +50,15 @@
     border-style: solid !important;
     border-color: var(--fc-border-color) !important;
   }
+
+  /* 全局隐藏滚动条但保留滚动功能 */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .hide-scrollbar {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Nightingale Team
+ * Copyright 2026 AIDO Team
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  *
  */
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot, type Root } from 'react-dom/client';
 import _ from 'lodash';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -33,19 +33,26 @@ export default function ModalHOC(Component: any) {
     const div = document.createElement('div');
     document.body.appendChild(div);
 
+    let root: Root | null = null;
+
     function destroy() {
-      const unmountResult = ReactDOM.unmountComponentAtNode(div);
-      if (unmountResult && div.parentNode) {
+      if (root) {
+        root.unmount();
+        root = null;
+      }
+      if (div.parentNode) {
         div.parentNode.removeChild(div);
       }
     }
 
     function render(props: any) {
-      ReactDOM.render(
+      if (!root) {
+        root = createRoot(div);
+      }
+      root.render(
         <Router>
           <Component {...props} />
         </Router>,
-        div,
       );
     }
 

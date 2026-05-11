@@ -115,7 +115,7 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, childr
         </div>
       )}
       {customArea}
-      <div style={{ flex: 1, overflow: 'auto', padding: '12px 16px' }}>
+      <div className="hide-scrollbar" style={{ flex: 1, overflow: 'auto', padding: '12px 16px' }}>
         {children}
       </div>
     </div>

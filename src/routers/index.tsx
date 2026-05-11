@@ -63,6 +63,8 @@ import RecordingRule, { Add as RecordingRuleAdd, Edit as RecordingRuleEdit } fro
 import TraceExplorer, { Dependencies as TraceDependencies } from '@/pages/traceCpt/Explorer';
 import Permissions from '@/pages/permissions';
 import SSOConfigs from '@/pages/help/SSOConfigs';
+import AIChat from '@/pages/aiChat';
+import E2EMonitoring from '@/pages/e2eMonitoring';
 import NotificationTpls from '@/pages/help/NotificationTpls';
 import NotificationSettings from '@/pages/help/NotificationSettings';
 import MigrateDashboards from '@/pages/help/migrate';
@@ -199,6 +201,8 @@ export default function Content() {
         <Route path='/regular-report' element={<RegularReport />} />
         <Route path='/rum' element={<RUMOverview />} />
         <Route path='/rum/errors' element={<RUMErrors />} />
+        <Route path='/ai-chat' element={<AIChat />} />
+        <Route path='/e2e-monitoring' element={<E2EMonitoring />} />
         <Route path='/datasources/:action/:type/:id' element={<DatasourceAdd />} />
         <Route path='/datasources/:action/:type' element={<DatasourceAdd />} />
         <Route path='/datasources' element={<Datasource />} />
